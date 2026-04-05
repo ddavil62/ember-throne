@@ -41,6 +41,7 @@
 | [DIFFICULTY.md](DIFFICULTY.md) | 난이도 설계 -- 2단계 난이도, 적 AI 차이, 게임 오버 | v0.1 |
 | [UI-FLOW.md](UI-FLOW.md) | UI 플로우 -- 전체 화면 흐름, 전투 UI, 대화 UI, 편성 화면, 세이브/로드, 상점, 월드맵 | v0.1 |
 | [WORLD-PROGRESSION.md](WORLD-PROGRESSION.md) | 월드맵/진행 -- 6지역 30+거점, 유대 13쌍, 세이브 시스템, 이벤트 CG 19장, BGM 16트랙, SE 39종 | v0.1 |
+| [SKILL-ANIMATIONS.md](SKILL-ANIMATIONS.md) | 스킬 연출 -- 연출 등급 4단계, 컷인 시스템, 시전 모션 17종, 이펙트 36종, 88개 스킬 애니메이션 상세 | v0.1 |
 | [STORY.md](STORY.md) | 스토리 -- 세계관, 등장인물, 4막 서사 구조, 러브라인, 비극 서사, 엔딩 | v0.3 |
 
 ---

@@ -1,0 +1,22 @@
+# Godot 4.x
+.godot/
+
+# Import cache
+*.import
+
+# Export presets (민감 정보 포함 가능)
+export_presets.cfg
+
+# C# / Mono (사용하지 않지만 혹시 모를 경우)
+.mono/
+*.csproj
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+*.code-workspace

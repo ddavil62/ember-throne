@@ -34,13 +34,13 @@
 | 문서 | 설명 | 상태 |
 |------|------|------|
 | [BATTLE-SYSTEM.md](BATTLE-SYSTEM.md) | 전투 시스템 -- 턴 구조, 유닛 행동, 이동/공격 범위, 지형 효과, 전투 공식, 무기 상성, 상태이상, 승리/패배 조건, 경험치 공식 | v0.1 |
-| [CHARACTERS.md](CHARACTERS.md) | 캐릭터 -- 12인 클래스 설계, 전직, 역할 분배, 스탯 성장, 스킬 목록 | 미작성 |
-| [ENEMIES.md](ENEMIES.md) | 적 유닛 -- 적 유형, 보스 설계, 적 전용 무기/스킬 | 미작성 |
-| [ITEMS-EQUIPMENT.md](ITEMS-EQUIPMENT.md) | 아이템/장비 -- 소비 아이템, 장비 등급, 유일 장비, 핵심 아이템, 상점 시스템 | 미작성 |
-| [MAPS.md](MAPS.md) | 맵 디자인 -- 그리드 규격, 맵 유형, 전투 35전 목록 | 미작성 |
+| [CHARACTERS.md](CHARACTERS.md) | 캐릭터 -- 11인 클래스 설계, 전직, 역할 분배, 기본 스탯/성장률/Lv30 스탯, 88개 스킬 상세, 패시브 | v0.1 |
+| [ENEMIES.md](ENEMIES.md) | 적 유닛 -- 18종 적 유형, 3보스 메카닉, 막별 스케일링, AI 패턴 6종, 드롭 테이블 | v0.1 |
+| [ITEMS-EQUIPMENT.md](ITEMS-EQUIPMENT.md) | 아이템/장비 -- 소비 21종, 무기 38종, 방어구 24종, 악세서리 32종, 유일 장비, 상점 인벤토리 | v0.1 |
+| [MAPS.md](MAPS.md) | 맵 디자인 -- 그리드 규격, 16종 지형, 35전 상세(적 구성/전술/보상), ASCII 레이아웃 5개 | v0.1 |
 | [DIFFICULTY.md](DIFFICULTY.md) | 난이도 설계 -- 2단계 난이도, 적 AI 차이, 게임 오버 | v0.1 |
 | [UI-FLOW.md](UI-FLOW.md) | UI 플로우 -- 전체 화면 흐름, 전투 UI, 대화 UI, 편성 화면, 세이브/로드, 상점, 월드맵 | v0.1 |
-| [WORLD-PROGRESSION.md](WORLD-PROGRESSION.md) | 월드맵/진행 -- 월드맵 구조, 스토리 진행, 유대 시스템, 세이브 데이터 | 미작성 |
+| [WORLD-PROGRESSION.md](WORLD-PROGRESSION.md) | 월드맵/진행 -- 6지역 30+거점, 유대 13쌍, 세이브 시스템, 이벤트 CG 19장, BGM 16트랙, SE 39종 | v0.1 |
 | [STORY.md](STORY.md) | 스토리 -- 세계관, 등장인물, 4막 서사 구조, 러브라인, 비극 서사, 엔딩 | v0.3 |
 
 ---

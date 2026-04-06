@@ -1,0 +1,82 @@
+[
+  {
+    "asset": "button_normal.png",
+    "description": "일반 상태 버튼",
+    "patch_margin_left": 48,
+    "patch_margin_top": 32,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 32
+  },
+  {
+    "asset": "button_hover.png",
+    "description": "호버 상태 버튼",
+    "patch_margin_left": 48,
+    "patch_margin_top": 32,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 32
+  },
+  {
+    "asset": "button_pressed.png",
+    "description": "눌림 상태 버튼",
+    "patch_margin_left": 48,
+    "patch_margin_top": 32,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 32
+  },
+  {
+    "asset": "panel_dark.png",
+    "description": "다크 패널 (메인 윈도우, 메뉴, 인벤토리)",
+    "patch_margin_left": 48,
+    "patch_margin_top": 48,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 48
+  },
+  {
+    "asset": "panel_light.png",
+    "description": "밝은 패널 (서브 윈도우, 상세 정보)",
+    "patch_margin_left": 48,
+    "patch_margin_top": 48,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 48
+  },
+  {
+    "asset": "dialog_box.png",
+    "description": "대화 텍스트 박스",
+    "patch_margin_left": 48,
+    "patch_margin_top": 32,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 32
+  },
+  {
+    "asset": "tooltip.png",
+    "description": "툴팁/정보 팝업",
+    "patch_margin_left": 32,
+    "patch_margin_top": 32,
+    "patch_margin_right": 32,
+    "patch_margin_bottom": 32
+  },
+  {
+    "asset": "window_frame.png",
+    "description": "대형 윈도우 프레임 (상점, 편성, 세이브/로드)",
+    "patch_margin_left": 48,
+    "patch_margin_top": 64,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 48
+  },
+  {
+    "asset": "header_bar.png",
+    "description": "헤더 배너 바",
+    "patch_margin_left": 48,
+    "patch_margin_top": 16,
+    "patch_margin_right": 48,
+    "patch_margin_bottom": 16
+  },
+  {
+    "asset": "list_row.png",
+    "description": "목록 행 배경 (인벤토리, 스킬 리스트)",
+    "patch_margin_left": 16,
+    "patch_margin_top": 8,
+    "patch_margin_right": 16,
+    "patch_margin_bottom": 8
+  }
+]

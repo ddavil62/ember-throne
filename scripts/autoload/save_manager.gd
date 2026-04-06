@@ -27,6 +27,7 @@ func _get_save_path(slot: int) -> String:
 ## 현재 게임 상태를 직렬화하여 Dictionary로 반환
 func _serialize_game_state() -> Dictionary:
 	var gm: Node = get_node("/root/GameManager")
+	var pm: Node = get_node("/root/PartyManager")
 	return {
 		"version": 1,
 		"timestamp": Time.get_datetime_string_from_system(),
@@ -36,18 +37,19 @@ func _serialize_game_state() -> Dictionary:
 		"current_battle_id": gm.current_battle_id,
 		"flags": gm.flags.duplicate(true),
 		"party": _serialize_party(),
+		"active_party": pm.serialize_active(),
 		"inventory": _serialize_inventory(),
 	}
 
-## 파티 상태 직렬화 (추후 구현)
+## 파티 상태 직렬화. PartyManager에 위임한다.
 func _serialize_party() -> Array:
-	# Phase 9에서 파티 매니저 구현 후 연동
-	return []
+	var pm: Node = get_node("/root/PartyManager")
+	return pm.serialize()
 
-## 인벤토리 직렬화 (추후 구현)
+## 인벤토리 직렬화. InventoryManager에 위임한다.
 func _serialize_inventory() -> Dictionary:
-	# Phase 9에서 인벤토리 매니저 구현 후 연동
-	return {}
+	var im: Node = get_node("/root/InventoryManager")
+	return im.serialize()
 
 ## 게임 저장
 ## @param slot 슬롯 번호 (0=자동, 1~3=수동)
@@ -101,6 +103,21 @@ func _apply_save_data(data: Dictionary) -> void:
 	gm.current_scene_id = data.get("current_scene_id", "")
 	gm.current_battle_id = data.get("current_battle_id", "")
 	gm.flags = data.get("flags", {})
+
+	# 파티 데이터 복원
+	var pm: Node = get_node("/root/PartyManager")
+	var party_data: Array = data.get("party", [])
+	if party_data.size() > 0:
+		pm.deserialize(party_data)
+		var active_data: Array = data.get("active_party", [])
+		if active_data.size() > 0:
+			pm.deserialize_active(active_data)
+
+	# 인벤토리 데이터 복원
+	var im: Node = get_node("/root/InventoryManager")
+	var inv_data: Dictionary = data.get("inventory", {})
+	if not inv_data.is_empty():
+		im.deserialize(inv_data)
 
 ## 자동 세이브
 func auto_save() -> bool:

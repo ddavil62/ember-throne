@@ -1,0 +1,31 @@
+; poison_cloud.tres
+; 독 안개 — 느리게 확산하는 독성 안개 입자
+; 용도: 독 스킬, 독 장판 이펙트, 중독 상태 표시
+; GPUParticles2D 설정: amount=25, lifetime=2.0, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_poison_cloud"]
+offsets = PackedFloat32Array(0.0, 0.4, 1.0)
+colors = PackedColorArray(0.3, 0.8, 0.1, 1.0, 0.2, 0.6, 0.1, 0.6, 0.1, 0.3, 0.05, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_poison_cloud"]
+gradient = SubResource("Gradient_poison_cloud")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 8.0
+direction = Vector3(0, -1, 0)
+spread = 120.0
+initial_velocity_min = 8.0
+initial_velocity_max = 25.0
+gravity = Vector3(0, -3, 0)
+angular_velocity_min = -20.0
+angular_velocity_max = 20.0
+damping_min = 5.0
+damping_max = 15.0
+scale_min = 1.0
+scale_max = 2.5
+color = Color(0.3, 0.7, 0.15, 1.0)
+color_ramp = SubResource("GradientTexture1D_poison_cloud")
+explosiveness = 1.0

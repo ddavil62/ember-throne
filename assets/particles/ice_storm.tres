@@ -1,0 +1,29 @@
+; ice_storm.tres
+; 빙결 폭풍 — 무작위 방향으로 확산하는 얼음 입자
+; 용도: 빙결 범위 스킬, 눈보라 이펙트
+; GPUParticles2D 설정: amount=40, lifetime=1.2, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_ice_storm"]
+offsets = PackedFloat32Array(0.0, 0.5, 1.0)
+colors = PackedColorArray(1.0, 1.0, 1.0, 1.0, 0.6, 0.9, 1.0, 0.7, 0.0, 0.8, 1.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ice_storm"]
+gradient = SubResource("Gradient_ice_storm")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 10, 0)
+angular_velocity_min = -120.0
+angular_velocity_max = 120.0
+scale_min = 0.3
+scale_max = 1.0
+color = Color(0.8, 0.95, 1.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_ice_storm")
+explosiveness = 1.0

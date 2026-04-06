@@ -1,0 +1,29 @@
+; resurrect.tres
+; 부활 빛 — 아래에서 위로 밝게 폭발하는 부활 이펙트
+; 용도: 부활 스킬, 전투 복귀 연출
+; GPUParticles2D 설정: amount=40, lifetime=1.0, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_resurrect"]
+offsets = PackedFloat32Array(0.0, 0.3, 0.7, 1.0)
+colors = PackedColorArray(1.0, 1.0, 1.0, 1.0, 1.0, 0.95, 0.6, 1.0, 1.0, 0.85, 0.3, 0.6, 1.0, 0.8, 0.2, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_resurrect"]
+gradient = SubResource("Gradient_resurrect")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, -1, 0)
+spread = 60.0
+initial_velocity_min = 60.0
+initial_velocity_max = 160.0
+gravity = Vector3(0, -20, 0)
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+scale_min = 0.4
+scale_max = 1.5
+color = Color(1.0, 0.95, 0.7, 1.0)
+color_ramp = SubResource("GradientTexture1D_resurrect")
+explosiveness = 1.0

@@ -1,0 +1,29 @@
+; wind_blade.tres
+; 바람 칼날 — 한 방향으로 빠르게 이동하는 바람 입자
+; 용도: 풍계 근접/원거리 스킬, 칼바람 이펙트
+; GPUParticles2D 설정: amount=15, lifetime=0.3, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_wind_blade"]
+offsets = PackedFloat32Array(0.0, 0.5, 1.0)
+colors = PackedColorArray(0.6, 1.0, 0.6, 1.0, 0.8, 1.0, 0.8, 0.7, 1.0, 1.0, 1.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wind_blade"]
+gradient = SubResource("Gradient_wind_blade")
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(2, 6, 0)
+direction = Vector3(1, 0, 0)
+spread = 15.0
+initial_velocity_min = 200.0
+initial_velocity_max = 350.0
+gravity = Vector3(0, 0, 0)
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_min = 0.3
+scale_max = 0.8
+color = Color(0.7, 1.0, 0.7, 1.0)
+color_ramp = SubResource("GradientTexture1D_wind_blade")
+explosiveness = 1.0

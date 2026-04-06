@@ -1,0 +1,29 @@
+; arrow_rain.tres
+; 화살비 — 위에서 아래로 대각선 낙하하는 화살 입자
+; 용도: 궁수 범위 스킬, 화살 소나기 이펙트
+; GPUParticles2D 설정: amount=50, lifetime=0.5, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_arrow_rain"]
+offsets = PackedFloat32Array(0.0, 0.6, 1.0)
+colors = PackedColorArray(0.45, 0.3, 0.15, 1.0, 0.55, 0.45, 0.35, 0.8, 0.5, 0.5, 0.5, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_arrow_rain"]
+gradient = SubResource("Gradient_arrow_rain")
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(40, 2, 0)
+direction = Vector3(0.3, 1, 0)
+spread = 15.0
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 100, 0)
+angular_velocity_min = -5.0
+angular_velocity_max = 5.0
+scale_min = 0.3
+scale_max = 0.7
+color = Color(0.5, 0.35, 0.2, 1.0)
+color_ramp = SubResource("GradientTexture1D_arrow_rain")
+explosiveness = 1.0

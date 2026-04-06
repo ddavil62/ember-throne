@@ -1,0 +1,29 @@
+; fire_column.tres
+; 수직 화염 기둥 — 아래에서 위로 직선 방출되는 화염 기둥
+; 용도: 화염 기둥 스킬, 지면 화염 장판 이펙트
+; GPUParticles2D 설정: amount=50, lifetime=1.0, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_fire_column"]
+offsets = PackedFloat32Array(0.0, 0.5, 1.0)
+colors = PackedColorArray(1.0, 0.65, 0.0, 1.0, 1.0, 0.2, 0.0, 0.8, 0.35, 0.0, 0.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fire_column"]
+gradient = SubResource("Gradient_fire_column")
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(8, 2, 0)
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 100.0
+initial_velocity_max = 180.0
+gravity = Vector3(0, -30, 0)
+angular_velocity_min = -45.0
+angular_velocity_max = 45.0
+scale_min = 0.4
+scale_max = 1.2
+color = Color(1.0, 0.55, 0.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_fire_column")
+explosiveness = 1.0

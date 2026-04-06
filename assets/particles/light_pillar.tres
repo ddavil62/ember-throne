@@ -1,0 +1,29 @@
+; light_pillar.tres
+; 빛 기둥 — 아래에서 위로 직선 상승하는 신성한 빛 기둥
+; 용도: 신성 스킬 시전, 축복 이펙트, 정화 스킬
+; GPUParticles2D 설정: amount=35, lifetime=1.0, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_light_pillar"]
+offsets = PackedFloat32Array(0.0, 0.4, 1.0)
+colors = PackedColorArray(1.0, 1.0, 1.0, 1.0, 1.0, 0.9, 0.5, 0.8, 1.0, 0.85, 0.3, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_light_pillar"]
+gradient = SubResource("Gradient_light_pillar")
+
+[resource]
+emission_shape = 3
+emission_box_extents = Vector3(6, 2, 0)
+direction = Vector3(0, -1, 0)
+spread = 8.0
+initial_velocity_min = 80.0
+initial_velocity_max = 140.0
+gravity = Vector3(0, -10, 0)
+angular_velocity_min = -20.0
+angular_velocity_max = 20.0
+scale_min = 0.5
+scale_max = 1.3
+color = Color(1.0, 0.95, 0.8, 1.0)
+color_ramp = SubResource("GradientTexture1D_light_pillar")
+explosiveness = 1.0

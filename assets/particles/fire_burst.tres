@@ -1,0 +1,29 @@
+; fire_burst.tres
+; 폭발형 화염 — 중심에서 방사상으로 확산하는 화염 파티클
+; 용도: 근접/원거리 화염 스킬 적중 시 폭발 이펙트
+; GPUParticles2D 설정: amount=30, lifetime=0.5, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_fire_burst"]
+offsets = PackedFloat32Array(0.0, 0.4, 1.0)
+colors = PackedColorArray(1.0, 0.65, 0.0, 1.0, 1.0, 0.3, 0.0, 0.8, 0.6, 0.0, 0.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fire_burst"]
+gradient = SubResource("Gradient_fire_burst")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 80.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, -20, 0)
+angular_velocity_min = -90.0
+angular_velocity_max = 90.0
+scale_min = 0.6
+scale_max = 1.4
+color = Color(1.0, 0.5, 0.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_fire_burst")
+explosiveness = 1.0

@@ -1,0 +1,30 @@
+; smoke_bomb.tres
+; 연막 — 빠르게 확산 후 서서히 소멸하는 연막 입자
+; 용도: 도적 연막 스킬, 회피 이펙트, 은신 시전
+; GPUParticles2D 설정: amount=35, lifetime=1.5, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_smoke_bomb"]
+offsets = PackedFloat32Array(0.0, 0.3, 1.0)
+colors = PackedColorArray(0.5, 0.5, 0.5, 1.0, 0.65, 0.65, 0.65, 0.7, 0.8, 0.8, 0.8, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_smoke_bomb"]
+gradient = SubResource("Gradient_smoke_bomb")
+
+[resource]
+emission_shape = 0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 60.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, -8, 0)
+damping_min = 40.0
+damping_max = 70.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+scale_min = 1.0
+scale_max = 2.5
+color = Color(0.55, 0.55, 0.55, 1.0)
+color_ramp = SubResource("GradientTexture1D_smoke_bomb")
+explosiveness = 1.0

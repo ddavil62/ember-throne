@@ -1,0 +1,28 @@
+; thunder_flash.tres
+; 번개 섬광 — 순간적으로 밝은 점이 확산하는 번개 이펙트
+; 용도: 번개 스킬 적중, 전기 충격 이펙트
+; GPUParticles2D 설정: amount=20, lifetime=0.2, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_thunder_flash"]
+offsets = PackedFloat32Array(0.0, 0.3, 1.0)
+colors = PackedColorArray(1.0, 1.0, 0.4, 1.0, 1.0, 1.0, 0.8, 0.9, 1.0, 1.0, 1.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_thunder_flash"]
+gradient = SubResource("Gradient_thunder_flash")
+
+[resource]
+emission_shape = 0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 150.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+scale_min = 0.2
+scale_max = 1.0
+color = Color(1.0, 1.0, 0.5, 1.0)
+color_ramp = SubResource("GradientTexture1D_thunder_flash")
+explosiveness = 1.0

@@ -1,0 +1,31 @@
+; song_note.tres
+; 음표 부유 — 느리게 상승하며 좌우로 흔들리는 음표 입자 (루핑)
+; 용도: 바드 스킬 시전 중, 노래 버프 지속 이펙트
+; GPUParticles2D 설정: amount=10, lifetime=1.5, one_shot=false (루핑)
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_song_note"]
+offsets = PackedFloat32Array(0.0, 0.5, 1.0)
+colors = PackedColorArray(0.7, 0.5, 1.0, 1.0, 1.0, 0.6, 0.8, 0.7, 1.0, 0.7, 0.85, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_song_note"]
+gradient = SubResource("Gradient_song_note")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector3(0, -1, 0)
+spread = 30.0
+initial_velocity_min = 8.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, -3, 0)
+angular_velocity_min = -45.0
+angular_velocity_max = 45.0
+orbit_velocity_min = 0.2
+orbit_velocity_max = 0.5
+scale_min = 0.3
+scale_max = 0.7
+color = Color(0.75, 0.55, 1.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_song_note")
+explosiveness = 0.0

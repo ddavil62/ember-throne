@@ -1,0 +1,31 @@
+; fire_wave.tres
+; 원형 확산 화염파 — 중심에서 외곽으로 원형으로 퍼지는 화염
+; 용도: 범위 화염 스킬, 화염 충격파 이펙트
+; GPUParticles2D 설정: amount=40, lifetime=1.5, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_fire_wave"]
+offsets = PackedFloat32Array(0.0, 0.6, 1.0)
+colors = PackedColorArray(1.0, 0.4, 0.0, 1.0, 0.9, 0.2, 0.0, 0.6, 0.5, 0.1, 0.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fire_wave"]
+gradient = SubResource("Gradient_fire_wave")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 3.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+gravity = Vector3(0, 0, 0)
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+damping_min = 20.0
+damping_max = 40.0
+scale_min = 0.8
+scale_max = 1.8
+color = Color(1.0, 0.35, 0.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_fire_wave")
+explosiveness = 1.0

@@ -1,0 +1,33 @@
+; arcane_storm.tres
+; 복합 원소 폭풍 — 무작위 방향으로 다색 원소 입자가 확산하는 폭풍
+; 용도: 아케인 마법사 궁극기, 복합 원소 스킬, 대형 마법 이펙트
+; GPUParticles2D 설정: amount=60, lifetime=2.0, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_arcane_storm"]
+offsets = PackedFloat32Array(0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
+colors = PackedColorArray(0.0, 0.9, 1.0, 1.0, 0.6, 0.2, 1.0, 1.0, 0.2, 0.9, 0.3, 1.0, 0.0, 0.9, 1.0, 0.8, 0.6, 0.2, 1.0, 0.5, 0.2, 0.9, 0.3, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_arcane_storm"]
+gradient = SubResource("Gradient_arcane_storm")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+orbit_velocity_min = 0.3
+orbit_velocity_max = 0.8
+damping_min = 10.0
+damping_max = 30.0
+scale_min = 0.3
+scale_max = 1.2
+color = Color(0.5, 0.6, 1.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_arcane_storm")
+explosiveness = 1.0

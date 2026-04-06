@@ -1,0 +1,28 @@
+; ice_shatter.tres
+; 빙결 파편 — 중심에서 폭발적으로 흩어지는 얼음 파편
+; 용도: 빙결 적중, 얼음 깨짐 이펙트
+; GPUParticles2D 설정: amount=25, lifetime=0.8, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_ice_shatter"]
+offsets = PackedFloat32Array(0.0, 0.4, 1.0)
+colors = PackedColorArray(0.7, 0.95, 1.0, 1.0, 1.0, 1.0, 1.0, 0.8, 1.0, 1.0, 1.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ice_shatter"]
+gradient = SubResource("Gradient_ice_shatter")
+
+[resource]
+emission_shape = 0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 80, 0)
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_min = 0.4
+scale_max = 1.2
+color = Color(0.75, 0.95, 1.0, 1.0)
+color_ramp = SubResource("GradientTexture1D_ice_shatter")
+explosiveness = 1.0

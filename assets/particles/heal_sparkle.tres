@@ -1,0 +1,29 @@
+; heal_sparkle.tres
+; 치유 반짝임 — 대상 주변에서 부유하며 반짝이는 치유 입자
+; 용도: 힐 스킬, 회복 이펙트, HP 회복 연출
+; GPUParticles2D 설정: amount=20, lifetime=0.5, one_shot=true
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_heal_sparkle"]
+offsets = PackedFloat32Array(0.0, 0.5, 1.0)
+colors = PackedColorArray(0.3, 1.0, 0.3, 1.0, 0.6, 1.0, 0.6, 0.8, 1.0, 1.0, 1.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_heal_sparkle"]
+gradient = SubResource("Gradient_heal_sparkle")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 12.0
+direction = Vector3(0, -1, 0)
+spread = 45.0
+initial_velocity_min = 15.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, -15, 0)
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+scale_min = 0.2
+scale_max = 0.7
+color = Color(0.5, 1.0, 0.5, 1.0)
+color_ramp = SubResource("GradientTexture1D_heal_sparkle")
+explosiveness = 1.0

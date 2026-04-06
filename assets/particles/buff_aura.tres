@@ -1,0 +1,29 @@
+; buff_aura.tres
+; 버프 오라 — 대상 주변에서 천천히 상승하는 버프 입자 (루핑)
+; 용도: 공격력/방어력 버프 상태 표시, 강화 지속 이펙트
+; GPUParticles2D 설정: amount=15, lifetime=1.0, one_shot=false (루핑)
+
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3]
+
+[sub_resource type="Gradient" id="Gradient_buff_aura"]
+offsets = PackedFloat32Array(0.0, 0.6, 1.0)
+colors = PackedColorArray(1.0, 0.85, 0.3, 1.0, 1.0, 0.95, 0.6, 0.6, 1.0, 1.0, 1.0, 0.0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_buff_aura"]
+gradient = SubResource("Gradient_buff_aura")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 14.0
+direction = Vector3(0, -1, 0)
+spread = 20.0
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, -5, 0)
+angular_velocity_min = -15.0
+angular_velocity_max = 15.0
+scale_min = 0.2
+scale_max = 0.6
+color = Color(1.0, 0.85, 0.3, 1.0)
+color_ramp = SubResource("GradientTexture1D_buff_aura")
+explosiveness = 0.0

@@ -7,7 +7,7 @@ script = ExtResource("1_script")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
-anchor_mode = 0
+anchor_mode = 1
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -10

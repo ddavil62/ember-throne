@@ -1,0 +1,49 @@
+{
+  "battle_id": "battle_27",
+  "name_ko": "유랑 전투 7: 재의 바다 변경",
+  "name_en": "Wandering Battle 7: Ash Sea Border",
+  "act": 3,
+  "scene_id": null,
+  "map_size": {"width": 15, "height": 12},
+  "map_type": "small",
+  "battle_type": "rout",
+  "difficulty_rating": 8,
+  "is_optional": true,
+  "deploy_count": 8,
+  "deploy_zones": [[1, 9], [2, 9], [3, 9], [4, 9], [1, 10], [2, 10], [3, 10], [4, 10]],
+  "victory_conditions": [
+    {"type": "rout", "description_ko": "모든 적 섬멸"}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "ash_beast_medium", "level": 16, "position": [8, 2], "ai_override": null},
+    {"enemy_id": "ash_beast_medium", "level": 16, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "ash_beast_medium", "level": 16, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "ash_beast_large", "level": 17, "position": [10, 1], "ai_override": null},
+    {"enemy_id": "ash_beast_large", "level": 17, "position": [13, 3], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 17, "position": [9, 3], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 17, "position": [12, 5], "ai_override": null},
+    {"enemy_id": "ash_spirit", "level": 17, "position": [7, 4], "ai_override": null},
+    {"enemy_id": "ash_spore", "level": 16, "position": [5, 2], "ai_override": "summoner"},
+    {"enemy_id": "ash_spore", "level": 16, "position": [14, 3], "ai_override": "summoner"}
+  ],
+  "terrain_layout": "ash_sea_border",
+  "tileset_id": "ashland",
+  "bgm": "battle_ash",
+  "rewards": {
+    "gold": 500,
+    "items": ["ward_shard_x3", "ash_essence_x1"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": null,
+    "on_victory": null
+  },
+  "special_rules": [
+    {"type": "repeatable", "description_ko": "반복 가능"},
+    {"type": "terrain_damage", "description_ko": "재의 땅 HP 감소. 결계석 2개 활용"},
+    {"type": "summon_mechanic", "unit_id": "ash_spore", "summons": "ash_maggot", "description_ko": "재의 포자 2체가 매 턴 재의 구더기 소환"}
+  ]
+}

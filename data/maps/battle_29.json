@@ -1,0 +1,58 @@
+{
+  "battle_id": "battle_29",
+  "name_ko": "왕도 성문 공성전",
+  "name_en": "Capital Gate Siege",
+  "act": 4,
+  "scene_id": "4-1",
+  "map_size": {"width": 25, "height": 20},
+  "map_type": "large",
+  "battle_type": "boss",
+  "difficulty_rating": 9,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[8, 17], [9, 17], [10, 17], [11, 17], [8, 18], [9, 18], [10, 18], [11, 18]],
+  "victory_conditions": [
+    {"type": "destroy_objective", "description_ko": "성문(HP 3000) 파괴", "target": "castle_gate", "target_hp": 3000}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "gate_warden", "level": 22, "position": [12, 4], "ai_override": "miniboss"},
+    {"enemy_id": "wall_archer", "level": 21, "position": [2, 1], "ai_override": "stationary"},
+    {"enemy_id": "wall_archer", "level": 21, "position": [8, 1], "ai_override": "stationary"},
+    {"enemy_id": "wall_archer", "level": 21, "position": [16, 1], "ai_override": "stationary"},
+    {"enemy_id": "wall_archer", "level": 21, "position": [22, 1], "ai_override": "stationary"},
+    {"enemy_id": "morgan_elite_knight", "level": 21, "position": [9, 6], "ai_override": null},
+    {"enemy_id": "morgan_elite_knight", "level": 21, "position": [11, 7], "ai_override": null},
+    {"enemy_id": "morgan_elite_knight", "level": 21, "position": [13, 6], "ai_override": null},
+    {"enemy_id": "morgan_elite_knight", "level": 21, "position": [15, 7], "ai_override": null},
+    {"enemy_id": "morgan_elite_mage", "level": 22, "position": [10, 5], "ai_override": null},
+    {"enemy_id": "morgan_elite_mage", "level": 22, "position": [14, 5], "ai_override": null},
+    {"enemy_id": "morgan_elite_mage", "level": 22, "position": [12, 8], "ai_override": null},
+    {"enemy_id": "gate_guard", "level": 21, "position": [10, 4], "ai_override": null},
+    {"enemy_id": "gate_guard", "level": 21, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "gate_guard", "level": 21, "position": [13, 4], "ai_override": null},
+    {"enemy_id": "gate_guard", "level": 21, "position": [14, 4], "ai_override": null},
+    {"enemy_id": "gate_guard", "level": 21, "position": [12, 6], "ai_override": null}
+  ],
+  "destructible_objects": [
+    {"object_id": "castle_gate", "position": [11, 4], "size": {"width": 4, "height": 2}, "hp": 3000, "description_ko": "성문 (HP 3000)"}
+  ],
+  "terrain_layout": "ascalon_gate",
+  "tileset_id": "ascalon",
+  "bgm": "battle_epic",
+  "rewards": {
+    "gold": 650,
+    "items": ["kingdom_knight_sword"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "4-1b_battle_start",
+    "on_victory": "4-1b_battle_end"
+  },
+  "special_rules": [
+    {"type": "siege", "target": "castle_gate", "hp": 3000, "description_ko": "성문(HP 3000) 파괴 목표"},
+    {"type": "wall_units", "description_ko": "성벽 위 궁수는 직접 접근 불가, 원거리로만 처리"}
+  ]
+}

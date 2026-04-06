@@ -1,0 +1,188 @@
+[
+  {
+    "pair": ["kael", "seria"],
+    "name_ko": "꺼지지 않는 약속",
+    "name_en": "Unquenchable Promise",
+    "type": "romantic",
+    "max_level": 3,
+    "effects": {
+      "lv1": {"both": {"atk_percent": 3, "def_percent": 3}},
+      "lv2": {"both": {"atk_percent": 7, "def_percent": 7, "crit_rate": 5}},
+      "lv3": {"both": {"atk_percent": 10, "def_percent": 10, "crit_rate": 10}}
+    },
+    "lv2_trigger": {"scene": "2-7", "event": "harden_karen_night"},
+    "lv3_trigger": {"scene": "3-7", "event": "seria_confession", "manual_condition": "adjacent_battle_count_5"},
+    "lore_ko": "1막에서 만나 여정을 함께하며 사랑이 깊어진다"
+  },
+  {
+    "pair": ["rinen", "nael"],
+    "name_ko": "빛과 재의 사이",
+    "name_en": "Between Light and Ash",
+    "type": "romantic",
+    "max_level": 3,
+    "effects": {
+      "lv1": {"both": {"matk_percent": 3, "mdef_percent": 3}},
+      "lv2": {"both": {"matk_percent": 7, "mdef_percent": 7, "hp_regen_percent": 3}},
+      "lv3": {"both": {"matk_percent": 10, "mdef_percent": 10, "hp_regen_percent": 5}}
+    },
+    "lv2_trigger": {"scene": "2-5", "event": "rinen_nightmare_comfort"},
+    "lv3_trigger": {"scene": "3-15", "event": "last_night", "manual_condition": "adjacent_battle_count_5"},
+    "lore_ko": "실바렌에서 시작된 사랑, 리넨의 기억 여정을 함께"
+  },
+  {
+    "pair": ["voldt", "eris"],
+    "name_ko": "무너지지 않는 방패",
+    "name_en": "Unbreakable Shield",
+    "type": "spouse",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"voldt": {"def_percent": 5}},
+      "lv2": {"voldt": {"def_percent": 15}}
+    },
+    "lv2_trigger": {"scene": "3-3", "event": "voldt_hostage_confession"},
+    "lv3_trigger": null,
+    "note": "에리스 사망 후 Lv2 효과가 '에리스의 방패' 패시브로 전환",
+    "lore_ko": "인질로 잡힌 아내를 위한 의지"
+  },
+  {
+    "pair": ["kael", "roc"],
+    "name_ko": "전우의 활과 검",
+    "name_en": "Bow and Sword of Brothers",
+    "type": "comrade",
+    "max_level": 3,
+    "effects": {
+      "lv1": {"both": {"hit_percent": 5, "evade_percent": 3}},
+      "lv2": {"both": {"hit_percent": 10, "evade_percent": 7}},
+      "lv3": {"both": {"hit_percent": 15, "evade_percent": 10}}
+    },
+    "lv2_trigger": {"scene": "2-4", "event": "silvaren_defense_aftermath"},
+    "lv3_trigger": {"scene": "3-11", "event": "silvaren_reclaim_pina_site", "manual_condition": "adjacent_battle_count_5"},
+    "lore_ko": "서로의 상실을 이해하는 전우. 실바렌에서의 공동 전선"
+  },
+  {
+    "pair": ["seria", "elmira"],
+    "name_ko": "이단과 정통",
+    "name_en": "Heresy and Orthodoxy",
+    "type": "mentor",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"heal_effect_percent": 10}},
+      "lv2": {"both": {"heal_effect_percent": 20}}
+    },
+    "lv2_trigger": {"scene": "4-6", "event": "elmira_reunion_reconciliation"},
+    "lv3_trigger": null,
+    "lore_ko": "이단 선고의 배경, 재회와 화해, 함께하는 의식"
+  },
+  {
+    "pair": ["grid", "roc"],
+    "name_ko": "성격 차이의 신뢰",
+    "name_en": "Trust Beyond Differences",
+    "type": "rival_friend",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"spd_percent": 5}},
+      "lv2": {"both": {"spd_percent": 15}}
+    },
+    "lv2_trigger": {"scene": "2-7", "event": "harben_conversation"},
+    "lv3_trigger": null,
+    "lore_ko": "성격은 다르지만 통하는 두 사람. 벨마르~실바렌 여정의 동료"
+  },
+  {
+    "pair": ["drana", "seria"],
+    "name_ko": "학문과 신앙",
+    "name_en": "Knowledge and Faith",
+    "type": "academic",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"matk_percent": 5}},
+      "lv2": {"both": {"matk_percent": 10}}
+    },
+    "lv2_trigger": {"scene": "2-9", "event": "crowfel_campfire_truth"},
+    "lv3_trigger": null,
+    "lore_ko": "마법과 신앙이라는 다른 길을 걷지만 지식을 나누는 동료"
+  },
+  {
+    "pair": ["kael", "hazel"],
+    "name_ko": "거울의 칼날",
+    "name_en": "Mirror's Edge",
+    "type": "mirror",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"crit_rate": 5}},
+      "lv2": {"both": {"crit_rate": 15}}
+    },
+    "lv2_trigger": {"scene": "3-12", "event": "crowfel_defection_decision"},
+    "lv3_trigger": null,
+    "lore_ko": "명령을 따른 자 vs 명령을 거부한 자 -- 거울 같은 두 군인"
+  },
+  {
+    "pair": ["irene", "voldt"],
+    "name_ko": "상처의 공명",
+    "name_en": "Resonance of Scars",
+    "type": "comrade",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"def_percent": 5}},
+      "lv2": {"both": {"def_percent": 10}}
+    },
+    "lv2_trigger": {"scene": "4-3", "event": "eris_death_irene_beside_voldt"},
+    "lv3_trigger": null,
+    "lore_ko": "모르간에게 가족을 잃은 공통의 상처. 에필로그에서 고아원을 함께 운영"
+  },
+  {
+    "pair": ["rinen", "drana"],
+    "name_ko": "결계의 비밀",
+    "name_en": "Secrets of the Barrier",
+    "type": "academic",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"matk_percent": 3, "mdef_percent": 3}},
+      "lv2": {"both": {"matk_percent": 7, "mdef_percent": 7}}
+    },
+    "lv2_trigger": {"scene": "3-5", "event": "drana_diagnoses_rinen"},
+    "lv3_trigger": null,
+    "lore_ko": "드라나의 결계석 지식이 리넨의 정체 해명에 기여"
+  },
+  {
+    "pair": ["grid", "irene"],
+    "name_ko": "뒷세계의 네트워크",
+    "name_en": "Underground Network",
+    "type": "underworld",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"hit_percent": 5}},
+      "lv2": {"both": {"hit_percent": 10, "spd_percent": 5}}
+    },
+    "lv2_trigger": {"scene": "3-7", "event": "ascalon_escape_joint_retreat"},
+    "lv3_trigger": null,
+    "lore_ko": "밀수업자와 지하 조직 수장. 뒷세계의 정보 네트워크를 공유"
+  },
+  {
+    "pair": ["nael", "roc"],
+    "name_ko": "소꿉친구의 맹세",
+    "name_en": "Childhood Promise",
+    "type": "childhood",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"both": {"evade_percent": 5}},
+      "lv2": {"both": {"evade_percent": 10, "heal_effect_percent": 10}}
+    },
+    "lv2_trigger": {"scene": "2-4", "event": "pina_event_nael_holds_roc"},
+    "lv3_trigger": null,
+    "lore_ko": "실바렌의 소꿉친구. 피나를 함께 기억하는 사이"
+  },
+  {
+    "pair": ["kael", "rinen"],
+    "name_ko": "왕의 부탁",
+    "name_en": "The King's Request",
+    "type": "guardian",
+    "max_level": 2,
+    "effects": {
+      "lv1": {"kael": {"def_percent": 5}},
+      "lv2": {"kael": {"def_percent": 10}, "rinen": {"matk_percent": 10}}
+    },
+    "lv2_trigger": {"scene": "3-7", "event": "caldric_entrust"},
+    "lv3_trigger": null,
+    "lore_ko": "칼드릭의 부탁 -- '이 아이를 부탁하오'"
+  }
+]

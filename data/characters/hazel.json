@@ -1,0 +1,46 @@
+{
+  "id": "hazel",
+  "name_ko": "헤이즐",
+  "name_en": "Hazel",
+  "class_ko": "이반 장군",
+  "class_en": "Defected General",
+  "class_change_ko": "자유군 원수",
+  "class_change_en": "Liberator Marshal",
+  "class_change_scene": "3-12",
+  "weapon_types": ["greatsword"],
+  "armor_types": ["heavy", "light"],
+  "join_scene": "3-12",
+  "join_level": 18,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 28, "mp": 7, "atk": 11, "def": 8, "matk": 2, "mdef": 4, "spd": 5, "mov": 4
+  },
+  "growth": {
+    "hp": 2.8, "mp": 0.5, "atk": 1.0, "def": 0.6, "matk": 0.1, "mdef": 0.3, "spd": 0.3, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 109, "mp": 22, "atk": 40, "def": 25, "matk": 5, "mdef": 13, "spd": 14, "mov": 4
+  },
+  "class_change_bonus": {
+    "hp": 5, "mp": 2, "atk": 5, "def": 3, "matk": 0, "mdef": 1, "spd": 1, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 114, "mp": 24, "atk": 45, "def": 28, "matk": 5, "mdef": 14, "spd": 15, "mov": 4
+  },
+  "skills": ["cleave", "command", "intimidate", "heavy_strike"],
+  "post_class_skills": ["all_out_attack", "greatsword_whirlwind", "judgement_strike", "liberation_banner"],
+  "passives": [
+    {
+      "id": "generals_dignity",
+      "name_ko": "장군의 위엄",
+      "description_ko": "인접 아군 ATK/DEF +10% (상시, \"지휘\" 스킬과 중첩)",
+      "unlock": "initial"
+    },
+    {
+      "id": "blade_of_conscience",
+      "name_ko": "양심의 칼",
+      "description_ko": "카엘 인접 시 쌍방 치명타율 +15%",
+      "unlock": "class_change"
+    }
+  ]
+}

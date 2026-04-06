@@ -1,0 +1,71 @@
+{
+  "id": "ash_evil_eye",
+  "name_ko": "재의 마안",
+  "name_en": "Ash Evil Eye",
+  "faction": "ash_beast",
+  "type": "magic",
+  "role": "ranged_magic",
+  "weapon_type": "magic",
+  "armor_type": "none",
+  "ai_pattern": "ambush",
+  "range_min": 2,
+  "range_max": 4,
+  "base_stats": {
+    "hp": 24, "mp": 20, "atk": 4, "def": 3, "matk": 16, "mdef": 12, "spd": 5, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.2, "atk": 0.4, "def": 0.3, "matk": 1.5, "mdef": 0.9, "spd": 0.3
+  },
+  "act_stats": {
+    "act2": { "hp": 24, "atk": 4, "def": 3, "matk": 16, "mdef": 12, "spd": 5 },
+    "act3": { "hp": 36, "atk": 6, "def": 5, "matk": 24, "mdef": 18, "spd": 8 },
+    "act4": { "hp": 50, "atk": 8, "def": 6, "matk": 34, "mdef": 25, "spd": 11 }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [
+    {
+      "id": "ash_gaze",
+      "name_ko": "재화 시선",
+      "name_en": "Ashen Gaze",
+      "type": "magic",
+      "description_ko": "재화(灰化) 상태이상 부여 공격. 3턴간 HP 10% 감소 + 전 스탯 -10%",
+      "damage_type": "magic",
+      "multiplier": 1.2,
+      "range": 4,
+      "aoe": false,
+      "cooldown": 0,
+      "mp_cost": 6,
+      "status_effect": {
+        "type": "ash_corruption",
+        "chance": 0.6,
+        "duration": 3,
+        "effects": {
+          "hp_percent_per_turn": -0.10,
+          "all_stats_modifier": -0.10
+        },
+        "cure": "adjacent_to_barrier_stone"
+      }
+    }
+  ],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "glass_cannon",
+      "description_ko": "물리 내구 극히 낮아 근접 진입 시 쉽게 처리 가능"
+    }
+  ],
+  "drops": [
+    { "item_id": "ash_crystal", "name_ko": "재의 수정", "rate": 0.30, "type": "material" },
+    { "item_id": "barrier_fragment", "name_ko": "결계의 조각", "rate": 0.15 }
+  ],
+  "gold_reward": { "min": 30, "max": 50 },
+  "exp_reward": 22,
+  "sprite_id": "ash_evil_eye",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "마법 사거리 4의 원거리 마법형. 재화(灰化) 상태이상 부여가 핵심. 결계석 인접 시 즉시 해제. 물리 내구 극히 낮음."
+}

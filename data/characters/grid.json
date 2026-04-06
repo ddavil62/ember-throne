@@ -1,0 +1,46 @@
+{
+  "id": "grid",
+  "name_ko": "그리드",
+  "name_en": "Grid",
+  "class_ko": "밀수업자",
+  "class_en": "Smuggler",
+  "class_change_ko": "폭풍해적",
+  "class_change_en": "Storm Corsair",
+  "class_change_scene": "3-12",
+  "weapon_types": ["dagger", "curved_sword_post_class"],
+  "armor_types": ["light", "cloak"],
+  "join_scene": "1-5",
+  "join_level": 2,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 20, "mp": 6, "atk": 8, "def": 4, "matk": 2, "mdef": 3, "spd": 10, "mov": 5
+  },
+  "growth": {
+    "hp": 1.8, "mp": 0.4, "atk": 0.8, "def": 0.3, "matk": 0.1, "mdef": 0.2, "spd": 0.6, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 72, "mp": 18, "atk": 31, "def": 13, "matk": 5, "mdef": 9, "spd": 27, "mov": 5
+  },
+  "class_change_bonus": {
+    "hp": 3, "mp": 2, "atk": 5, "def": 2, "matk": 0, "mdef": 1, "spd": 2, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 75, "mp": 20, "atk": 36, "def": 15, "matk": 5, "mdef": 10, "spd": 29, "mov": 5
+  },
+  "skills": ["dirty_blow", "pistol_shot", "plunder", "smoke_bomb"],
+  "post_class_skills": ["pirates_roar", "chain_strike", "storm_charge", "fathers_oath"],
+  "passives": [
+    {
+      "id": "smugglers_eye",
+      "name_ko": "밀수업자의 눈",
+      "description_ko": "맵 보물상자 위치 자동 표시. 골드 획득 +15%",
+      "unlock": "initial"
+    },
+    {
+      "id": "marinas_promise",
+      "name_ko": "마리나의 약속",
+      "description_ko": "HP 20% 이하 시 1회 치명타 피해 무효화 (전투당 1회)",
+      "unlock": "class_change"
+    }
+  ]
+}

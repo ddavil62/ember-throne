@@ -1,0 +1,152 @@
+{
+  "id": "lucid",
+  "name_ko": "루시드",
+  "name_en": "Lucid",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "sword",
+  "armor_type": "light",
+  "ai_pattern": "boss",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 180, "mp": 30, "atk": 22, "def": 14, "matk": 12, "mdef": 14, "spd": 14, "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 0, "atk": 0, "def": 0, "matk": 0, "mdef": 0, "spd": 0
+  },
+  "skills": [
+    {
+      "id": "assassination_blade",
+      "name_ko": "암살검",
+      "name_en": "Assassination Blade",
+      "type": "physical",
+      "description_ko": "단일 대상 물리 공격. 배율 1.5x. 후방 공격 시 치명타 확정",
+      "damage_type": "physical",
+      "multiplier": 1.5,
+      "range": 1,
+      "aoe": false,
+      "cooldown": 0,
+      "mp_cost": 0,
+      "special": "guaranteed_crit_from_behind",
+      "phase": 1
+    },
+    {
+      "id": "afterimage",
+      "name_ko": "잔상",
+      "name_en": "Afterimage",
+      "type": "buff",
+      "description_ko": "다음 1회 공격 회피 (확정 회피). 3턴 쿨다운",
+      "cooldown": 3,
+      "mp_cost": 5,
+      "effect": "guaranteed_dodge_once",
+      "phase": 1
+    },
+    {
+      "id": "barrier_blade",
+      "name_ko": "결계의 칼날",
+      "name_en": "Barrier Blade",
+      "type": "magic",
+      "description_ko": "사거리 3의 마법 공격. MATK 기반 배율 1.3x. 직선 관통형",
+      "damage_type": "magic",
+      "multiplier": 1.3,
+      "range": 3,
+      "aoe": false,
+      "aoe_type": "line_piercing",
+      "cooldown": 0,
+      "mp_cost": 8,
+      "phase": 2
+    },
+    {
+      "id": "clone",
+      "name_ko": "분신",
+      "name_en": "Clone",
+      "type": "summon",
+      "description_ko": "분신 3체를 맵에 소환. 분신은 HP 40, ATK 12의 약화 복제품. 진짜를 공격해야 데미지. 분신은 1회 피격 시 소멸",
+      "cooldown": 5,
+      "mp_cost": 15,
+      "summon_count": 3,
+      "clone_stats": { "hp": 40, "atk": 12 },
+      "clone_on_hit": "destroy",
+      "counter_ability": "이렌의 '정보망' 패시브로 진짜 식별 가능",
+      "phase": 2
+    }
+  ],
+  "passives": [
+    {
+      "id": "cold_judgment",
+      "name_ko": "냉혹한 판단",
+      "name_en": "Cold Judgment",
+      "description_ko": "HP가 가장 낮은 아군 유닛을 우선 타겟",
+      "description_en": "Prioritizes targeting ally unit with lowest HP",
+      "phase": 1
+    },
+    {
+      "id": "evasion_specialist",
+      "name_ko": "회피 특화",
+      "name_en": "Evasion Specialist",
+      "description_ko": "기본 회피율 +20%. 숲/폐허 지형에서 추가 +15%",
+      "description_en": "Base evasion +20%. Additional +15% in forest/ruins terrain",
+      "phase": 1
+    },
+    {
+      "id": "mana_release",
+      "name_ko": "마력 해방",
+      "name_en": "Mana Release",
+      "description_ko": "MOV +1, 마법 사거리 활성화",
+      "description_en": "MOV +1, magic range activated",
+      "phase": 2
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "conditional_battle",
+      "description_ko": "대화 중 '루시드를 신뢰할 수 없다' 선택 시 전투 발생. '자수를 받아들인다' 선택 시 전투 없이 합류"
+    }
+  ],
+  "appearance_battle": "4-2",
+  "drops": [
+    { "item_id": "secret_police_dagger", "name_ko": "비밀경찰 단검", "rate": 1.0, "rarity": "rare", "stats": { "atk": 12, "spd": 3 } },
+    { "item_id": "panacea", "name_ko": "만병통치약", "rate": 1.0, "quantity": 2 }
+  ],
+  "gold_reward": { "min": 0, "max": 0 },
+  "exp_reward": 120,
+  "sprite_id": "lucid",
+  "is_boss": true,
+  "boss_phases": [
+    {
+      "phase": 1,
+      "name_ko": "검사 루시드",
+      "name_en": "Swordsman Lucid",
+      "stats": {
+        "hp": 180, "atk": 22, "def": 14, "matk": 12, "mdef": 14, "spd": 14, "mov": 4
+      },
+      "range_min": 1,
+      "range_max": 1,
+      "ai_pattern": "ambush",
+      "ai_detail": "사냥형 + 회피 우선 (숲/폐허 지형 적극 활용)",
+      "skills": ["assassination_blade", "afterimage"],
+      "passives": ["cold_judgment", "evasion_specialist"],
+      "transition": "HP가 0이 되면 대사 이벤트 후 2페이즈 전환",
+      "strategy_ko": "높은 회피를 명중률 높은 유닛(헤이즐, 로크)으로 극복하거나 범위 공격(회피 불가)으로 대처"
+    },
+    {
+      "phase": 2,
+      "name_ko": "각성 루시드",
+      "name_en": "Awakened Lucid",
+      "stats": {
+        "hp": 150, "atk": 18, "def": 10, "matk": 22, "mdef": 16, "spd": 12, "mov": 5
+      },
+      "range_min": 1,
+      "range_max": 3,
+      "ai_pattern": "ambush",
+      "ai_detail": "저격형 (힐러 우선) + 분신 소환 시 분산 배치",
+      "skills": ["barrier_blade", "clone"],
+      "passives": ["mana_release"],
+      "transition": null,
+      "strategy_ko": "분신을 빠르게 소거(범위 공격 유효)하고 진짜를 집중 공격. 마법 공격이 추가되므로 MDEF 낮은 유닛 보호"
+    }
+  ],
+  "notes_ko": "비밀경찰 수장. 4막 2전(전투 30). 선택지에 따라 전투 또는 자수 합류. 2페이즈 보스."
+}

@@ -1,0 +1,52 @@
+{
+  "battle_id": "battle_20",
+  "name_ko": "왕도 탈출전",
+  "name_en": "Escape from the Capital",
+  "act": 3,
+  "scene_id": "3-7",
+  "map_size": {"width": 20, "height": 16},
+  "map_type": "medium",
+  "battle_type": "escape",
+  "difficulty_rating": 8,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[16, 6], [17, 6], [18, 6], [16, 7], [17, 7], [18, 7], [16, 8], [17, 8]],
+  "victory_conditions": [
+    {"type": "escape", "description_ko": "아군 전원이 서쪽 탈출 지점 도달", "target_unit": "all_party", "target_position": [0, 8], "turn_limit": null}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "secret_police_agent", "level": 14, "position": [10, 3], "ai_override": null},
+    {"enemy_id": "secret_police_agent", "level": 14, "position": [8, 6], "ai_override": null},
+    {"enemy_id": "secret_police_agent", "level": 14, "position": [12, 8], "ai_override": null},
+    {"enemy_id": "secret_police_agent", "level": 14, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "royal_guard_knight", "level": 14, "position": [9, 4], "ai_override": null},
+    {"enemy_id": "royal_guard_knight", "level": 14, "position": [11, 7], "ai_override": null},
+    {"enemy_id": "royal_guard_knight", "level": 14, "position": [7, 9], "ai_override": null},
+    {"enemy_id": "royal_guard_mage", "level": 14, "position": [10, 5], "ai_override": null},
+    {"enemy_id": "royal_guard_mage", "level": 14, "position": [8, 10], "ai_override": null},
+    {"enemy_id": "royal_guard_captain", "level": 15, "position": [9, 2], "ai_override": "miniboss"},
+    {"enemy_id": "conscript_footsoldier", "level": 13, "position": [13, 10], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 13, "position": [14, 12], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 13, "position": [5, 11], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 13, "position": [3, 8], "ai_override": null}
+  ],
+  "terrain_layout": "ascalon_outer",
+  "tileset_id": "ascalon",
+  "bgm": "battle_chase",
+  "rewards": {
+    "gold": 500,
+    "items": [],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "3-7_battle_start",
+    "on_turn_5": "3-7_kael_injury_event",
+    "on_victory": "3-7_battle_end"
+  },
+  "special_rules": [
+    {"type": "story_event", "turn": 5, "description_ko": "카엘이 5턴째에 중상을 입는 이벤트 자동 발생"}
+  ]
+}

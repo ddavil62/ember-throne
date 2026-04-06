@@ -1,0 +1,50 @@
+{
+  "battle_id": "battle_31",
+  "name_ko": "에리스 구출전",
+  "name_en": "Eris Rescue Mission",
+  "act": 4,
+  "scene_id": "4-3",
+  "map_size": {"width": 20, "height": 16},
+  "map_type": "medium",
+  "battle_type": "rout",
+  "difficulty_rating": 8,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[2, 12], [3, 12], [4, 12], [5, 12], [2, 13], [3, 13], [4, 13], [5, 13]],
+  "victory_conditions": [
+    {"type": "rout", "description_ko": "모든 적 섬멸"}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "morgan_experiment", "level": 22, "position": [8, 3], "ai_override": null},
+    {"enemy_id": "morgan_experiment", "level": 22, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "morgan_experiment", "level": 22, "position": [15, 5], "ai_override": null},
+    {"enemy_id": "morgan_experiment", "level": 22, "position": [6, 6], "ai_override": null},
+    {"enemy_id": "mutant_guard", "level": 23, "position": [10, 2], "ai_override": null},
+    {"enemy_id": "mutant_guard", "level": 23, "position": [14, 3], "ai_override": null},
+    {"enemy_id": "mutant_guard", "level": 23, "position": [9, 5], "ai_override": null},
+    {"enemy_id": "ash_experiment_large", "level": 24, "position": [11, 1], "ai_override": null},
+    {"enemy_id": "ash_experiment_large", "level": 24, "position": [13, 6], "ai_override": null},
+    {"enemy_id": "morgan_aide_mage", "level": 23, "position": [7, 4], "ai_override": null},
+    {"enemy_id": "morgan_aide_mage", "level": 23, "position": [16, 4], "ai_override": null},
+    {"enemy_id": "jailer_chief", "level": 24, "position": [12, 2], "ai_override": "miniboss"}
+  ],
+  "terrain_layout": "ascalon_dungeon",
+  "tileset_id": "ascalon_dungeon",
+  "bgm": "battle_dungeon",
+  "rewards": {
+    "gold": 500,
+    "items": ["eris_hairpin"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "4-3_battle_start",
+    "on_victory": "4-3_eris_event"
+  },
+  "special_rules": [
+    {"type": "class_change_trigger", "unit_id": "voldt", "description_ko": "에리스 이벤트 후 볼드 전직 트리거"},
+    {"type": "ash_status", "description_ko": "모르간 실험체는 재화 상태이상 부여. 결계의 조각 필수"}
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "irene",
+  "name_ko": "이렌",
+  "name_en": "Irene",
+  "class_ko": "재투성이 수장",
+  "class_en": "Ashen Leader",
+  "class_change_ko": "그림자 지휘관",
+  "class_change_en": "Shadow Commander",
+  "class_change_scene": "4-2",
+  "weapon_types": ["dagger", "throwing_weapon"],
+  "armor_types": ["light", "cloak"],
+  "join_scene": "3-1",
+  "join_level": 12,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 21, "mp": 10, "atk": 7, "def": 5, "matk": 4, "mdef": 5, "spd": 9, "mov": 4
+  },
+  "growth": {
+    "hp": 1.8, "mp": 0.7, "atk": 0.6, "def": 0.4, "matk": 0.3, "mdef": 0.4, "spd": 0.5, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 73, "mp": 30, "atk": 24, "def": 17, "matk": 13, "mdef": 17, "spd": 24, "mov": 4
+  },
+  "class_change_bonus": {
+    "hp": 3, "mp": 3, "atk": 3, "def": 2, "matk": 1, "mdef": 2, "spd": 2, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 76, "mp": 33, "atk": 27, "def": 19, "matk": 14, "mdef": 19, "spd": 26, "mov": 4
+  },
+  "skills": ["weak_point", "throwing_blade", "poison_needle", "chain_trap"],
+  "post_class_skills": ["underground_support", "exploit_weakness", "shadow_assault", "supreme_command"],
+  "passives": [
+    {
+      "id": "intelligence_network",
+      "name_ko": "정보망",
+      "description_ko": "맵 시작 시 적 배치 및 이동 범위 공개",
+      "unlock": "initial"
+    },
+    {
+      "id": "end_of_revenge",
+      "name_ko": "복수의 끝",
+      "description_ko": "보스 대상 전 데미지 +20%",
+      "unlock": "class_change"
+    }
+  ]
+}

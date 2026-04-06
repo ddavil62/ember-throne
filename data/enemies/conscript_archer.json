@@ -1,0 +1,56 @@
+{
+  "id": "conscript_archer",
+  "name_ko": "징발대 궁수",
+  "name_en": "Conscript Archer",
+  "faction": "kingdom",
+  "type": "ranged",
+  "role": "ranged_dps",
+  "weapon_type": "bow",
+  "armor_type": "light",
+  "ai_pattern": "ambush",
+  "range_min": 2,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 26, "mp": 0, "atk": 11, "def": 5, "matk": 3, "mdef": 4, "spd": 7, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.3, "atk": 1.0, "def": 0.4, "matk": 0.4, "mdef": 0.3, "spd": 0.4
+  },
+  "act_stats": {
+    "act1": { "hp": 26, "atk": 11, "def": 5, "matk": 3, "mdef": 4, "spd": 7 },
+    "act2": { "hp": 38, "atk": 17, "def": 7, "matk": 5, "mdef": 6, "spd": 10 },
+    "act3": { "hp": 53, "atk": 23, "def": 10, "matk": 7, "mdef": 8, "spd": 13 },
+    "act4": { "hp": 71, "atk": 31, "def": 13, "matk": 10, "mdef": 11, "spd": 15 }
+  },
+  "scaling_multiplier": {
+    "hp": 0.68, "atk": 1.1, "def": 0.42, "matk": 1.0, "mdef": 0.67, "spd": 1.4
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "min_range_restriction",
+      "name_ko": "최소 사거리 제약",
+      "name_en": "Minimum Range Restriction",
+      "description_ko": "인접 공격 불가 (최소 사거리 2)",
+      "description_en": "Cannot attack adjacent targets (minimum range 2)"
+    },
+    {
+      "id": "forest_range_penalty",
+      "name_ko": "숲 사거리 감소",
+      "name_en": "Forest Range Penalty",
+      "description_ko": "숲 지형에서 사거리 -1",
+      "description_en": "Range -1 in forest terrain"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    { "item_id": "mana_potion", "name_ko": "마력의 물약", "rate": 0.20 },
+    { "item_id": "longbow", "name_ko": "장궁", "rate": 0.05 }
+  ],
+  "gold_reward": { "min": 25, "max": 45 },
+  "exp_reward": 16,
+  "sprite_id": "conscript_archer",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "원거리 물리 딜러. 최소 사거리 2 제약으로 근접당하면 무력. 숲 지형에서 사거리 감소."
+}

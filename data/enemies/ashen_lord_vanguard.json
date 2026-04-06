@@ -1,0 +1,142 @@
+{
+  "id": "ashen_lord_vanguard",
+  "name_ko": "재의 군주 수하",
+  "name_en": "Ashen Lord Vanguard",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "fist",
+  "armor_type": "natural",
+  "ai_pattern": "boss",
+  "range_min": 1,
+  "range_max": 1,
+  "tile_size": "2x2",
+  "base_stats": {
+    "hp": 280, "mp": 20, "atk": 24, "def": 16, "matk": 18, "mdef": 14, "spd": 6, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 0, "atk": 0, "def": 0, "matk": 0, "mdef": 0, "spd": 0
+  },
+  "skills": [
+    {
+      "id": "ash_strike",
+      "name_ko": "재의 일격",
+      "name_en": "Ash Strike",
+      "type": "physical",
+      "description_ko": "근접 단일 대상. 배율 1.8x 물리. 재화(灰化) 상태이상 50% 확률 부여",
+      "damage_type": "physical",
+      "multiplier": 1.8,
+      "range": 1,
+      "aoe": false,
+      "cooldown": 0,
+      "mp_cost": 0,
+      "status_effect": {
+        "type": "ash_corruption",
+        "chance": 0.50,
+        "duration": 3,
+        "effects": {
+          "hp_percent_per_turn": -0.10,
+          "all_stats_modifier": -0.10
+        }
+      }
+    },
+    {
+      "id": "ash_roar",
+      "name_ko": "재의 포효",
+      "name_en": "Ash Roar",
+      "type": "magic",
+      "description_ko": "자신 중심 3칸 범위 내 전 유닛에게 MATK 배율 1.2x 마법 데미지 + 마비 상태이상(2턴) 30% 확률",
+      "damage_type": "magic",
+      "multiplier": 1.2,
+      "range": 0,
+      "aoe": true,
+      "aoe_radius": 3,
+      "aoe_center": "self",
+      "cooldown": 3,
+      "mp_cost": 8,
+      "status_effect": {
+        "type": "paralysis",
+        "chance": 0.30,
+        "duration": 2
+      }
+    },
+    {
+      "id": "ash_summon",
+      "name_ko": "재의 소환",
+      "name_en": "Ash Summon",
+      "type": "summon",
+      "description_ko": "재의 늑대 2체 또는 재의 불꽃 1체를 맵에 소환",
+      "cooldown": 5,
+      "mp_cost": 10,
+      "summon_options": [
+        { "unit_id": "ash_wolf", "count": 2 },
+        { "unit_id": "ash_flame", "count": 1 }
+      ]
+    }
+  ],
+  "passives": [
+    {
+      "id": "large_unit",
+      "name_ko": "대형 유닛",
+      "name_en": "Large Unit",
+      "description_ko": "2x2 타일 점유. 이동 시 2x2 범위 전체가 이동",
+      "description_en": "Occupies 2x2 tiles. Entire 2x2 area moves together"
+    },
+    {
+      "id": "ash_spread",
+      "name_ko": "재의 확산",
+      "name_en": "Ash Spread",
+      "description_ko": "매 턴 종료 시 자신의 2x2 점유 타일 인접 타일 중 2칸을 '재의 땅'으로 변환. 리넨 인접(2x2 외곽 기준) 시 해당 턴 발동하지 않음",
+      "description_en": "Converts 2 adjacent tiles to Ash Ground each turn end. Suppressed when Linen is adjacent",
+      "terrain_effect": {
+        "type": "ash_ground",
+        "tiles_per_turn": 2,
+        "effects": {
+          "hp_percent_per_turn": -0.05,
+          "def_modifier": -0.10
+        },
+        "immunity": "adjacent_to_barrier_stone",
+        "suppression": "linen_adjacent"
+      }
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "barrier_stones",
+      "description_ko": "맵에 결계석 타일 3개 배치. 결계석 인접 타일은 재의 땅으로 변환되지 않음"
+    },
+    {
+      "id": "linen_interaction",
+      "description_ko": "리넨이 인접(2x2 외곽 기준) 시 재의 확산 해당 턴 억제"
+    }
+  ],
+  "appearance_battle": "3-13",
+  "drops": [
+    { "item_id": "ash_crystal_key", "name_ko": "재의 결정", "rate": 1.0, "type": "key_item", "auto_obtain": true },
+    { "item_id": "ash_giant_hide", "name_ko": "재의 거인 가죽", "rate": 1.0, "rarity": "rare", "type": "material" },
+    { "item_id": "panacea", "name_ko": "만병통치약", "rate": 1.0, "quantity": 1 }
+  ],
+  "gold_reward": { "min": 0, "max": 0 },
+  "exp_reward": 150,
+  "sprite_id": "ashen_lord_vanguard",
+  "is_boss": true,
+  "boss_phases": [
+    {
+      "phase": 1,
+      "name_ko": "재의 군주 수하",
+      "name_en": "Ashen Lord Vanguard",
+      "stats": {
+        "hp": 280, "atk": 24, "def": 16, "matk": 18, "mdef": 14, "spd": 6, "mov": 3
+      },
+      "range_min": 1,
+      "range_max": 1,
+      "ai_pattern": "defensive",
+      "ai_detail": "수호형 (맵 중앙) + 재의 확산 극대화 위치 선정",
+      "skills": ["ash_strike", "ash_roar", "ash_summon"],
+      "passives": ["large_unit", "ash_spread"],
+      "transition": null,
+      "strategy_ko": "재의 확산 관리가 핵심. 장기전을 피하고 결계석을 거점으로 단기 결전. 리넨을 전방에 배치하여 확산 억제"
+    }
+  ],
+  "notes_ko": "재의 군주의 선봉장. 3막 13전(전투 26). 재의 바다 입구에서 출현. 2x2 대형 유닛. 재의 확산 관리가 핵심 메카닉."
+}

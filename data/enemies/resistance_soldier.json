@@ -1,0 +1,38 @@
+{
+  "id": "resistance_soldier",
+  "name_ko": "저항군 병사",
+  "name_en": "Resistance Soldier",
+  "faction": "resistance",
+  "type": "melee",
+  "role": "special_event",
+  "weapon_type": "sword",
+  "armor_type": "light",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 30, "mp": 0, "atk": 10, "def": 8, "matk": 2, "mdef": 5, "spd": 6, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.5, "atk": 0.8, "def": 0.6, "matk": 0.2, "mdef": 0.3, "spd": 0.3
+  },
+  "act_stats": {
+    "act2": { "hp": 30, "atk": 10, "def": 8, "matk": 2, "mdef": 5, "spd": 6 }
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "event_battle",
+      "description_ko": "전투 2-1 전용 특수 유닛. 3턴 후 이벤트 중단되며 처치 불필요"
+    }
+  ],
+  "appearance_battle": "2-1",
+  "drops": [],
+  "gold_reward": { "min": 0, "max": 0 },
+  "exp_reward": 0,
+  "sprite_id": "resistance_soldier",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "저항군 오해 전투(2-1) 전용 특수 유닛. 8체 등장. 3턴 후 이벤트로 전투 중단되며 처치 불필요."
+}

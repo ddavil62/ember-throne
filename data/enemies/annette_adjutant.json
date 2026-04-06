@@ -1,0 +1,51 @@
+{
+  "id": "annette_adjutant",
+  "name_ko": "아네트 부관",
+  "name_en": "Annette Adjutant",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "dps_buffer",
+  "weapon_type": "sword",
+  "armor_type": "medium",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 36, "mp": 5, "atk": 14, "def": 10, "matk": 5, "mdef": 7, "spd": 8, "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 3.2, "atk": 1.3, "def": 0.7, "matk": 0.4, "mdef": 0.5, "spd": 0.5
+  },
+  "act_stats": {
+    "act2": { "hp": 36, "atk": 14, "def": 10, "matk": 5, "mdef": 7, "spd": 8 },
+    "act3": { "hp": 50, "atk": 19, "def": 14, "matk": 7, "mdef": 10, "spd": 11 }
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "ally_atk_buff",
+      "name_ko": "부관의 고무",
+      "name_en": "Adjutant's Inspiration",
+      "description_ko": "인접 아군(적 측) ATK +10%",
+      "description_en": "Adjacent allied (enemy side) units gain ATK +10%"
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "story_unit",
+      "description_ko": "스토리 유닛. 전투 중 처치해도 스토리에서 사망하지 않음 (전투불능 -> 퇴각 연출)"
+    },
+    {
+      "id": "faction_switch",
+      "description_ko": "3-12 이후 아군으로 전환"
+    }
+  ],
+  "appearance_range": "2-4 ~ 3-12",
+  "drops": [],
+  "gold_reward": { "min": 0, "max": 0 },
+  "exp_reward": 0,
+  "sprite_id": "annette_adjutant",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "헤이즐 장군의 부관. 2막 실바렌 전투(2-4)와 3막 초반까지 적으로 등장. 3-12 이후 아군으로 전환. 드롭 없음 (스토리 유닛)."
+}

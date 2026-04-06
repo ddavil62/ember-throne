@@ -1,0 +1,63 @@
+{
+  "id": "ash_giant",
+  "name_ko": "재의 거인",
+  "name_en": "Ash Giant",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "tank_dps",
+  "weapon_type": "fist",
+  "armor_type": "natural",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "tile_size": "2x1",
+  "base_stats": {
+    "hp": 65, "mp": 0, "atk": 18, "def": 14, "matk": 0, "mdef": 3, "spd": 3, "mov": 2
+  },
+  "scaling_per_level": {
+    "hp": 5.8, "atk": 1.6, "def": 1.2, "matk": 0, "mdef": 0.2, "spd": 0.2
+  },
+  "act_stats": {
+    "act2": { "hp": 65, "atk": 18, "def": 14, "matk": 0, "mdef": 3, "spd": 3 },
+    "act3": { "hp": 98, "atk": 27, "def": 21, "matk": 0, "mdef": 5, "spd": 5 },
+    "act4": { "hp": 135, "atk": 38, "def": 29, "matk": 0, "mdef": 6, "spd": 6 }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "large_unit",
+      "name_ko": "대형 유닛",
+      "name_en": "Large Unit",
+      "description_ko": "2x1 타일 점유",
+      "description_en": "Occupies 2x1 tiles"
+    },
+    {
+      "id": "cleave",
+      "name_ko": "광역 근접",
+      "name_en": "Cleave",
+      "description_ko": "공격 시 인접 1칸 추가 범위 (근접 범위 공격)",
+      "description_en": "Attacks hit 1 additional adjacent tile (melee AoE)"
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "slow_powerhouse",
+      "description_ko": "매우 느리지만 압도적 화력. 유인 후 원거리 소모전이 유효"
+    }
+  ],
+  "drops": [
+    { "item_id": "ash_giant_hide", "name_ko": "재의 거인 가죽", "rate": 0.30, "type": "material" },
+    { "item_id": "herb_superior", "name_ko": "상급 약초", "rate": 0.20 }
+  ],
+  "gold_reward": { "min": 50, "max": 80 },
+  "exp_reward": 30,
+  "sprite_id": "ash_giant",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "2x1 타일 점유 대형 유닛. 압도적 HP(65)와 ATK(18). MOV 2로 매우 느림. 공격 시 인접 1칸 추가 범위."
+}

@@ -1,0 +1,58 @@
+{
+  "battle_id": "battle_32",
+  "name_ko": "모르간 사저 지하",
+  "name_en": "Morgan's Manor Underground",
+  "act": 4,
+  "scene_id": "4-4",
+  "map_size": {"width": 20, "height": 16},
+  "map_type": "medium",
+  "battle_type": "rout",
+  "difficulty_rating": 9,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[2, 12], [3, 12], [4, 12], [5, 12], [2, 13], [3, 13], [4, 13], [5, 13]],
+  "victory_conditions": [
+    {"type": "rout", "description_ko": "모든 적 섬멸 + 마법 장벽 2개 파괴"}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "ward_golem", "level": 24, "position": [9, 3], "ai_override": null},
+    {"enemy_id": "ward_golem", "level": 24, "position": [14, 4], "ai_override": null},
+    {"enemy_id": "morgan_guard_mage", "level": 24, "position": [7, 2], "ai_override": null},
+    {"enemy_id": "morgan_guard_mage", "level": 24, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "morgan_guard_mage", "level": 24, "position": [15, 3], "ai_override": null},
+    {"enemy_id": "morgan_guard_mage", "level": 24, "position": [8, 6], "ai_override": null},
+    {"enemy_id": "morgan_guard_knight", "level": 24, "position": [10, 2], "ai_override": null},
+    {"enemy_id": "morgan_guard_knight", "level": 24, "position": [13, 5], "ai_override": null},
+    {"enemy_id": "morgan_guard_knight", "level": 24, "position": [16, 4], "ai_override": null},
+    {"enemy_id": "mutant_experiment", "level": 23, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "mutant_experiment", "level": 23, "position": [12, 6], "ai_override": null},
+    {"enemy_id": "mutant_experiment", "level": 23, "position": [17, 5], "ai_override": null}
+  ],
+  "destructible_objects": [
+    {"object_id": "magic_barrier_1", "position": [10, 3], "hp": 500, "weakness": "matk", "description_ko": "마법 장벽 1 (MATK로만 파괴 가능)"},
+    {"object_id": "magic_barrier_2", "position": [14, 3], "hp": 500, "weakness": "matk", "description_ko": "마법 장벽 2 (MATK로만 파괴 가능)"}
+  ],
+  "npcs": [
+    {"unit_id": "rendor", "position": [12, 1], "is_enemy": false, "description_ko": "렌도르 NPC (적이 아님, 보스 근접 시 이벤트)"}
+  ],
+  "terrain_layout": "morgan_manor_basement",
+  "tileset_id": "ascalon_dungeon",
+  "bgm": "battle_dungeon",
+  "rewards": {
+    "gold": 600,
+    "items": ["rendors_staff"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "4-4_battle_start",
+    "on_victory": "4-4_rendor_event"
+  },
+  "special_rules": [
+    {"type": "magic_barrier", "count": 2, "description_ko": "마법 장벽 2개를 파괴해야 보스 방 진입 가능. MATK 기반 공격으로만 파괴"},
+    {"type": "class_change_trigger", "unit_id": "drana", "description_ko": "렌도르 이벤트 후 드라나 전직 트리거"},
+    {"type": "physical_resist", "unit_ids": ["ward_golem"], "description_ko": "결계석 골렘은 물리 내성이 높음. 마법으로 처리"}
+  ]
+}

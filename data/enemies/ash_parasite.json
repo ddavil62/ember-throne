@@ -1,0 +1,69 @@
+{
+  "id": "ash_parasite",
+  "name_ko": "재의 기생체",
+  "name_en": "Ash Parasite",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "special",
+  "weapon_type": "tendril",
+  "armor_type": "natural",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 2,
+  "base_stats": {
+    "hp": 30, "mp": 5, "atk": 8, "def": 8, "matk": 8, "mdef": 8, "spd": 6, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.8, "atk": 0.7, "def": 0.7, "matk": 0.7, "mdef": 0.7, "spd": 0.4
+  },
+  "act_stats": {
+    "act2": { "hp": 30, "atk": 8, "def": 8, "matk": 8, "mdef": 8, "spd": 6 },
+    "act3": { "hp": 45, "atk": 12, "def": 12, "matk": 12, "mdef": 12, "spd": 9 },
+    "act4": { "hp": 63, "atk": 17, "def": 17, "matk": 17, "mdef": 17, "spd": 13 }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "linen_weakness",
+      "name_ko": "시원화 반응",
+      "name_en": "Primal Fire Reaction",
+      "description_ko": "리넨 인접 시 전 스탯 -20%",
+      "description_en": "All stats -20% when adjacent to Linen"
+    },
+    {
+      "id": "barrier_decay",
+      "name_ko": "결계석 쇠퇴",
+      "name_en": "Barrier Stone Decay",
+      "description_ko": "결계석 타일 위에서 매 턴 HP 10% 감소",
+      "description_en": "Loses 10% HP per turn when on barrier stone tile"
+    },
+    {
+      "id": "death_terrain",
+      "name_ko": "재의 땅 생성",
+      "name_en": "Ash Ground Creation",
+      "description_ko": "처치 시 인접 2칸에 재의 땅 생성 (턴 시작 시 HP 5% 감소, DEF -10%)",
+      "description_en": "Creates Ash Ground on 2 adjacent tiles on death (HP -5% per turn, DEF -10%)"
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "death_ash_ground",
+      "description_ko": "처치 위치 선정이 중요. 인접 2칸에 재의 땅 지형 생성"
+    }
+  ],
+  "drops": [
+    { "item_id": "ash_core", "name_ko": "재의 핵", "rate": 0.20, "type": "material" },
+    { "item_id": "barrier_fragment", "name_ko": "결계의 조각", "rate": 0.20 }
+  ],
+  "gold_reward": { "min": 25, "max": 45 },
+  "exp_reward": 20,
+  "sprite_id": "ash_parasite",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "리넨의 시원화 불꽃에 반응하는 특수 유닛. 리넨 인접 시 전 스탯 -20%. 처치 시 재의 땅 생성에 주의."
+}

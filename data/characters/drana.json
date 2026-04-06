@@ -1,0 +1,46 @@
+{
+  "id": "drana",
+  "name_ko": "드라나",
+  "name_en": "Drana",
+  "class_ko": "학원 마법사",
+  "class_en": "Academy Mage",
+  "class_change_ko": "진리의 탐구자",
+  "class_change_en": "Arcane Seeker",
+  "class_change_scene": "4-4",
+  "weapon_types": ["staff"],
+  "armor_types": ["robe"],
+  "join_scene": "2-9",
+  "join_level": 9,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 18, "mp": 18, "atk": 4, "def": 3, "matk": 10, "mdef": 5, "spd": 5, "mov": 3
+  },
+  "growth": {
+    "hp": 1.5, "mp": 1.5, "atk": 0.3, "def": 0.2, "matk": 1.0, "mdef": 0.4, "spd": 0.3, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 62, "mp": 62, "atk": 13, "def": 9, "matk": 39, "mdef": 17, "spd": 14, "mov": 3
+  },
+  "class_change_bonus": {
+    "hp": 2, "mp": 5, "atk": 0, "def": 1, "matk": 5, "mdef": 2, "spd": 1, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 64, "mp": 67, "atk": 13, "def": 10, "matk": 44, "mdef": 19, "spd": 15, "mov": 3
+  },
+  "skills": ["ice_lance", "thunderbolt", "analyze", "wind_cutter"],
+  "post_class_skills": ["blizzard", "seal", "arcane_storm", "rendors_legacy"],
+  "passives": [
+    {
+      "id": "top_students_focus",
+      "name_ko": "수석의 집중",
+      "description_ko": "마법 공격 명중률 +10%",
+      "unlock": "initial"
+    },
+    {
+      "id": "rendors_legacy_passive",
+      "name_ko": "렌도르의 유산 (연속 시전)",
+      "description_ko": "마법 연속 사용 시 2회째 MP 소모 -50%",
+      "unlock": "class_change"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+[
+  {
+    "type": "plains",
+    "name_ko": "평지",
+    "name_en": "Plains",
+    "move_cost": 1,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": null,
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "forest",
+    "name_ko": "숲",
+    "name_en": "Forest",
+    "move_cost": 2,
+    "evade_bonus": 15,
+    "def_bonus": 5,
+    "special_effect": "bow_range_minus_1",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "mountain",
+    "name_ko": "산/바위",
+    "name_en": "Mountain",
+    "move_cost": 3,
+    "evade_bonus": 10,
+    "def_bonus": 10,
+    "special_effect": "heavy_unit_blocked",
+    "passable_heavy_armor": false,
+    "passable_mounted": false
+  },
+  {
+    "type": "shallow_water",
+    "name_ko": "물(얕은)",
+    "name_en": "Shallow Water",
+    "move_cost": 2,
+    "evade_bonus": -5,
+    "def_bonus": -5,
+    "special_effect": "magic_attack_plus_10",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "deep_water",
+    "name_ko": "물(깊은)",
+    "name_en": "Deep Water",
+    "move_cost": -1,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": "special_skill_only",
+    "passable_heavy_armor": false,
+    "passable_mounted": false
+  },
+  {
+    "type": "bridge",
+    "name_ko": "다리",
+    "name_en": "Bridge",
+    "move_cost": 1,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": "destructible",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "road",
+    "name_ko": "도로",
+    "name_en": "Road",
+    "move_cost": 1,
+    "evade_bonus": -5,
+    "def_bonus": 0,
+    "special_effect": null,
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "ruins",
+    "name_ko": "폐허",
+    "name_en": "Ruins",
+    "move_cost": 1,
+    "evade_bonus": 5,
+    "def_bonus": 0,
+    "special_effect": null,
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "sand",
+    "name_ko": "모래",
+    "name_en": "Sand",
+    "move_cost": 2,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": "mounted_mov_minus_1",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "lava",
+    "name_ko": "용암",
+    "name_en": "Lava",
+    "move_cost": -1,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": "impassable_burn_adjacent",
+    "passable_heavy_armor": false,
+    "passable_mounted": false
+  },
+  {
+    "type": "barrier_stone",
+    "name_ko": "결계석",
+    "name_en": "Barrier Stone",
+    "move_cost": 1,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": "adjacent_ally_hp_regen_5_percent",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "ashen_land",
+    "name_ko": "재의 땅",
+    "name_en": "Ashen Land",
+    "move_cost": 2,
+    "evade_bonus": 0,
+    "def_bonus": -10,
+    "special_effect": "turn_start_hp_minus_5_percent",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "wall",
+    "name_ko": "성벽/건물",
+    "name_en": "Wall",
+    "move_cost": -1,
+    "evade_bonus": 0,
+    "def_bonus": 0,
+    "special_effect": "destructible_building",
+    "passable_heavy_armor": false,
+    "passable_mounted": false
+  },
+  {
+    "type": "fortress",
+    "name_ko": "요새",
+    "name_en": "Fortress",
+    "move_cost": 1,
+    "evade_bonus": 10,
+    "def_bonus": 15,
+    "special_effect": null,
+    "passable_heavy_armor": true,
+    "passable_mounted": false
+  },
+  {
+    "type": "village",
+    "name_ko": "마을",
+    "name_en": "Village",
+    "move_cost": 1,
+    "evade_bonus": 5,
+    "def_bonus": 5,
+    "special_effect": "turn_start_hp_regen_3_percent",
+    "passable_heavy_armor": true,
+    "passable_mounted": true
+  },
+  {
+    "type": "throne",
+    "name_ko": "왕좌",
+    "name_en": "Throne",
+    "move_cost": 1,
+    "evade_bonus": 15,
+    "def_bonus": 20,
+    "special_effect": "boss_stat_boost",
+    "passable_heavy_armor": true,
+    "passable_mounted": false
+  }
+]

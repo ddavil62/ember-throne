@@ -1,0 +1,49 @@
+{
+  "battle_id": "battle_19",
+  "name_ko": "볼드 구출전",
+  "name_en": "Voldt Rescue Operation",
+  "act": 3,
+  "scene_id": "3-3",
+  "map_size": {"width": 15, "height": 12},
+  "map_type": "small",
+  "battle_type": "escape",
+  "difficulty_rating": 7,
+  "is_optional": false,
+  "deploy_count": 7,
+  "deploy_zones": [[1, 9], [2, 9], [3, 9], [4, 9], [1, 10], [2, 10], [3, 10]],
+  "victory_conditions": [
+    {"type": "reach_position", "description_ko": "3턴 내 카엘이 볼드 구금 지점 도달", "target_unit": "kael", "target_position": [12, 1], "turn_limit": 3}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"},
+    {"type": "turn_limit_exceeded", "turn_limit": 3, "description_ko": "3턴 내 도달 실패"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "lucid_agent", "level": 13, "position": [8, 3], "ai_override": null},
+    {"enemy_id": "lucid_agent", "level": 13, "position": [10, 5], "ai_override": null},
+    {"enemy_id": "lucid_agent", "level": 13, "position": [6, 4], "ai_override": null},
+    {"enemy_id": "lucid_agent", "level": 13, "position": [13, 6], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 13, "position": [9, 2], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 13, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 13, "position": [7, 6], "ai_override": null},
+    {"enemy_id": "trap_specialist", "level": 13, "position": [10, 3], "ai_override": null},
+    {"enemy_id": "secret_police_captain", "level": 14, "position": [12, 2], "ai_override": "miniboss"},
+    {"enemy_id": "lucid", "level": 16, "position": [13, 1], "ai_override": "retreat"}
+  ],
+  "terrain_layout": "ascalon_prison",
+  "tileset_id": "ascalon",
+  "bgm": "battle_tension",
+  "rewards": {
+    "gold": 350,
+    "items": [],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "3-3_battle_start",
+    "on_victory": "3-3_battle_end"
+  },
+  "special_rules": [
+    {"type": "boss_retreat", "unit_id": "lucid", "description_ko": "루시드는 퇴각하며 직접 전투 불가"},
+    {"type": "trap_tiles", "description_ko": "함정 타일 존재 (이렌 패시브로 공개)"}
+  ]
+}

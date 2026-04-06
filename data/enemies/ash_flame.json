@@ -1,0 +1,70 @@
+{
+  "id": "ash_flame",
+  "name_ko": "재의 불꽃",
+  "name_en": "Ash Flame",
+  "faction": "ash_beast",
+  "type": "special",
+  "role": "suicide",
+  "weapon_type": "none",
+  "armor_type": "none",
+  "ai_pattern": "flee",
+  "range_min": 0,
+  "range_max": 0,
+  "base_stats": {
+    "hp": 18, "mp": 0, "atk": 0, "def": 2, "matk": 0, "mdef": 2, "spd": 8, "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 1.6, "atk": 0, "def": 0.2, "matk": 0, "mdef": 0.1, "spd": 0.5
+  },
+  "act_stats": {
+    "act2": { "hp": 18, "atk": 0, "def": 2, "matk": 0, "mdef": 2, "spd": 8 },
+    "act3": { "hp": 27, "atk": 0, "def": 3, "matk": 0, "mdef": 3, "spd": 12 },
+    "act4": { "hp": 38, "atk": 0, "def": 4, "matk": 0, "mdef": 4, "spd": 17 }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [
+    {
+      "id": "self_destruct",
+      "name_ko": "자폭",
+      "name_en": "Self-Destruct",
+      "type": "special",
+      "description_ko": "아군 유닛 인접 도달 시 자동 폭발. 인접 전 유닛(아군 포함)에게 HP 35% 고정 데미지 (방어 무시)",
+      "damage_type": "fixed",
+      "fixed_damage_percent": 0.35,
+      "range": 0,
+      "aoe": true,
+      "aoe_radius": 1,
+      "trigger": "adjacent_to_player_unit",
+      "ignores_defense": true,
+      "friendly_fire": true
+    }
+  ],
+  "passives": [
+    {
+      "id": "no_attack",
+      "name_ko": "공격 불가",
+      "name_en": "Cannot Attack",
+      "description_ko": "일반 공격 행동 없음. 자폭 전용 유닛",
+      "description_en": "No normal attack action. Suicide-only unit"
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "suicide_ai",
+      "description_ko": "가장 밀집된 아군 집단을 향해 돌진. 인접 시 자동 폭발. 원거리로 접근 전 처리 권장"
+    }
+  ],
+  "drops": [
+    { "item_id": "ash_ember", "name_ko": "재의 불씨", "rate": 0.40, "type": "material" }
+  ],
+  "gold_reward": { "min": 10, "max": 20 },
+  "exp_reward": 10,
+  "sprite_id": "ash_flame",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "자폭 특화 유닛. 공격 행동 없이 인접 시 자동 폭발. 인접 전 유닛에게 최대 HP 35% 고정 데미지. 원거리로 접근 전 처리."
+}

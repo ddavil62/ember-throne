@@ -1,0 +1,57 @@
+{
+  "battle_id": "battle_33",
+  "name_ko": "왕좌실 진격",
+  "name_en": "Advance to the Throne Room",
+  "act": 4,
+  "scene_id": "4-5",
+  "map_size": {"width": 25, "height": 20},
+  "map_type": "large",
+  "battle_type": "boss",
+  "difficulty_rating": 9,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[8, 16], [9, 16], [10, 16], [11, 16], [8, 17], [9, 17], [10, 17], [11, 17]],
+  "victory_conditions": [
+    {"type": "boss_kill", "description_ko": "모르간 측근 2체 격파", "target_units": ["morgan_aide_1", "morgan_aide_2"]}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "corrupted_morgan_guard", "level": 25, "position": [8, 5], "ai_override": null},
+    {"enemy_id": "corrupted_morgan_guard", "level": 25, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "corrupted_morgan_guard", "level": 25, "position": [16, 5], "ai_override": null},
+    {"enemy_id": "corrupted_morgan_guard", "level": 25, "position": [10, 7], "ai_override": null},
+    {"enemy_id": "corrupted_morgan_guard", "level": 25, "position": [14, 6], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 25, "position": [9, 3], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 25, "position": [13, 3], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 25, "position": [17, 4], "ai_override": null},
+    {"enemy_id": "ward_golem", "level": 25, "position": [7, 6], "ai_override": null},
+    {"enemy_id": "ward_golem", "level": 25, "position": [15, 7], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 25, "position": [11, 2], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 25, "position": [18, 5], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 25, "position": [6, 4], "ai_override": null},
+    {"enemy_id": "morgan_aide_1", "level": 27, "position": [10, 1], "ai_override": "miniboss"},
+    {"enemy_id": "morgan_aide_2", "level": 27, "position": [14, 1], "ai_override": "miniboss"}
+  ],
+  "npcs": [
+    {"unit_id": "caldric", "position": [12, 8], "is_enemy": false, "description_ko": "칼드릭 이벤트 NPC (칼드릭의 희생)"}
+  ],
+  "terrain_layout": "ascalon_throne_approach",
+  "tileset_id": "ascalon",
+  "bgm": "battle_epic",
+  "rewards": {
+    "gold": 700,
+    "items": ["sacred_elision"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "4-5_battle_start",
+    "on_turn_3": "4-5_caldric_sacrifice_event",
+    "on_victory": "4-5_elmira_joins"
+  },
+  "special_rules": [
+    {"type": "story_event", "description_ko": "칼드릭의 희생 이벤트. 엘미라 합류"},
+    {"type": "ally_join_post", "unit_id": "elmira", "description_ko": "전투 후 엘미라 합류"}
+  ]
+}

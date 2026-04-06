@@ -1,0 +1,50 @@
+{
+  "id": "ash_wolf",
+  "name_ko": "재의 늑대",
+  "name_en": "Ash Wolf",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "melee_rush",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 28, "mp": 0, "atk": 13, "def": 6, "matk": 0, "mdef": 4, "spd": 9, "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 2.5, "atk": 1.2, "def": 0.5, "matk": 0, "mdef": 0.3, "spd": 0.6
+  },
+  "act_stats": {
+    "act2": { "hp": 28, "atk": 13, "def": 6, "matk": 0, "mdef": 4, "spd": 9 },
+    "act3": { "hp": 42, "atk": 20, "def": 9, "matk": 0, "mdef": 6, "spd": 14 },
+    "act4": { "hp": 58, "atk": 27, "def": 13, "matk": 0, "mdef": 8, "spd": 19 }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "pack_attack",
+      "name_ko": "무리 공격",
+      "name_en": "Pack Attack",
+      "description_ko": "인접한 재의 늑대 1체당 ATK +10% (최대 +30%)",
+      "description_en": "ATK +10% per adjacent Ash Wolf (max +30%)"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    { "item_id": "ash_fang", "name_ko": "재의 이빨", "rate": 0.25, "type": "material" },
+    { "item_id": "herb", "name_ko": "약초", "rate": 0.20 }
+  ],
+  "gold_reward": { "min": 15, "max": 30 },
+  "exp_reward": 14,
+  "sprite_id": "ash_wolf",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "재의 짐승 기본 유닛. 무리 지어 돌격. 3체가 몰리면 ATK 30% 증가. 범위 공격으로 무리를 분산시키는 것이 핵심."
+}

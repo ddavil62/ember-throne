@@ -1,0 +1,50 @@
+{
+  "id": "conscript_footsoldier",
+  "name_ko": "징발대 보병",
+  "name_en": "Conscript Footsoldier",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "tank",
+  "weapon_type": "sword_shield",
+  "armor_type": "heavy",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 38, "mp": 0, "atk": 10, "def": 12, "matk": 3, "mdef": 6, "spd": 5, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 3.4, "atk": 0.9, "def": 0.9, "matk": 0.4, "mdef": 0.5, "spd": 0.3
+  },
+  "act_stats": {
+    "act1": { "hp": 38, "atk": 10, "def": 12, "matk": 3, "mdef": 6, "spd": 5 },
+    "act2": { "hp": 56, "atk": 15, "def": 17, "matk": 5, "mdef": 9, "spd": 7 },
+    "act3": { "hp": 78, "atk": 21, "def": 23, "matk": 7, "mdef": 12, "spd": 9 },
+    "act4": { "hp": 105, "atk": 28, "def": 30, "matk": 10, "mdef": 16, "spd": 11 }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0, "atk": 1.0, "def": 1.0, "matk": 1.0, "mdef": 1.0, "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "defend_bonus",
+      "name_ko": "방어 태세",
+      "name_en": "Defensive Stance",
+      "description_ko": "방어 행동 시 DEF +30%",
+      "description_en": "DEF +30% when using Defend action"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    { "item_id": "herb", "name_ko": "약초", "rate": 0.30 },
+    { "item_id": "rusty_longsword", "name_ko": "녹슨 장검", "rate": 0.05, "condition": "act1" },
+    { "item_id": "steel_sword", "name_ko": "강철검", "rate": 0.05, "condition": "act2+" }
+  ],
+  "gold_reward": { "min": 20, "max": 40 },
+  "exp_reward": 15,
+  "sprite_id": "conscript_footsoldier",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "왕국 정규군의 기본 전열 병사. 전열을 유지하며 보병-창병 조합의 전열 역할. 탱크를 우회하거나 무력화한 뒤 후방을 노리는 전술을 교육하는 역할."
+}

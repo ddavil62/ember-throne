@@ -1,0 +1,57 @@
+{
+  "id": "ash_eagle",
+  "name_ko": "재의 독수리",
+  "name_en": "Ash Eagle",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "flying_mobile",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "ambush",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 22, "mp": 0, "atk": 11, "def": 4, "matk": 0, "mdef": 6, "spd": 10, "mov": 5
+  },
+  "scaling_per_level": {
+    "hp": 2.0, "atk": 1.0, "def": 0.3, "matk": 0, "mdef": 0.4, "spd": 0.7
+  },
+  "act_stats": {
+    "act2": { "hp": 22, "atk": 11, "def": 4, "matk": 0, "mdef": 6, "spd": 10 },
+    "act3": { "hp": 33, "atk": 17, "def": 6, "matk": 0, "mdef": 9, "spd": 15 },
+    "act4": { "hp": 46, "atk": 23, "def": 8, "matk": 0, "mdef": 13, "spd": 21 }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "flying",
+      "name_ko": "비행",
+      "name_en": "Flying",
+      "description_ko": "모든 지형 이동 비용 1 (물/성벽 포함 통과)",
+      "description_en": "All terrain movement cost 1 (can traverse water/walls)"
+    },
+    {
+      "id": "bow_vulnerability",
+      "name_ko": "활 취약",
+      "name_en": "Bow Vulnerability",
+      "description_ko": "활 공격에 피해 +20%",
+      "description_en": "+20% damage received from bow attacks"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    { "item_id": "ash_feather", "name_ko": "재의 깃털", "rate": 0.25, "type": "material" },
+    { "item_id": "mana_potion", "name_ko": "마력의 물약", "rate": 0.15 }
+  ],
+  "gold_reward": { "min": 15, "max": 30 },
+  "exp_reward": 14,
+  "sprite_id": "ash_eagle",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "비행형 유닛. 모든 지형을 이동 비용 1로 통과. MOV 5로 후방 습격. 활 공격에 피해 +20% (로크가 천적)."
+}

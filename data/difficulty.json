@@ -1,0 +1,52 @@
+{
+  "normal": {
+    "enemy_hp_multiplier": 1.0,
+    "enemy_atk_multiplier": 1.0,
+    "enemy_def_multiplier": 1.0,
+    "enemy_spd_multiplier": 1.0,
+    "enemy_level_bonus": 0,
+    "enemy_stat_multiplier": 1.0,
+    "ai_target_healer_priority": false,
+    "ai_focus_fire": false,
+    "ai_flank_rear": false,
+    "ai_use_formations": false,
+    "ai_use_terrain": false,
+    "exp_multiplier": 1.0,
+    "gold_multiplier": 1.0,
+    "item_drop_rate": 1.0,
+    "phoenix_feather_purchasable": true,
+    "defeat_retry_prompt_threshold": null,
+    "ai_behavior": {
+      "target_selection": "nearest_low_hp",
+      "healer_ai": "heal_allies_priority",
+      "unit_cooperation": false,
+      "description_ko": "가장 가까운 적을 우선 공격. 체력 낮은 적 우선 (기본 어그로). 유닛 간 협동 없음"
+    }
+  },
+  "hard": {
+    "enemy_hp_multiplier": 1.3,
+    "enemy_atk_multiplier": 1.2,
+    "enemy_def_multiplier": 1.15,
+    "enemy_spd_multiplier": 1.1,
+    "enemy_level_bonus": 1,
+    "enemy_stat_multiplier": 1.2,
+    "ai_target_healer_priority": true,
+    "ai_focus_fire": true,
+    "ai_flank_rear": true,
+    "ai_use_formations": true,
+    "ai_use_terrain": true,
+    "exp_multiplier": 1.2,
+    "gold_multiplier": 1.0,
+    "item_drop_rate": 1.15,
+    "phoenix_feather_purchasable": false,
+    "defeat_retry_prompt_threshold": 3,
+    "ai_behavior": {
+      "target_selection": "threat_based",
+      "healer_ai": "safe_positioning",
+      "unit_cooperation": true,
+      "bypass_tank": true,
+      "terrain_camping": true,
+      "description_ko": "아군 힐러/마법사를 우선 노림 (위협도 기반). 집중 공격. 지형 활용. 탱커 우회 침투 시도"
+    }
+  }
+}

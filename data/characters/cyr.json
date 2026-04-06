@@ -1,0 +1,46 @@
+{
+  "id": "cyr",
+  "name_ko": "시르",
+  "name_en": "Cyr",
+  "class_ko": "재의 귀환자",
+  "class_en": "Ashen Returnee",
+  "class_change_ko": "회귀의 창기사",
+  "class_change_en": "Dusk Lancer",
+  "class_change_scene": "4-1",
+  "weapon_types": ["spear"],
+  "armor_types": ["light", "heavy_post_class"],
+  "join_scene": "3-14",
+  "join_level": 18,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 24, "mp": 9, "atk": 9, "def": 6, "matk": 5, "mdef": 6, "spd": 7, "mov": 4
+  },
+  "growth": {
+    "hp": 2.2, "mp": 0.6, "atk": 0.7, "def": 0.5, "matk": 0.4, "mdef": 0.4, "spd": 0.4, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 88, "mp": 26, "atk": 29, "def": 21, "matk": 17, "mdef": 18, "spd": 19, "mov": 4
+  },
+  "class_change_bonus": {
+    "hp": 4, "mp": 3, "atk": 4, "def": 3, "matk": 2, "mdef": 2, "spd": 1, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 92, "mp": 29, "atk": 33, "def": 24, "matk": 19, "mdef": 20, "spd": 20, "mov": 4
+  },
+  "skills": ["ashen_thrust", "ashification", "piercing_thrust", "ashen_barrier"],
+  "post_class_skills": ["returnees_oath", "ashen_storm", "century_memory", "cycle_spear"],
+  "passives": [
+    {
+      "id": "ashen_memory",
+      "name_ko": "재의 기억",
+      "description_ko": "통상 공격 시 20% 확률 재화 부여 1턴. 재화 적 공격 시 데미지 +10%",
+      "unlock": "initial"
+    },
+    {
+      "id": "flame_ash_resonance",
+      "name_ko": "불꽃과 재의 공명",
+      "description_ko": "리넨 인접 시 쌍방 전 스탯 +10%. 리넨의 화염 공격이 재화 적에게 추가 피해 +20%",
+      "unlock": "class_change"
+    }
+  ]
+}

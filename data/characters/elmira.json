@@ -1,0 +1,45 @@
+{
+  "id": "elmira",
+  "name_ko": "엘미라",
+  "name_en": "Elmira",
+  "class_ko": "시원화 대사제",
+  "class_en": "Primordial High Priestess",
+  "class_change_ko": null,
+  "class_change_en": null,
+  "class_change_scene": null,
+  "weapon_types": ["holy_staff"],
+  "armor_types": ["robe"],
+  "join_scene": "4-5",
+  "join_level": 25,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 22, "mp": 18, "atk": 4, "def": 5, "matk": 10, "mdef": 8, "spd": 6, "mov": 3
+  },
+  "growth": {
+    "hp": 1.8, "mp": 1.4, "atk": 0.3, "def": 0.3, "matk": 1.0, "mdef": 0.6, "spd": 0.3, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 74, "mp": 59, "atk": 13, "def": 14, "matk": 39, "mdef": 25, "spd": 15, "mov": 3
+  },
+  "class_change_bonus": null,
+  "stats_lv30_with_bonus": {
+    "hp": 74, "mp": 59, "atk": 13, "def": 14, "matk": 39, "mdef": 25, "spd": 15, "mov": 3
+  },
+  "skills": ["high_priestess_heal", "sacred_light", "high_priestess_prayer", "divine_judgement",
+             "primordial_blessing", "purifying_flame", "source_of_life", "flame_ritual"],
+  "post_class_skills": [],
+  "passives": [
+    {
+      "id": "high_priestess_grace",
+      "name_ko": "대사제의 가호",
+      "description_ko": "치유 스킬 효과 +20%. 마법 공격 빛 속성 추가 피해 +10%",
+      "unlock": "initial"
+    },
+    {
+      "id": "primordial_remnant",
+      "name_ko": "시원화의 잔영",
+      "description_ko": "결계석 타일 인접 시 MP 매 턴 10% 자동 회복",
+      "unlock": "initial"
+    }
+  ]
+}

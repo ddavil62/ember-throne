@@ -1,0 +1,46 @@
+{
+  "id": "voldt",
+  "name_ko": "볼드",
+  "name_en": "Voldt",
+  "class_ko": "탈주 근위대장",
+  "class_en": "Rogue Guardian",
+  "class_change_ko": "수호의 방벽",
+  "class_change_en": "Ironwall",
+  "class_change_scene": "4-3",
+  "weapon_types": ["sword_shield"],
+  "armor_types": ["heavy"],
+  "join_scene": "2-10",
+  "join_level": 10,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 32, "mp": 5, "atk": 7, "def": 10, "matk": 2, "mdef": 5, "spd": 4, "mov": 3
+  },
+  "growth": {
+    "hp": 3.5, "mp": 0.3, "atk": 0.6, "def": 0.8, "matk": 0.1, "mdef": 0.4, "spd": 0.2, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 134, "mp": 14, "atk": 24, "def": 33, "matk": 5, "mdef": 17, "spd": 10, "mov": 3
+  },
+  "class_change_bonus": {
+    "hp": 8, "mp": 2, "atk": 2, "def": 5, "matk": 0, "mdef": 3, "spd": 0, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 142, "mp": 16, "atk": 26, "def": 38, "matk": 5, "mdef": 20, "spd": 10, "mov": 3
+  },
+  "skills": ["shield_bash", "taunt", "iron_defense", "charge"],
+  "post_class_skills": ["eris_shield", "earths_fury", "absolute_defense", "last_bastion"],
+  "passives": [
+    {
+      "id": "guardians_dignity",
+      "name_ko": "근위대장의 위엄",
+      "description_ko": "도발 대상 적의 ATK -10%",
+      "unlock": "initial"
+    },
+    {
+      "id": "eris_memory",
+      "name_ko": "에리스의 기억",
+      "description_ko": "HP 30% 이하 시 DEF +25%",
+      "unlock": "class_change"
+    }
+  ]
+}

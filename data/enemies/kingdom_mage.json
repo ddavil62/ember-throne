@@ -1,0 +1,75 @@
+{
+  "id": "kingdom_mage",
+  "name_ko": "왕국 마법사",
+  "name_en": "Kingdom Mage",
+  "faction": "kingdom",
+  "type": "magic",
+  "role": "magic_dps",
+  "weapon_type": "staff",
+  "armor_type": "cloth",
+  "ai_pattern": "support",
+  "range_min": 1,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 24, "mp": 15, "atk": 5, "def": 4, "matk": 14, "mdef": 10, "spd": 6, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.1, "atk": 0.5, "def": 0.3, "matk": 1.8, "mdef": 0.8, "spd": 0.4
+  },
+  "act_stats": {
+    "act1": { "hp": 24, "atk": 5, "def": 4, "matk": 14, "mdef": 10, "spd": 6 },
+    "act2": { "hp": 35, "atk": 8, "def": 6, "matk": 23, "mdef": 15, "spd": 8 },
+    "act3": { "hp": 49, "atk": 11, "def": 8, "matk": 33, "mdef": 20, "spd": 11 },
+    "act4": { "hp": 66, "atk": 14, "def": 10, "matk": 47, "mdef": 27, "spd": 13 }
+  },
+  "scaling_multiplier": {
+    "hp": 0.63, "atk": 0.5, "def": 0.33, "matk": 4.67, "mdef": 1.67, "spd": 1.2
+  },
+  "skills": [
+    {
+      "id": "fire_magic",
+      "name_ko": "화염 마법",
+      "name_en": "Fire Magic",
+      "type": "magic",
+      "description_ko": "단일 대상 고데미지 화염 마법",
+      "damage_type": "magic",
+      "multiplier": 1.3,
+      "range": 3,
+      "aoe": false,
+      "cooldown": 0,
+      "mp_cost": 5
+    },
+    {
+      "id": "ice_magic",
+      "name_ko": "빙결 마법",
+      "name_en": "Ice Magic",
+      "type": "magic",
+      "description_ko": "범위 공격 + 빙결 상태이상",
+      "damage_type": "magic",
+      "multiplier": 1.0,
+      "range": 3,
+      "aoe": true,
+      "aoe_radius": 1,
+      "cooldown": 3,
+      "mp_cost": 8,
+      "status_effect": { "type": "freeze", "chance": 0.3, "duration": 1 }
+    }
+  ],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "glass_cannon",
+      "description_ko": "물리 방어가 극히 낮아 근접 딜러에게 매우 취약"
+    }
+  ],
+  "drops": [
+    { "item_id": "mana_potion", "name_ko": "마력의 물약", "rate": 0.30 },
+    { "item_id": "spellbook_fragment", "name_ko": "마법서 파편", "rate": 0.10 }
+  ],
+  "gold_reward": { "min": 30, "max": 50 },
+  "exp_reward": 20,
+  "sprite_id": "kingdom_mage",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "화염/빙결 마법을 사용하는 마법 딜러. 물리 DEF가 4로 극히 낮아 근접 딜러에게 매우 취약. 보병 전열 뒤에 배치."
+}

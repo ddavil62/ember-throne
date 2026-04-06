@@ -1,0 +1,51 @@
+{
+  "battle_id": "battle_04",
+  "name_ko": "징발대 추격전",
+  "name_en": "Conscript Pursuit",
+  "act": 1,
+  "scene_id": "1-7",
+  "map_size": {"width": 20, "height": 16},
+  "map_type": "medium",
+  "battle_type": "escape",
+  "difficulty_rating": 3,
+  "is_optional": false,
+  "deploy_count": 4,
+  "deploy_zones": [[1, 8], [2, 8], [1, 9], [2, 9]],
+  "victory_conditions": [
+    {"type": "escape", "description_ko": "카엘 일행 4명 전원이 동쪽 탈출 지점 도달", "target_unit": "all_party", "target_position": [19, 8], "turn_limit": null}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"},
+    {"type": "unit_death", "unit_id": "seria", "description_ko": "세리아 전사"},
+    {"type": "unit_death", "unit_id": "grid", "description_ko": "그리드 전사"},
+    {"type": "unit_death", "unit_id": "linen", "description_ko": "리넨 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "conscript_cavalry", "level": 3, "position": [5, 3], "ai_override": "pursue"},
+    {"enemy_id": "conscript_cavalry", "level": 3, "position": [8, 12], "ai_override": "pursue"},
+    {"enemy_id": "conscript_cavalry", "level": 3, "position": [3, 6], "ai_override": "pursue"},
+    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [7, 10], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [10, 7], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 3, "position": [9, 2], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 3, "position": [11, 11], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 3, "position": [14, 6], "ai_override": null}
+  ],
+  "terrain_layout": "irhen_road",
+  "tileset_id": "irhen",
+  "bgm": "battle_chase",
+  "rewards": {
+    "gold": 250,
+    "items": [],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "1-7a_battle_start",
+    "on_turn_3": "1-7a_linen_fire_event",
+    "on_victory": "1-7a_battle_end"
+  },
+  "special_rules": [
+    {"type": "random_event", "description_ko": "리넨의 화염 마법(제어 불가)이 랜덤으로 발동하는 이벤트"}
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "seria",
+  "name_ko": "세리아",
+  "name_en": "Seria",
+  "class_ko": "이단사제",
+  "class_en": "Exiled Cleric",
+  "class_change_ko": "불꽃의 사도",
+  "class_change_en": "Ember Apostle",
+  "class_change_scene": "3-4",
+  "weapon_types": ["staff"],
+  "armor_types": ["robe"],
+  "join_scene": "1-4",
+  "join_level": 1,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 19, "mp": 16, "atk": 4, "def": 4, "matk": 9, "mdef": 8, "spd": 5, "mov": 3
+  },
+  "growth": {
+    "hp": 1.6, "mp": 1.3, "atk": 0.3, "def": 0.3, "matk": 0.9, "mdef": 0.6, "spd": 0.3, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 65, "mp": 54, "atk": 13, "def": 13, "matk": 35, "mdef": 25, "spd": 14, "mov": 3
+  },
+  "class_change_bonus": {
+    "hp": 3, "mp": 5, "atk": 1, "def": 1, "matk": 4, "mdef": 3, "spd": 1, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 68, "mp": 59, "atk": 14, "def": 14, "matk": 39, "mdef": 28, "spd": 15, "mov": 3
+  },
+  "skills": ["healing_light", "purify", "light_arrow", "protective_prayer"],
+  "post_class_skills": ["flame_of_life", "sacred_flame", "resurrection_prayer", "apostle_blessing"],
+  "passives": [
+    {
+      "id": "heretic_faith",
+      "name_ko": "이단의 신앙",
+      "description_ko": "치유 스킬 효과 +10%",
+      "unlock": "initial"
+    },
+    {
+      "id": "flame_of_faith",
+      "name_ko": "신앙의 불꽃",
+      "description_ko": "치유 시 대상에게 ATK +10% 버프 1턴 부여",
+      "unlock": "class_change"
+    }
+  ]
+}

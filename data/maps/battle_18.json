@@ -1,0 +1,46 @@
+{
+  "battle_id": "battle_18",
+  "name_ko": "왕도 잠입 전투",
+  "name_en": "Capital Infiltration",
+  "act": 3,
+  "scene_id": "3-1",
+  "map_size": {"width": 15, "height": 12},
+  "map_type": "small",
+  "battle_type": "rout",
+  "difficulty_rating": 7,
+  "is_optional": false,
+  "deploy_count": 7,
+  "deploy_zones": [[1, 9], [2, 9], [3, 9], [4, 9], [1, 10], [2, 10], [3, 10]],
+  "victory_conditions": [
+    {"type": "rout", "description_ko": "모든 적 섬멸"}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "secret_police_agent", "level": 12, "position": [8, 2], "ai_override": null},
+    {"enemy_id": "secret_police_agent", "level": 12, "position": [11, 3], "ai_override": null},
+    {"enemy_id": "secret_police_agent", "level": 12, "position": [6, 4], "ai_override": null},
+    {"enemy_id": "secret_police_agent", "level": 12, "position": [13, 5], "ai_override": null},
+    {"enemy_id": "secret_police_mage", "level": 13, "position": [10, 1], "ai_override": null},
+    {"enemy_id": "secret_police_mage", "level": 13, "position": [7, 3], "ai_override": null},
+    {"enemy_id": "guard", "level": 12, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "guard", "level": 12, "position": [5, 5], "ai_override": null}
+  ],
+  "terrain_layout": "ascalon_streets",
+  "tileset_id": "ascalon",
+  "bgm": "battle_stealth",
+  "rewards": {
+    "gold": 400,
+    "items": ["secret_police_coat"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "3-1_battle_start",
+    "on_turn_1": "3-1_iren_joins",
+    "on_victory": "3-1_battle_end"
+  },
+  "special_rules": [
+    {"type": "ally_join", "turn": 1, "unit_id": "iren", "description_ko": "이렌 합류. 이렌의 정보망으로 적 배치 공개"}
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "battle_id": "battle_30",
+  "name_ko": "비밀경찰 본부",
+  "name_en": "Secret Police Headquarters",
+  "act": 4,
+  "scene_id": "4-2",
+  "map_size": {"width": 20, "height": 16},
+  "map_type": "medium",
+  "battle_type": "boss",
+  "difficulty_rating": 8,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[2, 12], [3, 12], [4, 12], [5, 12], [2, 13], [3, 13], [4, 13], [5, 13]],
+  "victory_conditions": [
+    {"type": "rout_or_boss", "description_ko": "선택지에 따라: (A) 잔당 소탕 또는 (B) 루시드 격파"}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "secret_police_elite", "level": 22, "position": [8, 3], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 22, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 22, "position": [14, 3], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 22, "position": [9, 6], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 22, "position": [13, 5], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 22, "position": [7, 5], "ai_override": null},
+    {"enemy_id": "secret_police_mage", "level": 23, "position": [10, 2], "ai_override": null},
+    {"enemy_id": "secret_police_mage", "level": 23, "position": [12, 5], "ai_override": null},
+    {"enemy_id": "secret_police_mage", "level": 23, "position": [15, 4], "ai_override": null},
+    {"enemy_id": "secret_police_assassin", "level": 23, "position": [6, 4], "ai_override": null},
+    {"enemy_id": "secret_police_assassin", "level": 23, "position": [16, 3], "ai_override": null},
+    {"enemy_id": "secret_police_assassin", "level": 23, "position": [8, 7], "ai_override": null},
+    {"enemy_id": "lucid", "level": 25, "position": [11, 1], "ai_override": "boss_conditional"}
+  ],
+  "terrain_layout": "ascalon_hq",
+  "tileset_id": "ascalon",
+  "bgm": "battle_boss",
+  "rewards": {
+    "gold": 550,
+    "items": ["lucids_glasses"],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "4-2_battle_start",
+    "on_turn_1": "4-2_lucid_choice_event",
+    "on_victory": "4-2_battle_end"
+  },
+  "special_rules": [
+    {"type": "branching_battle", "description_ko": "선택지: (A) 루시드 자수 -> 전투 축소(잔당만) / (B) 루시드 전투 -> 루시드 보스전"},
+    {"type": "trap_tiles", "description_ko": "함정 타일 다수 존재"}
+  ]
+}

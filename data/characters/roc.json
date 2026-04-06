@@ -1,0 +1,46 @@
+{
+  "id": "roc",
+  "name_ko": "로크",
+  "name_en": "Roc",
+  "class_ko": "숲의 사냥꾼",
+  "class_en": "Forest Ranger",
+  "class_change_ko": "실바렌의 수호자",
+  "class_change_en": "Silvaren Warden",
+  "class_change_scene": "3-11",
+  "weapon_types": ["bow"],
+  "armor_types": ["light", "cloak"],
+  "join_scene": "2-1",
+  "join_level": 5,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 22, "mp": 7, "atk": 9, "def": 5, "matk": 2, "mdef": 4, "spd": 9, "mov": 5
+  },
+  "growth": {
+    "hp": 2.0, "mp": 0.5, "atk": 0.8, "def": 0.4, "matk": 0.1, "mdef": 0.3, "spd": 0.5, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 80, "mp": 22, "atk": 32, "def": 17, "matk": 5, "mdef": 13, "spd": 24, "mov": 5
+  },
+  "class_change_bonus": {
+    "hp": 3, "mp": 2, "atk": 4, "def": 2, "matk": 1, "mdef": 1, "spd": 2, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 83, "mp": 24, "atk": 36, "def": 19, "matk": 6, "mdef": 14, "spd": 26, "mov": 5
+  },
+  "skills": ["precise_shot", "poison_arrow", "suppressive_fire", "rapid_fire"],
+  "post_class_skills": ["call_of_forest", "pinas_light", "piercing_shot", "wardens_volley"],
+  "passives": [
+    {
+      "id": "forest_traverse",
+      "name_ko": "산림 주파",
+      "description_ko": "숲 지형 이동 비용 1. 숲 위 회피 +10% 추가",
+      "unlock": "initial"
+    },
+    {
+      "id": "preemptive_shot",
+      "name_ko": "선제 사격",
+      "description_ko": "적 페이즈에 사거리 내 적 이동 시 자동 반격 (턴당 1회)",
+      "unlock": "initial"
+    }
+  ]
+}

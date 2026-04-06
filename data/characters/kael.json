@@ -1,0 +1,46 @@
+{
+  "id": "kael",
+  "name_ko": "카엘",
+  "name_en": "Kael",
+  "class_ko": "탈영기사",
+  "class_en": "Forsaken Knight",
+  "class_change_ko": "서약검사",
+  "class_change_en": "Oathblade",
+  "class_change_scene": "3-7",
+  "weapon_types": ["sword"],
+  "armor_types": ["light", "heavy_post_class"],
+  "join_scene": "1-1",
+  "join_level": 1,
+  "mandatory": true,
+  "stats_lv1": {
+    "hp": 25, "mp": 8, "atk": 8, "def": 7, "matk": 3, "mdef": 4, "spd": 6, "mov": 4
+  },
+  "growth": {
+    "hp": 2.8, "mp": 0.6, "atk": 0.8, "def": 0.6, "matk": 0.2, "mdef": 0.3, "spd": 0.4, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 106, "mp": 25, "atk": 31, "def": 24, "matk": 9, "mdef": 13, "spd": 18, "mov": 4
+  },
+  "class_change_bonus": {
+    "hp": 5, "mp": 2, "atk": 4, "def": 4, "matk": 1, "mdef": 2, "spd": 1, "mov": 0
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 111, "mp": 27, "atk": 35, "def": 28, "matk": 10, "mdef": 15, "spd": 19, "mov": 4
+  },
+  "skills": ["slash", "guardian_strike", "breakthrough", "war_cry"],
+  "post_class_skills": ["oath_blade", "unbreakable_vow", "irhens_memory", "dawn_sword"],
+  "passives": [
+    {
+      "id": "knights_pride",
+      "name_ko": "탈영기사의 긍지",
+      "description_ko": "인접 아군이 피격 시 해당 아군의 받는 피해 -10%",
+      "unlock": "initial"
+    },
+    {
+      "id": "oath_bond",
+      "name_ko": "서약의 유대",
+      "description_ko": "\"불굴의 맹세\" 대상이 전투불능 위기 시 1회 피해를 대신 받음 (HP 1 잔존)",
+      "unlock": "class_change"
+    }
+  ]
+}

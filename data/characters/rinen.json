@@ -1,0 +1,46 @@
+{
+  "id": "rinen",
+  "name_ko": "리넨",
+  "name_en": "Linen",
+  "class_ko": "방랑자",
+  "class_en": "Wanderer",
+  "class_change_ko": "불씨의 계승자",
+  "class_change_en": "Ember Heir",
+  "class_change_scene": "3-6",
+  "weapon_types": ["dagger"],
+  "armor_types": ["cloak", "robe_post_class"],
+  "join_scene": "1-6",
+  "join_level": 2,
+  "mandatory": false,
+  "stats_lv1": {
+    "hp": 20, "mp": 10, "atk": 6, "def": 4, "matk": 5, "mdef": 5, "spd": 9, "mov": 4
+  },
+  "growth": {
+    "hp": 1.8, "mp": 1.0, "atk": 0.4, "def": 0.3, "matk": 0.8, "mdef": 0.4, "spd": 0.5, "mov": 0
+  },
+  "stats_lv30": {
+    "hp": 72, "mp": 39, "atk": 18, "def": 13, "matk": 28, "mdef": 17, "spd": 24, "mov": 4
+  },
+  "class_change_bonus": {
+    "hp": 3, "mp": 5, "atk": 1, "def": 1, "matk": 5, "mdef": 2, "spd": 1, "mov": 1
+  },
+  "stats_lv30_with_bonus": {
+    "hp": 75, "mp": 44, "atk": 19, "def": 14, "matk": 33, "mdef": 19, "spd": 25, "mov": 5
+  },
+  "skills": ["trickery", "flame_flick", "smoke_screen", "vital_strike"],
+  "post_class_skills": ["primordial_blaze", "barrier_light", "flame_resonance", "heirs_will"],
+  "passives": [
+    {
+      "id": "wanderers_intuition",
+      "name_ko": "방랑자의 직감",
+      "description_ko": "회피율 +8%. 함정 자동 감지 (인접 시 경고)",
+      "unlock": "initial"
+    },
+    {
+      "id": "flame_resonance_passive",
+      "name_ko": "불꽃 공명",
+      "description_ko": "결계석 타일 위에서 전 스탯 +15%",
+      "unlock": "class_change"
+    }
+  ]
+}

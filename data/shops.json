@@ -1,0 +1,250 @@
+{
+  "act_1": {
+    "belmar": {
+      "unlock_scene": "1-5",
+      "name_ko": "벨마르 상점",
+      "name_en": "Belmar Shop",
+      "weapons": [
+        "rusty_longsword",
+        "iron_longsword",
+        "rusty_dagger",
+        "iron_dagger",
+        "iron_spear",
+        "wooden_staff"
+      ],
+      "armor": [
+        "leather_armor",
+        "iron_armor",
+        "cotton_robe",
+        "travelers_cloak",
+        "reinforced_leather",
+        "silk_robe"
+      ],
+      "accessories": [
+        "copper_ring",
+        "copper_necklace",
+        "leather_boots",
+        "antidote_charm"
+      ],
+      "consumables": [
+        "herb",
+        "mana_potion",
+        "antidote"
+      ],
+      "forge": []
+    }
+  },
+  "act_2": {
+    "silvaren": {
+      "unlock_scene": "2-1",
+      "name_ko": "실바렌 거점 상점",
+      "name_en": "Silvaren Base Shop",
+      "weapons": [
+        "steel_sword",
+        "composite_bow",
+        "steel_dagger",
+        "silver_staff",
+        "rune_staff",
+        "steel_spear"
+      ],
+      "armor": [
+        "chainmail",
+        "steel_armor",
+        "magic_robe",
+        "thick_cloak"
+      ],
+      "accessories": [
+        "silver_ring",
+        "speed_ring",
+        "focus_ring",
+        "silver_necklace",
+        "mana_necklace",
+        "frost_charm",
+        "silence_charm",
+        "sleep_charm"
+      ],
+      "consumables": [
+        "herb",
+        "superior_herb",
+        "mana_potion",
+        "antidote",
+        "panacea",
+        "fire_bottle",
+        "light_talisman",
+        "iron_wall_talisman",
+        "speed_talisman"
+      ],
+      "forge": [
+        {
+          "result": "ashen_dagger",
+          "materials": [{"item": "ashen_fang", "count": 2}],
+          "gold_cost": 200
+        },
+        {
+          "result": "flame_charm",
+          "materials": [{"item": "ashen_ember", "count": 3}],
+          "gold_cost": 150
+        }
+      ]
+    },
+    "harben": {
+      "unlock_scene": "2-7",
+      "name_ko": "하르벤 상점",
+      "name_en": "Harben Shop",
+      "extends": "silvaren",
+      "additional_weapons": [
+        "pirate_cutlass"
+      ],
+      "additional_armor": [],
+      "additional_accessories": [
+        "guardian_ring",
+        "sprint_boots"
+      ],
+      "additional_consumables": [
+        "smoke_bomb"
+      ],
+      "additional_forge": []
+    },
+    "crowfel": {
+      "unlock_scene": "2-9",
+      "name_ko": "크로우펠 상점",
+      "name_en": "Crowfel Shop",
+      "extends": "harben",
+      "additional_weapons": [
+        "academy_staff"
+      ],
+      "additional_armor": [],
+      "additional_accessories": [
+        "crit_ring"
+      ],
+      "additional_consumables": [],
+      "additional_forge": [
+        {
+          "result": "wind_cloak_armor",
+          "materials": [{"item": "ashen_feather", "count": 2}],
+          "gold_cost": 300
+        },
+        {
+          "result": "barrier_ring",
+          "materials": [{"item": "ashen_core", "count": 2}],
+          "gold_cost": 400
+        }
+      ]
+    }
+  },
+  "act_3": {
+    "ascalon_underground": {
+      "unlock_scene": "3-1",
+      "name_ko": "아스칼론 지하 상점",
+      "name_en": "Ascalon Underground Shop",
+      "weapons": [
+        "mithril_sword",
+        "royal_knight_sword",
+        "silvaren_longbow",
+        "assassins_blade",
+        "ivory_staff",
+        "mithril_spear"
+      ],
+      "armor": [
+        "mithril_light_armor",
+        "mithril_armor",
+        "temple_robe",
+        "shadow_cloak"
+      ],
+      "accessories": [
+        "magic_ring",
+        "life_necklace",
+        "sage_necklace",
+        "wind_boots",
+        "universal_charm",
+        "barrier_charm"
+      ],
+      "consumables": [
+        "herb",
+        "superior_herb",
+        "mana_potion",
+        "superior_mana_potion",
+        "antidote",
+        "panacea",
+        "barrier_fragment",
+        "fire_bottle",
+        "smoke_bomb",
+        "light_talisman",
+        "iron_wall_talisman",
+        "speed_talisman"
+      ],
+      "forge": [
+        {
+          "result": "giant_armor",
+          "materials": [{"item": "ashen_giant_hide", "count": 2}],
+          "gold_cost": 500
+        },
+        {
+          "result": "evil_eye_staff",
+          "materials": [{"item": "ashen_crystal", "count": 2}],
+          "gold_cost": 400
+        }
+      ]
+    },
+    "belmar_revisit": {
+      "unlock_scene": "3-12",
+      "name_ko": "벨마르 상점 (갱신)",
+      "name_en": "Belmar Shop (Updated)",
+      "additional_consumables": [
+        {
+          "item": "phoenix_feather",
+          "restriction": "normal_only",
+          "price": 500,
+          "stock": 2
+        }
+      ],
+      "additional_accessories": [
+        "battlefield_compass"
+      ]
+    }
+  },
+  "act_4": {
+    "allied_camp": {
+      "unlock_scene": "4-1",
+      "name_ko": "연합군 야영지 상점",
+      "name_en": "Allied Camp Shop",
+      "weapons": [
+        "mithril_bow",
+        "archmage_staff",
+        "mithril_greatsword",
+        "steel_greatsword"
+      ],
+      "armor": [
+        "silvaren_light_armor",
+        "sage_robe"
+      ],
+      "accessories": [
+        "heros_insignia",
+        {
+          "item": "phoenix_wing",
+          "stock": 1
+        }
+      ],
+      "consumables": [
+        "herb",
+        "superior_herb",
+        "mana_potion",
+        "superior_mana_potion",
+        "antidote",
+        "panacea",
+        "barrier_fragment",
+        "fire_bottle",
+        "smoke_bomb",
+        "light_talisman",
+        "iron_wall_talisman",
+        "speed_talisman",
+        {
+          "item": "phoenix_feather",
+          "restriction": "normal_only",
+          "stock": 1
+        }
+      ],
+      "forge": "all"
+    }
+  }
+}

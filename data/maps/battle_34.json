@@ -1,0 +1,70 @@
+{
+  "battle_id": "battle_34",
+  "name_ko": "최종 전투: 모르간",
+  "name_en": "Final Battle: Morgan",
+  "act": 4,
+  "scene_id": "4-7",
+  "map_size": {"width": 30, "height": 24},
+  "map_type": "final",
+  "battle_type": "boss",
+  "difficulty_rating": 10,
+  "is_optional": false,
+  "deploy_count": 8,
+  "deploy_zones": [[11, 21], [12, 21], [13, 21], [14, 21], [11, 22], [12, 22], [13, 22], [14, 22]],
+  "victory_conditions": [
+    {"type": "boss_kill", "description_ko": "재탄생 모르간 격파 (2단계)", "target_unit": "reborn_morgan"}
+  ],
+  "defeat_conditions": [
+    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+  ],
+  "enemy_placements": [
+    {"enemy_id": "corrupted_morgan", "level": 28, "position": [14, 10], "ai_override": "boss_phase1"},
+    {"enemy_id": "ash_knight", "level": 26, "position": [10, 8], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 26, "position": [16, 9], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 26, "position": [8, 11], "ai_override": null},
+    {"enemy_id": "ash_knight", "level": 26, "position": [18, 10], "ai_override": null},
+    {"enemy_id": "ward_golem", "level": 26, "position": [12, 9], "ai_override": null},
+    {"enemy_id": "ward_golem", "level": 26, "position": [15, 9], "ai_override": null},
+    {"enemy_id": "ward_golem", "level": 26, "position": [13, 11], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 26, "position": [9, 7], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 26, "position": [17, 8], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 26, "position": [11, 12], "ai_override": null},
+    {"enemy_id": "corrupted_mage", "level": 26, "position": [19, 11], "ai_override": null},
+    {"enemy_id": "ash_beast_large", "level": 25, "position": [6, 6], "ai_override": null},
+    {"enemy_id": "ash_beast_large", "level": 25, "position": [20, 7], "ai_override": null},
+    {"enemy_id": "ash_beast_large", "level": 25, "position": [7, 13], "ai_override": null},
+    {"enemy_id": "ash_beast_large", "level": 25, "position": [21, 12], "ai_override": null},
+    {"enemy_id": "ash_spirit", "level": 26, "position": [10, 5], "ai_override": null},
+    {"enemy_id": "ash_spirit", "level": 26, "position": [16, 6], "ai_override": null},
+    {"enemy_id": "ash_spirit", "level": 26, "position": [8, 9], "ai_override": null},
+    {"enemy_id": "ash_venomite", "level": 25, "position": [19, 5], "ai_override": null},
+    {"enemy_id": "ash_venomite", "level": 25, "position": [5, 8], "ai_override": null}
+  ],
+  "phase_2_enemies": [
+    {"enemy_id": "reborn_morgan", "level": 30, "position": [14, 1], "ai_override": "final_boss"},
+    {"enemy_id": "ash_phantom", "level": 27, "position": [11, 3], "ai_override": "revive_every_3_turns"},
+    {"enemy_id": "ash_phantom", "level": 27, "position": [17, 3], "ai_override": "revive_every_3_turns"},
+    {"enemy_id": "ash_phantom", "level": 27, "position": [12, 5], "ai_override": "revive_every_3_turns"},
+    {"enemy_id": "ash_phantom", "level": 27, "position": [16, 5], "ai_override": "revive_every_3_turns"}
+  ],
+  "terrain_layout": "ember_throne_final",
+  "tileset_id": "ascalon_throne",
+  "bgm": "battle_final",
+  "rewards": {
+    "gold": 0,
+    "items": [],
+    "exp_bonus": 0
+  },
+  "events": {
+    "on_start": "4-7_battle_start",
+    "on_boss_phase1_defeat": "4-7_phase_transition",
+    "on_victory": "4-7_ending_sequence"
+  },
+  "special_rules": [
+    {"type": "multi_phase", "phases": 2, "description_ko": "다단계 보스전. 1단계: 변질 모르간 HP 0 -> 이벤트 -> 2단계 시작"},
+    {"type": "phase2_boss", "unit_id": "reborn_morgan", "description_ko": "2단계: 재탄생 모르간 격파 시 승리. 잡졸 전멸 불필요"},
+    {"type": "phantom_revive", "description_ko": "재의 분신은 매 3턴 부활하므로 무시하고 본체에 집중"},
+    {"type": "ward_stones", "count": 4, "positions": [[11, 3], [17, 3], [4, 14], [24, 14]], "description_ko": "결계석 타일 4개 (상단 2, 중단 좌우 2)"},
+    {"type": "terrain_damage", "description_ko": "맵 외곽은 재의 땅으로 둘러싸여 중앙 경로로 진행"}
+  ]
+}

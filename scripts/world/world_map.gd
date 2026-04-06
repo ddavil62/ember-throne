@@ -121,26 +121,43 @@ const BG_COLOR := Color(0.15, 0.12, 0.1)
 # ── 라이프사이클 ──
 
 func _ready() -> void:
+	var log_lines: Array[String] = []
 	print("[WorldMap] _ready 시작")
+	log_lines.append("_ready 시작")
+
+	# FadeRect 즉시 제거 (최우선)
+	var gm: Node = get_node("/root/GameManager")
+	gm.force_clear_fade()
+	log_lines.append("FadeRect 강제 해제")
+
 	_get_scene_nodes()
+	log_lines.append("씬 노드 참조 OK")
+
 	_build_world_map()
+	log_lines.append("월드맵 빌드: %d개 노드" % _map_nodes.size())
+
 	_connect_signals()
-	_build_debug_overlay()
-	GameManager.change_state(GameManager.GameState.WORLD_MAP)
+	log_lines.append("시그널 연결 OK")
+
 	# 플레이어 마커를 현재 노드 또는 첫 available 노드 위치로 이동
 	var pm: Node = get_node("/root/ProgressionManager")
 	if pm.current_node_id != "" and _map_nodes.has(pm.current_node_id):
 		_move_player_marker(_map_nodes[pm.current_node_id].position)
 		_camera.position = _map_nodes[pm.current_node_id].position
+		log_lines.append("카메라 → %s" % pm.current_node_id)
 	else:
-		# 첫 번째 available 노드로 카메라 이동
+		var found := false
 		for nid: String in _map_nodes:
 			if pm.get_node_state(nid) == "available":
 				_camera.position = _map_nodes[nid].position
 				_move_player_marker(_map_nodes[nid].position)
+				log_lines.append("카메라 → %s (available)" % nid)
+				found = true
 				break
-	# 안전장치: 1초 후 FadeRect가 여전히 불투명하면 강제 해제
-	_schedule_fade_safety()
+		if not found:
+			log_lines.append("WARNING: available 노드 없음!")
+
+	_build_debug_overlay("\n".join(log_lines))
 	print("[WorldMap] _ready 완료 (노드: %d개)" % _map_nodes.size())
 
 func _process(delta: float) -> void:
@@ -216,33 +233,27 @@ func _calculate_node_position(nid: String, node_data: Dictionary) -> Vector2:
 	var offset: Vector2 = NODE_OFFSETS.get(nid, Vector2.ZERO)
 	return center + offset
 
-## 디버그 오버레이를 생성한다 (노드 수 등 진단 정보 표시).
+## 디버그 오버레이를 생성한다 (진단 로그 표시).
 ## CanvasLayer 200으로 설정 — FadeRect(layer 100) 위에 표시.
-func _build_debug_overlay() -> void:
-	var pm: Node = get_node("/root/ProgressionManager")
-	var dm: Node = get_node("/root/DataManager")
-	var available_count := 0
-	for nid: String in _map_nodes:
-		if pm.get_node_state(nid) == "available":
-			available_count += 1
+## @param log_text 화면에 표시할 진단 로그
+func _build_debug_overlay(log_text: String = "") -> void:
 	var canvas := CanvasLayer.new()
 	canvas.layer = 200
 	add_child(canvas)
+	# 반투명 배경
+	var bg := ColorRect.new()
+	bg.color = Color(0, 0, 0, 0.7)
+	bg.position = Vector2(8, 8)
+	bg.size = Vector2(500, 200)
+	canvas.add_child(bg)
 	var lbl := Label.new()
-	lbl.text = "월드맵 | 노드: %d / 데이터: %d | 활성: %d" % [
-		_map_nodes.size(), dm.world_nodes.size(), available_count
-	]
-	lbl.position = Vector2(16, 16)
-	lbl.add_theme_font_size_override("font_size", 16)
-	lbl.add_theme_color_override("font_color", Color(1.0, 1.0, 0.5, 1.0))
+	lbl.text = log_text
+	lbl.position = Vector2(16, 12)
+	lbl.size = Vector2(480, 190)
+	lbl.add_theme_font_size_override("font_size", 14)
+	lbl.add_theme_color_override("font_color", Color(0.0, 1.0, 0.0, 1.0))
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	canvas.add_child(lbl)
-
-## FadeRect 안전장치. 1초 후에도 FadeRect가 불투명하면 강제 해제한다.
-func _schedule_fade_safety() -> void:
-	await get_tree().create_timer(1.5).timeout
-	var gm: Node = get_node("/root/GameManager")
-	gm.force_clear_fade()
-	print("[WorldMap] 안전장치: FadeRect 강제 해제 실행")
 
 ## 지역 이름 라벨을 생성한다.
 func _create_region_labels() -> void:

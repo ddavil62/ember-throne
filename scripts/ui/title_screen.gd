@@ -223,14 +223,14 @@ func _on_difficulty_selected(value: String) -> void:
 	gm.play_time = 0.0
 	get_node("/root/PartyManager").init_default_party()
 	print("[TitleScreen] 새 게임 시작 (난이도: %s)" % value)
-	var dlg := "res://scenes/dialogue/dialogue_scene.tscn"
+	# 페이드 전환 대신 즉시 씬 변경 (디버깅용)
+	gm.change_state(gm.GameState.WORLD_MAP)
 	var map := "res://scenes/world/world_map.tscn"
-	if ResourceLoader.exists(dlg):
-		gm.transition_to_scene(dlg, 0.5, gm.GameState.DIALOGUE)
-	elif ResourceLoader.exists(map):
-		gm.transition_to_scene(map, 0.5, gm.GameState.WORLD_MAP)
+	if ResourceLoader.exists(map):
+		print("[TitleScreen] 월드맵으로 즉시 전환: %s" % map)
+		get_tree().change_scene_to_file(map)
 	else:
-		push_warning("[TitleScreen] 전환 가능한 씬 없음")
+		push_error("[TitleScreen] world_map.tscn 없음!")
 
 # ── 세이브 슬롯 ──
 ## 세이브 슬롯 버튼들을 갱신한다.

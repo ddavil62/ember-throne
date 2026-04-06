@@ -121,6 +121,7 @@ const BG_COLOR := Color(0.15, 0.12, 0.1)
 # ── 라이프사이클 ──
 
 func _ready() -> void:
+	print("[WorldMap] _ready 시작")
 	_get_scene_nodes()
 	_build_world_map()
 	_connect_signals()
@@ -138,6 +139,9 @@ func _ready() -> void:
 				_camera.position = _map_nodes[nid].position
 				_move_player_marker(_map_nodes[nid].position)
 				break
+	# 안전장치: 1초 후 FadeRect가 여전히 불투명하면 강제 해제
+	_schedule_fade_safety()
+	print("[WorldMap] _ready 완료 (노드: %d개)" % _map_nodes.size())
 
 func _process(delta: float) -> void:
 	_handle_camera_input(delta)
@@ -213,6 +217,7 @@ func _calculate_node_position(nid: String, node_data: Dictionary) -> Vector2:
 	return center + offset
 
 ## 디버그 오버레이를 생성한다 (노드 수 등 진단 정보 표시).
+## CanvasLayer 200으로 설정 — FadeRect(layer 100) 위에 표시.
 func _build_debug_overlay() -> void:
 	var pm: Node = get_node("/root/ProgressionManager")
 	var dm: Node = get_node("/root/DataManager")
@@ -221,16 +226,23 @@ func _build_debug_overlay() -> void:
 		if pm.get_node_state(nid) == "available":
 			available_count += 1
 	var canvas := CanvasLayer.new()
-	canvas.layer = 50
+	canvas.layer = 200
 	add_child(canvas)
 	var lbl := Label.new()
 	lbl.text = "월드맵 | 노드: %d / 데이터: %d | 활성: %d" % [
 		_map_nodes.size(), dm.world_nodes.size(), available_count
 	]
 	lbl.position = Vector2(16, 16)
-	lbl.add_theme_font_size_override("font_size", 14)
-	lbl.add_theme_color_override("font_color", Color(0.8, 0.8, 0.6, 0.8))
+	lbl.add_theme_font_size_override("font_size", 16)
+	lbl.add_theme_color_override("font_color", Color(1.0, 1.0, 0.5, 1.0))
 	canvas.add_child(lbl)
+
+## FadeRect 안전장치. 1초 후에도 FadeRect가 불투명하면 강제 해제한다.
+func _schedule_fade_safety() -> void:
+	await get_tree().create_timer(1.5).timeout
+	var gm: Node = get_node("/root/GameManager")
+	gm.force_clear_fade()
+	print("[WorldMap] 안전장치: FadeRect 강제 해제 실행")
 
 ## 지역 이름 라벨을 생성한다.
 func _create_region_labels() -> void:

@@ -85,7 +85,8 @@ func change_state(new_state: GameState) -> void:
 ## @param new_state 전환 후 게임 상태 (null이면 유지)
 func transition_to_scene(scene_path: String, duration: float = 0.5, new_state = null) -> void:
 	if _transitioning:
-		return
+		push_warning("[GameManager] 이미 전환 중, 강제 리셋")
+		_transitioning = false
 	_transitioning = true
 
 	var fade_rect: ColorRect = _transition_overlay.get_node("FadeRect")
@@ -97,20 +98,37 @@ func transition_to_scene(scene_path: String, duration: float = 0.5, new_state = 
 	await tween.finished
 
 	# 씬 변경
-	get_tree().change_scene_to_file(scene_path)
+	print("[GameManager] 씬 전환 시작: %s" % scene_path)
+	var err := get_tree().change_scene_to_file(scene_path)
+	if err != OK:
+		push_error("[GameManager] 씬 전환 실패: %s (에러: %d)" % [scene_path, err])
+		fade_rect.color.a = 0.0
+		fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_transitioning = false
+		return
 
 	# 상태 전환
 	if new_state != null:
 		change_state(new_state)
 
-	# 1프레임 대기 (씬 로드 완료)
+	# 씬 로드 안정화 대기 (deferred change_scene 완료를 위해 2프레임 대기)
 	await get_tree().process_frame
+	await get_tree().process_frame
+	print("[GameManager] 씬 전환 완료, 페이드 인 시작")
 
 	# 페이드 인
 	var tween_in := create_tween()
 	tween_in.tween_property(fade_rect, "color:a", 0.0, duration)
 	await tween_in.finished
 
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_transitioning = false
+	print("[GameManager] 전환 완료")
+
+## FadeRect를 즉시 투명하게 리셋한다 (안전장치).
+func force_clear_fade() -> void:
+	var fade_rect: ColorRect = _transition_overlay.get_node("FadeRect")
+	fade_rect.color.a = 0.0
 	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_transitioning = false
 

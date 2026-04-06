@@ -204,28 +204,34 @@ func _update_visuals() -> void:
 		_pulse_tween = null
 	match state:
 		"locked":
-			modulate = Color(0.45, 0.45, 0.45, 0.75)
+			modulate = Color(0.35, 0.35, 0.35, 0.5)
 			_icon_label.visible = false
 			_lock_label.visible = true
 			_check_label.visible = false
+			_name_label.visible = false
+			scale = Vector2(1.0, 1.0)
 		"available":
 			modulate = Color(1.0, 1.0, 1.0, 1.0)
 			_icon_label.visible = true
 			_lock_label.visible = false
 			_check_label.visible = false
+			_name_label.visible = true
+			scale = Vector2(1.4, 1.4)
 			_start_pulse()
 		"completed":
 			modulate = Color(0.7, 0.7, 0.7, 0.9)
 			_icon_label.visible = true
 			_lock_label.visible = false
 			_check_label.visible = true
+			_name_label.visible = false
+			scale = Vector2(1.0, 1.0)
 
 ## available 상태 노드에 펄스 애니메이션을 적용한다.
 func _start_pulse() -> void:
 	_pulse_tween = create_tween().set_loops()
-	_pulse_tween.tween_property(self, "modulate", Color(1.3, 1.2, 0.9, 1.0), 0.8) \
+	_pulse_tween.tween_property(self, "modulate", Color(1.5, 1.3, 0.8, 1.0), 0.6) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_pulse_tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.8) \
+	_pulse_tween.tween_property(self, "modulate", Color(0.9, 0.9, 1.0, 1.0), 0.6) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 # ── 입력 처리 ──
@@ -238,10 +244,19 @@ func _on_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -
 	if event is InputEventMouseButton:
 		var mb: InputEventMouseButton = event
 		if mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
-			# 잠긴 노드는 클릭 무시
 			if state == "locked":
+				_shake_locked()
 				return
 			node_clicked.emit(node_id)
+
+## 잠긴 노드 클릭 시 흔들림 피드백
+func _shake_locked() -> void:
+	var orig := position
+	var t := create_tween()
+	t.tween_property(self, "position", orig + Vector2(4, 0), 0.05)
+	t.tween_property(self, "position", orig + Vector2(-4, 0), 0.05)
+	t.tween_property(self, "position", orig + Vector2(2, 0), 0.05)
+	t.tween_property(self, "position", orig, 0.05)
 
 ## 마우스 진입 시 이름 라벨 표시
 func _on_mouse_entered() -> void:

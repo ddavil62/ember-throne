@@ -130,16 +130,18 @@ func _ready() -> void:
 
 	# 플레이어 마커를 현재 노드 또는 첫 available 노드 위치로 이동
 	var pm: Node = get_node("/root/ProgressionManager")
+	var focus_pos := Vector2(960, 540)
 	if pm.current_node_id != "" and _map_nodes.has(pm.current_node_id):
-		_move_player_marker(_map_nodes[pm.current_node_id].position)
-		_camera.position = _map_nodes[pm.current_node_id].position
+		focus_pos = _map_nodes[pm.current_node_id].position
 	else:
 		for nid: String in _map_nodes:
 			if pm.get_node_state(nid) == "available":
-				_camera.position = _map_nodes[nid].position
-				_move_player_marker(_map_nodes[nid].position)
+				focus_pos = _map_nodes[nid].position
+				print("[WorldMap] 카메라 → %s (%s)" % [nid, str(focus_pos)])
 				break
-	print("[WorldMap] 월드맵 로드 완료 (노드: %d개)" % _map_nodes.size())
+	_camera.position = focus_pos
+	_move_player_marker(focus_pos)
+	print("[WorldMap] 월드맵 로드 완료 (노드: %d개, 카메라: %s)" % [_map_nodes.size(), str(_camera.position)])
 
 func _process(delta: float) -> void:
 	_handle_camera_input(delta)

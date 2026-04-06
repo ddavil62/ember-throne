@@ -90,9 +90,8 @@ const LINE_WIDTH := 2.0
 
 ## 카메라 이동 속도 (키보드)
 const CAMERA_SPEED := 400.0
-## 카메라 팬 최소/최대 범위
-const CAMERA_MIN := Vector2(0, 0)
-const CAMERA_MAX := Vector2(1920, 1080)
+## 월드맵 전체 크기
+const MAP_SIZE := Vector2(1920, 1080)
 
 # ── 내부 참조 ──
 
@@ -145,6 +144,7 @@ func _ready() -> void:
 				print("[WorldMap] 카메라 → %s (%s)" % [nid, str(focus_pos)])
 				break
 	_camera.position = focus_pos
+	_clamp_camera()
 	_move_player_marker(focus_pos)
 	print("[WorldMap] 월드맵 로드 완료 (노드: %d개, 카메라: %s)" % [_map_nodes.size(), str(_camera.position)])
 
@@ -167,7 +167,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion and _dragging:
 		var motion: InputEventMouseMotion = event
 		_camera.position -= motion.relative
-		_camera.position = _camera.position.clamp(CAMERA_MIN, CAMERA_MAX)
+		_clamp_camera()
 
 # ── 씬 노드 참조 획득 ──
 
@@ -182,6 +182,12 @@ func _get_scene_nodes() -> void:
 	_info_type = $InfoPanel/NodeType
 	_info_desc = $InfoPanel/NodeDescription
 	_info_enter_btn = $InfoPanel/EnterButton
+	# InfoPanel을 CanvasLayer로 이동 (카메라 스크롤과 독립)
+	var ui_layer := CanvasLayer.new()
+	ui_layer.name = "UILayer"
+	ui_layer.layer = 10
+	add_child(ui_layer)
+	_info_panel.reparent(ui_layer)
 	# 초기 상태: 정보 패널 숨김
 	_info_panel.visible = false
 	# 카메라 초기 위치 (맵 중앙)
@@ -417,6 +423,22 @@ func _move_player_marker(target_pos: Vector2) -> void:
 
 # ── 카메라 제어 ──
 
+## 카메라 위치를 맵 범위 내로 클램핑한다.
+## DRAG_CENTER 모드에서 뷰포트 절반을 고려하여 맵 바깥이 보이지 않도록 한다.
+func _clamp_camera() -> void:
+	var vp_size := get_viewport_rect().size
+	var half_vp := vp_size / 2.0
+	var min_pos := half_vp
+	var max_pos := MAP_SIZE - half_vp
+	# 맵이 뷰포트보다 작거나 같으면 중앙 고정
+	if max_pos.x < min_pos.x:
+		min_pos.x = MAP_SIZE.x / 2.0
+		max_pos.x = min_pos.x
+	if max_pos.y < min_pos.y:
+		min_pos.y = MAP_SIZE.y / 2.0
+		max_pos.y = min_pos.y
+	_camera.position = _camera.position.clamp(min_pos, max_pos)
+
 ## 키보드 입력에 따라 카메라를 이동시킨다.
 ## @param delta 프레임 시간
 func _handle_camera_input(delta: float) -> void:
@@ -433,7 +455,7 @@ func _handle_camera_input(delta: float) -> void:
 
 	if dir != Vector2.ZERO:
 		_camera.position += dir.normalized() * CAMERA_SPEED * delta
-		_camera.position = _camera.position.clamp(CAMERA_MIN, CAMERA_MAX)
+		_clamp_camera()
 
 ## 특정 지역으로 카메라를 팬 이동시킨다.
 ## @param region_id 지역 ID

@@ -47,11 +47,15 @@ var _name_label: Label = null
 var _check_label: Label = null
 ## 잠금 아이콘 (잠금 시 표시)
 var _lock_label: Label = null
+## 펄스 애니메이션 트윈
+var _pulse_tween: Tween = null
 
 ## 아이콘 크기 (정사각형 변 길이)
-const ICON_SIZE := 40
+const ICON_SIZE := 56
 ## 호버 감지 영역 크기
-const HOVER_AREA_SIZE := 50
+const HOVER_AREA_SIZE := 64
+## 테두리 두께
+const BORDER_WIDTH := 2
 
 # ── 타입별 아이콘 매핑 ──
 
@@ -110,6 +114,14 @@ func set_state(new_state: String) -> void:
 
 ## placeholder 아이콘과 라벨들을 생성한다.
 func _build_visuals() -> void:
+	# 아이콘 테두리 (배경보다 약간 크게)
+	var border := ColorRect.new()
+	border.custom_minimum_size = Vector2(ICON_SIZE + BORDER_WIDTH * 2, ICON_SIZE + BORDER_WIDTH * 2)
+	border.size = Vector2(ICON_SIZE + BORDER_WIDTH * 2, ICON_SIZE + BORDER_WIDTH * 2)
+	border.position = Vector2(-(ICON_SIZE + BORDER_WIDTH * 2) / 2.0, -(ICON_SIZE + BORDER_WIDTH * 2) / 2.0)
+	border.color = Color(0.85, 0.75, 0.55, 0.8)
+	add_child(border)
+
 	# 아이콘 배경 (ColorRect)
 	_icon_bg = ColorRect.new()
 	_icon_bg.custom_minimum_size = Vector2(ICON_SIZE, ICON_SIZE)
@@ -125,7 +137,7 @@ func _build_visuals() -> void:
 	_icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_icon_label.size = Vector2(ICON_SIZE, ICON_SIZE)
 	_icon_label.position = Vector2(-ICON_SIZE / 2.0, -ICON_SIZE / 2.0)
-	_icon_label.add_theme_font_size_override("font_size", 20)
+	_icon_label.add_theme_font_size_override("font_size", 24)
 	_icon_label.add_theme_color_override("font_color", Color.WHITE)
 	add_child(_icon_label)
 
@@ -157,10 +169,10 @@ func _build_visuals() -> void:
 	_name_label = Label.new()
 	_name_label.text = name_ko
 	_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_name_label.position = Vector2(-80, -ICON_SIZE / 2.0 - 24)
-	_name_label.size = Vector2(160, 20)
-	_name_label.add_theme_font_size_override("font_size", 12)
-	_name_label.add_theme_color_override("font_color", Color(0.9, 0.85, 0.7))
+	_name_label.position = Vector2(-100, -ICON_SIZE / 2.0 - 28)
+	_name_label.size = Vector2(200, 24)
+	_name_label.add_theme_font_size_override("font_size", 14)
+	_name_label.add_theme_color_override("font_color", Color(0.95, 0.9, 0.75))
 	_name_label.visible = false
 	add_child(_name_label)
 
@@ -184,9 +196,13 @@ func _build_visuals() -> void:
 func _update_visuals() -> void:
 	if _icon_bg == null:
 		return
+	# 이전 펄스 트윈 제거
+	if _pulse_tween:
+		_pulse_tween.kill()
+		_pulse_tween = null
 	match state:
 		"locked":
-			modulate = Color(0.3, 0.3, 0.3, 0.6)
+			modulate = Color(0.45, 0.45, 0.45, 0.75)
 			_icon_label.visible = false
 			_lock_label.visible = true
 			_check_label.visible = false
@@ -195,11 +211,20 @@ func _update_visuals() -> void:
 			_icon_label.visible = true
 			_lock_label.visible = false
 			_check_label.visible = false
+			_start_pulse()
 		"completed":
 			modulate = Color(0.7, 0.7, 0.7, 0.9)
 			_icon_label.visible = true
 			_lock_label.visible = false
 			_check_label.visible = true
+
+## available 상태 노드에 펄스 애니메이션을 적용한다.
+func _start_pulse() -> void:
+	_pulse_tween = create_tween().set_loops()
+	_pulse_tween.tween_property(self, "modulate", Color(1.3, 1.2, 0.9, 1.0), 0.8) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_pulse_tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.8) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 # ── 입력 처리 ──
 

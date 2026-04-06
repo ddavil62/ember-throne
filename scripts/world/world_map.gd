@@ -124,11 +124,20 @@ func _ready() -> void:
 	_get_scene_nodes()
 	_build_world_map()
 	_connect_signals()
+	_build_debug_overlay()
 	GameManager.change_state(GameManager.GameState.WORLD_MAP)
-	# 플레이어 마커를 현재 노드 위치로 이동
+	# 플레이어 마커를 현재 노드 또는 첫 available 노드 위치로 이동
 	var pm: Node = get_node("/root/ProgressionManager")
 	if pm.current_node_id != "" and _map_nodes.has(pm.current_node_id):
 		_move_player_marker(_map_nodes[pm.current_node_id].position)
+		_camera.position = _map_nodes[pm.current_node_id].position
+	else:
+		# 첫 번째 available 노드로 카메라 이동
+		for nid: String in _map_nodes:
+			if pm.get_node_state(nid) == "available":
+				_camera.position = _map_nodes[nid].position
+				_move_player_marker(_map_nodes[nid].position)
+				break
 
 func _process(delta: float) -> void:
 	_handle_camera_input(delta)
@@ -181,7 +190,17 @@ func _build_world_map() -> void:
 	# 3) 연결선 생성
 	_create_connections(dm)
 
-	print("[WorldMap] 월드맵 구축 완료: 노드 %d개" % _map_nodes.size())
+	# 디버그 카운터
+	var available_count := 0
+	var locked_count := 0
+	for nid2: String in _map_nodes:
+		if pm.get_node_state(nid2) == "available":
+			available_count += 1
+		elif pm.get_node_state(nid2) == "locked":
+			locked_count += 1
+	print("[WorldMap] 월드맵 구축 완료: 노드 %d개 (available: %d, locked: %d)" % [
+		_map_nodes.size(), available_count, locked_count
+	])
 
 ## 노드의 월드맵 배치 좌표를 계산한다.
 ## @param nid 노드 ID
@@ -193,6 +212,26 @@ func _calculate_node_position(nid: String, node_data: Dictionary) -> Vector2:
 	var offset: Vector2 = NODE_OFFSETS.get(nid, Vector2.ZERO)
 	return center + offset
 
+## 디버그 오버레이를 생성한다 (노드 수 등 진단 정보 표시).
+func _build_debug_overlay() -> void:
+	var pm: Node = get_node("/root/ProgressionManager")
+	var dm: Node = get_node("/root/DataManager")
+	var available_count := 0
+	for nid: String in _map_nodes:
+		if pm.get_node_state(nid) == "available":
+			available_count += 1
+	var canvas := CanvasLayer.new()
+	canvas.layer = 50
+	add_child(canvas)
+	var lbl := Label.new()
+	lbl.text = "월드맵 | 노드: %d / 데이터: %d | 활성: %d" % [
+		_map_nodes.size(), dm.world_nodes.size(), available_count
+	]
+	lbl.position = Vector2(16, 16)
+	lbl.add_theme_font_size_override("font_size", 14)
+	lbl.add_theme_color_override("font_color", Color(0.8, 0.8, 0.6, 0.8))
+	canvas.add_child(lbl)
+
 ## 지역 이름 라벨을 생성한다.
 func _create_region_labels() -> void:
 	for region_id: String in REGION_CENTERS:
@@ -200,10 +239,10 @@ func _create_region_labels() -> void:
 		var label := Label.new()
 		label.text = REGION_NAMES.get(region_id, region_id)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.position = center + Vector2(-60, -80)
-		label.size = Vector2(120, 24)
-		label.add_theme_font_size_override("font_size", 14)
-		label.add_theme_color_override("font_color", Color(0.7, 0.6, 0.45, 0.7))
+		label.position = center + Vector2(-80, -90)
+		label.size = Vector2(160, 28)
+		label.add_theme_font_size_override("font_size", 16)
+		label.add_theme_color_override("font_color", Color(0.8, 0.7, 0.5, 0.85))
 		_nodes_layer.add_child(label)
 
 ## 노드 간 연결선(Line2D)을 생성한다.

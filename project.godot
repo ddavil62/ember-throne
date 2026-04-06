@@ -78,3 +78,4 @@ locale/fallback="ko"
 
 renderer/rendering_method="forward_plus"
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.04, 0.03, 0.06, 1)

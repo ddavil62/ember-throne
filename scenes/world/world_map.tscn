@@ -31,6 +31,7 @@ offset_left = -8.0
 offset_top = -8.0
 offset_right = 8.0
 offset_bottom = 8.0
+mouse_filter = 2
 color = Color(0.9, 0.8, 0.2, 1)
 
 [node name="MarkerLabel" type="Label" parent="PlayerMarker"]
@@ -38,6 +39,7 @@ offset_left = -8.0
 offset_top = -10.0
 offset_right = 8.0
 offset_bottom = 10.0
+mouse_filter = 2
 text = "P"
 horizontal_alignment = 1
 vertical_alignment = 1

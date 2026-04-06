@@ -268,6 +268,7 @@ func _create_region_labels() -> void:
 		label.size = Vector2(160, 28)
 		label.add_theme_font_size_override("font_size", 16)
 		label.add_theme_color_override("font_color", Color(0.8, 0.7, 0.5, 0.85))
+		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_nodes_layer.add_child(label)
 
 ## 노드 간 연결선(Line2D)을 생성한다.

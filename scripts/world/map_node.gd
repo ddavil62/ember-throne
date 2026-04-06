@@ -122,6 +122,7 @@ func _build_visuals() -> void:
 	border.size = Vector2(ICON_SIZE + BORDER_WIDTH * 2, ICON_SIZE + BORDER_WIDTH * 2)
 	border.position = Vector2(-(ICON_SIZE + BORDER_WIDTH * 2) / 2.0, -(ICON_SIZE + BORDER_WIDTH * 2) / 2.0)
 	border.color = Color(0.85, 0.75, 0.55, 0.8)
+	border.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(border)
 
 	# 아이콘 배경 (ColorRect)
@@ -130,6 +131,7 @@ func _build_visuals() -> void:
 	_icon_bg.size = Vector2(ICON_SIZE, ICON_SIZE)
 	_icon_bg.position = Vector2(-ICON_SIZE / 2.0, -ICON_SIZE / 2.0)
 	_icon_bg.color = TYPE_COLORS.get(node_type, Color(0.4, 0.4, 0.4))
+	_icon_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_icon_bg)
 
 	# 타입 아이콘 라벨
@@ -141,6 +143,7 @@ func _build_visuals() -> void:
 	_icon_label.position = Vector2(-ICON_SIZE / 2.0, -ICON_SIZE / 2.0)
 	_icon_label.add_theme_font_size_override("font_size", 24)
 	_icon_label.add_theme_color_override("font_color", Color.WHITE)
+	_icon_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_icon_label)
 
 	# 체크마크 (완료 표시, 초기 비표시)
@@ -152,6 +155,7 @@ func _build_visuals() -> void:
 	_check_label.position = Vector2(ICON_SIZE / 2.0 - 12, -ICON_SIZE / 2.0 - 4)
 	_check_label.add_theme_font_size_override("font_size", 14)
 	_check_label.add_theme_color_override("font_color", Color(0.2, 0.9, 0.2))
+	_check_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_check_label.visible = false
 	add_child(_check_label)
 
@@ -164,6 +168,7 @@ func _build_visuals() -> void:
 	_lock_label.position = Vector2(-ICON_SIZE / 2.0, -ICON_SIZE / 2.0)
 	_lock_label.add_theme_font_size_override("font_size", 22)
 	_lock_label.add_theme_color_override("font_color", Color(0.3, 0.3, 0.3))
+	_lock_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_lock_label.visible = false
 	add_child(_lock_label)
 
@@ -175,6 +180,7 @@ func _build_visuals() -> void:
 	_name_label.size = Vector2(200, 24)
 	_name_label.add_theme_font_size_override("font_size", 14)
 	_name_label.add_theme_color_override("font_color", Color(0.95, 0.9, 0.75))
+	_name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_name_label.visible = false
 	add_child(_name_label)
 

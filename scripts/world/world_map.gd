@@ -118,10 +118,17 @@ var _map_nodes: Dictionary = {}
 ## 현재 선택된 노드 ID
 var _selected_node_id: String = ""
 
+## 마우스 드래그 팬 상태
+var _dragging: bool = false
+var _drag_start: Vector2 = Vector2.ZERO
 
 # ── 라이프사이클 ──
 
 func _ready() -> void:
+	# FadeRect 즉시 해제 (전환 안전장치)
+	var gm: Node = get_node("/root/GameManager")
+	gm.force_clear_fade()
+
 	_get_scene_nodes()
 	_build_world_map()
 	_connect_signals()
@@ -149,6 +156,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		_hide_info_panel()
 		get_viewport().set_input_as_handled()
+
+	# 마우스 우클릭 드래그로 카메라 팬
+	if event is InputEventMouseButton:
+		var mb: InputEventMouseButton = event
+		if mb.button_index == MOUSE_BUTTON_RIGHT:
+			_dragging = mb.pressed
+			if mb.pressed:
+				_drag_start = mb.position
+	elif event is InputEventMouseMotion and _dragging:
+		var motion: InputEventMouseMotion = event
+		_camera.position -= motion.relative
+		_camera.position = _camera.position.clamp(CAMERA_MIN, CAMERA_MAX)
 
 # ── 씬 노드 참조 획득 ──
 
@@ -401,14 +420,15 @@ func _move_player_marker(target_pos: Vector2) -> void:
 ## 키보드 입력에 따라 카메라를 이동시킨다.
 ## @param delta 프레임 시간
 func _handle_camera_input(delta: float) -> void:
+	# 키보드 카메라 이동 (화살표, WASD)
 	var dir := Vector2.ZERO
-	if Input.is_action_pressed("camera_up"):
+	if Input.is_action_pressed("ui_up") or Input.is_key_pressed(KEY_W):
 		dir.y -= 1
-	if Input.is_action_pressed("camera_down"):
+	if Input.is_action_pressed("ui_down") or Input.is_key_pressed(KEY_S):
 		dir.y += 1
-	if Input.is_action_pressed("camera_left"):
+	if Input.is_action_pressed("ui_left") or Input.is_key_pressed(KEY_A):
 		dir.x -= 1
-	if Input.is_action_pressed("camera_right"):
+	if Input.is_action_pressed("ui_right") or Input.is_key_pressed(KEY_D):
 		dir.x += 1
 
 	if dir != Vector2.ZERO:

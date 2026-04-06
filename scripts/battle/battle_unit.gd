@@ -1,0 +1,327 @@
+## @fileoverview 전투 유닛 클래스. 캐릭터/적 초기화, 이동, 전투 상태 관리를 담당한다.
+class_name BattleUnit
+extends Node2D
+
+# ── 상수 ──
+
+## 이동 Tween 세그먼트당 소요 시간 (초)
+const MOVE_SEGMENT_DURATION: float = 0.15
+
+## 8방향 이름 배열
+const DIRECTION_NAMES: Array[String] = [
+	"south", "south_west", "west", "north_west",
+	"north", "north_east", "east", "south_east"
+]
+
+# ── 시그널 ──
+
+## 이동 완료 시 발생
+signal move_finished()
+
+# ── 기본 속성 ──
+
+## 유닛 고유 ID (캐릭터 id 또는 "enemy_0" 등)
+var unit_id: String = ""
+
+## 소속 팀 ("player" 또는 "enemy")
+var team: String = "player"
+
+## 기본 스탯 (레벨 적용 완료 상태)
+var stats: Dictionary = {
+	"hp": 0, "mp": 0, "atk": 0, "def": 0,
+	"matk": 0, "mdef": 0, "spd": 0, "mov": 0
+}
+
+## 현재 HP
+var current_hp: int = 0
+
+## 현재 MP
+var current_mp: int = 0
+
+## 현재 위치 (그리드 좌표)
+var cell: Vector2i = Vector2i.ZERO
+
+## 현재 바라보는 방향 (8방향 문자열)
+var facing: String = "south"
+
+## 장비 슬롯
+var equipment: Dictionary = {
+	"weapon": "",
+	"armor": "",
+	"accessory": ""
+}
+
+## 보유 스킬 ID 배열
+var skills: Array[String] = []
+
+## 활성 상태이상 배열 [{status_id, duration, ...}]
+var status_effects: Array[Dictionary] = []
+
+## 이번 턴 행동 완료 여부
+var acted: bool = false
+
+## 이동 중 여부 (Tween 애니메이션 진행 중)
+var _is_moving: bool = false
+
+## 레벨
+var level: int = 1
+
+## 클래스 이름 (표시용)
+var class_name_ko: String = ""
+
+## 유닛 이름 (표시용)
+var unit_name_ko: String = ""
+
+## 원본 데이터 참조 (디버그/UI용)
+var _source_data: Dictionary = {}
+
+# ── 자식 노드 참조 ──
+
+## 스프라이트 노드
+var _sprite: AnimatedSprite2D = null
+
+## HP바 노드
+var _health_bar: ProgressBar = null
+
+## 상태이상 아이콘 컨테이너
+var _status_icons: HBoxContainer = null
+
+## 선택 표시 노드
+var _selection_indicator: Sprite2D = null
+
+# ── 초기화 ──
+
+func _ready() -> void:
+	_find_child_nodes()
+
+## 자식 노드 참조 취득
+func _find_child_nodes() -> void:
+	if has_node("Sprite"):
+		_sprite = get_node("Sprite") as AnimatedSprite2D
+	if has_node("HealthBar"):
+		_health_bar = get_node("HealthBar") as ProgressBar
+	if has_node("StatusIcons"):
+		_status_icons = get_node("StatusIcons") as HBoxContainer
+	if has_node("SelectionIndicator"):
+		_selection_indicator = get_node("SelectionIndicator") as Sprite2D
+		_selection_indicator.visible = false
+
+## 캐릭터 데이터로 유닛 초기화 (플레이어 유닛)
+## @param char_data DataManager.get_character()에서 가져온 캐릭터 Dictionary
+## @param char_level 캐릭터 레벨
+func init_from_character(char_data: Dictionary, char_level: int) -> void:
+	_source_data = char_data
+	unit_id = char_data.get("id", "")
+	team = "player"
+	level = char_level
+	unit_name_ko = char_data.get("name_ko", "")
+	class_name_ko = char_data.get("class_ko", "")
+
+	# 레벨 1 기본 스탯
+	var base: Dictionary = char_data.get("stats_lv1", {})
+	var growth: Dictionary = char_data.get("growth", {})
+
+	# 레벨 적용: stat = base + growth * (level - 1)
+	for key: String in stats:
+		var base_val: float = float(base.get(key, 0))
+		var growth_val: float = float(growth.get(key, 0))
+		stats[key] = int(base_val + growth_val * (char_level - 1))
+
+	# 전직 보너스 (해당하는 경우 — 간략 처리, 전직 시스템은 별도 Phase에서)
+	current_hp = stats["hp"]
+	current_mp = stats["mp"]
+
+	# 스킬 설정
+	skills.clear()
+	var skill_list: Array = char_data.get("skills", [])
+	for s: Variant in skill_list:
+		skills.append(s as String)
+
+	_update_health_bar()
+
+## 적 데이터로 유닛 초기화
+## @param enemy_data DataManager.get_enemy()에서 가져온 적 Dictionary
+## @param enemy_level 적 레벨 (맵 배치 데이터의 level)
+func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
+	_source_data = enemy_data
+	unit_id = enemy_data.get("id", "")
+	team = "enemy"
+	level = enemy_level
+	unit_name_ko = enemy_data.get("name_ko", "")
+
+	# 기본 스탯 사용
+	var base: Dictionary = enemy_data.get("base_stats", {})
+	var scaling: Dictionary = enemy_data.get("scaling_per_level", {})
+
+	for key: String in stats:
+		var base_val: float = float(base.get(key, 0))
+		var scale_val: float = float(scaling.get(key, 0))
+		stats[key] = int(base_val + scale_val * maxi(enemy_level - 1, 0))
+
+	current_hp = stats["hp"]
+	current_mp = stats["mp"]
+
+	# 스킬 설정
+	skills.clear()
+	var skill_list: Array = enemy_data.get("skills", [])
+	for s: Variant in skill_list:
+		skills.append(s as String)
+
+	_update_health_bar()
+
+# ── 이동 ──
+
+## 경로를 따라 유닛을 이동시킨다 (Tween 애니메이션)
+## @param target_cell 목표 셀 좌표
+## @param path 경로 셀 배열 (시작 셀 포함)
+func move_to(target_cell: Vector2i, path: Array[Vector2i]) -> void:
+	if _is_moving:
+		return
+	if path.size() < 2:
+		cell = target_cell
+		position = GridSystem.cell_to_world(target_cell)
+		move_finished.emit()
+		return
+
+	_is_moving = true
+
+	# 경로 포인트를 순회하며 Tween 이동
+	var tween := create_tween()
+	for i: int in range(1, path.size()):
+		var world_pos := GridSystem.cell_to_world(path[i])
+		# 각 세그먼트 시작 시 방향 갱신
+		var prev_cell: Vector2i = path[i - 1]
+		var next_cell: Vector2i = path[i]
+		var dir := GridSystem.get_direction(prev_cell, next_cell)
+		tween.tween_callback(_set_facing.bind(dir))
+		tween.tween_property(self, "position", world_pos, MOVE_SEGMENT_DURATION)
+
+	await tween.finished
+
+	cell = target_cell
+	_is_moving = false
+	move_finished.emit()
+
+## 방향 설정 (Tween 콜백용)
+## @param dir 방향 문자열
+func _set_facing(dir: String) -> void:
+	facing = dir
+	_update_sprite_direction()
+
+## 대상 셀 방향으로 facing 갱신
+## @param target_cell 바라볼 대상 셀 좌표
+func face_towards(target_cell: Vector2i) -> void:
+	if target_cell == cell:
+		return
+	facing = GridSystem.get_direction(cell, target_cell)
+	_update_sprite_direction()
+
+# ── 전투 액션 ──
+
+## 피해를 입힌다
+## @param amount 피해량
+## @returns 남은 HP
+func take_damage(amount: int) -> int:
+	current_hp = maxi(current_hp - amount, 0)
+	_update_health_bar()
+	# 피격 시각 효과 (깜빡임)
+	_flash_damage()
+	return current_hp
+
+## 회복
+## @param amount 회복량
+func heal(amount: int) -> void:
+	current_hp = mini(current_hp + amount, stats["hp"])
+	_update_health_bar()
+
+## 상태이상 적용
+## @param status_id 상태이상 ID
+## @param duration 지속 턴 수
+func apply_status(status_id: String, duration: int) -> void:
+	# 기존 동일 상태이상이 있으면 갱신
+	for effect: Dictionary in status_effects:
+		if effect.get("status_id", "") == status_id:
+			effect["duration"] = duration
+			return
+	status_effects.append({"status_id": status_id, "duration": duration})
+
+## 상태이상 제거
+## @param status_id 제거할 상태이상 ID
+func remove_status(status_id: String) -> void:
+	for i: int in range(status_effects.size() - 1, -1, -1):
+		if status_effects[i].get("status_id", "") == status_id:
+			status_effects.remove_at(i)
+			break
+
+## 생존 여부 확인
+## @returns 살아있으면 true
+func is_alive() -> bool:
+	return current_hp > 0
+
+## 턴 시작 시 리셋 (행동 완료 플래그, 상태이상 턴 차감 등)
+func reset_turn() -> void:
+	acted = false
+	# 상태이상 턴 차감
+	var expired: Array[String] = []
+	for effect: Dictionary in status_effects:
+		effect["duration"] = effect.get("duration", 0) - 1
+		if effect["duration"] <= 0:
+			expired.append(effect.get("status_id", ""))
+	for sid: String in expired:
+		remove_status(sid)
+
+# ── 선택 표시 ──
+
+## 선택 표시 활성화
+func show_selection() -> void:
+	if _selection_indicator:
+		_selection_indicator.visible = true
+
+## 선택 표시 비활성화
+func hide_selection() -> void:
+	if _selection_indicator:
+		_selection_indicator.visible = false
+
+## 행동 완료 시 그레이아웃 표시
+func show_acted() -> void:
+	modulate = Color(0.5, 0.5, 0.5, 1.0)
+
+## 행동 가능 상태로 복원
+func clear_acted_visual() -> void:
+	modulate = Color(1.0, 1.0, 1.0, 1.0)
+
+# ── 내부 유틸 ──
+
+## HP바 갱신
+func _update_health_bar() -> void:
+	if _health_bar == null:
+		return
+	_health_bar.max_value = stats["hp"]
+	_health_bar.value = current_hp
+	# HP 비율에 따른 색상 변경
+	var ratio := float(current_hp) / float(maxi(stats["hp"], 1))
+	if ratio > 0.5:
+		_health_bar.modulate = Color(0.2, 0.9, 0.2)  # 초록
+	elif ratio > 0.25:
+		_health_bar.modulate = Color(0.9, 0.9, 0.2)  # 노랑
+	else:
+		_health_bar.modulate = Color(0.9, 0.2, 0.2)  # 빨강
+
+## 스프라이트 방향 갱신
+func _update_sprite_direction() -> void:
+	if _sprite == null:
+		return
+	# 방향별 애니메이션이 있으면 전환 (없으면 좌우 반전으로 처리)
+	var anim_name := "idle_" + facing
+	if _sprite.sprite_frames and _sprite.sprite_frames.has_animation(anim_name):
+		_sprite.play(anim_name)
+	else:
+		# 기본: 좌우 반전으로 처리
+		var flip := facing in ["west", "north_west", "south_west"]
+		_sprite.flip_h = flip
+
+## 피격 깜빡임 효과
+func _flash_damage() -> void:
+	var tween := create_tween()
+	tween.tween_property(self, "modulate", Color(1.0, 0.3, 0.3, 1.0), 0.05)
+	tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.1)

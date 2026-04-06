@@ -19,6 +19,7 @@ GameManager="*res://scripts/autoload/game_manager.gd"
 DataManager="*res://scripts/autoload/data_manager.gd"
 SaveManager="*res://scripts/autoload/save_manager.gd"
 AudioManager="*res://scripts/autoload/audio_manager.gd"
+ProgressionManager="*res://scripts/world/progression_manager.gd"
 
 [display]
 

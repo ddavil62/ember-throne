@@ -147,7 +147,7 @@ func _load_maps() -> void:
 	maps = _load_json_dir("res://data/maps", "battle_id")
 	print("[DataManager] 맵 %d개 로드" % maps.size())
 
-## 기타 데이터 로드 (지형, 상점, 난이도)
+## 기타 데이터 로드 (지형, 상점, 난이도, 월드 노드)
 func _load_misc() -> void:
 	var terrain_data: Variant = _load_json("res://data/terrain.json")
 	if terrain_data is Array:
@@ -159,6 +159,17 @@ func _load_misc() -> void:
 	if shops_data is Dictionary:
 		shops = shops_data
 	difficulty_data = _load_json("res://data/difficulty.json")
+	_load_world_nodes()
+
+## 월드 노드 데이터 로드
+func _load_world_nodes() -> void:
+	var data: Variant = _load_json("res://data/world/nodes.json")
+	if data is Array:
+		for node_data: Dictionary in data:
+			var nid: String = node_data.get("node_id", "")
+			if nid != "":
+				world_nodes[nid] = node_data
+	print("[DataManager] 월드 노드 %d개 로드" % world_nodes.size())
 
 # ── 조회 헬퍼 ──
 
@@ -197,3 +208,7 @@ func get_map(battle_id: String) -> Dictionary:
 ## 지형 데이터 조회
 func get_terrain(terrain_type: String) -> Dictionary:
 	return terrain.get(terrain_type, {})
+
+## 월드 노드 데이터 조회
+func get_world_node(node_id: String) -> Dictionary:
+	return world_nodes.get(node_id, {})

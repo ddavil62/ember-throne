@@ -167,6 +167,21 @@ func _get_scene_nodes() -> void:
 	_info_panel.visible = false
 	# 카메라 초기 위치 (맵 중앙)
 	_camera.position = Vector2(960, 540)
+	# 월드맵 배경 텍스처 로드
+	_load_background()
+
+## 월드맵 배경 이미지를 런타임에 로드한다.
+func _load_background() -> void:
+	var bg_path := "res://assets/worldmap/world_map_bg.png"
+	var bg_sprite: Sprite2D = $Background
+	# Image.load_from_file로 직접 로드 (임포트 시스템 불필요)
+	var img := Image.load_from_file(bg_path)
+	if img != null and not img.is_empty():
+		var tex := ImageTexture.create_from_image(img)
+		bg_sprite.texture = tex
+		print("[WorldMap] 배경 텍스처 로드 완료: %dx%d" % [img.get_width(), img.get_height()])
+	else:
+		push_warning("[WorldMap] 배경 파일 로드 실패: %s" % bg_path)
 
 # ── 월드맵 빌드 ──
 

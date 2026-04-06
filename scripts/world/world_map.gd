@@ -118,8 +118,6 @@ var _map_nodes: Dictionary = {}
 ## 현재 선택된 노드 ID
 var _selected_node_id: String = ""
 
-## 배경 색상 (양피지 톤)
-const BG_COLOR := Color(0.15, 0.12, 0.1)
 
 # ── 라이프사이클 ──
 

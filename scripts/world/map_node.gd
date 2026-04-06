@@ -97,8 +97,10 @@ func setup(data: Dictionary, pos: Vector2) -> void:
 	name_ko = data.get("name_ko", "")
 	name_en = data.get("name_en", "")
 	act = data.get("act", 1)
-	scene_id = data.get("scene_id", "")
-	battle_id = data.get("battle_id", "")
+	var _sid = data.get("scene_id", "")
+	scene_id = _sid if _sid != null else ""
+	var _bid = data.get("battle_id", "")
+	battle_id = _bid if _bid != null else ""
 	description_ko = data.get("description_ko", "")
 	connections = data.get("connections", [])
 	position = pos

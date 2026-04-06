@@ -2,6 +2,9 @@
 ## 카메라 이동, 노드 선택/진입 등 월드맵의 모든 상호작용을 관리한다.
 extends Node2D
 
+## MapNode 스크립트 (class_name 글로벌 등록 실패 시 대비)
+const MapNodeClass = preload("res://scripts/world/map_node.gd")
+
 # ── 지역 중심 좌표 (1920x1080 기반) ──
 # 스펙에 따른 대략적 배치: 이르헨(좌상) - 실바렌(우상) - 크로우펠(중앙) -
 # 하르벤(중우) - 벨마르(좌하) - 아스칼론(우하) - 재의 바다(하단)
@@ -109,7 +112,7 @@ var _info_type: Label = null
 var _info_desc: RichTextLabel = null
 var _info_enter_btn: Button = null
 
-## 생성된 MapNode 인스턴스 맵 {node_id: MapNode}
+## 생성된 MapNodeClass 인스턴스 맵 {node_id: MapNodeClass}
 var _map_nodes: Dictionary = {}
 
 ## 현재 선택된 노드 ID
@@ -121,44 +124,22 @@ const BG_COLOR := Color(0.15, 0.12, 0.1)
 # ── 라이프사이클 ──
 
 func _ready() -> void:
-	var log_lines: Array[String] = []
-	print("[WorldMap] _ready 시작")
-	log_lines.append("_ready 시작")
-
-	# FadeRect 즉시 제거 (최우선)
-	var gm: Node = get_node("/root/GameManager")
-	gm.force_clear_fade()
-	log_lines.append("FadeRect 강제 해제")
-
 	_get_scene_nodes()
-	log_lines.append("씬 노드 참조 OK")
-
 	_build_world_map()
-	log_lines.append("월드맵 빌드: %d개 노드" % _map_nodes.size())
-
 	_connect_signals()
-	log_lines.append("시그널 연결 OK")
 
 	# 플레이어 마커를 현재 노드 또는 첫 available 노드 위치로 이동
 	var pm: Node = get_node("/root/ProgressionManager")
 	if pm.current_node_id != "" and _map_nodes.has(pm.current_node_id):
 		_move_player_marker(_map_nodes[pm.current_node_id].position)
 		_camera.position = _map_nodes[pm.current_node_id].position
-		log_lines.append("카메라 → %s" % pm.current_node_id)
 	else:
-		var found := false
 		for nid: String in _map_nodes:
 			if pm.get_node_state(nid) == "available":
 				_camera.position = _map_nodes[nid].position
 				_move_player_marker(_map_nodes[nid].position)
-				log_lines.append("카메라 → %s (available)" % nid)
-				found = true
 				break
-		if not found:
-			log_lines.append("WARNING: available 노드 없음!")
-
-	_build_debug_overlay("\n".join(log_lines))
-	print("[WorldMap] _ready 완료 (노드: %d개)" % _map_nodes.size())
+	print("[WorldMap] 월드맵 로드 완료 (노드: %d개)" % _map_nodes.size())
 
 func _process(delta: float) -> void:
 	_handle_camera_input(delta)
@@ -201,7 +182,7 @@ func _build_world_map() -> void:
 	for nid: String in dm.world_nodes:
 		var node_data: Dictionary = dm.world_nodes[nid]
 		var pos := _calculate_node_position(nid, node_data)
-		var map_node := MapNode.new()
+		var map_node := MapNodeClass.new()
 		map_node.setup(node_data, pos)
 		map_node.set_state(pm.get_node_state(nid))
 		map_node.node_clicked.connect(_on_node_clicked)
@@ -236,25 +217,6 @@ func _calculate_node_position(nid: String, node_data: Dictionary) -> Vector2:
 ## 디버그 오버레이를 생성한다 (진단 로그 표시).
 ## CanvasLayer 200으로 설정 — FadeRect(layer 100) 위에 표시.
 ## @param log_text 화면에 표시할 진단 로그
-func _build_debug_overlay(log_text: String = "") -> void:
-	var canvas := CanvasLayer.new()
-	canvas.layer = 200
-	add_child(canvas)
-	# 반투명 배경
-	var bg := ColorRect.new()
-	bg.color = Color(0, 0, 0, 0.7)
-	bg.position = Vector2(8, 8)
-	bg.size = Vector2(500, 200)
-	canvas.add_child(bg)
-	var lbl := Label.new()
-	lbl.text = log_text
-	lbl.position = Vector2(16, 12)
-	lbl.size = Vector2(480, 190)
-	lbl.add_theme_font_size_override("font_size", 14)
-	lbl.add_theme_color_override("font_color", Color(0.0, 1.0, 0.0, 1.0))
-	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	canvas.add_child(lbl)
-
 ## 지역 이름 라벨을 생성한다.
 func _create_region_labels() -> void:
 	for region_id: String in REGION_CENTERS:
@@ -460,7 +422,7 @@ func pan_to_node(node_id: String) -> void:
 func _refresh_node_states() -> void:
 	var pm: Node = get_node("/root/ProgressionManager")
 	for nid: String in _map_nodes:
-		var map_node: MapNode = _map_nodes[nid]
+		var map_node: MapNodeClass = _map_nodes[nid]
 		map_node.set_state(pm.get_node_state(nid))
 	# 연결선 색상 갱신
 	_refresh_connection_colors()

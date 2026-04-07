@@ -23,6 +23,21 @@
 | `altar`를 ritual 타입이 아닌 배틀에 배치 | 의식 배틀(battle_35)에만 존재하는 특수 오브젝트 | battle_type이 `ritual`이거나 MAPS.md "제단" 명시 배틀만 |
 | `trap_hidden`을 MAPS.md 근거 없이 배치 | 함정 배틀(battle_19)의 전술 특성 오염 | MAPS.md "함정", "trap" 명시 배틀만 |
 | `gate_intact`를 관문 배틀 외에 배치 | 성문 돌파 이벤트(battle_29) 전용 | MAPS.md "성문", "관문" 명시 배틀만 |
+| Prop `z_index`를 타입별 기준값 없이 임의 지정 | 바위/우물 등이 나무 위로 겹쳐 보이는 렌더링 오류 발생 | 아래 **Prop Z-Order 기준표** 참조 |
+
+### Prop Z-Order 기준표
+
+Prop 배치 시 `z_index`는 반드시 아래 기준을 따른다. 같은 레이어 내에서는 `y좌표`가 클수록(화면 아래쪽) 앞에 그려지므로 별도 조정 불필요.
+
+| 레이어 | z_index | 해당 Prop 종류 |
+|--------|---------|----------------|
+| 지면 장식 (바닥 밀착) | 0 | `floor_crack`, `blood_pool`, `rune_floor` 등 |
+| 저층 오브젝트 | 10 | `rock_small`, `stump`, `campfire`, `well`, `barrel`, `crate` |
+| 중층 오브젝트 | 20 | `rock_large`, `bush`, `fence`, `statue_small` |
+| 고층 오브젝트 | 30 | `tree`, `pillar`, `statue_large`, `ward_stone_active`, `altar` |
+| 구조물 | 40 | `bridge_intact`, `bridge_broken`, `iron_gate`, `gate_intact`, `trap_hidden` |
+
+> **규칙**: 나무(`tree`)는 z_index 30, 바위(`rock`)·우물(`well`)은 z_index 10~20. 나무가 항상 바위/우물보다 앞에 그려져야 한다.
 
 ---
 

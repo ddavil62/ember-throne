@@ -419,7 +419,47 @@ func _render_objects() -> void:
 			obj_x * ts,
 			obj_y * ts + ts - obj_h
 		)
+		# 타입별 z_index 적용: 저층 오브젝트가 고층(나무 등) 뒤에 그려지도록
+		sprite.z_index = _get_prop_z_index(obj_type)
 		obj_node.add_child(sprite)
+
+## 오브젝트 타입별 z_index를 반환한다.
+## 저층(바위/우물)이 고층(나무/기둥) 뒤에 그려지도록 레이어를 분리한다.
+## @param obj_type 오브젝트 타입명
+## @returns z_index 값 (0=지면, 10=저층, 20=중층, 30=고층, 40=구조물)
+static func _get_prop_z_index(obj_type: String) -> int:
+	const Z_GROUND:    int = 0   # 지면 장식 (바닥 밀착)
+	const Z_LOW:       int = 10  # 저층: 바위, 우물, 통, 장작
+	const Z_MID:       int = 20  # 중층: 큰 바위, 덤불, 울타리, 작은 동상
+	const Z_HIGH:      int = 30  # 고층: 나무, 기둥, 큰 동상, 결계석, 제단
+	const Z_STRUCTURE: int = 40  # 구조물: 다리, 문, 함정
+
+	match obj_type:
+		# ── 지면 장식 ──
+		"wildflower", "ash_mist", "rune_floor":
+			return Z_GROUND
+		# ── 저층 ──
+		"rock_small", "rock", "stump", "burnt_stump", "fallen_log", \
+		"campfire", "well", "barrel", "crate", "rope_anchor", "lantern", \
+		"wildflower":
+			return Z_LOW
+		# ── 중층 ──
+		"rock_medium", "rock_large", "bush_small", "bush", "bush_large", \
+		"fence", "dock", "mushroom", "roots", "fissure", "ash_crystal", \
+		"statue_small":
+			return Z_MID
+		# ── 고층 ──
+		"tree_small", "tree_large", "tree_oak", "pine", "ancient_tree", \
+		"dead_tree", "pillar", "village_square", "shop", "house", \
+		"farmhouse", "ward_pillar", "ward_stone_active", "altar", \
+		"ember_throne", "statue_large":
+			return Z_HIGH
+		# ── 구조물 ──
+		"bridge_intact", "bridge_broken", "iron_gate", "gate_intact", \
+		"trap_hidden":
+			return Z_STRUCTURE
+		_:
+			return Z_LOW  # 기본값: 저층
 
 ## 오브젝트 타입명을 실제 파일 경로로 변환한다.
 ## props 폴더의 지역별/공용 에셋을 타입명으로 참조할 수 있게 한다.

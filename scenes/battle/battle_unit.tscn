@@ -15,6 +15,14 @@ offset_bottom = -16.0
 show_percentage = false
 value = 100.0
 
+[node name="MpBar" type="ProgressBar" parent="."]
+offset_left = -14.0
+offset_top = -24.0
+offset_right = 14.0
+offset_bottom = -21.0
+show_percentage = false
+value = 100.0
+
 [node name="StatusIcons" type="HBoxContainer" parent="."]
 offset_left = -14.0
 offset_top = -28.0

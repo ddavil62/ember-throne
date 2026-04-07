@@ -97,6 +97,15 @@ var _sprite: AnimatedSprite2D = null
 ## HP바 노드
 var _health_bar: ProgressBar = null
 
+## MP바 노드
+var _mp_bar: ProgressBar = null
+
+## HP 채움 StyleBox (색상 동적 변경용)
+var _hp_fill_style: StyleBoxFlat = null
+
+## MP 채움 StyleBox
+var _mp_fill_style: StyleBoxFlat = null
+
 ## 상태이상 아이콘 컨테이너
 var _status_icons: HBoxContainer = null
 
@@ -114,28 +123,59 @@ func _find_child_nodes() -> void:
 		_sprite = get_node("Sprite") as AnimatedSprite2D
 	if has_node("HealthBar"):
 		_health_bar = get_node("HealthBar") as ProgressBar
+	if has_node("MpBar"):
+		_mp_bar = get_node("MpBar") as ProgressBar
 	if has_node("StatusIcons"):
 		_status_icons = get_node("StatusIcons") as HBoxContainer
 	if has_node("SelectionIndicator"):
 		_selection_indicator = get_node("SelectionIndicator") as Sprite2D
 		_selection_indicator.visible = false
+	_setup_bar_styles()
 	_reposition_hud()
 
-## HP바·상태이상 아이콘을 캐릭터 머리 바로 위에 배치한다.
-## SPRITE_HEAD_H = 캔버스 내 머리 위치까지의 추정 높이 (언스케일, 경험적 값)
-func _reposition_hud() -> void:
-	var bar_h := 4.0
-	var gap   := 2.0
-	# 머리 Y = (offset - head_height) * scale
-	var head_y: float = (SPRITE_OFFSET_Y - SPRITE_HEAD_H) * SPRITE_SCALE
-	var bar_top: float = head_y - gap - bar_h
+## HP바·MP바 시각 스타일을 적용한다 (어두운 배경 + 검은 테두리 + 채움색)
+func _setup_bar_styles() -> void:
+	# 공통 배경: 어두운 반투명 + 검은 1px 테두리
+	var make_bg := func() -> StyleBoxFlat:
+		var s := StyleBoxFlat.new()
+		s.bg_color = Color(0.06, 0.06, 0.06, 0.88)
+		s.set_border_width_all(1)
+		s.border_color = Color(0.0, 0.0, 0.0, 1.0)
+		return s
+
+	_hp_fill_style = StyleBoxFlat.new()
+	_hp_fill_style.bg_color = Color(0.18, 0.82, 0.18, 1.0)   # 기본 초록
+
+	_mp_fill_style = StyleBoxFlat.new()
+	_mp_fill_style.bg_color = Color(0.22, 0.52, 1.0, 1.0)    # 파랑
 
 	if _health_bar:
-		_health_bar.offset_top    = bar_top
-		_health_bar.offset_bottom = bar_top + bar_h
+		_health_bar.add_theme_stylebox_override("background", make_bg.call())
+		_health_bar.add_theme_stylebox_override("fill", _hp_fill_style)
+	if _mp_bar:
+		_mp_bar.add_theme_stylebox_override("background", make_bg.call())
+		_mp_bar.add_theme_stylebox_override("fill", _mp_fill_style)
+
+## HP바·MP바·상태이상 아이콘을 캐릭터 머리 바로 위에 배치한다.
+## 아래에서 위 순서: [머리] → [gap] → [HP bar] → [1px] → [MP bar] → [상태이상]
+func _reposition_hud() -> void:
+	var bar_h    := 3.0   # 바 높이 (게임 px)
+	var bar_gap  := 1.0   # HP바와 MP바 사이 간격
+	var head_gap := 2.0   # 머리와 HP바 사이 간격
+
+	var head_y: float  = (SPRITE_OFFSET_Y - SPRITE_HEAD_H) * SPRITE_SCALE
+	var hp_top: float  = head_y - head_gap - bar_h
+	var mp_top: float  = hp_top - bar_gap - bar_h
+
+	if _health_bar:
+		_health_bar.offset_top    = hp_top
+		_health_bar.offset_bottom = hp_top + bar_h
+	if _mp_bar:
+		_mp_bar.offset_top    = mp_top
+		_mp_bar.offset_bottom = mp_top + bar_h
 	if _status_icons:
-		_status_icons.offset_top    = bar_top - 8.0
-		_status_icons.offset_bottom = bar_top
+		_status_icons.offset_top    = mp_top - 8.0
+		_status_icons.offset_bottom = mp_top
 
 ## 캐릭터 데이터로 유닛 초기화 (플레이어 유닛)
 ## @param char_data DataManager.get_character()에서 가져온 캐릭터 Dictionary
@@ -169,6 +209,7 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 		skills.append(s as String)
 
 	_update_health_bar()
+	_update_mp_bar()
 
 	# 스프라이트 로딩 시도 (플레이어 캐릭터)
 	var sid: String = char_data.get("sprite_id", unit_id)
@@ -222,6 +263,7 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 		skills.append(s as String)
 
 	_update_health_bar()
+	_update_mp_bar()
 
 	# 스프라이트 로딩 시도 (적 유닛)
 	var sid: String = enemy_data.get("sprite_id", unit_id)
@@ -407,14 +449,22 @@ func _update_health_bar() -> void:
 		return
 	_health_bar.max_value = stats["hp"]
 	_health_bar.value = current_hp
-	# HP 비율에 따른 색상 변경
-	var ratio := float(current_hp) / float(maxi(stats["hp"], 1))
-	if ratio > 0.5:
-		_health_bar.modulate = Color(0.2, 0.9, 0.2)  # 초록
-	elif ratio > 0.25:
-		_health_bar.modulate = Color(0.9, 0.9, 0.2)  # 노랑
-	else:
-		_health_bar.modulate = Color(0.9, 0.2, 0.2)  # 빨강
+	# HP 비율에 따른 채움 색상 변경 (배경은 항상 어둡게 유지)
+	if _hp_fill_style:
+		var ratio := float(current_hp) / float(maxi(stats["hp"], 1))
+		if ratio > 0.5:
+			_hp_fill_style.bg_color = Color(0.18, 0.82, 0.18, 1.0)   # 초록
+		elif ratio > 0.25:
+			_hp_fill_style.bg_color = Color(0.92, 0.78, 0.08, 1.0)   # 노랑
+		else:
+			_hp_fill_style.bg_color = Color(0.90, 0.18, 0.12, 1.0)   # 빨강
+
+## MP바 갱신
+func _update_mp_bar() -> void:
+	if _mp_bar == null:
+		return
+	_mp_bar.max_value = maxi(stats["mp"], 1)
+	_mp_bar.value = current_mp
 
 ## 스프라이트 방향 갱신
 func _update_sprite_direction() -> void:

@@ -82,10 +82,8 @@ func setup(battle_map: Node2D, deploy_cells: Array[Vector2i], party: Array[Dicti
 func _build_ui() -> void:
 	layer = 10
 
-	# 뷰포트 크기를 기준으로 패널 사이즈를 명시적으로 설정한다.
-	# CanvasLayer 직속 Control에 anchor_bottom=1.0을 쓰면 높이가 0으로
-	# 계산되어 클릭 hitbox가 사라지는 버그가 있으므로 직접 지정한다.
 	var vp_size: Vector2 = get_viewport().get_visible_rect().size
+	print("[Deploy] _build_ui 호출됨, 뷰포트: %s" % vp_size)
 
 	# 왼쪽 패널 (캐릭터 목록)
 	_panel = Panel.new()
@@ -249,6 +247,7 @@ func _remove_unit_at(cell: Vector2i) -> void:
 ## 캐릭터 버튼 클릭
 ## @param char_data 클릭된 캐릭터 데이터
 func _on_character_button_pressed(char_data: Dictionary) -> void:
+	print("[Deploy] 캐릭터 버튼 눌림: %s" % char_data.get("id", "?"))
 	var char_id: String = char_data.get("id", "")
 
 	# 이미 배치된 캐릭터 선택 시 → 해당 유닛으로 카메라 이동 (또는 제거 모드)
@@ -294,6 +293,7 @@ func _on_unit_clicked(unit: BattleUnit) -> void:
 
 ## 전투 시작 버튼 클릭
 func _on_start_pressed() -> void:
+	print("[Deploy] 전투 시작 버튼 눌림! 배치된 유닛: %d명" % _deployed.size())
 	# 최소 1명 배치 필요 (카엘은 자동이므로 항상 1명 이상)
 	if _deployed.is_empty():
 		return

@@ -36,6 +36,10 @@ const SPRITE_ALIASES: Dictionary = {
 	"lucid": "boss_lucid",
 	"secret_police_spy": "secret_police_agent",
 	"secret_police_officer": "secret_police_commander",
+	# ash_beast 계열 — 전용 에셋 제작 전까지 임시 매핑
+	"ash_beast_small":  "ash_parasite",
+	"ash_beast_medium": "ash_wolf",
+	"ash_beast_large":  "ash_giant",
 }
 
 # ── 공개 함수 ──

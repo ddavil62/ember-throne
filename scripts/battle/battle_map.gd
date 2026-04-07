@@ -601,18 +601,19 @@ func spawn_unit(unit_data: Dictionary, spawn_cell: Vector2i, unit_team: String, 
 		uid = unit_data.get("id", "unit_%d" % units.size())
 	unit.unit_id = uid
 
-	if unit_team == "player":
-		unit.init_from_character(unit_data, unit_level)
-	else:
-		unit.init_from_enemy(unit_data, unit_level)
-
 	unit.cell = spawn_cell
 	unit.position = GridSystem.cell_to_world(spawn_cell)
 
+	# add_child 먼저 → _ready() → _find_child_nodes() 실행 후 init 호출
 	if _units_container:
 		_units_container.add_child(unit)
 	else:
 		add_child(unit)
+
+	if unit_team == "player":
+		unit.init_from_character(unit_data, unit_level)
+	else:
+		unit.init_from_enemy(unit_data, unit_level)
 
 	units[spawn_cell] = unit
 	_units_by_id[uid] = unit

@@ -482,6 +482,10 @@ func _execute_wait() -> void:
 
 ## 유닛 행동 완료 후 처리
 func _complete_action() -> void:
+	# VCC가 동기 시그널 처리 중 BATTLE_END를 설정했으면 덮어쓰지 않고 즉시 반환
+	if _state == TurnState.BATTLE_END:
+		return
+
 	_state = TurnState.ACTION_COMPLETE
 
 	if _selected_unit:
@@ -757,10 +761,15 @@ func _execute_ai_unit_action(unit: BattleUnit) -> void:
 
 			if not closest_target.is_alive():
 				EventBus.unit_died.emit(closest_target.unit_id, unit.unit_id)
-				battle_map.remove_unit(closest_target.cell)
+				if battle_map:
+					battle_map.remove_unit(closest_target.cell)
 			else:
 				# AI 반격 받기
 				_execute_counterattack(closest_target, unit)
+
+	# VCC가 전투 종료를 판정했으면 나머지 처리 생략
+	if _state == TurnState.BATTLE_END:
+		return
 
 	# 행동 완료
 	unit.acted = true

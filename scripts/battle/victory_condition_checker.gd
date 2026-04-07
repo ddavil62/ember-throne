@@ -1,6 +1,6 @@
 ## @fileoverview 승리/패배 조건 판별기 (VCC). battle JSON의 victory_conditions /
-## defeat_conditions 배열을 파싱하여 rout, escape, survive_turns, unit_death,
-## turn_limit_exceeded, unit_hp_threshold 6개 조건 타입을 이벤트 구동 방식으로
+## defeat_conditions 배열을 파싱하여 rout, escape, survive/survive_turns, unit_death,
+## turn_limit_exceeded, unit_hp_threshold 조건 타입을 이벤트 구동 방식으로
 ## 실시간 판별한다. TurnManager의 자식 노드로 추가된다.
 class_name VictoryConditionChecker
 extends Node
@@ -33,6 +33,7 @@ const VICTORY_MESSAGES: Dictionary = {
 	"escape": "탈출 작전 성공!",
 	"rout": "모든 적을 섬멸했다!",
 	"survive_turns": "거점을 수호했다!",
+	"survive": "거점을 수호했다!",
 }
 
 ## 패배 조건별 기본 메시지
@@ -112,7 +113,7 @@ func _on_unit_moved(unit_id: String, _from: Vector2i, to: Vector2i) -> void:
 	var context: Dictionary = {"unit_id": unit_id, "to": to}
 	_check_victory_conditions("escape", context)
 
-## 턴 시작 시 — turn_limit_exceeded 패배 후 survive_turns 승리 체크 (player 페이즈만)
+## 턴 시작 시 — turn_limit_exceeded 패배 후 survive/survive_turns 승리 체크 (player 페이즈만)
 ## @param phase 페이즈 ("player" / "enemy" / "npc")
 ## @param turn_number 현재 턴 번호
 func _on_turn_started(phase: String, turn_number: int) -> void:
@@ -130,8 +131,10 @@ func _on_turn_started(phase: String, turn_number: int) -> void:
 	if _check_defeat_conditions("turn_limit_exceeded", context):
 		return
 
-	# 3. victory (survive_turns)
-	_check_victory_conditions("survive_turns", context)
+	# 3. victory (survive_turns / survive — JSON 타입명 호환)
+	if _check_victory_conditions("survive_turns", context):
+		return
+	_check_victory_conditions("survive", context)
 
 ## 데미지 발생 시 — unit_hp_threshold 패배 조건 체크
 ## @param _attacker_id 공격자 ID
@@ -190,10 +193,14 @@ func _check_defeat_conditions(event_type: String, context: Dictionary) -> bool:
 						defeat_achieved.emit(cond_type, msg)
 						return true
 
+			_:
+				# 미처리 패배 조건 타입 (boss_kill, any_unit_death 등은 별도 작업에서 구현 예정)
+				push_warning("[VCC] 미처리 패배 조건 타입: %s" % cond_type)
+
 	return false
 
 ## victory_conditions를 순회하여 event_type에 해당하는 조건을 체크한다.
-## @param event_type 이벤트 타입 문자열 ("rout", "escape", "survive_turns")
+## @param event_type 이벤트 타입 문자열 ("rout", "escape", "survive_turns", "survive")
 ## @param context 이벤트 문맥 Dictionary
 ## @returns 조건 충족 시 true
 func _check_victory_conditions(event_type: String, context: Dictionary) -> bool:
@@ -221,8 +228,10 @@ func _check_victory_conditions(event_type: String, context: Dictionary) -> bool:
 				var target_pos := Vector2i(int(target_pos_arr[0]), int(target_pos_arr[1]))
 
 				# 턴 제한 확인 (escape 조건 자체의 turn_limit)
-				if cond.has("turn_limit"):
-					var escape_turn_limit: int = cond.get("turn_limit", 999)
+				# null 경계값 처리: JSON에서 turn_limit이 null이면 제한 없음으로 취급
+				var tl_value: Variant = cond.get("turn_limit", null)
+				if tl_value != null and typeof(tl_value) == TYPE_INT:
+					var escape_turn_limit: int = tl_value as int
 					var current_turn: int = _get_current_turn()
 					if current_turn > escape_turn_limit:
 						continue  # 턴 제한 초과 — 이 조건은 더 이상 유효하지 않음
@@ -242,13 +251,25 @@ func _check_victory_conditions(event_type: String, context: Dictionary) -> bool:
 						victory_achieved.emit(cond_type, msg)
 						return true
 
-			"survive_turns":
-				var required_turns: int = cond.get("required_turns", 999)
+			"survive_turns", "survive":
+				# JSON 호환: survive_turns와 survive 모두 동일 로직 처리
+				# 필드명 호환: required_turns 또는 turn_limit에서 목표 턴 수를 읽음
+				var rt_value: Variant = cond.get("required_turns", null)
+				var tl_value: Variant = cond.get("turn_limit", null)
+				var required_turns: int = 999
+				if rt_value != null and typeof(rt_value) == TYPE_INT:
+					required_turns = rt_value as int
+				elif tl_value != null and typeof(tl_value) == TYPE_INT:
+					required_turns = tl_value as int
 				var current_turn: int = context.get("turn_number", 0)
 				if current_turn >= required_turns:
-					var msg: String = VICTORY_MESSAGES.get("survive_turns", "거점을 수호했다!")
+					var msg: String = VICTORY_MESSAGES.get(cond_type, "거점을 수호했다!")
 					victory_achieved.emit(cond_type, msg)
 					return true
+
+			_:
+				# 미처리 승리 조건 타입 (boss_kill, reach_position 등은 별도 작업에서 구현 예정)
+				push_warning("[VCC] 미처리 승리 조건 타입: %s" % cond_type)
 
 	return false
 

@@ -131,11 +131,45 @@ func _on_battle_condition_triggered(is_victory: bool, condition_type: String, re
 		"reason_ko": reason_ko,
 	}
 
-	# 승리 시 경험치/보상 정보 추가 (추후 TurnManager에서 수집)
+	# 승리 시 맵 데이터에서 보상 정보를 읽어 표시 + 인벤토리에 반영
 	if is_victory:
 		result_data["exp_results"] = []
-		result_data["gold_earned"] = 0
-		result_data["items_earned"] = []
+
+		var gm: Node = get_node("/root/GameManager")
+		var dm: Node = get_node("/root/DataManager")
+		var map_data: Dictionary = dm.get_map(gm.current_battle_id)
+		var rewards: Dictionary = map_data.get("rewards", {})
+
+		# 골드 보상
+		var gold_amount: int = rewards.get("gold", 0)
+		result_data["gold_earned"] = gold_amount
+		if gold_amount > 0:
+			var pm: Node = get_node("/root/PartyManager")
+			pm.add_gold(gold_amount)
+
+		# 아이템 보상 — "_xN" 접미사는 수량 N으로 파싱
+		var items_earned: Array = []
+		var im: Node = get_node("/root/InventoryManager")
+		for raw_id: String in rewards.get("items", []):
+			var item_id: String = raw_id
+			var count: int = 1
+			# "_x숫자" 패턴 파싱 (예: "herb_x3" → "herb" x 3)
+			var regex := RegEx.new()
+			regex.compile("^(.+)_x(\\d+)$")
+			var m := regex.search(raw_id)
+			if m:
+				item_id = m.get_string(1)
+				count = int(m.get_string(2))
+			# 인벤토리에 추가
+			im.add_item(item_id, count)
+			# 결과 화면용 데이터 (name_ko는 DataManager에서 조회)
+			var item_data: Dictionary = im.get_item_data(item_id)
+			items_earned.append({
+				"item_id": item_id,
+				"name_ko": item_data.get("name_ko", item_id),
+				"count": count,
+			})
+		result_data["items_earned"] = items_earned
 
 	_battle_result.show_result(result_data)
 

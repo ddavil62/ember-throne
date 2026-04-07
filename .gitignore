@@ -21,6 +21,11 @@ desktop.ini
 .vscode/
 *.code-workspace
 
+# Node.js
+node_modules/
+
 # 비주얼 리그레션 테스트 — 스크린샷 출력 (레퍼런스는 추적)
 tests/visual/screenshots/
+tests/screenshots/
+tests/recordings/
 project.godot.visual_test_bak

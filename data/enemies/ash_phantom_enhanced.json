@@ -1,0 +1,78 @@
+{
+  "id": "ash_phantom_enhanced",
+  "name_ko": "강화된 재의 환영",
+  "name_en": "Enhanced Ash Phantom",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 55,
+    "mp": 0,
+    "atk": 38,
+    "def": 10,
+    "matk": 20,
+    "mdef": 24,
+    "spd": 28,
+    "mov": 6
+  },
+  "scaling_per_level": {
+    "hp": 2.0,
+    "atk": 1.4,
+    "def": 0.4,
+    "matk": 0.7,
+    "mdef": 0.8,
+    "spd": 0.4
+  },
+  "act_stats": {
+    "act4": {
+      "hp": 55,
+      "atk": 38,
+      "def": 10,
+      "matk": 20,
+      "mdef": 24,
+      "spd": 28
+    }
+  },
+  "ash_scaling": {
+    "act4": 2.5
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "phantom",
+      "name_ko": "환영",
+      "name_en": "Phantom",
+      "description_ko": "회피 +30%",
+      "description_en": "Evasion +30%"
+    },
+    {
+      "id": "ash_frenzy",
+      "name_ko": "재의 광란",
+      "name_en": "Ash Frenzy",
+      "description_ko": "ATK +15% (폭주 상태의 잔재)",
+      "description_en": "ATK +15% (remnant of rampage state)"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ash_residue",
+      "name_ko": "재의 찌꺼기",
+      "rate": 0.3
+    }
+  ],
+  "gold_reward": {
+    "min": 25,
+    "max": 40
+  },
+  "exp_reward": 20,
+  "sprite_id": "ash_phantom",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "강화된 재의 환영 — battle_34 3페이즈 미니언. ash_phantom의 act4 스탯 대비 약 20% 상승. 폭주 상태 잔재로 ATK 보너스 패시브 추가."
+}

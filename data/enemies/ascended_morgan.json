@@ -1,0 +1,112 @@
+{
+  "id": "ascended_morgan",
+  "name_ko": "승천 모르간",
+  "name_en": "Ascended Morgan",
+  "faction": "kingdom",
+  "type": "magic",
+  "role": "boss",
+  "weapon_type": "magic",
+  "armor_type": "heavy",
+  "ai_pattern": "boss",
+  "range_min": 1,
+  "range_max": 5,
+  "base_stats": {
+    "hp": 360, "mp": 70, "atk": 28, "def": 12, "matk": 36, "mdef": 14, "spd": 10, "mov": 5
+  },
+  "scaling_per_level": {
+    "hp": 0, "atk": 0, "def": 0, "matk": 0, "mdef": 0, "spd": 0
+  },
+  "skills": [
+    {
+      "id": "primal_bombardment",
+      "name_ko": "시원화 포격",
+      "name_en": "Primal Bombardment",
+      "type": "magic",
+      "description_ko": "사거리 5, 직선 관통 3칸 범위 마법. 배율 1.8x. 최강 공격",
+      "damage_type": "magic",
+      "multiplier": 1.8,
+      "range": 5,
+      "aoe": true,
+      "aoe_type": "line_piercing",
+      "aoe_width": 3,
+      "cooldown": 2,
+      "mp_cost": 20,
+      "phase": 3
+    },
+    {
+      "id": "barrier_collapse",
+      "name_ko": "결계 붕괴",
+      "name_en": "Barrier Collapse",
+      "type": "special",
+      "description_ko": "맵 전체 아군에게 현재 HP 25% 고정 데미지 (방어/회피 불가). 사용 후 1턴 행동 불가 (반격 찬스)",
+      "damage_type": "fixed",
+      "fixed_damage_percent": 0.25,
+      "range": -1,
+      "aoe": true,
+      "aoe_type": "map_wide",
+      "cooldown": 6,
+      "mp_cost": 25,
+      "ignores_defense": true,
+      "ignores_evasion": true,
+      "self_stun_after": 1,
+      "phase": 3
+    },
+    {
+      "id": "barrier_storm",
+      "name_ko": "결계의 폭풍",
+      "name_en": "Barrier Storm",
+      "type": "magic",
+      "description_ko": "자신 중심 4칸 범위 광역 마법. 배율 1.0x. 전 유닛에게 데미지",
+      "damage_type": "magic",
+      "multiplier": 1.0,
+      "range": 0,
+      "aoe": true,
+      "aoe_radius": 4,
+      "aoe_center": "self",
+      "cooldown": 4,
+      "mp_cost": 15,
+      "phase": 3
+    }
+  ],
+  "passives": [
+    {
+      "id": "ash_radiation",
+      "name_ko": "재화 방사",
+      "name_en": "Ash Radiation",
+      "description_ko": "매 2턴마다 맵 전체 아군에게 재화 상태이상 부여 시도 (50% 확률). 결계석 인접 아군은 면역",
+      "description_en": "Every 2 turns, attempts to inflict Ash Corruption on all player units (50% chance). Units adjacent to barrier stones are immune",
+      "activation_interval": 2,
+      "status_effect": {
+        "type": "ash_corruption",
+        "chance": 0.50,
+        "immunity": "adjacent_to_barrier_stone"
+      },
+      "phase": 3
+    },
+    {
+      "id": "rampage",
+      "name_ko": "폭주",
+      "name_en": "Rampage",
+      "description_ko": "DEF/MDEF 감소 대신 ATK/MATK/SPD 대폭 상승. 유리대포 상태",
+      "description_en": "DEF/MDEF decreased but ATK/MATK/SPD greatly increased. Glass cannon state",
+      "phase": 3
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "three_phase_boss",
+      "description_ko": "battle_34 3페이즈 최종 보스. 시원화 힘 폭주 형태. 공격력이 극대화되지만 방어가 약해진 유리대포 상태."
+    }
+  ],
+  "appearance_battle": "4-7",
+  "drops": [
+    { "item_id": "morgans_ring", "name_ko": "모르간의 반지", "rate": 1.0, "rarity": "unique", "stats": { "matk": 8, "magic_multiplier_bonus": 0.10 }, "description_ko": "유일 악세서리. MATK+8, 전 마법 배율 +10%" },
+    { "item_id": "life_dew", "name_ko": "생명의 이슬", "rate": 1.0, "quantity": 3 }
+  ],
+  "gold_reward": { "min": 0, "max": 0 },
+  "exp_reward": 300,
+  "sprite_id": "ascended_morgan",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "승천 모르간 — battle_34 3페이즈 최종 보스. 시원화 힘 폭주 형태. corrupted_morgan의 boss_phases[2] 스탯 기준 HP +40% 상승 (250→360). ATK/MATK/SPD 동일, DEF/MDEF는 유리대포 스타일로 낮게 유지."
+}

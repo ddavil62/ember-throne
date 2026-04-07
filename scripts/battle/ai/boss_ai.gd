@@ -43,6 +43,15 @@ const MORGAN_PHASE2_THRESHOLD: float = 0.60
 ## 타락한 모르간: 3페이즈 전환 HP 비율
 const MORGAN_PHASE3_THRESHOLD: float = 0.30
 
+## 승천 모르간: 소환 쿨타임 (턴)
+const ASCENDED_MORGAN_SUMMON_INTERVAL: int = 4
+
+## 승천 모르간: 최대 소환 횟수
+const ASCENDED_MORGAN_MAX_SUMMONS: int = 2
+
+## 승천 모르간: 궁극기 HP 비율 임계값 (barrier_collapse 사용 조건)
+const ASCENDED_MORGAN_ULTIMATE_THRESHOLD: float = 0.15
+
 # ── 메인 분기 ──
 
 ## 보스 유닛의 행동을 결정한다. unit._source_data.id로 보스를 분기한다.
@@ -67,6 +76,8 @@ func decide(unit: BattleUnit, targets: Array[BattleUnit], move_cells: Array[Vect
 			return decide_lucid(unit, targets, move_cells, battle_map)
 		"corrupted_morgan":
 			return decide_corrupted_morgan(unit, targets, move_cells, battle_map)
+		"ascended_morgan":
+			return decide_ascended_morgan(unit, targets, move_cells, battle_map)
 		_:
 			# 알 수 없는 보스 — aggressive 기본 동작
 			return _default_aggressive(unit, targets, move_cells, battle_map)
@@ -301,6 +312,67 @@ func decide_corrupted_morgan(unit: BattleUnit, targets: Array[BattleUnit], move_
 
 		# 접근 후 공격
 		return _magic_attack_or_approach(unit, targets, move_cells, battle_map)
+
+# ── 승천 모르간 (ascended_morgan) — battle_34 3페이즈 최종 보스 ──
+
+## 승천 모르간 AI 행동 결정. corrupted_morgan의 Phase 3 스킬셋을 전용 보스로 분리한 것.
+## 궁극기(barrier_collapse) + AoE(primal_bombardment, barrier_storm) + 주기적 미니언 소환
+## @param unit 보스 유닛
+## @param targets 적 유닛 배열
+## @param move_cells 이동 가능 셀 배열
+## @param battle_map 전투 맵 참조
+## @returns 행동 Dictionary
+func decide_ascended_morgan(unit: BattleUnit, targets: Array[BattleUnit], move_cells: Array[Vector2i], battle_map: Node2D) -> Dictionary:
+	var boss_id: String = unit._source_data.get("id", "")
+	var turn: int = _turn_counter.get(boss_id, 0)
+	var summons: int = _summon_count.get(boss_id, 0)
+	var hp_ratio: float = float(unit.current_hp) / float(maxi(unit.stats.get("hp", 1), 1))
+
+	# 1. 궁극기 — HP가 매우 낮을 때 barrier_collapse (맵 전체 고정 데미지)
+	if hp_ratio <= ASCENDED_MORGAN_ULTIMATE_THRESHOLD:
+		return {
+			"type": "skill",
+			"skill_id": "barrier_collapse",
+			"move_to": unit.cell,
+			"target": null,
+		}
+
+	# 2. 주기적 미니언 소환 (ash_phantom_enhanced, 4턴마다, 최대 2회, 첫 턴 제외)
+	if turn > 0 and turn % ASCENDED_MORGAN_SUMMON_INTERVAL == 0 and summons < ASCENDED_MORGAN_MAX_SUMMONS:
+		_summon_count[boss_id] = summons + 1
+		return {
+			"type": "summon",
+			"summon_id": "ash_phantom_enhanced",
+			"count": 1,
+			"move_to": unit.cell,
+			"target": null,
+			"skill_id": "ash_summon"
+		}
+
+	# 3. AoE — 범위 내 2명 이상이면 barrier_storm 사용
+	var nearby_count: int = _count_targets_in_range(unit, targets, 4)
+	if nearby_count >= 2:
+		return {
+			"type": "skill",
+			"skill_id": "barrier_storm",
+			"move_to": unit.cell,
+			"target": null,
+		}
+
+	# 4. 메인 공격 — primal_bombardment (사거리 5, 직선 관통)
+	var best_target: BattleUnit = _find_highest_threat_target(targets)
+	if best_target != null:
+		var dist: int = _manhattan_distance(unit.cell, best_target.cell)
+		if dist <= 5:
+			return {
+				"type": "skill",
+				"skill_id": "primal_bombardment",
+				"move_to": unit.cell,
+				"target": best_target,
+			}
+
+	# 5. 접근 후 공격
+	return _magic_attack_or_approach(unit, targets, move_cells, battle_map)
 
 # ── 유틸리티 함수 ──
 

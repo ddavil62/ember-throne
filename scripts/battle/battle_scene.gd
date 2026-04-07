@@ -23,6 +23,16 @@ extends Node
 ## 전투 결과 화면
 @onready var _battle_result: BattleResult = $BattleResult
 
+## 현재 전투의 다단계 보스전 페이즈 (1부터 시작)
+var _current_boss_phase: int = 1
+
+## 다단계 보스전 총 페이즈 수
+var _total_boss_phases: int = 1
+
+## 페이즈별 보스 유닛 ID (special_rules에서 추출)
+## {2: "reborn_morgan", 3: "ascended_morgan"}
+var _phase_boss_ids: Dictionary = {}
+
 # ── 초기화 ──
 
 func _ready() -> void:
@@ -40,6 +50,9 @@ func _ready() -> void:
 
 	# 전투 조건 달성 시 결과 표시 (EventBus 경유)
 	EventBus.battle_condition_triggered.connect(_on_battle_condition_triggered)
+
+	# 유닛 사망 시 페이즈 전환 확인 (다단계 보스전)
+	EventBus.unit_died.connect(_on_unit_died_check_phase)
 
 	# 전투 데이터 로드 및 배치 화면 시작
 	_start_battle()
@@ -79,6 +92,9 @@ func _start_battle() -> void:
 	print("[BattleScene] 배치 구역: %d개, 파티: %d명, 제한: %d" % [
 		deploy_cells.size(), party.size(), deploy_limit
 	])
+
+	# 다단계 보스전 페이즈 초기화
+	_init_boss_phases(map_data)
 
 	# 배치 화면 시작
 	_deployment.setup(_battle_map, deploy_cells, party, deploy_limit)
@@ -171,6 +187,141 @@ func _on_battle_condition_triggered(is_victory: bool, condition_type: String, re
 		result_data["items_earned"] = items_earned
 
 	_battle_result.show_result(result_data)
+
+# ── 다단계 보스전 페이즈 전환 ──
+
+## 맵 데이터의 special_rules에서 다단계 보스전 정보를 초기화한다.
+## @param map_data 맵 데이터 Dictionary
+func _init_boss_phases(map_data: Dictionary) -> void:
+	_current_boss_phase = 1
+	_total_boss_phases = 1
+	_phase_boss_ids.clear()
+
+	var special_rules: Array = map_data.get("special_rules", [])
+	for rule: Variant in special_rules:
+		if not rule is Dictionary:
+			continue
+		var r: Dictionary = rule as Dictionary
+		var rule_type: String = r.get("type", "")
+
+		if rule_type == "multi_phase":
+			_total_boss_phases = r.get("phases", 1)
+		elif rule_type == "phase2_boss":
+			_phase_boss_ids[2] = r.get("unit_id", "")
+		elif rule_type == "phase3_boss":
+			_phase_boss_ids[3] = r.get("unit_id", "")
+
+	if _total_boss_phases > 1:
+		print("[BattleScene] 다단계 보스전: %d페이즈, 보스ID: %s" % [
+			_total_boss_phases, str(_phase_boss_ids)
+		])
+
+## 유닛 사망 시 페이즈 전환 여부를 확인한다 (EventBus 콜백).
+## 현재 페이즈의 보스가 사망하면 다음 페이즈의 적을 스폰한다.
+## @param unit_id 사망한 유닛 ID
+## @param _killer_id 처치한 유닛 ID
+func _on_unit_died_check_phase(unit_id: String, _killer_id: String) -> void:
+	if _total_boss_phases <= 1:
+		return
+
+	# 현재 페이즈 + 1의 보스 ID와 비교하여 현재 페이즈 보스인지 판별
+	var next_phase: int = _current_boss_phase + 1
+	if next_phase > _total_boss_phases:
+		return
+
+	# 현재 페이즈의 보스가 사망했는지 확인
+	# Phase 1 보스: enemy_placements의 첫 번째 보스 (corrupted_morgan)
+	# Phase 2+ 보스: _phase_boss_ids에서 조회
+	var current_boss_id: String = ""
+	if _current_boss_phase == 1:
+		# Phase 1 보스는 enemy_placements에서 is_boss인 적의 id를 사용
+		# unit_id 형식: "enemy_id_N" (예: "corrupted_morgan_0")
+		var gm: Node = get_node("/root/GameManager")
+		var dm: Node = get_node("/root/DataManager")
+		var map_data: Dictionary = dm.get_map(gm.current_battle_id)
+		for placement: Variant in map_data.get("enemy_placements", []):
+			if not placement is Dictionary:
+				continue
+			var p: Dictionary = placement as Dictionary
+			var eid: String = p.get("enemy_id", "")
+			var enemy_data: Dictionary = dm.get_enemy(eid)
+			if enemy_data.get("is_boss", false):
+				current_boss_id = eid
+				break
+	else:
+		current_boss_id = _phase_boss_ids.get(_current_boss_phase, "")
+
+	if current_boss_id.is_empty():
+		return
+
+	# unit_id가 "enemy_id_N" 형식이므로 enemy_id 부분만 추출하여 비교
+	var died_enemy_id: String = _extract_enemy_id_from_uid(unit_id)
+	if died_enemy_id != current_boss_id:
+		return
+
+	# 페이즈 전환 실행
+	print("[BattleScene] 보스 %s 격파! Phase %d → Phase %d 전환" % [
+		current_boss_id, _current_boss_phase, next_phase
+	])
+	_current_boss_phase = next_phase
+	_spawn_phase_enemies(next_phase)
+
+## uid에서 원래 enemy_id를 추출한다. uid 형식: "enemy_id_N"
+## @param uid 유닛 고유 ID
+## @returns 원래 enemy_id
+func _extract_enemy_id_from_uid(uid: String) -> String:
+	# uid 끝에서 "_숫자" 패턴을 제거 (예: "corrupted_morgan_0" → "corrupted_morgan")
+	var last_underscore: int = uid.rfind("_")
+	if last_underscore < 0:
+		return uid
+	var suffix: String = uid.substr(last_underscore + 1)
+	if suffix.is_valid_int():
+		return uid.substr(0, last_underscore)
+	return uid
+
+## 지정 페이즈의 적 유닛을 스폰한다.
+## @param phase 스폰할 페이즈 번호
+func _spawn_phase_enemies(phase: int) -> void:
+	var gm: Node = get_node("/root/GameManager")
+	var dm: Node = get_node("/root/DataManager")
+	var map_data: Dictionary = dm.get_map(gm.current_battle_id)
+
+	# 페이즈별 적 배열 키: "phase_2_enemies", "phase_3_enemies", ...
+	var enemies_key: String = "phase_%d_enemies" % phase
+	var phase_enemies: Array = map_data.get(enemies_key, [])
+
+	if phase_enemies.is_empty():
+		push_warning("[BattleScene] %s 데이터 없음" % enemies_key)
+		return
+
+	# 기존 적 중 남은 유닛 수를 카운트 (스폰 인덱스 충돌 방지)
+	var spawn_offset: int = _battle_map.get_units_by_team("enemy").size()
+
+	for i: int in range(phase_enemies.size()):
+		var placement: Variant = phase_enemies[i]
+		if not placement is Dictionary:
+			continue
+		var p: Dictionary = placement as Dictionary
+		var enemy_id: String = p.get("enemy_id", "")
+		var enemy_level: int = p.get("level", 1)
+		var pos: Array = p.get("position", [0, 0])
+		var spawn_cell := Vector2i(int(pos[0]), int(pos[1]))
+
+		var enemy_data: Dictionary = dm.get_enemy(enemy_id)
+		if enemy_data.is_empty():
+			push_warning("[BattleScene] Phase %d 적 데이터 없음: %s" % [phase, enemy_id])
+			continue
+
+		# 고유 유닛 ID 생성 (기존 유닛과 충돌 방지)
+		var uid: String = "%s_%d" % [enemy_id, spawn_offset + i]
+		_battle_map.spawn_unit(enemy_data, spawn_cell, "enemy", uid, enemy_level)
+		print("[BattleScene] Phase %d 적 스폰: %s (lv%d) at %s" % [
+			phase, enemy_id, enemy_level, str(spawn_cell)
+		])
+
+	# 승리 조건은 이미 최종 보스(ascended_morgan)로 설정되어 있으므로
+	# VCC를 다시 설정할 필요 없음 — boss_kill target_unit이 최종 보스를 가리킴
+	print("[BattleScene] Phase %d 적 스폰 완료 (%d체)" % [phase, phase_enemies.size()])
 
 ## 월드맵으로 복귀한다.
 func _return_to_world_map() -> void:

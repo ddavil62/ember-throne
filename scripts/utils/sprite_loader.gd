@@ -33,6 +33,8 @@ const SPRITE_ALIASES: Dictionary = {
 	"ash_evil_eye": "ash_mage_eye",
 	"ashen_lord_vanguard": "boss_ash_warlord",
 	"corrupted_morgan": "boss_corrupted_morgan",
+	"reborn_morgan": "boss_corrupted_morgan",
+	"ascended_morgan": "boss_corrupted_morgan",
 	"lucid": "boss_lucid",
 	"secret_police_spy": "secret_police_agent",
 	"secret_police_officer": "secret_police_commander",

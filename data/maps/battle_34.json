@@ -50,8 +50,8 @@
   "victory_conditions": [
     {
       "type": "boss_kill",
-      "description_ko": "재탄생 모르간 격파 (2단계)",
-      "target_unit": "reborn_morgan"
+      "description_ko": "승천 모르간 격파 (3단계)",
+      "target_unit": "ascended_morgan"
     }
   ],
   "defeat_conditions": [
@@ -299,6 +299,35 @@
       "ai_override": "revive_every_3_turns"
     }
   ],
+  "phase_3_enemies": [
+    {
+      "enemy_id": "ascended_morgan",
+      "level": 32,
+      "position": [
+        14,
+        6
+      ],
+      "ai_override": "final_boss"
+    },
+    {
+      "enemy_id": "ash_phantom_enhanced",
+      "level": 29,
+      "position": [
+        11,
+        7
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_phantom_enhanced",
+      "level": 29,
+      "position": [
+        17,
+        7
+      ],
+      "ai_override": null
+    }
+  ],
   "terrain_layout": "ember_throne_final",
   "tileset_id": "ascalon_throne",
   "bgm": "battle_final",
@@ -310,18 +339,24 @@
   "events": {
     "on_start": "4-7_battle_start",
     "on_boss_phase1_defeat": "4-7_phase_transition",
+    "on_boss_phase2_defeat": "4-7_phase3_transition",
     "on_victory": "4-7_ending_sequence"
   },
   "special_rules": [
     {
       "type": "multi_phase",
-      "phases": 2,
-      "description_ko": "다단계 보스전. 1단계: 변질 모르간 HP 0 -> 이벤트 -> 2단계 시작"
+      "phases": 3,
+      "description_ko": "다단계 보스전. 1단계: 변질 모르간 HP 0 -> 이벤트 -> 2단계 -> 재탄생 모르간 HP 0 -> 3단계 시작"
     },
     {
       "type": "phase2_boss",
       "unit_id": "reborn_morgan",
-      "description_ko": "2단계: 재탄생 모르간 격파 시 승리. 잡졸 전멸 불필요"
+      "description_ko": "2단계: 재탄생 모르간 격파 시 3단계 전환. 잡졸 전멸 불필요"
+    },
+    {
+      "type": "phase3_boss",
+      "unit_id": "ascended_morgan",
+      "description_ko": "3단계: 승천 모르간 격파 시 승리. 시원화 힘 폭주 형태"
     },
     {
       "type": "phantom_revive",

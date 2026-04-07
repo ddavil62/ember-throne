@@ -1,0 +1,104 @@
+{
+  "id": "reborn_morgan",
+  "name_ko": "재탄생 모르간",
+  "name_en": "Reborn Morgan",
+  "faction": "kingdom",
+  "type": "magic",
+  "role": "boss",
+  "weapon_type": "magic",
+  "armor_type": "heavy",
+  "ai_pattern": "boss",
+  "range_min": 1,
+  "range_max": 4,
+  "base_stats": {
+    "hp": 300, "mp": 60, "atk": 24, "def": 18, "matk": 32, "mdef": 20, "spd": 6, "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 0, "atk": 0, "def": 0, "matk": 0, "mdef": 0, "spd": 0
+  },
+  "skills": [
+    {
+      "id": "barrier_chain",
+      "name_ko": "결계의 사슬",
+      "name_en": "Barrier Chain",
+      "type": "debuff",
+      "description_ko": "사거리 3, 대상 1체를 2턴간 이동 불가 (마비와 동일)",
+      "range": 3,
+      "aoe": false,
+      "cooldown": 2,
+      "mp_cost": 10,
+      "status_effect": {
+        "type": "immobilize",
+        "duration": 2
+      },
+      "phase": 2
+    },
+    {
+      "id": "barrier_convergence",
+      "name_ko": "결계의 수렴",
+      "name_en": "Barrier Convergence",
+      "type": "magic",
+      "description_ko": "맵 전체 랜덤 3칸에 1턴 후 폭발하는 마법진 생성. 해당 칸 위 유닛에게 MATK 1.5x 데미지. 마법진은 적색으로 표시되어 회피 가능",
+      "damage_type": "magic",
+      "multiplier": 1.5,
+      "range": -1,
+      "aoe": true,
+      "aoe_count": 3,
+      "cooldown": 5,
+      "mp_cost": 18,
+      "special": "delayed_1_turn_red_marker",
+      "phase": 2
+    },
+    {
+      "id": "barrier_storm",
+      "name_ko": "결계의 폭풍",
+      "name_en": "Barrier Storm",
+      "type": "magic",
+      "description_ko": "자신 중심 4칸 범위 광역 마법. 배율 1.0x. 전 유닛에게 데미지",
+      "damage_type": "magic",
+      "multiplier": 1.0,
+      "range": 0,
+      "aoe": true,
+      "aoe_radius": 4,
+      "aoe_center": "self",
+      "cooldown": 4,
+      "mp_cost": 15,
+      "phase": 2
+    }
+  ],
+  "passives": [
+    {
+      "id": "barrier_absorption",
+      "name_ko": "결계 흡수",
+      "name_en": "Barrier Absorption",
+      "description_ko": "매 3턴마다 발동. 맵에 남아있는 결계석 기둥 1개당 HP 20% 회복 (최대 80%). 기둥 4개 전부 파괴 시 회복 0%",
+      "description_en": "Activates every 3 turns. Recovers 20% HP per remaining barrier pillar (max 80%)",
+      "heal_per_pillar_percent": 0.20,
+      "max_pillars": 4,
+      "activation_interval": 3,
+      "phase": 2
+    },
+    {
+      "id": "fortified_shell",
+      "name_ko": "강화 외피",
+      "name_en": "Fortified Shell",
+      "description_ko": "물리 데미지 -15%",
+      "description_en": "Physical damage -15%",
+      "phase": 2
+    }
+  ],
+  "special_mechanics": [
+    {
+      "id": "barrier_pillars",
+      "description_ko": "2페이즈 시 왕좌실 맵 4구석에 결계석 기둥(파괴 가능 오브젝트, HP 80) 활성화. 파괴하면 결계 흡수 회복량 감소"
+    }
+  ],
+  "appearance_battle": "4-7",
+  "drops": [],
+  "gold_reward": { "min": 0, "max": 0 },
+  "exp_reward": 0,
+  "sprite_id": "reborn_morgan",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "재탄생 모르간 — battle_34 2페이즈 보스. 결계석 흡수 형태. 결계석 기둥 파괴로 회복량 감소시킨 뒤 전력 공격이 핵심 전략."
+}

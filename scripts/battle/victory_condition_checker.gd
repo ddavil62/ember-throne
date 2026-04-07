@@ -34,6 +34,7 @@ const VICTORY_MESSAGES: Dictionary = {
 	"rout": "모든 적을 섬멸했다!",
 	"survive_turns": "거점을 수호했다!",
 	"survive": "거점을 수호했다!",
+	"boss_kill": "{unit_name}을(를) 격파했다!",
 }
 
 ## 패배 조건별 기본 메시지
@@ -93,11 +94,15 @@ func _on_unit_died(unit_id: String, _killer_id: String) -> void:
 	if _check_defeat_conditions("unit_death", context):
 		return
 
-	# 2. victory 조건 체크 (rout — 적 전멸)
+	# 2. victory 조건 체크 (boss_kill — 대상 보스 사망)
+	if _check_victory_conditions("boss_kill", context):
+		return
+
+	# 3. victory 조건 체크 (rout — 적 전멸)
 	if _check_victory_conditions("rout", context):
 		return
 
-	# 3. 아군 전멸 패배 체크 (JSON에 명시 안 된 경우에도 기본 동작)
+	# 4. 아군 전멸 패배 체크 (JSON에 명시 안 된 경우에도 기본 동작)
 	if _get_alive_player_count() == 0:
 		var msg: String = DEFEAT_MESSAGES.get("rout", "아군이 전멸했다...")
 		defeat_achieved.emit("rout", msg)
@@ -214,6 +219,19 @@ func _check_victory_conditions(event_type: String, context: Dictionary) -> bool:
 			continue
 
 		match cond_type:
+			"boss_kill":
+				var target_uid: String = cond.get("target_unit", "")
+				var died_uid: String = context.get("unit_id", "")
+				# uid 형식 "enemy_id_N"에서 base enemy_id 추출하여 비교
+				var died_base_id: String = _extract_base_id(died_uid)
+				if target_uid != "" and (died_uid == target_uid or died_base_id == target_uid):
+					var unit_name: String = _get_unit_name_ko(target_uid)
+					var msg: String = VICTORY_MESSAGES.get("boss_kill", "").replace("{unit_name}", unit_name)
+					if cond.has("description_ko"):
+						msg = cond["description_ko"]
+					victory_achieved.emit(cond_type, msg)
+					return true
+
 			"rout":
 				if _get_alive_enemy_count() == 0:
 					var msg: String = VICTORY_MESSAGES.get("rout", "모든 적을 섬멸했다!")
@@ -362,6 +380,18 @@ func _all_party_at_position(target_pos: Vector2i) -> bool:
 		if unit.is_alive() and unit.cell != target_pos:
 			return false
 	return true
+
+## uid에서 base enemy_id를 추출한다. uid 형식: "enemy_id_N"
+## @param uid 유닛 고유 ID (예: "ascended_morgan_22")
+## @returns base enemy_id (예: "ascended_morgan")
+func _extract_base_id(uid: String) -> String:
+	var last_underscore: int = uid.rfind("_")
+	if last_underscore < 0:
+		return uid
+	var suffix: String = uid.substr(last_underscore + 1)
+	if suffix.is_valid_int():
+		return uid.substr(0, last_underscore)
+	return uid
 
 ## DataManager 싱글톤 참조 취득
 ## @returns DataManager 노드 또는 null

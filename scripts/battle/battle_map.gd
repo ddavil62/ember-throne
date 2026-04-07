@@ -12,6 +12,58 @@ const COLOR_ATTACK: Color = Color(0.9, 0.2, 0.2, 0.35)      # 공격 범위 (빨
 const COLOR_DEPLOY: Color = Color(0.2, 0.9, 0.3, 0.35)      # 배치 가능 (초록색 반투명)
 const COLOR_GRID_LINE: Color = Color(1.0, 1.0, 1.0, 0.15)   # 그리드 선
 
+# ── Wang 타일셋 상수 ──
+
+## Wang 타일 16종: "NW NE SW SE" 코너 조합 → 스프라이트시트 Rect2
+## 키 형식: 각 코너가 lower("L") 또는 upper("U"), 순서: NW+NE+SW+SE
+## 모든 타일셋이 동일한 4×4(128×128) 레이아웃을 공유하므로 하드코딩 가능
+const WANG_ATLAS: Dictionary = {
+	"LLLL": Rect2( 64,  32, 32, 32),  # wang_0  — 전체 lower (순수 하위 지형)
+	"LLLU": Rect2( 96,  32, 32, 32),  # wang_1
+	"LLUL": Rect2( 64,  64, 32, 32),  # wang_2
+	"LLUU": Rect2( 32,  64, 32, 32),  # wang_3
+	"LULL": Rect2( 64,   0, 32, 32),  # wang_4
+	"LULU": Rect2( 96,  64, 32, 32),  # wang_5
+	"LUUL": Rect2(  0,  32, 32, 32),  # wang_6
+	"LUUU": Rect2( 96,  96, 32, 32),  # wang_7
+	"ULLL": Rect2( 32,  32, 32, 32),  # wang_8
+	"ULLU": Rect2( 64,  96, 32, 32),  # wang_9
+	"ULUL": Rect2( 32,   0, 32, 32),  # wang_10
+	"ULUU": Rect2(  0,  64, 32, 32),  # wang_11
+	"UULL": Rect2( 96,   0, 32, 32),  # wang_12
+	"UULU": Rect2(  0,   0, 32, 32),  # wang_13
+	"UUUL": Rect2( 32,  96, 32, 32),  # wang_14
+	"UUUU": Rect2(  0,  96, 32, 32),  # wang_15 — 전체 upper (순수 상위 지형)
+}
+
+## 타일셋 페어 정의: (lower 지형, upper 지형, PNG 경로)
+## 렌더링 순서 = 레이어 순서 (앞쪽이 아래, 뒤쪽이 위에 표시됨)
+const TILESET_PAIRS: Array = [
+	# irhen 지역 (초원 기반 전환)
+	{"lower": "plains",       "upper": "road",          "png": "res://assets/tilesets/irhen/IRH-01.png"},
+	{"lower": "plains",       "upper": "ruins",         "png": "res://assets/tilesets/irhen/IRH-02.png"},
+	{"lower": "plains",       "upper": "ashen_land",    "png": "res://assets/tilesets/irhen/IRH-03.png"},
+	# silvaren 지역 (숲 기반 전환)
+	{"lower": "plains",       "upper": "forest",        "png": "res://assets/tilesets/silvaren/SIL-01.png"},
+	{"lower": "forest",       "upper": "shallow_water", "png": "res://assets/tilesets/silvaren/SIL-03.png"},
+	# crowfel 지역 (산악 전환)
+	{"lower": "plains",       "upper": "mountain",      "png": "res://assets/tilesets/crowfel/CRO-01.png"},
+	{"lower": "mountain",     "upper": "wall",          "png": "res://assets/tilesets/crowfel/CRO-02.png"},
+	# harben 지역 (농지 전환)
+	{"lower": "plains",       "upper": "village",       "png": "res://assets/tilesets/harben/HAR-01.png"},
+	# ashen-sea 지역 (화산/황무지 전환)
+	{"lower": "ashen_land",   "upper": "lava",          "png": "res://assets/tilesets/ashen-sea/ASH-01.png"},
+	# belmar 지역 (해안 전환)
+	{"lower": "deep_water",   "upper": "shallow_water", "png": "res://assets/tilesets/belmar/BEL-02.png"},
+	{"lower": "shallow_water","upper": "sand",          "png": "res://assets/tilesets/belmar/BEL-03.png"},
+]
+
+## 타일셋 PNG로 커버되는 지형 타입 (나머지는 폴백 ColorRect 사용)
+const TILESET_COVERED: Array = [
+	"plains", "road", "ruins", "ashen_land", "forest", "shallow_water",
+	"mountain", "wall", "village", "lava", "deep_water", "sand",
+]
+
 # ── 시그널 ──
 
 ## 유닛 클릭 시 발생
@@ -173,29 +225,121 @@ func _setup_camera_limits(map_w: int, map_h: int) -> void:
 		map_h * GridSystem.TILE_SIZE / 2.0
 	)
 
-## 지형 렌더링 (placeholder — 타일셋 없는 동안 ColorRect로 표시)
-## @param tiles 타일 2D 배열
-## @param w 너비
-## @param h 높이
+## 지형 렌더링 — Wang 타일셋 오토타일링으로 픽셀아트 표시
+## 1) 베이스 레이어: plains 셀 → IRH-01 wang_0 (순수 초원)
+## 2) Wang 레이어: 각 타일셋 페어에 따라 upper 지형 및 전환 타일 렌더
+## 3) 폴백: 타일셋 미정의 지형은 ColorRect
+## @param tiles 지형 타입 2D 배열
+## @param w 맵 너비 (타일)
+## @param h 맵 높이 (타일)
 func _render_terrain(tiles: Array, w: int, h: int) -> void:
-	# 기존 지형 시각화 정리
 	if _terrain_layer:
 		for child: Node in _terrain_layer.get_children():
 			child.queue_free()
 
-	# 타일셋이 아직 없으므로 ColorRect placeholder로 각 셀 표시
 	var terrain_node: Node2D = _terrain_layer if _terrain_layer else self
+	var tex_cache: Dictionary = {}  # PNG 경로 → Texture2D 캐시
+
+	# 맵에 실제로 존재하는 지형 타입 수집 (미사용 페어 건너뛰기 최적화)
+	var present: Dictionary = {}
+	for row: Array in tiles:
+		for t in row:
+			present[t] = true
+
+	# ── 베이스 레이어: plains 셀 전체를 초원 텍스처로 채움 ──
+	var plains_tex: Texture2D = _get_cached_tex("res://assets/tilesets/irhen/IRH-01.png", tex_cache)
 	for y: int in range(h):
 		for x: int in range(w):
-			var terrain_type: String = tiles[y][x] if y < tiles.size() and x < tiles[y].size() else "plains"
-			var rect := ColorRect.new()
-			rect.size = Vector2(GridSystem.TILE_SIZE, GridSystem.TILE_SIZE)
-			rect.position = Vector2(x * GridSystem.TILE_SIZE, y * GridSystem.TILE_SIZE)
-			rect.color = _get_terrain_color(terrain_type)
-			rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			terrain_node.add_child(rect)
+			var t: String = tiles[y][x] if y < tiles.size() and x < tiles[y].size() else "plains"
+			if t == "plains":
+				_place_wang_sprite(terrain_node, plains_tex, Rect2(64, 32, 32, 32), x, y)
 
-## 지형 타입별 placeholder 색상 반환
+	# ── 폴백 레이어: 타일셋 미정의 지형 → ColorRect ──
+	for y: int in range(h):
+		for x: int in range(w):
+			var t: String = tiles[y][x] if y < tiles.size() and x < tiles[y].size() else "plains"
+			if not TILESET_COVERED.has(t):
+				var fallback := ColorRect.new()
+				fallback.size = Vector2(GridSystem.TILE_SIZE, GridSystem.TILE_SIZE)
+				fallback.position = Vector2(x * GridSystem.TILE_SIZE, y * GridSystem.TILE_SIZE)
+				fallback.color = _get_terrain_color(t)
+				fallback.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				terrain_node.add_child(fallback)
+
+	# ── Wang 오토타일링 레이어: 타일셋 페어별 upper/전환 타일 렌더 ──
+	for pair: Dictionary in TILESET_PAIRS:
+		var lo: String = pair["lower"]
+		var up: String = pair["upper"]
+
+		# 이 맵에 관련 지형이 하나도 없으면 스킵
+		if not present.has(lo) and not present.has(up):
+			continue
+
+		var tex: Texture2D = _get_cached_tex(pair["png"], tex_cache)
+
+		for y: int in range(h):
+			for x: int in range(w):
+				var t: String = tiles[y][x] if y < tiles.size() and x < tiles[y].size() else "plains"
+				if t != lo and t != up:
+					continue
+
+				# 4개 코너값 계산: 꼭짓점을 공유하는 셀 중 upper가 있으면 upper
+				var nw: bool = _corner_upper(tiles, x, y, -1, -1, w, h, up)
+				var ne_c: bool = _corner_upper(tiles, x, y, +1, -1, w, h, up)
+				var sw: bool = _corner_upper(tiles, x, y, -1, +1, w, h, up)
+				var se: bool = _corner_upper(tiles, x, y, +1, +1, w, h, up)
+
+				var key: String = (("U" if nw else "L") + ("U" if ne_c else "L")
+						+ ("U" if sw else "L") + ("U" if se else "L"))
+				var region: Rect2 = WANG_ATLAS.get(key, Rect2(64, 32, 32, 32))
+
+				# lower 셀인데 모든 코너가 lower면 이미 베이스에서 렌더됨 → 스킵
+				if t == lo and key == "LLLL":
+					continue
+
+				_place_wang_sprite(terrain_node, tex, region, x, y)
+
+## Wang 타일 Sprite2D를 지형 레이어에 추가
+## @param parent 부모 노드
+## @param tex 스프라이트시트 텍스처
+## @param region 타일 영역 Rect2
+## @param x 그리드 X 좌표
+## @param y 그리드 Y 좌표
+func _place_wang_sprite(parent: Node2D, tex: Texture2D, region: Rect2, x: int, y: int) -> void:
+	var atlas := AtlasTexture.new()
+	atlas.atlas = tex
+	atlas.region = region
+	var sprite := Sprite2D.new()
+	sprite.texture = atlas
+	sprite.centered = false
+	sprite.position = Vector2(x * GridSystem.TILE_SIZE, y * GridSystem.TILE_SIZE)
+	parent.add_child(sprite)
+
+## 텍스처 캐시에서 반환 (없으면 load 후 저장)
+## @param path 리소스 경로
+## @param cache 캐시 딕셔너리
+## @returns Texture2D
+func _get_cached_tex(path: String, cache: Dictionary) -> Texture2D:
+	if not cache.has(path):
+		cache[path] = load(path) as Texture2D
+	return cache[path]
+
+## Wang 오토타일링 코너 판정: 꼭짓점 공유 셀 중 upper_t가 있으면 true
+## @param dx -1(왼쪽) 또는 +1(오른쪽)
+## @param dy -1(위) 또는 +1(아래)
+## @returns 해당 코너가 upper 지형인지 여부
+func _corner_upper(tiles: Array, x: int, y: int, dx: int, dy: int,
+		w: int, h: int, upper_t: String) -> bool:
+	# 이 꼭짓점을 공유하는 4개 셀: (x,y), (x+dx,y), (x,y+dy), (x+dx,y+dy)
+	for cy: int in [y, y + dy]:
+		for cx: int in [x, x + dx]:
+			if cx >= 0 and cx < w and cy >= 0 and cy < h:
+				if cy < tiles.size() and cx < tiles[cy].size():
+					if tiles[cy][cx] == upper_t:
+						return true
+	return false
+
+## 지형 타입별 폴백 색상 반환 (타일셋 미정의 지형용)
 ## @param terrain_type 지형 타입
 ## @returns 색상
 func _get_terrain_color(terrain_type: String) -> Color:

@@ -4,34 +4,163 @@
   "name_en": "Defense of Irhen",
   "act": 1,
   "scene_id": "1-3",
-  "map_size": {"width": 20, "height": 16},
+  "map_size": {
+    "width": 20,
+    "height": 16
+  },
   "map_type": "medium",
   "battle_type": "escape",
   "difficulty_rating": 1,
   "is_optional": false,
   "deploy_count": 2,
-  "deploy_zones": [[4, 4], [5, 4]],
+  "deploy_zones": [
+    [
+      4,
+      4
+    ],
+    [
+      5,
+      4
+    ]
+  ],
   "victory_conditions": [
-    {"type": "escape", "description_ko": "3턴 내 카엘이 북동쪽 탈출 지점 도달", "target_unit": "kael", "target_position": [19, 0], "turn_limit": 3}
+    {
+      "type": "escape",
+      "description_ko": "3턴 내 카엘이 북동쪽 탈출 지점 도달",
+      "target_unit": "kael",
+      "target_position": [
+        19,
+        0
+      ],
+      "turn_limit": 3
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"},
-    {"type": "unit_death", "unit_id": "seria", "description_ko": "세리아 전사"},
-    {"type": "turn_limit_exceeded", "turn_limit": 3, "description_ko": "3턴 내 탈출 실패"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    },
+    {
+      "type": "unit_death",
+      "unit_id": "seria",
+      "description_ko": "세리아 전사"
+    },
+    {
+      "type": "turn_limit_exceeded",
+      "turn_limit": 3,
+      "description_ko": "3턴 내 탈출 실패"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "ash_beast_small", "level": 1, "position": [3, 11], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 1, "position": [6, 11], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 1, "position": [9, 11], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 1, "position": [12, 11], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 1, "position": [15, 11], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 1, "position": [18, 11], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 2, "position": [4, 13], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 2, "position": [8, 13], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 2, "position": [12, 13], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 2, "position": [16, 13], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 3, "position": [7, 15], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 3, "position": [13, 15], "ai_override": null}
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        3,
+        11
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        6,
+        11
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        9,
+        11
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        12,
+        11
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        15,
+        11
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        18,
+        11
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 2,
+      "position": [
+        4,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 2,
+      "position": [
+        8,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 2,
+      "position": [
+        12,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 2,
+      "position": [
+        16,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 3,
+      "position": [
+        7,
+        15
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 3,
+      "position": [
+        13,
+        15
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "irhen_village",
   "tileset_id": "irhen",
@@ -47,6 +176,363 @@
     "on_victory": "1-3_battle_end"
   },
   "special_rules": [
-    {"type": "wave_spawn", "description_ko": "1턴: 재의 짐승(소), 2턴: 재의 짐승(중/대) 진입"}
+    {
+      "type": "wave_spawn",
+      "description_ko": "1턴: 재의 짐승(소), 2턴: 재의 짐승(중/대) 진입"
+    }
+  ],
+  "tiles": [
+    [
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "road",
+      "road",
+      "road"
+    ],
+    [
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "road",
+      "road",
+      "road",
+      "plains",
+      "plains"
+    ],
+    [
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "road",
+      "road",
+      "road",
+      "plains",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "road",
+      "road",
+      "road",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "plains",
+      "village",
+      "village",
+      "village",
+      "village",
+      "village",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "forest",
+      "forest",
+      "forest",
+      "forest",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "plains",
+      "village",
+      "village",
+      "village",
+      "village",
+      "village",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "forest",
+      "forest",
+      "forest",
+      "forest",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "forest",
+      "forest",
+      "forest",
+      "village",
+      "village",
+      "village",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "forest",
+      "forest",
+      "forest",
+      "forest",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "forest",
+      "forest",
+      "forest",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "forest",
+      "forest",
+      "forest",
+      "forest",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "forest",
+      "forest",
+      "forest",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains"
+    ],
+    [
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "plains",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land"
+    ],
+    [
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land"
+    ],
+    [
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land"
+    ],
+    [
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land"
+    ],
+    [
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land"
+    ],
+    [
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land",
+      "ashen_land"
+    ]
   ]
 }

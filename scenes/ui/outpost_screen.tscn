@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://outpost_screen_001"]
+[gd_scene load_steps=5 format=3 uid="uid://outpost_screen_001"]
 
 [ext_resource type="Script" path="res://scripts/ui/outpost_scene.gd" id="1_orchestrator"]
+[ext_resource type="Script" path="res://scripts/ui/party_screen.gd" id="2_party"]
+[ext_resource type="Script" path="res://scripts/ui/equipment_screen.gd" id="3_equip"]
+[ext_resource type="Script" path="res://scripts/ui/inventory_screen.gd" id="4_inv"]
 
 [node name="OutpostScene" type="Control"]
 layout_mode = 3
@@ -10,3 +13,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_orchestrator")
+
+[node name="PartyScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_party")
+
+[node name="EquipmentScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_equip")
+
+[node name="InventoryScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_inv")

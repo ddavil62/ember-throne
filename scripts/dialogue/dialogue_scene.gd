@@ -1,41 +1,24 @@
 ## @fileoverview 대화 씬 오케스트레이터. DialogueManager, DialogueBox, ChoicePanel,
-## CGViewer를 코드에서 생성하고 register_ui로 연결한 뒤 대화를 시작한다.
+## CGViewer를 .tscn에서 인스턴스하고 register_ui로 연결한 뒤 대화를 시작한다.
 extends Node
 
-# ── 노드 참조 ──
+# ── 노드 참조 (.tscn에서 정의된 자식 노드) ──
 
 ## 대화 매니저
-var _dialogue_manager: Node = null
-
-## 대화 박스 UI
-var _dialogue_box: Control = null
-
-## 선택지 패널 UI
-var _choice_panel: Control = null
+@onready var _dialogue_manager: Node = $DialogueManager
 
 ## CG 뷰어
-var _cg_viewer: Control = null
+@onready var _cg_viewer: Control = $CGViewer
+
+## 대화 박스 UI
+@onready var _dialogue_box: Control = $DialogueBox
+
+## 선택지 패널 UI
+@onready var _choice_panel: Control = $ChoicePanel
 
 # ── 초기화 ──
 
 func _ready() -> void:
-	# 노드 생성
-	_dialogue_manager = DialogueManagerClass.new()
-	_dialogue_manager.name = "DialogueManager"
-	add_child(_dialogue_manager)
-
-	_cg_viewer = CGViewerClass.new()
-	_cg_viewer.name = "CGViewer"
-	add_child(_cg_viewer)
-
-	_dialogue_box = DialogueBoxClass.new()
-	_dialogue_box.name = "DialogueBox"
-	add_child(_dialogue_box)
-
-	_choice_panel = ChoicePanelClass.new()
-	_choice_panel.name = "ChoicePanel"
-	add_child(_choice_panel)
-
 	# UI 등록 (의존성 주입)
 	_dialogue_manager.register_ui(_dialogue_box, _choice_panel, _cg_viewer)
 

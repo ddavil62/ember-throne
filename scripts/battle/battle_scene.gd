@@ -3,80 +3,42 @@
 ## 의존성을 주입한 뒤 전투 플로우를 진행한다.
 extends Node
 
-# ── 상수 ──
+# ── 노드 참조 (.tscn에서 정의된 자식 노드) ──
 
-## BattleMap 씬 경로
-const BATTLE_MAP_SCENE_PATH := "res://scenes/battle/battle_map.tscn"
-
-# ── 노드 참조 ──
-
-## 전투 맵 (코드에서 인스턴스 생성)
-var _battle_map: Node2D = null
+## 전투 맵 (PackedScene 인스턴스)
+@onready var _battle_map: Node2D = $BattleMap
 
 ## 턴 매니저
-var _turn_manager: TurnManager = null
-
-## 전투 HUD
-var _battle_hud: BattleHUD = null
-
-## 배치 화면
-var _deployment: DeploymentScreen = null
-
-## 전투 결과 화면
-var _battle_result: BattleResult = null
+@onready var _turn_manager: TurnManager = $TurnManager
 
 ## 스킬 연출기
-var _skill_executor: SkillExecutor = null
+@onready var _skill_executor: SkillExecutor = $SkillExecutor
+
+## 전투 HUD
+@onready var _battle_hud: BattleHUD = $BattleHUD
+
+## 배치 화면
+@onready var _deployment: DeploymentScreen = $DeploymentScreen
+
+## 전투 결과 화면
+@onready var _battle_result: BattleResult = $BattleResult
 
 # ── 초기화 ──
 
 func _ready() -> void:
-	# 1) BattleMap 씬 로드 및 인스턴스 생성
-	var battle_map_res := load(BATTLE_MAP_SCENE_PATH)
-	if battle_map_res == null:
-		push_error("[BattleScene] BattleMap 씬 로드 실패: %s" % BATTLE_MAP_SCENE_PATH)
-		_return_to_world_map()
-		return
-	_battle_map = battle_map_res.instantiate()
-	add_child(_battle_map)
-	move_child(_battle_map, 0)  # 맵을 가장 아래(뒤)에 배치
-
-	# 2) 하위 시스템 노드 생성
-	_turn_manager = TurnManager.new()
-	_turn_manager.name = "TurnManager"
-	add_child(_turn_manager)
-
-	_skill_executor = SkillExecutor.new()
-	_skill_executor.name = "SkillExecutor"
-	add_child(_skill_executor)
-
-	_battle_hud = BattleHUD.new()
-	_battle_hud.name = "BattleHUD"
-	_battle_hud.visible = false  # 배치 단계에서는 숨김
-	add_child(_battle_hud)
-
-	_deployment = DeploymentScreen.new()
-	_deployment.name = "DeploymentScreen"
-	add_child(_deployment)
-
-	_battle_result = BattleResult.new()
-	_battle_result.name = "BattleResult"
-	add_child(_battle_result)
-
-	# 3) 의존성 주입
+	# 의존성 주입
 	_turn_manager.battle_map = _battle_map
 	_turn_manager.connect_battle_map()
 	_battle_hud.battle_map = _battle_map
-	# SkillExecutor는 _ready()에서 CutinOverlay, VfxPlayer 자동 생성
 
-	# 4) 시그널 연결
+	# 시그널 연결
 	_deployment.deployment_finished.connect(_on_deployment_finished)
 	_deployment.deployment_cancelled.connect(_on_deployment_cancelled)
 	_battle_result.result_confirmed.connect(_on_result_confirmed)
 	_battle_result.retry_requested.connect(_on_retry_requested)
 	_battle_result.return_to_map.connect(_on_return_to_map)
 
-	# 5) 전투 데이터 로드 및 배치 화면 시작
+	# 전투 데이터 로드 및 배치 화면 시작
 	_start_battle()
 
 # ── 전투 플로우 ──

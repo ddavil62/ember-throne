@@ -1,23 +1,16 @@
-## @fileoverview 상점 씬 오케스트레이터. shop_screen.gd를 코드에서 생성하고
+## @fileoverview 상점 씬 오케스트레이터. .tscn에서 정의된 ShopScreen에
 ## shop_id와 act를 주입한다. 월드맵 복귀 처리를 담당한다.
 extends Control
 
-# ── 노드 참조 ──
+# ── 노드 참조 (.tscn에서 정의된 자식 노드) ──
 
 ## 실제 상점 화면
-var _shop_screen: Control = null
+@onready var _shop_screen: Control = $ShopScreen
 
 # ── 초기화 ──
 
 func _ready() -> void:
 	anchors_preset = Control.PRESET_FULL_RECT
-
-	# 상점 화면 생성 (shop_screen.gd는 class_name이 없으므로 preload)
-	var ShopScreenScript := preload("res://scripts/ui/shop_screen.gd")
-	_shop_screen = Control.new()
-	_shop_screen.set_script(ShopScreenScript)
-	_shop_screen.name = "ShopScreen"
-	add_child(_shop_screen)
 
 	# GameManager에서 현재 노드 정보 취득
 	var gm: Node = get_node("/root/GameManager")

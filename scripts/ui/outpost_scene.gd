@@ -1,5 +1,5 @@
-## @fileoverview 거점 씬 오케스트레이터. 편성/장비/아이템 화면을 탭으로 전환한다.
-## 각 하위 화면은 자체 _build_ui()로 UI를 구성하므로 여기서는 탭 전환만 관리한다.
+## @fileoverview 거점 씬 오케스트레이터. .tscn에서 정의된 편성/장비/아이템
+## 화면을 탭으로 전환한다.
 extends Control
 
 # ── 상수 ──
@@ -7,12 +7,12 @@ extends Control
 const COLOR_ACCENT := Color(0.85, 0.55, 0.2, 1.0)
 const COLOR_TEXT := Color(0.9, 0.9, 0.85, 1.0)
 
-# ── 노드 참조 ──
+# ── 노드 참조 (.tscn에서 정의된 자식 노드) ──
 
 ## 하위 화면들
-var _party_screen: Control = null
-var _equipment_screen: Control = null
-var _inventory_screen: Control = null
+@onready var _party_screen: Control = $PartyScreen
+@onready var _equipment_screen: Control = $EquipmentScreen
+@onready var _inventory_screen: Control = $InventoryScreen
 
 ## 탭 버튼
 var _tab_party: Button = null
@@ -26,26 +26,6 @@ var _current_tab: String = "party"
 
 func _ready() -> void:
 	anchors_preset = Control.PRESET_FULL_RECT
-
-	# 하위 화면 생성 (class_name이 없으므로 preload)
-	var PartyScript := preload("res://scripts/ui/party_screen.gd")
-	var EquipScript := preload("res://scripts/ui/equipment_screen.gd")
-	var InvScript := preload("res://scripts/ui/inventory_screen.gd")
-
-	_party_screen = Control.new()
-	_party_screen.set_script(PartyScript)
-	_party_screen.name = "PartyScreen"
-	add_child(_party_screen)
-
-	_equipment_screen = Control.new()
-	_equipment_screen.set_script(EquipScript)
-	_equipment_screen.name = "EquipmentScreen"
-	add_child(_equipment_screen)
-
-	_inventory_screen = Control.new()
-	_inventory_screen.set_script(InvScript)
-	_inventory_screen.name = "InventoryScreen"
-	add_child(_inventory_screen)
 
 	_build_tab_bar()
 	_switch_tab("party")

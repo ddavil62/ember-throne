@@ -40,6 +40,8 @@ const SPRITE_ALIASES: Dictionary = {
 	"ash_beast_small":  "ash_parasite",
 	"ash_beast_medium": "ash_wolf",
 	"ash_beast_large":  "ash_giant",
+	# 플레이어 캐릭터 — 영문 이름(Linen)으로 폴더가 생성된 경우
+	"rinen": "linen",
 }
 
 # ── 공개 함수 ──

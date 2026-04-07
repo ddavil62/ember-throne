@@ -30,6 +30,20 @@ const COLOR_BTN_ACCENT := Color(0.85, 0.55, 0.2, 0.3)
 ## 패널 여백
 const PADDING: int = 24
 
+## 승리 조건별 한국어 메시지
+const VICTORY_MESSAGES: Dictionary = {
+	"escape": "탈출 작전 성공!",
+	"rout": "모든 적을 섬멸했다!",
+	"survive_turns": "거점을 수호했다!",
+}
+
+## 패배 조건별 한국어 메시지
+const DEFEAT_MESSAGES: Dictionary = {
+	"turn_limit_exceeded": "시간 제한을 초과했다...",
+	"unit_death": "{unit_name}이(가) 전사했다...",
+	"unit_hp_threshold": "{unit_name}이(가) 쓰러졌다...",
+}
+
 # ── 시그널 ──
 
 ## 결과 확인 (승리 후)
@@ -59,6 +73,8 @@ func _ready() -> void:
 ## @param result_data 결과 데이터 Dictionary
 ## result_data = {
 ##   "victory": bool,
+##   "condition_type": String (조건 타입, 없으면 기본 메시지),
+##   "reason_ko": String (한국어 결과 설명, 없으면 기본 메시지),
 ##   "exp_results": [{unit_id, exp_gained, leveled_up, old_level, new_level, stat_gains}],
 ##   "gold_earned": int,
 ##   "items_earned": [{item_id, name_ko, count}],
@@ -79,7 +95,7 @@ func show_result(result_data: Dictionary) -> void:
 	if is_victory:
 		_panel = _build_victory_panel(result_data)
 	else:
-		_panel = _build_defeat_panel()
+		_panel = _build_defeat_panel(result_data)
 	add_child(_panel)
 
 	visible = true
@@ -114,9 +130,9 @@ func _build_victory_panel(result_data: Dictionary) -> Control:
 	vbox.add_theme_constant_override("separation", 12)
 	panel.add_child(vbox)
 
-	# 타이틀
+	# 타이틀 — 조건별 한국어 메시지 사용
 	var title := Label.new()
-	title.text = "전투 승리!"
+	title.text = result_data.get("reason_ko", "전투 승리!")
 	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", COLOR_VICTORY)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -251,8 +267,9 @@ func _build_exp_row(entry: Dictionary) -> HBoxContainer:
 # ── 패배 패널 ──
 
 ## 패배 결과 패널을 구성한다.
+## @param result_data 결과 데이터 Dictionary (reason_ko 포함)
 ## @returns Control 패널 노드
-func _build_defeat_panel() -> Control:
+func _build_defeat_panel(result_data: Dictionary = {}) -> Control:
 	var panel := PanelContainer.new()
 	var defeat_height: float = 200.0
 	panel.custom_minimum_size = Vector2(PANEL_WIDTH, defeat_height)
@@ -278,9 +295,9 @@ func _build_defeat_panel() -> Control:
 	vbox.add_theme_constant_override("separation", 16)
 	panel.add_child(vbox)
 
-	# 타이틀
+	# 타이틀 — 조건별 한국어 메시지 사용
 	var title := Label.new()
-	title.text = "전투 패배..."
+	title.text = result_data.get("reason_ko", "전투 패배...")
 	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", COLOR_DEFEAT)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

@@ -28,6 +28,13 @@ signal status_removed(target_id: String, status_id: String)
 signal battle_won(battle_id: String)
 ## 전투 패배
 signal battle_lost(battle_id: String)
+## 전투 조건 충족 (승리 또는 패배)
+## is_victory: true=승리, false=패배
+## condition_type: 조건 타입 문자열
+## reason_ko: 한국어 결과 설명
+signal battle_condition_triggered(is_victory: bool, condition_type: String, reason_ko: String)
+## 턴 제한 경고 (남은 턴이 2 이하일 때)
+signal turn_limit_warning(turns_remaining: int)
 
 # ── 경험치/레벨 시그널 ──
 

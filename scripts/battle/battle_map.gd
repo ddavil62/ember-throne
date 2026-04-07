@@ -549,19 +549,7 @@ func reset_units_turn(team_name: String = "") -> void:
 			unit.reset_turn()
 			unit.clear_acted_visual()
 
-## 전투 종료 판정 (한쪽이 전멸했는지)
-## @returns "player_win" / "enemy_win" / "" (진행 중)
-func check_battle_end() -> String:
-	var player_alive := false
-	var enemy_alive := false
-	for unit: BattleUnit in units.values():
-		if unit.is_alive():
-			if unit.team == "player":
-				player_alive = true
-			elif unit.team == "enemy":
-				enemy_alive = true
-	if not enemy_alive:
-		return "player_win"
-	if not player_alive:
-		return "enemy_win"
-	return ""
+## 현재 로드된 맵 데이터를 반환한다 (VictoryConditionChecker 초기화용).
+## @returns 맵 데이터 Dictionary
+func get_map_data() -> Dictionary:
+	return _map_data

@@ -38,6 +38,9 @@ func _ready() -> void:
 	_battle_result.retry_requested.connect(_on_retry_requested)
 	_battle_result.return_to_map.connect(_on_return_to_map)
 
+	# 전투 조건 달성 시 결과 표시 (EventBus 경유)
+	EventBus.battle_condition_triggered.connect(_on_battle_condition_triggered)
+
 	# 전투 데이터 로드 및 배치 화면 시작
 	_start_battle()
 
@@ -115,6 +118,25 @@ func _on_retry_requested() -> void:
 ## 월드맵 복귀 요청
 func _on_return_to_map() -> void:
 	_return_to_world_map()
+
+## 전투 조건 달성 시 결과 화면을 표시한다 (EventBus 콜백).
+## @param is_victory 승리 여부
+## @param condition_type 조건 타입 문자열
+## @param reason_ko 한국어 결과 설명
+func _on_battle_condition_triggered(is_victory: bool, condition_type: String, reason_ko: String) -> void:
+	var result_data: Dictionary = {
+		"victory": is_victory,
+		"condition_type": condition_type,
+		"reason_ko": reason_ko,
+	}
+
+	# 승리 시 경험치/보상 정보 추가 (추후 TurnManager에서 수집)
+	if is_victory:
+		result_data["exp_results"] = []
+		result_data["gold_earned"] = 0
+		result_data["items_earned"] = []
+
+	_battle_result.show_result(result_data)
 
 ## 월드맵으로 복귀한다.
 func _return_to_world_map() -> void:

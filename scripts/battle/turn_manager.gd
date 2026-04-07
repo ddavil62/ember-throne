@@ -83,10 +83,20 @@ var _action_menu_container: VBoxContainer = null
 ## 이번 전투에서 각 유닛이 획득한 EXP 누적 {unit_id: int}
 var _battle_exp_gained: Dictionary = {}
 
+## 승리/패배 조건 판별기
+var _vcc: VictoryConditionChecker = null
+
 # ── 초기화 ──
 
 func _ready() -> void:
 	_create_action_menu()
+
+	# VCC 생성 및 자식 노드로 추가
+	_vcc = VictoryConditionChecker.new()
+	_vcc.name = "VictoryConditionChecker"
+	add_child(_vcc)
+	_vcc.victory_achieved.connect(_on_victory_achieved)
+	_vcc.defeat_achieved.connect(_on_defeat_achieved)
 
 ## BattleMap 시그널을 연결한다. battle_map 주입 후 호출해야 한다.
 func connect_battle_map() -> void:
@@ -102,6 +112,12 @@ func connect_battle_map() -> void:
 func start_battle() -> void:
 	turn_number = 1
 	_battle_exp_gained.clear()
+
+	# VCC 초기화 — 맵 데이터에서 승리/패배 조건 로드
+	if _vcc and battle_map:
+		var map_data: Dictionary = battle_map.get_map_data()
+		_vcc.setup(map_data, battle_map)
+
 	_start_phase("player")
 
 ## 페이즈를 시작한다
@@ -133,8 +149,8 @@ func _start_phase(phase: String) -> void:
 func _end_phase() -> void:
 	EventBus.turn_ended.emit(current_phase, turn_number)
 
-	# 전투 종료 판정
-	if _check_battle_end():
+	# 전투 종료 상태면 중단 (VCC가 이미 BATTLE_END 처리함)
+	if _state == TurnState.BATTLE_END:
 		return
 
 	# 다음 페이즈 결정
@@ -478,8 +494,8 @@ func _complete_action() -> void:
 	_move_cells.clear()
 	_attack_cells.clear()
 
-	# 전투 종료 판정
-	if _check_battle_end():
+	# 전투 종료 상태면 중단 (VCC가 이미 BATTLE_END 처리함)
+	if _state == TurnState.BATTLE_END:
 		return
 
 	# 같은 페이즈에서 행동 가능한 유닛이 남았는지 확인
@@ -490,33 +506,44 @@ func _complete_action() -> void:
 	else:
 		_state = TurnState.IDLE
 
-# ── 전투 종료 판정 ──
+# ── 전투 종료 판정 (VCC 콜백) ──
 
-## 전투 종료를 판정하고 시그널을 발신한다
-## @returns 전투가 종료되었으면 true
-func _check_battle_end() -> bool:
-	if battle_map == null:
-		return false
-
-	var result: String = battle_map.check_battle_end()
-	if result.is_empty():
-		return false
+## VCC 승리 조건 달성 콜백
+## @param condition_type 조건 타입 문자열
+## @param reason_ko 한국어 결과 메시지
+func _on_victory_achieved(condition_type: String, reason_ko: String) -> void:
+	if _state == TurnState.BATTLE_END:
+		return
 
 	_state = TurnState.BATTLE_END
+	_vcc.deactivate()
+
+	# 경험치 적용
+	_apply_battle_exp()
 
 	var gm: Node = _get_game_manager()
 	var battle_id: String = gm.current_battle_id if gm else ""
 
-	if result == "player_win":
-		# 전투 승리 — 경험치 적용
-		_apply_battle_exp()
-		EventBus.battle_won.emit(battle_id)
-		print("[TurnManager] 전투 승리! (battle_id: %s)" % battle_id)
-	elif result == "enemy_win":
-		EventBus.battle_lost.emit(battle_id)
-		print("[TurnManager] 전투 패배! (battle_id: %s)" % battle_id)
+	EventBus.battle_won.emit(battle_id)
+	EventBus.battle_condition_triggered.emit(true, condition_type, reason_ko)
+	print("[TurnManager] 전투 승리! 조건: %s (battle_id: %s)" % [condition_type, battle_id])
 
-	return true
+## VCC 패배 조건 달성 콜백
+## @param condition_type 조건 타입 문자열
+## @param reason_ko 한국어 결과 메시지
+func _on_defeat_achieved(condition_type: String, reason_ko: String) -> void:
+	if _state == TurnState.BATTLE_END:
+		return
+
+	_state = TurnState.BATTLE_END
+	_vcc.deactivate()
+
+	var gm: Node = _get_game_manager()
+	var battle_id: String = gm.current_battle_id if gm else ""
+
+	EventBus.battle_lost.emit(battle_id)
+	EventBus.battle_condition_triggered.emit(false, condition_type, reason_ko)
+	print("[TurnManager] 전투 패배! 조건: %s (battle_id: %s)" % [condition_type, battle_id])
 
 # ── 지형 효과 ──
 
@@ -635,9 +662,16 @@ func _execute_ai_phase(phase: String) -> void:
 	)
 
 	for unit: BattleUnit in ai_units:
+		# 전투 종료 확인 (VCC가 중도 판정한 경우)
+		if _state == TurnState.BATTLE_END:
+			return
 		if not unit.is_alive() or unit.acted:
 			continue
 		await _execute_ai_unit_action(unit)
+
+	# 전투 종료 상태면 페이즈 전환하지 않음
+	if _state == TurnState.BATTLE_END:
+		return
 
 	# AI 페이즈 종료
 	_state = TurnState.PHASE_END

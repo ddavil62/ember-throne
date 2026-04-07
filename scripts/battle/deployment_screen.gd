@@ -78,6 +78,14 @@ func setup(battle_map: Node2D, deploy_cells: Array[Vector2i], party: Array[Dicti
 
 	_update_ui()
 
+## 씬트리로 오는 모든 마우스 클릭을 잡아서 출력 (입력 흐름 디버그)
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
+		print("[Deploy] _input 수신: pos=%s, 패널rect=%s" % [
+			(event as InputEventMouseButton).position,
+			_panel.get_global_rect() if _panel else Rect2()
+		])
+
 ## UI 구성
 func _build_ui() -> void:
 	layer = 10

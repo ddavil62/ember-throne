@@ -78,20 +78,41 @@ func setup(battle_map: Node2D, deploy_cells: Array[Vector2i], party: Array[Dicti
 
 	_update_ui()
 
-## 씬트리로 오는 모든 마우스 클릭을 잡아서 출력 (입력 흐름 디버그)
+## GUI 라우팅 우회: _input에서 직접 rect 비교로 버튼 클릭 처리
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
-		print("[Deploy] _input 수신: pos=%s, 패널rect=%s" % [
-			(event as InputEventMouseButton).position,
-			_panel.get_global_rect() if _panel else Rect2()
-		])
+	if not (event is InputEventMouseButton): return
+	var mb := event as InputEventMouseButton
+	if not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT: return
+	var pos := mb.position
+
+	# 패널 영역 외 클릭은 무시
+	if _panel == null or not _panel.get_global_rect().has_point(pos): return
+
+	# 전투 시작 버튼 수동 클릭 감지
+	if _start_button and not _start_button.disabled:
+		if _start_button.get_global_rect().has_point(pos):
+			_on_start_pressed()
+			get_viewport().set_input_as_handled()
+			return
+
+	# 캐릭터 버튼 수동 클릭 감지
+	if _character_list == null: return
+	for char_data: Dictionary in _party_characters:
+		var char_id: String = char_data.get("id", "")
+		var btn_name := "Char_" + char_id
+		if not _character_list.has_node(btn_name): continue
+		var btn := _character_list.get_node(btn_name) as Button
+		if btn == null or btn.disabled: continue
+		if btn.get_global_rect().has_point(pos):
+			_on_character_button_pressed(char_data)
+			get_viewport().set_input_as_handled()
+			return
 
 ## UI 구성
 func _build_ui() -> void:
 	layer = 10
 
 	var vp_size: Vector2 = get_viewport().get_visible_rect().size
-	print("[Deploy] _build_ui 호출됨, 뷰포트: %s" % vp_size)
 
 	# 왼쪽 패널 (캐릭터 목록)
 	_panel = Panel.new()
@@ -255,7 +276,6 @@ func _remove_unit_at(cell: Vector2i) -> void:
 ## 캐릭터 버튼 클릭
 ## @param char_data 클릭된 캐릭터 데이터
 func _on_character_button_pressed(char_data: Dictionary) -> void:
-	print("[Deploy] 캐릭터 버튼 눌림: %s" % char_data.get("id", "?"))
 	var char_id: String = char_data.get("id", "")
 
 	# 이미 배치된 캐릭터 선택 시 → 해당 유닛으로 카메라 이동 (또는 제거 모드)
@@ -301,7 +321,6 @@ func _on_unit_clicked(unit: BattleUnit) -> void:
 
 ## 전투 시작 버튼 클릭
 func _on_start_pressed() -> void:
-	print("[Deploy] 전투 시작 버튼 눌림! 배치된 유닛: %d명" % _deployed.size())
 	# 최소 1명 배치 필요 (카엘은 자동이므로 항상 1명 이상)
 	if _deployed.is_empty():
 		return

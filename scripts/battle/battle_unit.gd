@@ -327,6 +327,51 @@ func face_towards(target_cell: Vector2i) -> void:
 
 # ── 전투 액션 ──
 
+# ── 전투 애니메이션 (코루틴) ──
+
+## 공격 애니메이션을 1사이클 재생하고 idle로 복귀한다.
+## 스프라이트나 애니메이션이 없으면 즉시 반환한다.
+func play_attack_anim() -> void:
+	if _sprite == null or _sprite.sprite_frames == null:
+		return
+	var anim := "attack_%s" % facing
+	if not _sprite.sprite_frames.has_animation(anim):
+		return
+	_sprite.play(anim)
+	var frames_n := _sprite.sprite_frames.get_frame_count(anim)
+	var fps: float = _sprite.sprite_frames.get_animation_speed(anim)
+	await get_tree().create_timer(float(frames_n) / fps).timeout
+	if is_instance_valid(_sprite) and _sprite.animation == anim:
+		_sprite.play("idle_%s" % facing)
+
+## 피격 애니메이션을 1사이클 재생하고 idle로 복귀한다.
+## 스프라이트나 애니메이션이 없으면 즉시 반환한다.
+func play_hit_anim() -> void:
+	if _sprite == null or _sprite.sprite_frames == null:
+		return
+	var anim := "hit_%s" % facing
+	if not _sprite.sprite_frames.has_animation(anim):
+		return
+	_sprite.play(anim)
+	var frames_n := _sprite.sprite_frames.get_frame_count(anim)
+	var fps: float = _sprite.sprite_frames.get_animation_speed(anim)
+	await get_tree().create_timer(float(frames_n) / fps).timeout
+	if is_instance_valid(_sprite) and _sprite.animation == anim:
+		_sprite.play("idle_%s" % facing)
+
+## 사망 애니메이션을 재생하고 완료(animation_finished)까지 대기한다.
+## non-looping이므로 마지막 프레임에서 멈춘다.
+func play_death_anim() -> void:
+	if _sprite == null or _sprite.sprite_frames == null:
+		return
+	var anim := "death_%s" % facing
+	if not _sprite.sprite_frames.has_animation(anim):
+		anim = "death_south"  # 방향별 애니메이션 없을 때 fallback
+		if not _sprite.sprite_frames.has_animation(anim):
+			return
+	_sprite.play(anim)
+	await _sprite.animation_finished
+
 ## 피해를 입힌다
 ## @param amount 피해량
 ## @returns 남은 HP

@@ -396,7 +396,7 @@ func _cancel_target_select() -> void:
 
 # ── 공격 실행 ──
 
-## 공격을 실행한다 (데미지 계산 + 반격 처리)
+## 공격을 실행한다 (데미지 계산 + 애니메이션 + 반격 처리, 코루틴)
 ## @param attacker 공격 유닛
 ## @param defender 방어 유닛
 func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
@@ -404,9 +404,16 @@ func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
 	if battle_map:
 		battle_map.clear_highlights()
 
-	# 공격 방향으로 facing 갱신
+	# 공격/방어 방향 전환
 	attacker.face_towards(defender.cell)
 	defender.face_towards(attacker.cell)
+
+	# 공격 애니메이션 시작 (fire-and-forget 코루틴)
+	attacker.play_attack_anim()
+
+	# 공격 히트 타이밍 대기 — 6프레임 중 3번째(중반)에 데미지 적용
+	# 6frames @ 8fps → 0.75s 총 재생 / 2 = 0.375s
+	await get_tree().create_timer(3.0 / 8.0).timeout
 
 	# 물리 데미지 계산
 	var result: Dictionary = combat_calc.calc_physical_damage(
@@ -427,7 +434,7 @@ func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
 			var kill_exp: int = exp_system.calc_kill_exp(attacker.level, defender.level)
 			_accumulate_exp(attacker.unit_id, kill_exp)
 
-			# 골드 드롭 처리 (_source_data에서 gold_reward 직접 참조)
+			# 골드 드롭 처리
 			if defender.team == "enemy":
 				var gr: Dictionary = defender._source_data.get("gold_reward", {})
 				var g_min: int = int(gr.get("min", 0))
@@ -435,21 +442,29 @@ func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
 				if g_max > 0:
 					_battle_gold_gained += randi_range(g_min, g_max)
 
+			# 사망 애니메이션 완료 대기 후 유닛 제거
+			await defender.play_death_anim()
 			EventBus.unit_died.emit(defender.unit_id, attacker.unit_id)
 			if battle_map:
 				battle_map.remove_unit(defender.cell)
+		else:
+			# 생존 — 피격 애니메이션 (fire-and-forget)
+			defender.play_hit_anim()
 	else:
 		# 빗나감 표시 (추후 UI 연출)
 		print("[TurnManager] %s의 공격이 빗나감!" % attacker.unit_id)
 
-	# 반격 처리 (방어자 생존 + 사거리 내)
+	# 공격 애니메이션 나머지 완료 대기 (남은 3프레임 분)
+	await get_tree().create_timer(3.0 / 8.0).timeout
+
+	# 반격 처리 (방어자 생존 + 적중 + 사거리 내)
 	if defender.is_alive() and result["hit"]:
-		_execute_counterattack(defender, attacker)
+		await _execute_counterattack(defender, attacker)
 
 	# 행동 완료
 	_complete_action()
 
-## 반격을 실행한다 (1회, skill_mult 1.0)
+## 반격을 실행한다 (1회, 애니메이션 포함, 코루틴)
 ## @param counter_attacker 반격하는 유닛 (원래 방어자)
 ## @param counter_target 반격 대상 (원래 공격자)
 func _execute_counterattack(counter_attacker: BattleUnit, counter_target: BattleUnit) -> void:
@@ -462,6 +477,14 @@ func _execute_counterattack(counter_attacker: BattleUnit, counter_target: Battle
 	var dist: int = absi(counter_attacker.cell.x - counter_target.cell.x) + absi(counter_attacker.cell.y - counter_target.cell.y)
 	if dist < range_min or dist > range_max:
 		return  # 사거리 밖 — 반격 불가
+
+	# 반격 방향 전환
+	counter_attacker.face_towards(counter_target.cell)
+	counter_target.face_towards(counter_attacker.cell)
+
+	# 반격 애니메이션 시작
+	counter_attacker.play_attack_anim()
+	await get_tree().create_timer(3.0 / 8.0).timeout
 
 	# 반격 데미지 계산 (기본 공격, skill_mult 1.0)
 	var counter_result: Dictionary = combat_calc.calc_physical_damage(
@@ -486,9 +509,15 @@ func _execute_counterattack(counter_attacker: BattleUnit, counter_target: Battle
 				if g_max > 0:
 					_battle_gold_gained += randi_range(g_min, g_max)
 
+			# 사망 애니메이션 완료 대기
+			await counter_target.play_death_anim()
 			EventBus.unit_died.emit(counter_target.unit_id, counter_attacker.unit_id)
 			if battle_map:
 				battle_map.remove_unit(counter_target.cell)
+		else:
+			counter_target.play_hit_anim()
+
+	await get_tree().create_timer(3.0 / 8.0).timeout
 
 # ── 대기 ──
 

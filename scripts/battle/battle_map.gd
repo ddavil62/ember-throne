@@ -285,7 +285,7 @@ func _render_terrain(tiles: Array, w: int, h: int) -> void:
 			var base_name: String = BASE_TILE_MAP.get(t, "")
 			if base_name != "":
 				var base_path := "res://assets/tiles/base/%s.png" % base_name
-				var base_tex: Texture2D = _get_cached_tex(base_path, tex_cache)
+				var base_tex: ImageTexture = _get_image_tex(base_path, tex_cache)
 				if base_tex:
 					_place_wang_sprite(terrain_node, base_tex, Rect2(0, 0, 32, 32), x, y)
 					continue
@@ -366,6 +366,23 @@ func _get_cached_tex(path: String, cache: Dictionary) -> Texture2D:
 	if not cache.has(path):
 		cache[path] = load(path) as Texture2D
 	return cache[path]
+
+## 베이스 타일 PNG를 Image.load_from_file로 직접 로드 (import 파일 불필요)
+## ResourceLoader는 .import/.ctex가 없으면 null을 반환하므로, 독립 PNG 파일은
+## 이 메서드로 ImageTexture를 생성한다.
+## @param path res:// 경로
+## @param cache 캐시 딕셔너리
+## @returns ImageTexture (실패 시 null)
+func _get_image_tex(path: String, cache: Dictionary) -> ImageTexture:
+	if not cache.has(path):
+		var img := Image.load_from_file(
+			ProjectSettings.globalize_path(path))
+		if img:
+			img.convert(Image.FORMAT_RGBA8)
+			cache[path] = ImageTexture.create_from_image(img)
+		else:
+			cache[path] = null
+	return cache[path] as ImageTexture
 
 ## 오버레이 텍스처 캐시에서 반환 (없으면 로드 후 저장)
 ## 사전 처리된 {NAME}_ov.png 파일을 로드한다.

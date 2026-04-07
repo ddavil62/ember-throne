@@ -127,7 +127,7 @@ ember-throne/
 - 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈 -- 게임 플레이 루프 완성 전 별도 작업 필요
 - `spend_gold()` 음수 amount 미검증 -- 현재 호출부 없으나 상점 구현 시 가드 추가 필요 (Phase 2 QA M1)
 - `init_default_party()`의 seria/rinen이 CHARACTER_JOINS와 불일치 -- 기획 확인 필요 (Phase 2 QA M2)
-- DifficultyManager 인스턴스가 `init_from_enemy()` 호출마다 생성됨 -- 성능 영향 미미, 추후 싱글톤/캐싱 검토 (Phase 3 QA L1)
+- ~~DifficultyManager 인스턴스가 `init_from_enemy()` 호출마다 생성됨~~ -- 싱글톤 패턴으로 전환 완료 (Phase 3 QA L1 해소)
 
 ## 향후 계획
 
@@ -141,7 +141,7 @@ ember-throne/
 - init_default_party() CHARACTER_JOINS 정합성 정리
 - 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
 - 보너스 EXP 대상 확장 검토 (배치 유닛 전체 -> 현재는 공격 행동 유닛만)
-- DifficultyManager 싱글톤/캐싱 전환 검토
+- ~~DifficultyManager 싱글톤/캐싱 전환 검토~~ -- 완료 (static var 싱글톤 패턴)
 - battle_34 3페이즈 보스전 구현
 - Steam 연동 (GodotSteam: 업적, 클라우드 세이브)
 - 스토어 페이지 에셋 준비

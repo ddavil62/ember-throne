@@ -1,5 +1,14 @@
 # Changelog
 
+## [미출시] - 2026-04-08
+
+### Changed (DifficultyManager 싱글톤 최적화)
+- `difficulty_manager.gd`: `static var _instance` + `static func get_instance()` 싱글톤 패턴 도입
+  - `RefCounted` 기반 유지, 최초 호출 시 1회만 인스턴스 생성
+  - 기존 인터페이스(메서드 시그니처) 변경 없음
+- `battle_unit.gd`: `DifficultyManager.new()` -> `DifficultyManager.get_instance()` 변경
+  - `init_from_enemy()` 호출마다 인스턴스 생성하던 비효율 해소 (Phase 3 QA L1)
+
 ## [미출시] - 2026-04-07
 
 ### Changed (Phase 3 Hard 난이도 적 스케일링)

@@ -234,7 +234,7 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 	unit_name_ko = enemy_data.get("name_ko", "")
 
 	# 난이도 보정: 적 레벨 + 보너스 (Hard: +1, Normal: +0)
-	var diff_mgr := DifficultyManager.new()
+	var diff_mgr := DifficultyManager.get_instance()
 	var actual_level: int = enemy_level + diff_mgr.get_enemy_level_bonus()
 	level = actual_level
 

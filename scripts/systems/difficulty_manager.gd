@@ -1,7 +1,20 @@
 ## @fileoverview 난이도 관리 시스템. 난이도 설정에 따른 전투/AI/보상 보정치를 제공한다.
 ## GameManager.difficulty와 DataManager.difficulty_data를 참조하여 보정치를 반환한다.
+## 싱글톤 패턴: DifficultyManager.get_instance()로 단일 인스턴스를 참조한다.
 class_name DifficultyManager
 extends RefCounted
+
+# ── 싱글톤 ──
+
+## 캐시된 싱글톤 인스턴스
+static var _instance: DifficultyManager = null
+
+## 싱글톤 인스턴스를 반환한다. 최초 호출 시 1회만 생성된다.
+## @returns DifficultyManager 인스턴스
+static func get_instance() -> DifficultyManager:
+	if _instance == null:
+		_instance = DifficultyManager.new()
+	return _instance
 
 # ── 상수 ──
 

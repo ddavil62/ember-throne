@@ -1,13 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://battle_scene_001"]
+[gd_scene load_steps=8 format=3 uid="uid://battle_scene_001"]
 
-[ext_resource type="Script" path="res://scripts/ui/placeholder_scene.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/battle/battle_scene.gd" id="1_orchestrator"]
+[ext_resource type="PackedScene" uid="uid://battle_map_001" path="res://scenes/battle/battle_map.tscn" id="2_battle_map"]
+[ext_resource type="Script" path="res://scripts/battle/turn_manager.gd" id="3_turn_manager"]
+[ext_resource type="Script" path="res://scripts/battle/ui/battle_hud.gd" id="4_battle_hud"]
+[ext_resource type="Script" path="res://scripts/battle/deployment_screen.gd" id="5_deployment"]
+[ext_resource type="Script" path="res://scripts/battle/ui/battle_result.gd" id="6_battle_result"]
+[ext_resource type="Script" path="res://scripts/battle/skill_executor.gd" id="7_skill_executor"]
 
-[node name="BattleScene" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_script")
-scene_label = "전투"
+[node name="BattleScene" type="Node"]
+script = ExtResource("1_orchestrator")
+
+[node name="BattleMap" parent="." instance=ExtResource("2_battle_map")]
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("3_turn_manager")
+
+[node name="BattleHUD" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("4_battle_hud")
+
+[node name="DeploymentScreen" type="CanvasLayer" parent="."]
+layer = 20
+script = ExtResource("5_deployment")
+
+[node name="BattleResult" type="CanvasLayer" parent="."]
+layer = 80
+script = ExtResource("6_battle_result")
+
+[node name="SkillExecutor" type="Node" parent="."]
+script = ExtResource("7_skill_executor")

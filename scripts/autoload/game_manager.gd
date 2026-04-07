@@ -31,6 +31,9 @@ var current_scene_id: String = ""
 ## 현재 전투 ID
 var current_battle_id: String = ""
 
+## 현재 월드맵 노드 ID (상점/거점 등에서 사용)
+var current_node_id: String = ""
+
 ## 게임 플래그 (스토리 분기, 해금 상태 등)
 var flags: Dictionary = {}
 

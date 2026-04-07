@@ -399,10 +399,12 @@ func _on_enter_button_pressed() -> void:
 				print("[WorldMap] 이벤트 진입: %s (scene: %s)" % [_selected_node_id, sid])
 		"shop":
 			# 상점 화면으로 전환
+			gm.current_node_id = _selected_node_id
 			gm.transition_to_scene("res://scenes/ui/shop_screen.tscn", 0.5, gm.GameState.MENU)
 			print("[WorldMap] 상점 진입: %s" % _selected_node_id)
 		"outpost":
 			# 편성/장비 메뉴
+			gm.current_node_id = _selected_node_id
 			gm.transition_to_scene("res://scenes/ui/outpost_screen.tscn", 0.5, gm.GameState.MENU)
 			print("[WorldMap] 거점 진입: %s" % _selected_node_id)
 		"travel":

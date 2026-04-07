@@ -1,0 +1,80 @@
+{
+  "id": "ash_knight",
+  "name_ko": "재의 기사",
+  "name_en": "Ash Knight",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "sword",
+  "armor_type": "heavy",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 45,
+    "mp": 0,
+    "atk": 17,
+    "def": 12,
+    "matk": 6,
+    "mdef": 8,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 4.0,
+    "atk": 1.4,
+    "def": 1.0,
+    "matk": 0.5,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act3": {
+      "hp": 68,
+      "atk": 26,
+      "def": 18,
+      "matk": 9,
+      "mdef": 12,
+      "spd": 9
+    },
+    "act4": {
+      "hp": 94,
+      "atk": 36,
+      "def": 25,
+      "matk": 13,
+      "mdef": 17,
+      "spd": 13
+    }
+  },
+  "ash_scaling": {
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "corrupted_will",
+      "name_ko": "변질된 의지",
+      "name_en": "Corrupted Will",
+      "description_ko": "재화 면역, 재의 땅 ATK +10%",
+      "description_en": "Ash immune, ATK +10% on ash"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ash_crystal",
+      "name_ko": "재의 수정",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 35,
+    "max": 55
+  },
+  "exp_reward": 22,
+  "sprite_id": "ash_knight",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "재의 기사"
+}

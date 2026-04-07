@@ -1,0 +1,100 @@
+{
+  "id": "morgan_aide_2",
+  "name_ko": "모르간 측근 2",
+  "name_en": "Morgan Aide (Ranged)",
+  "faction": "morgan",
+  "type": "ranged",
+  "role": "boss",
+  "weapon_type": "bow",
+  "armor_type": "medium",
+  "ai_pattern": "ranged_support",
+  "range_min": 2,
+  "range_max": 4,
+  "base_stats": {
+    "hp": 70,
+    "mp": 0,
+    "atk": 20,
+    "def": 12,
+    "matk": 8,
+    "mdef": 12,
+    "spd": 9,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 6.3,
+    "atk": 1.6,
+    "def": 1.0,
+    "matk": 0.6,
+    "mdef": 0.8,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 70,
+      "atk": 20,
+      "def": 12,
+      "matk": 8,
+      "mdef": 12,
+      "spd": 9
+    },
+    "act2": {
+      "hp": 105,
+      "atk": 30,
+      "def": 18,
+      "matk": 12,
+      "mdef": 18,
+      "spd": 14
+    },
+    "act3": {
+      "hp": 140,
+      "atk": 40,
+      "def": 24,
+      "matk": 16,
+      "mdef": 24,
+      "spd": 18
+    },
+    "act4": {
+      "hp": 189,
+      "atk": 54,
+      "def": 32,
+      "matk": 22,
+      "mdef": 32,
+      "spd": 24
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "sniper",
+      "name_ko": "저격수",
+      "name_en": "Sniper",
+      "description_ko": "동일 대상 2턴 연속 시 치명타 +30%",
+      "description_en": "Crit +30% same target"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "elixir",
+      "name_ko": "만병통치약",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 70,
+    "max": 100
+  },
+  "exp_reward": 35,
+  "sprite_id": "morgan_aide_2",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "모르간 측근 2. 원거리 미니보스."
+}

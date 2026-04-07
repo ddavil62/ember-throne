@@ -1,0 +1,92 @@
+{
+  "id": "mercenary_mage",
+  "name_ko": "용병 마법사",
+  "name_en": "Mercenary Mage",
+  "faction": "mercenary",
+  "type": "magic",
+  "role": "attacker",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "ranged_support",
+  "range_min": 1,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 26,
+    "mp": 0,
+    "atk": 5,
+    "def": 5,
+    "matk": 15,
+    "mdef": 10,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.3,
+    "atk": 0.4,
+    "def": 0.4,
+    "matk": 1.2,
+    "mdef": 0.7,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 26,
+      "atk": 5,
+      "def": 5,
+      "matk": 15,
+      "mdef": 10,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 39,
+      "atk": 8,
+      "def": 8,
+      "matk": 22,
+      "mdef": 15,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 52,
+      "atk": 10,
+      "def": 10,
+      "matk": 30,
+      "mdef": 20,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 70,
+      "atk": 14,
+      "def": 14,
+      "matk": 40,
+      "mdef": 27,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "mana_potion",
+      "name_ko": "마력의 물약",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 30,
+    "max": 50
+  },
+  "exp_reward": 17,
+  "sprite_id": "mercenary_mage",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "용병 마법사"
+}

@@ -1,0 +1,98 @@
+{
+  "id": "mutant_experiment",
+  "name_ko": "돌연변이 실험체",
+  "name_en": "Mutant Experiment",
+  "faction": "morgan",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 58,
+    "mp": 0,
+    "atk": 20,
+    "def": 9,
+    "matk": 12,
+    "mdef": 6,
+    "spd": 8,
+    "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 5.2,
+    "atk": 1.6,
+    "def": 0.7,
+    "matk": 1.0,
+    "mdef": 0.4,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 58,
+      "atk": 20,
+      "def": 9,
+      "matk": 12,
+      "mdef": 6,
+      "spd": 8
+    },
+    "act2": {
+      "hp": 87,
+      "atk": 30,
+      "def": 14,
+      "matk": 18,
+      "mdef": 9,
+      "spd": 12
+    },
+    "act3": {
+      "hp": 116,
+      "atk": 40,
+      "def": 18,
+      "matk": 24,
+      "mdef": 12,
+      "spd": 16
+    },
+    "act4": {
+      "hp": 157,
+      "atk": 54,
+      "def": 24,
+      "matk": 32,
+      "mdef": 16,
+      "spd": 22
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "ashification_touch",
+      "name_ko": "재화 접촉",
+      "description_ko": "35% 재화"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "ash_core",
+      "name_ko": "재의 핵",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 40,
+    "max": 65
+  },
+  "exp_reward": 23,
+  "sprite_id": "mutant_experiment",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "돌연변이 실험체"
+}

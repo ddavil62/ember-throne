@@ -1,0 +1,100 @@
+{
+  "id": "trap_specialist",
+  "name_ko": "함정 전문가",
+  "name_en": "Trap Specialist",
+  "faction": "kingdom",
+  "type": "support",
+  "role": "support",
+  "weapon_type": "dagger",
+  "armor_type": "light",
+  "ai_pattern": "support",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 24,
+    "mp": 0,
+    "atk": 8,
+    "def": 5,
+    "matk": 10,
+    "mdef": 7,
+    "spd": 8,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.2,
+    "atk": 0.6,
+    "def": 0.4,
+    "matk": 0.8,
+    "mdef": 0.5,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 24,
+      "atk": 8,
+      "def": 5,
+      "matk": 10,
+      "mdef": 7,
+      "spd": 8
+    },
+    "act2": {
+      "hp": 36,
+      "atk": 12,
+      "def": 8,
+      "matk": 15,
+      "mdef": 10,
+      "spd": 12
+    },
+    "act3": {
+      "hp": 48,
+      "atk": 16,
+      "def": 10,
+      "matk": 20,
+      "mdef": 14,
+      "spd": 16
+    },
+    "act4": {
+      "hp": 65,
+      "atk": 22,
+      "def": 14,
+      "matk": 27,
+      "mdef": 19,
+      "spd": 22
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [
+    {
+      "id": "set_trap",
+      "name_ko": "함정 설치",
+      "name_en": "Set Trap",
+      "description_ko": "함정 설치",
+      "description_en": "Set trap"
+    }
+  ],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "antidote",
+      "name_ko": "해독제",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 30,
+    "max": 50
+  },
+  "exp_reward": 15,
+  "sprite_id": "trap_specialist",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "함정 전문가"
+}

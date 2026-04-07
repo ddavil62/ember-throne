@@ -1,0 +1,100 @@
+{
+  "id": "gate_guard",
+  "name_ko": "문지기",
+  "name_en": "Gate Guard",
+  "faction": "neutral",
+  "type": "melee",
+  "role": "tank",
+  "weapon_type": "spear",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 2,
+  "base_stats": {
+    "hp": 48,
+    "mp": 0,
+    "atk": 12,
+    "def": 15,
+    "matk": 3,
+    "mdef": 7,
+    "spd": 4,
+    "mov": 2
+  },
+  "scaling_per_level": {
+    "hp": 4.3,
+    "atk": 1.0,
+    "def": 1.2,
+    "matk": 0.2,
+    "mdef": 0.5,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 48,
+      "atk": 12,
+      "def": 15,
+      "matk": 3,
+      "mdef": 7,
+      "spd": 4
+    },
+    "act2": {
+      "hp": 72,
+      "atk": 18,
+      "def": 22,
+      "matk": 4,
+      "mdef": 10,
+      "spd": 6
+    },
+    "act3": {
+      "hp": 96,
+      "atk": 24,
+      "def": 30,
+      "matk": 6,
+      "mdef": 14,
+      "spd": 8
+    },
+    "act4": {
+      "hp": 130,
+      "atk": 32,
+      "def": 40,
+      "matk": 8,
+      "mdef": 19,
+      "spd": 11
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "fortified",
+      "name_ko": "진지",
+      "name_en": "Fortified",
+      "description_ko": "이동 안 한 턴 DEF +20%",
+      "description_en": "DEF +20% if not moved"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "herb",
+      "name_ko": "약초",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 25,
+    "max": 45
+  },
+  "exp_reward": 15,
+  "sprite_id": "gate_guard",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "문지기"
+}

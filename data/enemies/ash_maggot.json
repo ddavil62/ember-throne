@@ -1,0 +1,81 @@
+{
+  "id": "ash_maggot",
+  "name_ko": "재의 구더기",
+  "name_en": "Ash Maggot",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "bite",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 12,
+    "mp": 0,
+    "atk": 6,
+    "def": 2,
+    "matk": 0,
+    "mdef": 2,
+    "spd": 4,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 1.1,
+    "atk": 0.5,
+    "def": 0.2,
+    "matk": 0.0,
+    "mdef": 0.1,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act2": {
+      "hp": 12,
+      "atk": 6,
+      "def": 2,
+      "matk": 0,
+      "mdef": 2,
+      "spd": 4
+    },
+    "act3": {
+      "hp": 18,
+      "atk": 9,
+      "def": 3,
+      "matk": 0,
+      "mdef": 3,
+      "spd": 6
+    },
+    "act4": {
+      "hp": 25,
+      "atk": 13,
+      "def": 4,
+      "matk": 0,
+      "mdef": 4,
+      "spd": 8
+    }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ash_residue",
+      "name_ko": "재의 찌꺼기",
+      "rate": 0.3
+    }
+  ],
+  "gold_reward": {
+    "min": 5,
+    "max": 12
+  },
+  "exp_reward": 5,
+  "sprite_id": "ash_maggot",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "재의 구더기"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "morgan_elite_knight",
+  "name_ko": "모르간 정예 기사",
+  "name_en": "Morgan Elite Knight",
+  "faction": "morgan",
+  "type": "melee",
+  "role": "tank",
+  "weapon_type": "sword_shield",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 58,
+    "mp": 0,
+    "atk": 16,
+    "def": 18,
+    "matk": 5,
+    "mdef": 9,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 5.2,
+    "atk": 1.3,
+    "def": 1.4,
+    "matk": 0.4,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 58,
+      "atk": 16,
+      "def": 18,
+      "matk": 5,
+      "mdef": 9,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 87,
+      "atk": 24,
+      "def": 27,
+      "matk": 8,
+      "mdef": 14,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 116,
+      "atk": 32,
+      "def": 36,
+      "matk": 10,
+      "mdef": 18,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 157,
+      "atk": 43,
+      "def": 49,
+      "matk": 14,
+      "mdef": 24,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "heavy_armor",
+      "name_ko": "중장갑",
+      "name_en": "Heavy Armor",
+      "description_ko": "물리 -10%",
+      "description_en": "Phys -10%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "premium_herb",
+      "name_ko": "상급 약초",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 40,
+    "max": 65
+  },
+  "exp_reward": 22,
+  "sprite_id": "morgan_elite_knight",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "모르간 정예 기사"
+}

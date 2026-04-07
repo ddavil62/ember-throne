@@ -1,0 +1,92 @@
+{
+  "id": "conscript_remnant_mage",
+  "name_ko": "징발대 잔당 마법사",
+  "name_en": "Conscript Remnant Mage",
+  "faction": "kingdom",
+  "type": "magic",
+  "role": "attacker",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "ranged_support",
+  "range_min": 1,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 18,
+    "mp": 0,
+    "atk": 4,
+    "def": 3,
+    "matk": 10,
+    "mdef": 7,
+    "spd": 5,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 1.6,
+    "atk": 0.3,
+    "def": 0.2,
+    "matk": 0.8,
+    "mdef": 0.5,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 18,
+      "atk": 4,
+      "def": 3,
+      "matk": 10,
+      "mdef": 7,
+      "spd": 5
+    },
+    "act2": {
+      "hp": 27,
+      "atk": 6,
+      "def": 4,
+      "matk": 15,
+      "mdef": 10,
+      "spd": 8
+    },
+    "act3": {
+      "hp": 36,
+      "atk": 8,
+      "def": 6,
+      "matk": 20,
+      "mdef": 14,
+      "spd": 10
+    },
+    "act4": {
+      "hp": 49,
+      "atk": 11,
+      "def": 8,
+      "matk": 27,
+      "mdef": 19,
+      "spd": 14
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "mana_potion",
+      "name_ko": "마력의 물약",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 18,
+    "max": 35
+  },
+  "exp_reward": 11,
+  "sprite_id": "conscript_remnant_mage",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "징발대 잔당 마법사"
+}

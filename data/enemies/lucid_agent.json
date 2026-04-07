@@ -1,0 +1,107 @@
+{
+  "id": "lucid_agent",
+  "name_ko": "루시드 요원",
+  "name_en": "Lucid Agent",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "dagger",
+  "armor_type": "light",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 35,
+    "mp": 0,
+    "atk": 15,
+    "def": 7,
+    "matk": 7,
+    "mdef": 8,
+    "spd": 11,
+    "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 3.1,
+    "atk": 1.2,
+    "def": 0.6,
+    "matk": 0.6,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 35,
+      "atk": 15,
+      "def": 7,
+      "matk": 7,
+      "mdef": 8,
+      "spd": 11
+    },
+    "act2": {
+      "hp": 52,
+      "atk": 22,
+      "def": 10,
+      "matk": 10,
+      "mdef": 12,
+      "spd": 16
+    },
+    "act3": {
+      "hp": 70,
+      "atk": 30,
+      "def": 14,
+      "matk": 14,
+      "mdef": 16,
+      "spd": 22
+    },
+    "act4": {
+      "hp": 94,
+      "atk": 40,
+      "def": 19,
+      "matk": 19,
+      "mdef": 22,
+      "spd": 30
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "stealth",
+      "name_ko": "은신",
+      "name_en": "Stealth",
+      "description_ko": "첫 턴 은신",
+      "description_en": "Invisible 1st turn"
+    },
+    {
+      "id": "backstab",
+      "name_ko": "급소 찌르기",
+      "name_en": "Backstab",
+      "description_ko": "후방 치명타",
+      "description_en": "Crit from behind"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "smoke_bomb",
+      "name_ko": "연막탄",
+      "rate": 0.12
+    }
+  ],
+  "gold_reward": {
+    "min": 45,
+    "max": 65
+  },
+  "exp_reward": 20,
+  "sprite_id": "lucid_agent",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "루시드 요원"
+}

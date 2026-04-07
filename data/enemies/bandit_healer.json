@@ -1,0 +1,100 @@
+{
+  "id": "bandit_healer",
+  "name_ko": "도적 치료사",
+  "name_en": "Bandit Healer",
+  "faction": "bandit",
+  "type": "support",
+  "role": "healer",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "support",
+  "range_min": 1,
+  "range_max": 2,
+  "base_stats": {
+    "hp": 20,
+    "mp": 0,
+    "atk": 4,
+    "def": 4,
+    "matk": 8,
+    "mdef": 7,
+    "spd": 5,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 1.8,
+    "atk": 0.3,
+    "def": 0.3,
+    "matk": 0.6,
+    "mdef": 0.5,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 20,
+      "atk": 4,
+      "def": 4,
+      "matk": 8,
+      "mdef": 7,
+      "spd": 5
+    },
+    "act2": {
+      "hp": 30,
+      "atk": 6,
+      "def": 6,
+      "matk": 12,
+      "mdef": 10,
+      "spd": 8
+    },
+    "act3": {
+      "hp": 40,
+      "atk": 8,
+      "def": 8,
+      "matk": 16,
+      "mdef": 14,
+      "spd": 10
+    },
+    "act4": {
+      "hp": 54,
+      "atk": 11,
+      "def": 11,
+      "matk": 22,
+      "mdef": 19,
+      "spd": 14
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [
+    {
+      "id": "heal",
+      "name_ko": "치유",
+      "name_en": "Heal",
+      "description_ko": "인접 HP 20% 회복",
+      "description_en": "Heal adjacent 20%"
+    }
+  ],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "herb",
+      "name_ko": "약초",
+      "rate": 0.3
+    }
+  ],
+  "gold_reward": {
+    "min": 20,
+    "max": 35
+  },
+  "exp_reward": 12,
+  "sprite_id": "bandit_healer",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "도적 치료사"
+}

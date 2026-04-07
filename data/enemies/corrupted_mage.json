@@ -1,0 +1,98 @@
+{
+  "id": "corrupted_mage",
+  "name_ko": "변질 마법사",
+  "name_en": "Corrupted Mage",
+  "faction": "morgan",
+  "type": "magic",
+  "role": "attacker",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "ranged_support",
+  "range_min": 1,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 30,
+    "mp": 0,
+    "atk": 5,
+    "def": 5,
+    "matk": 22,
+    "mdef": 12,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.7,
+    "atk": 0.4,
+    "def": 0.4,
+    "matk": 1.8,
+    "mdef": 0.8,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 30,
+      "atk": 5,
+      "def": 5,
+      "matk": 22,
+      "mdef": 12,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 45,
+      "atk": 8,
+      "def": 8,
+      "matk": 33,
+      "mdef": 18,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 60,
+      "atk": 10,
+      "def": 10,
+      "matk": 44,
+      "mdef": 24,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 81,
+      "atk": 14,
+      "def": 14,
+      "matk": 59,
+      "mdef": 32,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "ashification_magic",
+      "name_ko": "재화 마법",
+      "description_ko": "마법 30% 재화"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "ash_crystal",
+      "name_ko": "재의 수정",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 40,
+    "max": 60
+  },
+  "exp_reward": 22,
+  "sprite_id": "corrupted_mage",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "변질 마법사"
+}

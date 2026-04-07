@@ -1,0 +1,107 @@
+{
+  "id": "conscript_lancer",
+  "name_ko": "징발대 창기병",
+  "name_en": "Conscript Lancer",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "spear",
+  "armor_type": "medium",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 2,
+  "base_stats": {
+    "hp": 34,
+    "mp": 0,
+    "atk": 14,
+    "def": 9,
+    "matk": 3,
+    "mdef": 5,
+    "spd": 8,
+    "mov": 5
+  },
+  "scaling_per_level": {
+    "hp": 3.1,
+    "atk": 1.1,
+    "def": 0.7,
+    "matk": 0.2,
+    "mdef": 0.4,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 34,
+      "atk": 14,
+      "def": 9,
+      "matk": 3,
+      "mdef": 5,
+      "spd": 8
+    },
+    "act2": {
+      "hp": 51,
+      "atk": 21,
+      "def": 14,
+      "matk": 4,
+      "mdef": 8,
+      "spd": 12
+    },
+    "act3": {
+      "hp": 68,
+      "atk": 28,
+      "def": 18,
+      "matk": 6,
+      "mdef": 10,
+      "spd": 16
+    },
+    "act4": {
+      "hp": 92,
+      "atk": 38,
+      "def": 24,
+      "matk": 8,
+      "mdef": 14,
+      "spd": 22
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "anti_cavalry",
+      "name_ko": "대기마",
+      "name_en": "Anti-Cavalry",
+      "description_ko": "기마 상대 ATK +20%",
+      "description_en": "ATK +20% vs mounted"
+    },
+    {
+      "id": "charge",
+      "name_ko": "돌격",
+      "name_en": "Charge",
+      "description_ko": "3칸 이동 후 ATK +15%",
+      "description_en": "ATK +15% after 3+"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "herb",
+      "name_ko": "약초",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 25,
+    "max": 45
+  },
+  "exp_reward": 16,
+  "sprite_id": "conscript_lancer",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "징발대 창기병"
+}

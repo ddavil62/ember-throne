@@ -1,0 +1,81 @@
+{
+  "id": "ash_beast_small",
+  "name_ko": "소형 재의 짐승",
+  "name_en": "Small Ash Beast",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "melee_rush",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 18,
+    "mp": 0,
+    "atk": 11,
+    "def": 4,
+    "matk": 0,
+    "mdef": 3,
+    "spd": 8,
+    "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 1.6,
+    "atk": 0.9,
+    "def": 0.3,
+    "matk": 0.0,
+    "mdef": 0.2,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act2": {
+      "hp": 18,
+      "atk": 11,
+      "def": 4,
+      "matk": 0,
+      "mdef": 3,
+      "spd": 8
+    },
+    "act3": {
+      "hp": 27,
+      "atk": 16,
+      "def": 6,
+      "matk": 0,
+      "mdef": 4,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 38,
+      "atk": 23,
+      "def": 8,
+      "matk": 0,
+      "mdef": 6,
+      "spd": 17
+    }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ash_fang",
+      "name_ko": "재의 이빨",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 10,
+    "max": 20
+  },
+  "exp_reward": 8,
+  "sprite_id": "ash_beast_small",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "소형 재의 짐승"
+}

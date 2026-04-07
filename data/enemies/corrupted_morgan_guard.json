@@ -1,0 +1,98 @@
+{
+  "id": "corrupted_morgan_guard",
+  "name_ko": "변질 모르간 경비",
+  "name_en": "Corrupted Morgan Guard",
+  "faction": "morgan",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "sword",
+  "armor_type": "heavy",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 55,
+    "mp": 0,
+    "atk": 18,
+    "def": 14,
+    "matk": 8,
+    "mdef": 8,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 5.0,
+    "atk": 1.4,
+    "def": 1.1,
+    "matk": 0.6,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 55,
+      "atk": 18,
+      "def": 14,
+      "matk": 8,
+      "mdef": 8,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 82,
+      "atk": 27,
+      "def": 21,
+      "matk": 12,
+      "mdef": 12,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 110,
+      "atk": 36,
+      "def": 28,
+      "matk": 16,
+      "mdef": 16,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 148,
+      "atk": 49,
+      "def": 38,
+      "matk": 22,
+      "mdef": 22,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "ashification_touch",
+      "name_ko": "재화 접촉",
+      "description_ko": "25% 재화"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "ash_core",
+      "name_ko": "재의 핵",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 40,
+    "max": 65
+  },
+  "exp_reward": 22,
+  "sprite_id": "corrupted_morgan_guard",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "변질 모르간 경비"
+}

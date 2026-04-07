@@ -1,0 +1,100 @@
+{
+  "id": "conscript_captain",
+  "name_ko": "징발대 대장",
+  "name_en": "Conscript Captain",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "sword_shield",
+  "armor_type": "heavy",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 55,
+    "mp": 0,
+    "atk": 14,
+    "def": 15,
+    "matk": 4,
+    "mdef": 8,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 5.0,
+    "atk": 1.1,
+    "def": 1.2,
+    "matk": 0.3,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 55,
+      "atk": 14,
+      "def": 15,
+      "matk": 4,
+      "mdef": 8,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 82,
+      "atk": 21,
+      "def": 22,
+      "matk": 6,
+      "mdef": 12,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 110,
+      "atk": 28,
+      "def": 30,
+      "matk": 8,
+      "mdef": 16,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 148,
+      "atk": 38,
+      "def": 40,
+      "matk": 11,
+      "mdef": 22,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "command",
+      "name_ko": "지휘",
+      "name_en": "Command",
+      "description_ko": "인접 징발대 ATK +10%",
+      "description_en": "Adj conscript ATK +10%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "steel_sword",
+      "name_ko": "강철검",
+      "rate": 0.08
+    }
+  ],
+  "gold_reward": {
+    "min": 45,
+    "max": 70
+  },
+  "exp_reward": 22,
+  "sprite_id": "conscript_captain",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "징발대 대장"
+}

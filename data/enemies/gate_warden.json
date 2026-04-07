@@ -1,0 +1,107 @@
+{
+  "id": "gate_warden",
+  "name_ko": "수문장",
+  "name_en": "Gate Warden",
+  "faction": "neutral",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "spear",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 2,
+  "base_stats": {
+    "hp": 72,
+    "mp": 0,
+    "atk": 16,
+    "def": 20,
+    "matk": 4,
+    "mdef": 9,
+    "spd": 4,
+    "mov": 2
+  },
+  "scaling_per_level": {
+    "hp": 6.5,
+    "atk": 1.3,
+    "def": 1.6,
+    "matk": 0.3,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 72,
+      "atk": 16,
+      "def": 20,
+      "matk": 4,
+      "mdef": 9,
+      "spd": 4
+    },
+    "act2": {
+      "hp": 108,
+      "atk": 24,
+      "def": 30,
+      "matk": 6,
+      "mdef": 14,
+      "spd": 6
+    },
+    "act3": {
+      "hp": 144,
+      "atk": 32,
+      "def": 40,
+      "matk": 8,
+      "mdef": 18,
+      "spd": 8
+    },
+    "act4": {
+      "hp": 194,
+      "atk": 43,
+      "def": 54,
+      "matk": 11,
+      "mdef": 24,
+      "spd": 11
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "fortified",
+      "name_ko": "진지",
+      "name_en": "Fortified",
+      "description_ko": "이동 안 한 턴 DEF +25%",
+      "description_en": "DEF +25% if not moved"
+    },
+    {
+      "id": "command",
+      "name_ko": "지휘",
+      "name_en": "Command",
+      "description_ko": "인접 경비 DEF +10%",
+      "description_en": "Adj guard DEF +10%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "premium_herb",
+      "name_ko": "상급 약초",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 55,
+    "max": 85
+  },
+  "exp_reward": 25,
+  "sprite_id": "gate_warden",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "수문장. 보스급."
+}

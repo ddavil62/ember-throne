@@ -1,0 +1,95 @@
+{
+  "id": "ash_spore",
+  "name_ko": "재의 포자",
+  "name_en": "Ash Spore",
+  "faction": "ash_beast",
+  "type": "support",
+  "role": "support",
+  "weapon_type": "magic",
+  "armor_type": "none",
+  "ai_pattern": "support",
+  "range_min": 1,
+  "range_max": 2,
+  "base_stats": {
+    "hp": 30,
+    "mp": 0,
+    "atk": 4,
+    "def": 6,
+    "matk": 10,
+    "mdef": 8,
+    "spd": 4,
+    "mov": 2
+  },
+  "scaling_per_level": {
+    "hp": 2.7,
+    "atk": 0.3,
+    "def": 0.5,
+    "matk": 0.8,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act2": {
+      "hp": 30,
+      "atk": 4,
+      "def": 6,
+      "matk": 10,
+      "mdef": 8,
+      "spd": 4
+    },
+    "act3": {
+      "hp": 45,
+      "atk": 6,
+      "def": 9,
+      "matk": 15,
+      "mdef": 12,
+      "spd": 6
+    },
+    "act4": {
+      "hp": 63,
+      "atk": 8,
+      "def": 13,
+      "matk": 21,
+      "mdef": 17,
+      "spd": 8
+    }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [
+    {
+      "id": "summon_maggot",
+      "name_ko": "구더기 소환",
+      "name_en": "Summon Maggot",
+      "description_ko": "매 턴 구더기 소환",
+      "description_en": "Summon maggot/turn"
+    }
+  ],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "poison_cloud",
+      "name_ko": "독 구름",
+      "description_ko": "처치 시 인접 독 지형"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "ash_spore_sac",
+      "name_ko": "재의 포자낭",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 20,
+    "max": 40
+  },
+  "exp_reward": 14,
+  "sprite_id": "ash_spore",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "재의 포자"
+}

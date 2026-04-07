@@ -1,0 +1,86 @@
+{
+  "id": "silvaren_militia_scout",
+  "name_ko": "실바렌 민병대 척후",
+  "name_en": "Silvaren Militia Scout",
+  "faction": "neutral",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "dagger",
+  "armor_type": "light",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 18,
+    "mp": 0,
+    "atk": 8,
+    "def": 4,
+    "matk": 2,
+    "mdef": 4,
+    "spd": 8,
+    "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 1.6,
+    "atk": 0.6,
+    "def": 0.3,
+    "matk": 0.2,
+    "mdef": 0.3,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 18,
+      "atk": 8,
+      "def": 4,
+      "matk": 2,
+      "mdef": 4,
+      "spd": 8
+    },
+    "act2": {
+      "hp": 27,
+      "atk": 12,
+      "def": 6,
+      "matk": 3,
+      "mdef": 6,
+      "spd": 12
+    },
+    "act3": {
+      "hp": 36,
+      "atk": 16,
+      "def": 8,
+      "matk": 4,
+      "mdef": 8,
+      "spd": 16
+    },
+    "act4": {
+      "hp": 49,
+      "atk": 22,
+      "def": 11,
+      "matk": 5,
+      "mdef": 11,
+      "spd": 22
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [],
+  "gold_reward": {
+    "min": 10,
+    "max": 20
+  },
+  "exp_reward": 8,
+  "sprite_id": "silvaren_militia_scout",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "실바렌 민병대 척후"
+}

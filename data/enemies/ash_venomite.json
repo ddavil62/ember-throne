@@ -1,0 +1,87 @@
+{
+  "id": "ash_venomite",
+  "name_ko": "재의 독충",
+  "name_en": "Ash Venomite",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 24,
+    "mp": 0,
+    "atk": 10,
+    "def": 5,
+    "matk": 8,
+    "mdef": 6,
+    "spd": 7,
+    "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 2.2,
+    "atk": 0.8,
+    "def": 0.4,
+    "matk": 0.6,
+    "mdef": 0.4,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act2": {
+      "hp": 24,
+      "atk": 10,
+      "def": 5,
+      "matk": 8,
+      "mdef": 6,
+      "spd": 7
+    },
+    "act3": {
+      "hp": 36,
+      "atk": 15,
+      "def": 8,
+      "matk": 12,
+      "mdef": 9,
+      "spd": 10
+    },
+    "act4": {
+      "hp": 50,
+      "atk": 21,
+      "def": 10,
+      "matk": 17,
+      "mdef": 13,
+      "spd": 15
+    }
+  },
+  "ash_scaling": {
+    "act2": 1.0,
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "poison_touch",
+      "name_ko": "독 접촉",
+      "description_ko": "40% 독 부여"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "antidote",
+      "name_ko": "해독제",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 18,
+    "max": 35
+  },
+  "exp_reward": 14,
+  "sprite_id": "ash_venomite",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "재의 독충"
+}

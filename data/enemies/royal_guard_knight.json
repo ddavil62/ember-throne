@@ -1,0 +1,100 @@
+{
+  "id": "royal_guard_knight",
+  "name_ko": "친위대 기사",
+  "name_en": "Royal Guard Knight",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "tank",
+  "weapon_type": "sword_shield",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 55,
+    "mp": 0,
+    "atk": 15,
+    "def": 17,
+    "matk": 4,
+    "mdef": 9,
+    "spd": 5,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 5.0,
+    "atk": 1.2,
+    "def": 1.4,
+    "matk": 0.3,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 55,
+      "atk": 15,
+      "def": 17,
+      "matk": 4,
+      "mdef": 9,
+      "spd": 5
+    },
+    "act2": {
+      "hp": 82,
+      "atk": 22,
+      "def": 26,
+      "matk": 6,
+      "mdef": 14,
+      "spd": 8
+    },
+    "act3": {
+      "hp": 110,
+      "atk": 30,
+      "def": 34,
+      "matk": 8,
+      "mdef": 18,
+      "spd": 10
+    },
+    "act4": {
+      "hp": 148,
+      "atk": 40,
+      "def": 46,
+      "matk": 11,
+      "mdef": 24,
+      "spd": 14
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "heavy_armor",
+      "name_ko": "중장갑",
+      "name_en": "Heavy Armor",
+      "description_ko": "물리 -10%",
+      "description_en": "Phys -10%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "premium_herb",
+      "name_ko": "상급 약초",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 35,
+    "max": 55
+  },
+  "exp_reward": 20,
+  "sprite_id": "royal_guard_knight",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "친위대 기사"
+}

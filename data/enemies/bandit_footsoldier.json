@@ -1,0 +1,100 @@
+{
+  "id": "bandit_footsoldier",
+  "name_ko": "도적 전열 병사",
+  "name_en": "Bandit Footsoldier",
+  "faction": "bandit",
+  "type": "melee",
+  "role": "tank",
+  "weapon_type": "sword_shield",
+  "armor_type": "medium",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 34,
+    "mp": 0,
+    "atk": 9,
+    "def": 10,
+    "matk": 2,
+    "mdef": 5,
+    "spd": 5,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 3.1,
+    "atk": 0.7,
+    "def": 0.8,
+    "matk": 0.2,
+    "mdef": 0.4,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 34,
+      "atk": 9,
+      "def": 10,
+      "matk": 2,
+      "mdef": 5,
+      "spd": 5
+    },
+    "act2": {
+      "hp": 51,
+      "atk": 14,
+      "def": 15,
+      "matk": 3,
+      "mdef": 8,
+      "spd": 8
+    },
+    "act3": {
+      "hp": 68,
+      "atk": 18,
+      "def": 20,
+      "matk": 4,
+      "mdef": 10,
+      "spd": 10
+    },
+    "act4": {
+      "hp": 92,
+      "atk": 24,
+      "def": 27,
+      "matk": 5,
+      "mdef": 14,
+      "spd": 14
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "defend_bonus",
+      "name_ko": "방어 태세",
+      "name_en": "Defensive Stance",
+      "description_ko": "방어 시 DEF +25%",
+      "description_en": "DEF +25% when defending"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "herb",
+      "name_ko": "약초",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 15,
+    "max": 30
+  },
+  "exp_reward": 11,
+  "sprite_id": "bandit_footsoldier",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "도적 전열 병사"
+}

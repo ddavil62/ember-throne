@@ -1,0 +1,100 @@
+{
+  "id": "royal_guard_captain",
+  "name_ko": "친위대 대장",
+  "name_en": "Royal Guard Captain",
+  "faction": "kingdom",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "sword_shield",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 68,
+    "mp": 0,
+    "atk": 17,
+    "def": 18,
+    "matk": 5,
+    "mdef": 10,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 6.1,
+    "atk": 1.4,
+    "def": 1.4,
+    "matk": 0.4,
+    "mdef": 0.7,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 68,
+      "atk": 17,
+      "def": 18,
+      "matk": 5,
+      "mdef": 10,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 102,
+      "atk": 26,
+      "def": 27,
+      "matk": 8,
+      "mdef": 15,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 136,
+      "atk": 34,
+      "def": 36,
+      "matk": 10,
+      "mdef": 20,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 184,
+      "atk": 46,
+      "def": 49,
+      "matk": 14,
+      "mdef": 27,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "command",
+      "name_ko": "지휘",
+      "name_en": "Command",
+      "description_ko": "인접 친위대 DEF +10%",
+      "description_en": "Adj RG DEF +10%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "elixir",
+      "name_ko": "만병통치약",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 60,
+    "max": 90
+  },
+  "exp_reward": 28,
+  "sprite_id": "royal_guard_captain",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "친위대 대장. 보스급."
+}

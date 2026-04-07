@@ -1,0 +1,100 @@
+{
+  "id": "ward_golem",
+  "name_ko": "결계석 골렘",
+  "name_en": "Ward Golem",
+  "faction": "special",
+  "type": "melee",
+  "role": "tank",
+  "weapon_type": "slam",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 80,
+    "mp": 0,
+    "atk": 14,
+    "def": 22,
+    "matk": 0,
+    "mdef": 8,
+    "spd": 3,
+    "mov": 2
+  },
+  "scaling_per_level": {
+    "hp": 7.2,
+    "atk": 1.1,
+    "def": 1.8,
+    "matk": 0.0,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 80,
+      "atk": 14,
+      "def": 22,
+      "matk": 0,
+      "mdef": 8,
+      "spd": 3
+    },
+    "act2": {
+      "hp": 120,
+      "atk": 21,
+      "def": 33,
+      "matk": 0,
+      "mdef": 12,
+      "spd": 4
+    },
+    "act3": {
+      "hp": 160,
+      "atk": 28,
+      "def": 44,
+      "matk": 0,
+      "mdef": 16,
+      "spd": 6
+    },
+    "act4": {
+      "hp": 216,
+      "atk": 38,
+      "def": 59,
+      "matk": 0,
+      "mdef": 22,
+      "spd": 8
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "physical_immunity",
+      "name_ko": "물리 면역",
+      "name_en": "Physical Immunity",
+      "description_ko": "물리 -50%, 마법 +25%",
+      "description_en": "Phys -50%, Mag +25%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ward_fragment",
+      "name_ko": "결계의 조각",
+      "rate": 0.3
+    }
+  ],
+  "gold_reward": {
+    "min": 40,
+    "max": 65
+  },
+  "exp_reward": 20,
+  "sprite_id": "ward_golem",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "결계석 골렘"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "morgan_aide_mage",
+  "name_ko": "모르간 측근 마법사",
+  "name_en": "Morgan Aide Mage",
+  "faction": "morgan",
+  "type": "magic",
+  "role": "boss",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "ranged_support",
+  "range_min": 1,
+  "range_max": 4,
+  "base_stats": {
+    "hp": 60,
+    "mp": 0,
+    "atk": 6,
+    "def": 8,
+    "matk": 24,
+    "mdef": 16,
+    "spd": 8,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 5.4,
+    "atk": 0.5,
+    "def": 0.6,
+    "matk": 1.9,
+    "mdef": 1.1,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 60,
+      "atk": 6,
+      "def": 8,
+      "matk": 24,
+      "mdef": 16,
+      "spd": 8
+    },
+    "act2": {
+      "hp": 90,
+      "atk": 9,
+      "def": 12,
+      "matk": 36,
+      "mdef": 24,
+      "spd": 12
+    },
+    "act3": {
+      "hp": 120,
+      "atk": 12,
+      "def": 16,
+      "matk": 48,
+      "mdef": 32,
+      "spd": 16
+    },
+    "act4": {
+      "hp": 162,
+      "atk": 16,
+      "def": 22,
+      "matk": 65,
+      "mdef": 43,
+      "spd": 22
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [
+    {
+      "id": "barrier",
+      "name_ko": "마법 장벽",
+      "name_en": "Magic Barrier",
+      "description_ko": "아군 MDEF +30% 2턴",
+      "description_en": "Ally MDEF +30% 2t"
+    }
+  ],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "premium_mana_potion",
+      "name_ko": "상급 마력의 물약",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 60,
+    "max": 90
+  },
+  "exp_reward": 30,
+  "sprite_id": "morgan_aide_mage",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "모르간 측근 마법사."
+}

@@ -1,0 +1,92 @@
+{
+  "id": "bandit_mage",
+  "name_ko": "도적 마법사",
+  "name_en": "Bandit Mage",
+  "faction": "bandit",
+  "type": "magic",
+  "role": "attacker",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "ranged_support",
+  "range_min": 1,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 20,
+    "mp": 0,
+    "atk": 4,
+    "def": 3,
+    "matk": 11,
+    "mdef": 8,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 1.8,
+    "atk": 0.3,
+    "def": 0.2,
+    "matk": 0.9,
+    "mdef": 0.6,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 20,
+      "atk": 4,
+      "def": 3,
+      "matk": 11,
+      "mdef": 8,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 30,
+      "atk": 6,
+      "def": 4,
+      "matk": 16,
+      "mdef": 12,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 40,
+      "atk": 8,
+      "def": 6,
+      "matk": 22,
+      "mdef": 16,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 54,
+      "atk": 11,
+      "def": 8,
+      "matk": 30,
+      "mdef": 22,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "mana_potion",
+      "name_ko": "마력의 물약",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 20,
+    "max": 40
+  },
+  "exp_reward": 13,
+  "sprite_id": "bandit_mage",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "도적 마법사"
+}

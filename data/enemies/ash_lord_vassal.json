@@ -1,0 +1,80 @@
+{
+  "id": "ash_lord_vassal",
+  "name_ko": "재의 군주 수하",
+  "name_en": "Ashen Lord Vassal",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "claw",
+  "armor_type": "heavy",
+  "ai_pattern": "guard",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 75,
+    "mp": 0,
+    "atk": 20,
+    "def": 14,
+    "matk": 10,
+    "mdef": 10,
+    "spd": 5,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 6.8,
+    "atk": 1.6,
+    "def": 1.1,
+    "matk": 0.8,
+    "mdef": 0.7,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act3": {
+      "hp": 112,
+      "atk": 30,
+      "def": 21,
+      "matk": 15,
+      "mdef": 15,
+      "spd": 8
+    },
+    "act4": {
+      "hp": 158,
+      "atk": 42,
+      "def": 29,
+      "matk": 21,
+      "mdef": 21,
+      "spd": 10
+    }
+  },
+  "ash_scaling": {
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "ash_aura",
+      "name_ko": "재의 기운",
+      "name_en": "Ashen Aura",
+      "description_ko": "인접 재의 짐승 ATK +15%",
+      "description_en": "Adj ash ATK +15%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ash_essence",
+      "name_ko": "재의 정수",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 55,
+    "max": 85
+  },
+  "exp_reward": 28,
+  "sprite_id": "ash_lord_vassal",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "재의 군주 수하"
+}

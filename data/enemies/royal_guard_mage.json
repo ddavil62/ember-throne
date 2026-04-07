@@ -1,0 +1,92 @@
+{
+  "id": "royal_guard_mage",
+  "name_ko": "친위대 마법사",
+  "name_en": "Royal Guard Mage",
+  "faction": "kingdom",
+  "type": "magic",
+  "role": "attacker",
+  "weapon_type": "staff",
+  "armor_type": "light",
+  "ai_pattern": "ranged_support",
+  "range_min": 1,
+  "range_max": 3,
+  "base_stats": {
+    "hp": 28,
+    "mp": 0,
+    "atk": 5,
+    "def": 5,
+    "matk": 17,
+    "mdef": 12,
+    "spd": 6,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 2.5,
+    "atk": 0.4,
+    "def": 0.4,
+    "matk": 1.4,
+    "mdef": 0.8,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 28,
+      "atk": 5,
+      "def": 5,
+      "matk": 17,
+      "mdef": 12,
+      "spd": 6
+    },
+    "act2": {
+      "hp": 42,
+      "atk": 8,
+      "def": 8,
+      "matk": 26,
+      "mdef": 18,
+      "spd": 9
+    },
+    "act3": {
+      "hp": 56,
+      "atk": 10,
+      "def": 10,
+      "matk": 34,
+      "mdef": 24,
+      "spd": 12
+    },
+    "act4": {
+      "hp": 76,
+      "atk": 14,
+      "def": 14,
+      "matk": 46,
+      "mdef": 32,
+      "spd": 16
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "mana_potion",
+      "name_ko": "마력의 물약",
+      "rate": 0.25
+    }
+  ],
+  "gold_reward": {
+    "min": 35,
+    "max": 55
+  },
+  "exp_reward": 19,
+  "sprite_id": "royal_guard_mage",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "친위대 마법사"
+}

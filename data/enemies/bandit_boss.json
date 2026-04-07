@@ -1,0 +1,100 @@
+{
+  "id": "bandit_boss",
+  "name_ko": "도적 두목",
+  "name_en": "Bandit Boss",
+  "faction": "bandit",
+  "type": "melee",
+  "role": "boss",
+  "weapon_type": "sword",
+  "armor_type": "medium",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 52,
+    "mp": 0,
+    "atk": 14,
+    "def": 11,
+    "matk": 4,
+    "mdef": 7,
+    "spd": 7,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 4.7,
+    "atk": 1.1,
+    "def": 0.9,
+    "matk": 0.3,
+    "mdef": 0.5,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 52,
+      "atk": 14,
+      "def": 11,
+      "matk": 4,
+      "mdef": 7,
+      "spd": 7
+    },
+    "act2": {
+      "hp": 78,
+      "atk": 21,
+      "def": 16,
+      "matk": 6,
+      "mdef": 10,
+      "spd": 10
+    },
+    "act3": {
+      "hp": 104,
+      "atk": 28,
+      "def": 22,
+      "matk": 8,
+      "mdef": 14,
+      "spd": 14
+    },
+    "act4": {
+      "hp": 140,
+      "atk": 38,
+      "def": 30,
+      "matk": 11,
+      "mdef": 19,
+      "spd": 19
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "intimidate",
+      "name_ko": "위협",
+      "name_en": "Intimidate",
+      "description_ko": "인접 적 ATK -10%",
+      "description_en": "Adjacent enemy ATK -10%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "premium_herb",
+      "name_ko": "상급 약초",
+      "rate": 0.3
+    }
+  ],
+  "gold_reward": {
+    "min": 50,
+    "max": 80
+  },
+  "exp_reward": 22,
+  "sprite_id": "bandit_boss",
+  "is_boss": true,
+  "boss_phases": [],
+  "notes_ko": "도적 두목. 보스급."
+}

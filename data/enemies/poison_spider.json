@@ -1,0 +1,103 @@
+{
+  "id": "poison_spider",
+  "name_ko": "독거미",
+  "name_en": "Poison Spider",
+  "faction": "neutral",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "bite",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 20,
+    "mp": 0,
+    "atk": 9,
+    "def": 4,
+    "matk": 6,
+    "mdef": 5,
+    "spd": 7,
+    "mov": 3
+  },
+  "scaling_per_level": {
+    "hp": 1.8,
+    "atk": 0.7,
+    "def": 0.3,
+    "matk": 0.5,
+    "mdef": 0.4,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 20,
+      "atk": 9,
+      "def": 4,
+      "matk": 6,
+      "mdef": 5,
+      "spd": 7
+    },
+    "act2": {
+      "hp": 30,
+      "atk": 14,
+      "def": 6,
+      "matk": 9,
+      "mdef": 8,
+      "spd": 10
+    },
+    "act3": {
+      "hp": 40,
+      "atk": 18,
+      "def": 8,
+      "matk": 12,
+      "mdef": 10,
+      "spd": 14
+    },
+    "act4": {
+      "hp": 54,
+      "atk": 24,
+      "def": 11,
+      "matk": 16,
+      "mdef": 14,
+      "spd": 19
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "poison_web",
+      "name_ko": "독망",
+      "description_ko": "40% 독+이동-1"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "antidote",
+      "name_ko": "해독제",
+      "rate": 0.25
+    },
+    {
+      "item_id": "spider_silk",
+      "name_ko": "독거미 실",
+      "rate": 0.15
+    }
+  ],
+  "gold_reward": {
+    "min": 12,
+    "max": 25
+  },
+  "exp_reward": 10,
+  "sprite_id": "poison_spider",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "독거미"
+}

@@ -1,0 +1,98 @@
+{
+  "id": "poison_snake",
+  "name_ko": "독뱀",
+  "name_en": "Poison Snake",
+  "faction": "neutral",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "bite",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 16,
+    "mp": 0,
+    "atk": 8,
+    "def": 3,
+    "matk": 4,
+    "mdef": 4,
+    "spd": 9,
+    "mov": 4
+  },
+  "scaling_per_level": {
+    "hp": 1.4,
+    "atk": 0.6,
+    "def": 0.2,
+    "matk": 0.3,
+    "mdef": 0.3,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act1": {
+      "hp": 16,
+      "atk": 8,
+      "def": 3,
+      "matk": 4,
+      "mdef": 4,
+      "spd": 9
+    },
+    "act2": {
+      "hp": 24,
+      "atk": 12,
+      "def": 4,
+      "matk": 6,
+      "mdef": 6,
+      "spd": 14
+    },
+    "act3": {
+      "hp": 32,
+      "atk": 16,
+      "def": 6,
+      "matk": 8,
+      "mdef": 8,
+      "spd": 18
+    },
+    "act4": {
+      "hp": 43,
+      "atk": 22,
+      "def": 8,
+      "matk": 11,
+      "mdef": 11,
+      "spd": 24
+    }
+  },
+  "scaling_multiplier": {
+    "hp": 1.0,
+    "atk": 1.0,
+    "def": 1.0,
+    "matk": 1.0,
+    "mdef": 1.0,
+    "spd": 1.0
+  },
+  "skills": [],
+  "passives": [],
+  "special_mechanics": [
+    {
+      "id": "poison_bite",
+      "name_ko": "독니",
+      "description_ko": "50% 독"
+    }
+  ],
+  "drops": [
+    {
+      "item_id": "antidote",
+      "name_ko": "해독제",
+      "rate": 0.3
+    }
+  ],
+  "gold_reward": {
+    "min": 10,
+    "max": 20
+  },
+  "exp_reward": 8,
+  "sprite_id": "poison_snake",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "독뱀"
+}

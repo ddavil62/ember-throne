@@ -1,0 +1,80 @@
+{
+  "id": "ash_phantom",
+  "name_ko": "재의 환영",
+  "name_en": "Ash Phantom",
+  "faction": "ash_beast",
+  "type": "melee",
+  "role": "attacker",
+  "weapon_type": "claw",
+  "armor_type": "none",
+  "ai_pattern": "aggressive",
+  "range_min": 1,
+  "range_max": 1,
+  "base_stats": {
+    "hp": 20,
+    "mp": 0,
+    "atk": 15,
+    "def": 4,
+    "matk": 8,
+    "mdef": 10,
+    "spd": 12,
+    "mov": 5
+  },
+  "scaling_per_level": {
+    "hp": 1.8,
+    "atk": 1.2,
+    "def": 0.3,
+    "matk": 0.6,
+    "mdef": 0.7,
+    "spd": 0.3
+  },
+  "act_stats": {
+    "act3": {
+      "hp": 30,
+      "atk": 22,
+      "def": 6,
+      "matk": 12,
+      "mdef": 15,
+      "spd": 18
+    },
+    "act4": {
+      "hp": 42,
+      "atk": 32,
+      "def": 8,
+      "matk": 17,
+      "mdef": 21,
+      "spd": 25
+    }
+  },
+  "ash_scaling": {
+    "act3": 1.5,
+    "act4": 2.1
+  },
+  "skills": [],
+  "passives": [
+    {
+      "id": "phantom",
+      "name_ko": "환영",
+      "name_en": "Phantom",
+      "description_ko": "회피 +30%",
+      "description_en": "Evasion +30%"
+    }
+  ],
+  "special_mechanics": [],
+  "drops": [
+    {
+      "item_id": "ash_residue",
+      "name_ko": "재의 찌꺼기",
+      "rate": 0.2
+    }
+  ],
+  "gold_reward": {
+    "min": 20,
+    "max": 35
+  },
+  "exp_reward": 16,
+  "sprite_id": "ash_phantom",
+  "is_boss": false,
+  "boss_phases": [],
+  "notes_ko": "재의 환영"
+}

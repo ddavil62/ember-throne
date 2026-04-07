@@ -4,44 +4,215 @@
   "name_en": "Defense of Silvaren 1",
   "act": 2,
   "scene_id": "2-4",
-  "map_size": {"width": 25, "height": 20},
+  "map_size": {
+    "width": 25,
+    "height": 20
+  },
   "map_type": "large",
   "battle_type": "defense",
   "difficulty_rating": 5,
   "is_optional": false,
   "deploy_count": 6,
-  "deploy_zones": [[10, 3], [12, 3], [14, 3], [11, 4], [13, 4], [12, 5]],
+  "deploy_zones": [
+    [
+      10,
+      3
+    ],
+    [
+      12,
+      3
+    ],
+    [
+      14,
+      3
+    ],
+    [
+      11,
+      4
+    ],
+    [
+      13,
+      4
+    ],
+    [
+      12,
+      5
+    ]
+  ],
   "victory_conditions": [
-    {"type": "defense", "description_ko": "결계석을 5턴간 사수", "turn_limit": 5, "target": "ward_stone"}
+    {
+      "type": "defense",
+      "description_ko": "결계석을 5턴간 사수",
+      "turn_limit": 5,
+      "target": "ward_stone"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"},
-    {"type": "objective_reached", "description_ko": "결계석 타일에 적이 도달"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    },
+    {
+      "type": "objective_reached",
+      "description_ko": "결계석 타일에 적이 도달"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "conscript_footsoldier", "level": 9, "position": [4, 15], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 9, "position": [7, 14], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 9, "position": [12, 13], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 9, "position": [17, 14], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 9, "position": [20, 15], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 9, "position": [9, 17], "ai_override": null},
-    {"enemy_id": "conscript_lancer", "level": 9, "position": [5, 17], "ai_override": null},
-    {"enemy_id": "conscript_lancer", "level": 10, "position": [10, 15], "ai_override": null},
-    {"enemy_id": "conscript_lancer", "level": 10, "position": [15, 17], "ai_override": null},
-    {"enemy_id": "conscript_lancer", "level": 10, "position": [19, 17], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 10, "position": [8, 19], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 10, "position": [12, 19], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 10, "position": [16, 19], "ai_override": null},
-    {"enemy_id": "conscript_mage", "level": 10, "position": [6, 19], "ai_override": null},
-    {"enemy_id": "conscript_mage", "level": 10, "position": [18, 19], "ai_override": null},
-    {"enemy_id": "conscript_captain", "level": 11, "position": [12, 17], "ai_override": "miniboss"}
+    {
+      "enemy_id": "conscript_footsoldier",
+      "level": 9,
+      "position": [
+        4,
+        15
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_footsoldier",
+      "level": 9,
+      "position": [
+        7,
+        14
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_footsoldier",
+      "level": 9,
+      "position": [
+        12,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_footsoldier",
+      "level": 9,
+      "position": [
+        17,
+        14
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_footsoldier",
+      "level": 9,
+      "position": [
+        20,
+        15
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_footsoldier",
+      "level": 9,
+      "position": [
+        9,
+        17
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_lancer",
+      "level": 9,
+      "position": [
+        5,
+        17
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_lancer",
+      "level": 10,
+      "position": [
+        10,
+        15
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_lancer",
+      "level": 10,
+      "position": [
+        15,
+        17
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_lancer",
+      "level": 10,
+      "position": [
+        19,
+        17
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_archer",
+      "level": 10,
+      "position": [
+        8,
+        19
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_archer",
+      "level": 10,
+      "position": [
+        12,
+        19
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_archer",
+      "level": 10,
+      "position": [
+        16,
+        19
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_mage",
+      "level": 10,
+      "position": [
+        6,
+        19
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_mage",
+      "level": 10,
+      "position": [
+        18,
+        19
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_captain",
+      "level": 11,
+      "position": [
+        12,
+        17
+      ],
+      "ai_override": "miniboss"
+    }
   ],
   "terrain_layout": "silvaren_defense",
   "tileset_id": "silvaren",
   "bgm": "battle_intense",
   "rewards": {
     "gold": 500,
-    "items": ["silvaren_bow", "superior_herb_x2"],
+    "items": [
+      "silvaren_bow",
+      "superior_herb_x2"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -49,6 +220,306 @@
     "on_victory": "2-4a_battle_end"
   },
   "special_rules": [
-    {"type": "defend_objective", "target": "ward_stone", "positions": [[11, 2], [12, 4], [13, 4]], "description_ko": "결계석을 5턴간 사수. 적이 도달하면 패배"}
+    {
+      "type": "defend_objective",
+      "target": "ward_stone",
+      "positions": [
+        [
+          11,
+          2
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          4
+        ]
+      ],
+      "description_ko": "결계석을 5턴간 사수. 적이 도달하면 패배"
+    }
+  ],
+  "objects": [
+    {
+      "type": "roots",
+      "position": [
+        24,
+        4
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        18,
+        3
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        2,
+        3
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        15,
+        6
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        16,
+        6
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        14,
+        1
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        24,
+        14
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        17,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        1,
+        9
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        0,
+        6
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        19,
+        2
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        1,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        21,
+        8
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        18,
+        1
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        23,
+        4
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        6,
+        2
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        21,
+        4
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        3,
+        6
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        20,
+        2
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        6,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        0,
+        10
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        24,
+        3
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        22,
+        0
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        23,
+        2
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        0,
+        9
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        7,
+        9
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        5,
+        4
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        0,
+        12
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        17,
+        5
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        19,
+        8
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        22,
+        7
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        23,
+        8
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        19,
+        12
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        10,
+        6
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        21,
+        9
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        0,
+        13
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        10,
+        1
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        20,
+        4
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        21,
+        0
+      ]
+    }
   ]
 }

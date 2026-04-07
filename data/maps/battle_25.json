@@ -4,43 +4,201 @@
   "name_en": "Crowfell Rendezvous",
   "act": 3,
   "scene_id": "3-12",
-  "map_size": {"width": 20, "height": 16},
+  "map_size": {
+    "width": 20,
+    "height": 16
+  },
   "map_type": "medium",
   "battle_type": "rout",
   "difficulty_rating": 8,
   "is_optional": false,
   "deploy_count": 8,
-  "deploy_zones": [[2, 12], [3, 12], [4, 12], [5, 12], [2, 13], [3, 13], [4, 13], [5, 13]],
+  "deploy_zones": [
+    [
+      2,
+      12
+    ],
+    [
+      3,
+      12
+    ],
+    [
+      4,
+      12
+    ],
+    [
+      5,
+      12
+    ],
+    [
+      2,
+      13
+    ],
+    [
+      3,
+      13
+    ],
+    [
+      4,
+      13
+    ],
+    [
+      5,
+      13
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "morgan_elite_guard", "level": 18, "position": [8, 3], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 18, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 18, "position": [14, 3], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 19, "position": [9, 6], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 19, "position": [16, 5], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 19, "position": [6, 5], "ai_override": null},
-    {"enemy_id": "morgan_elite_mage", "level": 19, "position": [10, 2], "ai_override": null},
-    {"enemy_id": "morgan_elite_mage", "level": 19, "position": [13, 5], "ai_override": null},
-    {"enemy_id": "morgan_elite_mage", "level": 20, "position": [7, 4], "ai_override": null},
-    {"enemy_id": "morgan_elite_knight", "level": 20, "position": [12, 1], "ai_override": null},
-    {"enemy_id": "morgan_elite_knight", "level": 20, "position": [15, 4], "ai_override": null}
+    {
+      "enemy_id": "morgan_elite_guard",
+      "level": 18,
+      "position": [
+        8,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_guard",
+      "level": 18,
+      "position": [
+        11,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_guard",
+      "level": 18,
+      "position": [
+        14,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_guard",
+      "level": 19,
+      "position": [
+        9,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_guard",
+      "level": 19,
+      "position": [
+        16,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_guard",
+      "level": 19,
+      "position": [
+        6,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_mage",
+      "level": 19,
+      "position": [
+        10,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_mage",
+      "level": 19,
+      "position": [
+        13,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_mage",
+      "level": 20,
+      "position": [
+        7,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_knight",
+      "level": 20,
+      "position": [
+        12,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "morgan_elite_knight",
+      "level": 20,
+      "position": [
+        15,
+        4
+      ],
+      "ai_override": null
+    }
   ],
   "npc_allies": [
-    {"unit_id": "conscript_defector", "level": 14, "position": [18, 8], "ai_override": "support_flank"},
-    {"unit_id": "conscript_defector", "level": 14, "position": [19, 9], "ai_override": "support_flank"},
-    {"unit_id": "conscript_defector", "level": 14, "position": [18, 10], "ai_override": "support_flank"}
+    {
+      "unit_id": "conscript_defector",
+      "level": 14,
+      "position": [
+        18,
+        8
+      ],
+      "ai_override": "support_flank"
+    },
+    {
+      "unit_id": "conscript_defector",
+      "level": 14,
+      "position": [
+        19,
+        9
+      ],
+      "ai_override": "support_flank"
+    },
+    {
+      "unit_id": "conscript_defector",
+      "level": 14,
+      "position": [
+        18,
+        10
+      ],
+      "ai_override": "support_flank"
+    }
   ],
   "terrain_layout": "crowfell_mountain",
   "tileset_id": "crowfell",
   "bgm": "battle_intense",
   "rewards": {
     "gold": 550,
-    "items": ["ward_stone_remnant_crowfell", "ivan_greatsword"],
+    "items": [
+      "ward_stone_remnant_crowfell",
+      "ivan_greatsword"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -49,8 +207,199 @@
     "on_victory": "3-12b_battle_end"
   },
   "special_rules": [
-    {"type": "ally_join", "turn": 1, "unit_ids": ["hazel", "anet"], "description_ko": "헤이즐/아네트 합류"},
-    {"type": "npc_support", "description_ko": "징발대 이반자 NPC 3체가 측면 지원"},
-    {"type": "collect_remnant", "description_ko": "결계석 잔영 수집"}
+    {
+      "type": "ally_join",
+      "turn": 1,
+      "unit_ids": [
+        "hazel",
+        "anet"
+      ],
+      "description_ko": "헤이즐/아네트 합류"
+    },
+    {
+      "type": "npc_support",
+      "description_ko": "징발대 이반자 NPC 3체가 측면 지원"
+    },
+    {
+      "type": "collect_remnant",
+      "description_ko": "결계석 잔영 수집"
+    }
+  ],
+  "objects": [
+    {
+      "type": "weapon_rack",
+      "position": [
+        17,
+        5
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        19,
+        4
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        8,
+        1
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        19,
+        11
+      ]
+    },
+    {
+      "type": "weapon_rack",
+      "position": [
+        12,
+        2
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        15,
+        0
+      ]
+    },
+    {
+      "type": "weapon_rack",
+      "position": [
+        2,
+        7
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        0,
+        7
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        19,
+        6
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        14,
+        0
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        14,
+        2
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        14,
+        6
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        18,
+        6
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        16,
+        7
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        12,
+        0
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        3,
+        5
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        4,
+        8
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        18,
+        1
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        9,
+        1
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        17,
+        7
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        10,
+        4
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        17,
+        0
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        18,
+        0
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        9,
+        2
+      ]
+    }
   ]
 }

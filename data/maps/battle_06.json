@@ -4,33 +4,110 @@
   "name_en": "Wandering Battle 1: Bandit Clearing",
   "act": 1,
   "scene_id": null,
-  "map_size": {"width": 15, "height": 12},
+  "map_size": {
+    "width": 15,
+    "height": 12
+  },
   "map_type": "small",
   "battle_type": "rout",
   "difficulty_rating": 2,
   "is_optional": true,
   "deploy_count": 4,
-  "deploy_zones": [[1, 9], [2, 9], [3, 9], [1, 10]],
+  "deploy_zones": [
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      1,
+      10
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "bandit_boss", "level": 3, "position": [11, 2], "ai_override": null},
-    {"enemy_id": "bandit_footsoldier", "level": 3, "position": [8, 3], "ai_override": null},
-    {"enemy_id": "bandit_footsoldier", "level": 4, "position": [10, 5], "ai_override": null},
-    {"enemy_id": "bandit_footsoldier", "level": 4, "position": [12, 4], "ai_override": null},
-    {"enemy_id": "bandit_archer", "level": 5, "position": [13, 1], "ai_override": null},
-    {"enemy_id": "bandit_archer", "level": 5, "position": [9, 6], "ai_override": null}
+    {
+      "enemy_id": "bandit_boss",
+      "level": 3,
+      "position": [
+        11,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit_footsoldier",
+      "level": 3,
+      "position": [
+        8,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit_footsoldier",
+      "level": 4,
+      "position": [
+        10,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit_footsoldier",
+      "level": 4,
+      "position": [
+        12,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit_archer",
+      "level": 5,
+      "position": [
+        13,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit_archer",
+      "level": 5,
+      "position": [
+        9,
+        6
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "road_plain",
   "tileset_id": "irhen",
   "bgm": "battle_normal",
   "rewards": {
     "gold": 200,
-    "items": ["herb_x2"],
+    "items": [
+      "herb_x2"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -38,7 +115,115 @@
     "on_victory": null
   },
   "special_rules": [
-    {"type": "repeatable", "description_ko": "반복 가능 (보상은 Gold/EXP만, 아이템은 최초 1회)"},
-    {"type": "random_drop", "item": "defense_ring", "chance": 0.1, "description_ko": "방어의 반지 10% 확률 드롭"}
+    {
+      "type": "repeatable",
+      "description_ko": "반복 가능 (보상은 Gold/EXP만, 아이템은 최초 1회)"
+    },
+    {
+      "type": "random_drop",
+      "item": "defense_ring",
+      "chance": 0.1,
+      "description_ko": "방어의 반지 10% 확률 드롭"
+    }
+  ],
+  "objects": [
+    {
+      "type": "well",
+      "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        12,
+        8
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        6,
+        1
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "type": "well",
+      "position": [
+        9,
+        1
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        3,
+        4
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        5,
+        2
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        1,
+        4
+      ]
+    },
+    {
+      "type": "bush",
+      "position": [
+        3,
+        3
+      ]
+    },
+    {
+      "type": "well",
+      "position": [
+        12,
+        3
+      ]
+    },
+    {
+      "type": "well",
+      "position": [
+        14,
+        4
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        2,
+        1
+      ]
+    },
+    {
+      "type": "well",
+      "position": [
+        5,
+        3
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        3,
+        2
+      ]
+    }
   ]
 }

@@ -4,28 +4,119 @@
   "name_en": "Resistance Misunderstanding",
   "act": 2,
   "scene_id": "2-1",
-  "map_size": {"width": 20, "height": 16},
+  "map_size": {
+    "width": 20,
+    "height": 16
+  },
   "map_type": "medium",
   "battle_type": "defense",
   "difficulty_rating": 3,
   "is_optional": false,
   "deploy_count": 4,
-  "deploy_zones": [[9, 12], [10, 12], [9, 13], [10, 13]],
+  "deploy_zones": [
+    [
+      9,
+      12
+    ],
+    [
+      10,
+      12
+    ],
+    [
+      9,
+      13
+    ],
+    [
+      10,
+      13
+    ]
+  ],
   "victory_conditions": [
-    {"type": "survive", "description_ko": "3턴간 생존 (전투 중단 이벤트)", "turn_limit": 3}
+    {
+      "type": "survive",
+      "description_ko": "3턴간 생존 (전투 중단 이벤트)",
+      "turn_limit": 3
+    }
   ],
   "defeat_conditions": [
-    {"type": "any_unit_death", "description_ko": "아군/적 모두 전투불능 금지 (기절로 처리)"}
+    {
+      "type": "any_unit_death",
+      "description_ko": "아군/적 모두 전투불능 금지 (기절로 처리)"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "silvaren_militia_footsoldier", "level": 7, "position": [5, 3], "ai_override": null},
-    {"enemy_id": "silvaren_militia_footsoldier", "level": 7, "position": [8, 4], "ai_override": null},
-    {"enemy_id": "silvaren_militia_footsoldier", "level": 8, "position": [12, 3], "ai_override": null},
-    {"enemy_id": "silvaren_militia_footsoldier", "level": 8, "position": [15, 5], "ai_override": null},
-    {"enemy_id": "silvaren_militia_archer", "level": 8, "position": [6, 2], "ai_override": null},
-    {"enemy_id": "silvaren_militia_archer", "level": 8, "position": [11, 2], "ai_override": null},
-    {"enemy_id": "silvaren_militia_archer", "level": 9, "position": [14, 4], "ai_override": null},
-    {"enemy_id": "silvaren_militia_scout", "level": 9, "position": [10, 1], "ai_override": null}
+    {
+      "enemy_id": "silvaren_militia_footsoldier",
+      "level": 7,
+      "position": [
+        5,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_footsoldier",
+      "level": 7,
+      "position": [
+        8,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_footsoldier",
+      "level": 8,
+      "position": [
+        12,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_footsoldier",
+      "level": 8,
+      "position": [
+        15,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_archer",
+      "level": 8,
+      "position": [
+        6,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_archer",
+      "level": 8,
+      "position": [
+        11,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_archer",
+      "level": 9,
+      "position": [
+        14,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "silvaren_militia_scout",
+      "level": 9,
+      "position": [
+        10,
+        1
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "silvaren_forest",
   "tileset_id": "silvaren",
@@ -41,7 +132,194 @@
     "on_victory": "2-1_battle_end"
   },
   "special_rules": [
-    {"type": "no_kill", "description_ko": "아군/적 모두 전투불능 금지 (기절로 처리)"},
-    {"type": "ally_join_post", "unit_ids": ["rok", "nael"], "description_ko": "3턴 후 이벤트로 로크/나엘 합류"}
+    {
+      "type": "no_kill",
+      "description_ko": "아군/적 모두 전투불능 금지 (기절로 처리)"
+    },
+    {
+      "type": "ally_join_post",
+      "unit_ids": [
+        "rok",
+        "nael"
+      ],
+      "description_ko": "3턴 후 이벤트로 로크/나엘 합류"
+    }
+  ],
+  "objects": [
+    {
+      "type": "mushroom",
+      "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        9,
+        1
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        14,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        13,
+        3
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        19,
+        2
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        7,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        15,
+        4
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        16,
+        7
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        17,
+        7
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        17,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        5,
+        2
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        4,
+        1
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        16,
+        2
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        2,
+        11
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        12,
+        1
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        19,
+        5
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        18,
+        8
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        19,
+        10
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        0,
+        1
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        12,
+        0
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        3,
+        5
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        6,
+        1
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        10,
+        0
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        4,
+        9
+      ]
+    }
   ]
 }

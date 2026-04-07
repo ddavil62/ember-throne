@@ -186,6 +186,9 @@ func load_map(battle_id: String) -> void:
 	# 지형 시각화 (ColorRect 기반 — 타일셋이 없는 동안 placeholder)
 	_render_terrain(tiles, map_w, map_h)
 
+	# 장식 오브젝트 렌더링 (나무, 바위, 우물 등)
+	_render_objects()
+
 	# 적 유닛 배치
 	_spawn_enemies()
 
@@ -246,13 +249,13 @@ func _render_terrain(tiles: Array, w: int, h: int) -> void:
 		for t in row:
 			present[t] = true
 
-	# ── 베이스 레이어: plains 셀 전체를 초원 텍스처로 채움 ──
+	# ── 베이스 레이어: 전체 맵을 IRH-01 초원으로 채움 ──
+	# 오버레이 타일의 하위 지형(잔디) 영역이 투명하므로, 모든 셀에 기본 잔디를 깔아
+	# 어떤 지형이든 하위 지형 부분이 일관된 베이스 잔디로 자연스럽게 보인다.
 	var plains_tex: Texture2D = _get_cached_tex("res://assets/tilesets/irhen/IRH-01.png", tex_cache)
 	for y: int in range(h):
 		for x: int in range(w):
-			var t: String = tiles[y][x] if y < tiles.size() and x < tiles[y].size() else "plains"
-			if t == "plains":
-				_place_wang_sprite(terrain_node, plains_tex, Rect2(64, 32, 32, 32), x, y)
+			_place_wang_sprite(terrain_node, plains_tex, Rect2(64, 32, 32, 32), x, y)
 
 	# ── 폴백 레이어: 타일셋 미정의 지형 → ColorRect ──
 	for y: int in range(h):
@@ -266,7 +269,9 @@ func _render_terrain(tiles: Array, w: int, h: int) -> void:
 				fallback.mouse_filter = Control.MOUSE_FILTER_IGNORE
 				terrain_node.add_child(fallback)
 
-	# ── Wang 오토타일링 레이어: 타일셋 페어별 upper/전환 타일 렌더 ──
+	# ── Wang 오버레이 레이어: 타일셋 페어별 upper/전환 타일 렌더 ──
+	# 오버레이 텍스처는 하위 지형(잔디) 픽셀이 투명화되어 있어,
+	# 여러 페어가 동일 셀에 적층돼도 베이스 잔디와 자연스럽게 합성된다.
 	for pair: Dictionary in TILESET_PAIRS:
 		var lo: String = pair["lower"]
 		var up: String = pair["upper"]
@@ -275,7 +280,8 @@ func _render_terrain(tiles: Array, w: int, h: int) -> void:
 		if not present.has(lo) and not present.has(up):
 			continue
 
-		var tex: Texture2D = _get_cached_tex(pair["png"], tex_cache)
+		# 하위 지형 픽셀이 투명 처리된 오버레이 텍스처 사용
+		var tex: Texture2D = _get_overlay_tex(pair["png"], tex_cache)
 
 		for y: int in range(h):
 			for x: int in range(w):
@@ -293,7 +299,7 @@ func _render_terrain(tiles: Array, w: int, h: int) -> void:
 						+ ("U" if sw else "L") + ("U" if se else "L"))
 				var region: Rect2 = WANG_ATLAS.get(key, Rect2(64, 32, 32, 32))
 
-				# lower 셀인데 모든 코너가 lower면 이미 베이스에서 렌더됨 → 스킵
+				# lower 셀인데 모든 코너가 lower면 베이스 레이어로 충분 → 스킵
 				if t == lo and key == "LLLL":
 					continue
 
@@ -309,9 +315,11 @@ func _place_wang_sprite(parent: Node2D, tex: Texture2D, region: Rect2, x: int, y
 	var atlas := AtlasTexture.new()
 	atlas.atlas = tex
 	atlas.region = region
+	atlas.filter_clip = true  # 아틀라스 인접 타일 픽셀 블리드 방지
 	var sprite := Sprite2D.new()
 	sprite.texture = atlas
 	sprite.centered = false
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST  # 픽셀아트 최근접 필터
 	sprite.position = Vector2(x * GridSystem.TILE_SIZE, y * GridSystem.TILE_SIZE)
 	parent.add_child(sprite)
 
@@ -324,22 +332,165 @@ func _get_cached_tex(path: String, cache: Dictionary) -> Texture2D:
 		cache[path] = load(path) as Texture2D
 	return cache[path]
 
+## 오버레이 텍스처 캐시에서 반환 (없으면 로드 후 저장)
+## 사전 처리된 {NAME}_ov.png 파일을 로드한다.
+## _ov.png 는 scripts/tools/make_tileset_overlays.py 로 생성된 오프라인 처리 파일이며,
+## wang_0/wang_15 공간 기준 마스킹으로 하위 지형 픽셀이 정확하게 투명화되어 있다.
+## @param path 원본 타일셋 PNG 경로 (res://.../{NAME}.png)
+## @param cache 캐시 딕셔너리
+## @returns Texture2D (하위 지형 픽셀 투명)
+func _get_overlay_tex(path: String, cache: Dictionary) -> Texture2D:
+	var overlay_key: String = path + "_ov"
+	if not cache.has(overlay_key):
+		# {NAME}.png → {NAME}_ov.png
+		var ov_path: String = path.replace(".png", "_ov.png")
+		if ResourceLoader.exists(ov_path):
+			cache[overlay_key] = load(ov_path) as Texture2D
+		else:
+			# _ov.png 없으면 원본 사용 (fallback, 시각적 품질 저하)
+			push_warning("[BattleMap] 오버레이 파일 없음 (make_tileset_overlays.py 실행 필요): %s" % ov_path)
+			cache[overlay_key] = load(path) as Texture2D
+	return cache[overlay_key]
+
 ## Wang 오토타일링 코너 판정: 꼭짓점을 공유하는 4개 셀 검사
 ## 4셀 검사가 Wang 표준이며 인접 타일 간 꼭짓점값 일치(이음매 없는 연결)를 보장한다.
-## 경계 1칸 바깥까지 전환이 번지는 현상은 Wang 타일의 정상 동작이다.
+## OOB 셀은 경계 셀로 클램핑하여 상위 지형이 맵 가장자리에서 자연스럽게 연장되도록 한다.
 ## @param dx -1(왼쪽) 또는 +1(오른쪽)
 ## @param dy -1(위) 또는 +1(아래)
 ## @returns 해당 코너가 upper 지형인지 여부
 func _corner_upper(tiles: Array, x: int, y: int, dx: int, dy: int,
 		w: int, h: int, upper_t: String) -> bool:
 	# 꼭짓점을 공유하는 4개 셀: (x,y), (x+dx,y), (x,y+dy), (x+dx,y+dy)
+	# OOB는 경계 셀로 클램핑 → 지형이 맵 밖으로 자연스럽게 연장되어 경계 잘림 방지
 	for cy: int in [y, y + dy]:
 		for cx: int in [x, x + dx]:
-			if cx >= 0 and cx < w and cy >= 0 and cy < h:
-				if cy < tiles.size() and cx < tiles[cy].size():
-					if tiles[cy][cx] == upper_t:
-						return true
+			var clamped_cx: int = clampi(cx, 0, w - 1)
+			var clamped_cy: int = clampi(cy, 0, h - 1)
+			if clamped_cy < tiles.size() and clamped_cx < tiles[clamped_cy].size():
+				if tiles[clamped_cy][clamped_cx] == upper_t:
+					return true
 	return false
+
+## 맵 장식 오브젝트 렌더링 (나무, 바위, 우물 등)
+## 맵 데이터의 "objects" 배열을 읽어 _deco_layer에 Sprite2D로 배치한다.
+## 오브젝트 타입명은 _resolve_prop_path()로 실제 props 폴더 경로로 변환된다.
+## 이미지 하단이 타일 하단에 정렬되어 자연스러운 depth sorting 효과가 생긴다.
+func _render_objects() -> void:
+	var objects: Array = _map_data.get("objects", [])
+	if objects.is_empty():
+		return
+
+	var obj_node: Node2D = _deco_layer if _deco_layer else self
+	# 기존 오브젝트 제거
+	if _deco_layer:
+		for child: Node in _deco_layer.get_children():
+			child.queue_free()
+
+	var obj_cache: Dictionary = {}
+	var ts: int = GridSystem.TILE_SIZE
+
+	for obj: Dictionary in objects:
+		var obj_type: String = obj.get("type", "")
+		var pos: Array = obj.get("position", [0, 0])
+		var obj_x: int = pos[0] as int
+		var obj_y: int = pos[1] as int
+
+		var tex_path: String = _resolve_prop_path(obj_type)
+		if tex_path.is_empty():
+			push_warning("[BattleMap] 알 수 없는 오브젝트 타입: %s" % obj_type)
+			continue
+		if not ResourceLoader.exists(tex_path):
+			push_warning("[BattleMap] 프랍 파일 없음: %s" % tex_path)
+			continue
+
+		if not obj_cache.has(tex_path):
+			obj_cache[tex_path] = load(tex_path) as Texture2D
+		var tex: Texture2D = obj_cache[tex_path]
+		if tex == null:
+			continue
+
+		var sprite := Sprite2D.new()
+		sprite.texture = tex
+		sprite.centered = false
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		# 오브젝트 하단을 타일 하단에 정렬 (높이가 타일보다 큰 오브젝트도 자연스럽게 보임)
+		var obj_h: int = tex.get_height()
+		sprite.position = Vector2(
+			obj_x * ts,
+			obj_y * ts + ts - obj_h
+		)
+		obj_node.add_child(sprite)
+
+## 오브젝트 타입명을 실제 파일 경로로 변환한다.
+## props 폴더의 지역별/공용 에셋을 타입명으로 참조할 수 있게 한다.
+## @param obj_type 오브젝트 타입명 (예: "tree_oak", "well")
+## @returns 리소스 경로 문자열. 알 수 없는 타입이면 빈 문자열 반환.
+static func _resolve_prop_path(obj_type: String) -> String:
+	const PROP_MAP: Dictionary = {
+		# ── common ──
+		"tree_small":    "res://assets/props/common/P01_tree_small.png",
+		"tree_large":    "res://assets/props/common/P02_tree_large.png",
+		"tree_oak":      "res://assets/props/common/P02_tree_large.png",
+		"pine":          "res://assets/props/common/P03_pine.png",
+		"rock_small":    "res://assets/props/common/P04_rock_small.png",
+		"rock":          "res://assets/props/common/P04_rock_small.png",
+		"rock_medium":   "res://assets/props/common/P05_rock_medium.png",
+		"rock_large":    "res://assets/props/common/P06_rock_large.png",
+		"bush_small":    "res://assets/props/common/P07_bush_small.png",
+		"bush":          "res://assets/props/common/P07_bush_small.png",
+		"bush_large":    "res://assets/props/common/P08_bush_large.png",
+		"wildflower":    "res://assets/props/common/P09_wildflower.png",
+		"fallen_log":    "res://assets/props/common/P10_fallen_log.png",
+		# ── irhen ──
+		"farmhouse":     "res://assets/props/irhen/P11_farmhouse.png",
+		"well":          "res://assets/props/irhen/P12_well.png",
+		"fence":         "res://assets/props/irhen/P13_fence.png",
+		"village_square":"res://assets/props/irhen/P14_village_square.png",
+		# ── belmar ──
+		"dock":          "res://assets/props/belmar/P15_dock.png",
+		"crate":         "res://assets/props/belmar/P16_crate.png",
+		"rope_anchor":   "res://assets/props/belmar/P17_rope_anchor.png",
+		"lantern":       "res://assets/props/belmar/P18_lantern.png",
+		"shop":          "res://assets/props/belmar/P19_shop.png",
+		"house":         "res://assets/props/belmar/P20_house.png",
+		# ── silvaren ──
+		"ancient_tree":  "res://assets/props/silvaren/P21_ancient_tree.png",
+		"mushroom":      "res://assets/props/silvaren/P22_mushroom.png",
+		"roots":         "res://assets/props/silvaren/P23_roots.png",
+		"ward_pillar":   "res://assets/props/silvaren/P24_ward_pillar.png",
+		# ── harben ──
+		"hay_bale":      "res://assets/props/harben/P25_hay_bale.png",
+		"windmill":      "res://assets/props/harben/P26_windmill.png",
+		"farm_cart":     "res://assets/props/harben/P27_farm_cart.png",
+		# ── crowfel ──
+		"tent":          "res://assets/props/crowfel/P28_tent.png",
+		"barricade":     "res://assets/props/crowfel/P29_barricade.png",
+		"weapon_rack":   "res://assets/props/crowfel/P30_weapon_rack.png",
+		"watchtower":    "res://assets/props/crowfel/P31_watchtower.png",
+		# ── ascalon ──
+		"castle_wall":   "res://assets/props/ascalon/P32_castle_wall.png",
+		"palace_pillar": "res://assets/props/ascalon/P33_palace_pillar.png",
+		"banner":        "res://assets/props/ascalon/P34_banner.png",
+		"iron_gate":     "res://assets/props/ascalon/P35_iron_gate.png",
+		"ember_throne":  "res://assets/props/ascalon/P36_ember_throne.png",
+		# ── ashen-sea ──
+		"dead_tree":     "res://assets/props/ashen-sea/P37_dead_tree.png",
+		"burnt_stump":   "res://assets/props/ashen-sea/P37_dead_tree.png",
+		"ash_crystal":   "res://assets/props/ashen-sea/P38_ash_crystal.png",
+		"fissure":       "res://assets/props/ashen-sea/P39_fissure.png",
+		"ash_mist":      "res://assets/props/ashen-sea/P40_mist.png",
+		# ── special ──
+		"ward_stone_active":   "res://assets/props/special/S01_ward_stone_active.png",
+		"ward_stone_inactive": "res://assets/props/special/S02_ward_stone_inactive.png",
+		"altar":               "res://assets/props/special/S03_altar.png",
+		"trap_hidden":         "res://assets/props/special/S04_trap_hidden.png",
+		"trap_triggered":      "res://assets/props/special/S05_trap_triggered.png",
+		"gate_intact":         "res://assets/props/special/S06_gate_intact.png",
+		"gate_broken":         "res://assets/props/special/S07_gate_broken.png",
+		"bridge_intact":       "res://assets/props/special/S08_bridge_intact.png",
+		"bridge_broken":       "res://assets/props/special/S09_bridge_broken.png",
+	}
+	return PROP_MAP.get(obj_type, "")
 
 ## 지형 타입별 폴백 색상 반환 (타일셋 미정의 지형용)
 ## @param terrain_type 지형 타입

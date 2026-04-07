@@ -4,37 +4,155 @@
   "name_en": "Wandering Battle 6: Mercenary Raid",
   "act": 2,
   "scene_id": null,
-  "map_size": {"width": 15, "height": 12},
+  "map_size": {
+    "width": 15,
+    "height": 12
+  },
   "map_type": "small",
   "battle_type": "rout",
   "difficulty_rating": 7,
   "is_optional": true,
   "deploy_count": 6,
-  "deploy_zones": [[1, 9], [2, 9], [3, 9], [1, 10], [2, 10], [3, 10]],
+  "deploy_zones": [
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      3,
+      10
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "mercenary_swordsman", "level": 10, "position": [8, 2], "ai_override": null},
-    {"enemy_id": "mercenary_swordsman", "level": 10, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "mercenary_swordsman", "level": 10, "position": [6, 5], "ai_override": null},
-    {"enemy_id": "mercenary_archer", "level": 10, "position": [13, 1], "ai_override": null},
-    {"enemy_id": "mercenary_archer", "level": 10, "position": [9, 6], "ai_override": null},
-    {"enemy_id": "mercenary_mage", "level": 10, "position": [10, 3], "ai_override": null},
-    {"enemy_id": "mercenary_mage", "level": 10, "position": [7, 4], "ai_override": null},
-    {"enemy_id": "mercenary_captain", "level": 12, "position": [11, 1], "ai_override": "miniboss"},
-    {"enemy_id": "mercenary_cavalry", "level": 10, "position": [14, 3], "ai_override": "pursue"},
-    {"enemy_id": "mercenary_cavalry", "level": 10, "position": [5, 6], "ai_override": "pursue"}
+    {
+      "enemy_id": "mercenary_swordsman",
+      "level": 10,
+      "position": [
+        8,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_swordsman",
+      "level": 10,
+      "position": [
+        11,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_swordsman",
+      "level": 10,
+      "position": [
+        6,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_archer",
+      "level": 10,
+      "position": [
+        13,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_archer",
+      "level": 10,
+      "position": [
+        9,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_mage",
+      "level": 10,
+      "position": [
+        10,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_mage",
+      "level": 10,
+      "position": [
+        7,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "mercenary_captain",
+      "level": 12,
+      "position": [
+        11,
+        1
+      ],
+      "ai_override": "miniboss"
+    },
+    {
+      "enemy_id": "mercenary_cavalry",
+      "level": 10,
+      "position": [
+        14,
+        3
+      ],
+      "ai_override": "pursue"
+    },
+    {
+      "enemy_id": "mercenary_cavalry",
+      "level": 10,
+      "position": [
+        5,
+        6
+      ],
+      "ai_override": "pursue"
+    }
   ],
   "terrain_layout": "open_plain",
   "tileset_id": "harben",
   "bgm": "battle_intense",
   "rewards": {
     "gold": 500,
-    "items": ["mercenary_sword", "defense_amulet"],
+    "items": [
+      "mercenary_sword",
+      "defense_amulet"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -42,6 +160,109 @@
     "on_victory": null
   },
   "special_rules": [
-    {"type": "repeatable", "description_ko": "반복 가능"}
+    {
+      "type": "repeatable",
+      "description_ko": "반복 가능"
+    }
+  ],
+  "objects": [
+    {
+      "type": "rock",
+      "position": [
+        6,
+        1
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        9,
+        0
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        12,
+        4
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        1,
+        6
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        2,
+        3
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        0,
+        3
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        0,
+        1
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        4,
+        4
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        11,
+        2
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        9,
+        2
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        12,
+        5
+      ]
+    }
   ]
 }

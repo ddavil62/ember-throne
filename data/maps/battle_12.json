@@ -4,40 +4,177 @@
   "name_en": "Crowfell Mountain Pass",
   "act": 2,
   "scene_id": "2-9",
-  "map_size": {"width": 20, "height": 16},
+  "map_size": {
+    "width": 20,
+    "height": 16
+  },
   "map_type": "medium",
   "battle_type": "annihilation",
   "difficulty_rating": 5,
   "is_optional": false,
   "deploy_count": 6,
-  "deploy_zones": [[6, 12], [7, 12], [8, 12], [6, 13], [7, 13], [8, 13]],
+  "deploy_zones": [
+    [
+      6,
+      12
+    ],
+    [
+      7,
+      12
+    ],
+    [
+      8,
+      12
+    ],
+    [
+      6,
+      13
+    ],
+    [
+      7,
+      13
+    ],
+    [
+      8,
+      13
+    ]
+  ],
   "victory_conditions": [
-    {"type": "annihilation", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "annihilation",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"},
-    {"type": "all_allies_dead", "description_ko": "아군 전멸"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    },
+    {
+      "type": "all_allies_dead",
+      "description_ko": "아군 전멸"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "bandit_elite", "level": 10, "position": [10, 3], "ai_override": "aggressive"},
-    {"enemy_id": "bandit_elite", "level": 10, "position": [13, 5], "ai_override": "aggressive"},
-    {"enemy_id": "bandit_elite", "level": 10, "position": [8, 6], "ai_override": "aggressive"},
-    {"enemy_id": "bandit_elite", "level": 11, "position": [15, 4], "ai_override": "aggressive"},
-    {"enemy_id": "bandit_mage", "level": 11, "position": [12, 2], "ai_override": "ranged_support"},
-    {"enemy_id": "bandit_mage", "level": 11, "position": [14, 7], "ai_override": "ranged_support"},
-    {"enemy_id": "bandit_boss", "level": 12, "position": [11, 1], "ai_override": "guard"},
-    {"enemy_id": "bandit_archer", "level": 11, "position": [9, 4], "ai_override": "ranged_support"},
-    {"enemy_id": "bandit_archer", "level": 11, "position": [16, 3], "ai_override": "ranged_support"},
-    {"enemy_id": "bandit_archer", "level": 12, "position": [7, 8], "ai_override": "ranged_support"},
-    {"enemy_id": "mercenary_swordsman", "level": 12, "position": [17, 5], "ai_override": "aggressive"},
-    {"enemy_id": "mercenary_swordsman", "level": 12, "position": [6, 7], "ai_override": "aggressive"}
+    {
+      "enemy_id": "bandit_elite",
+      "level": 10,
+      "position": [
+        10,
+        3
+      ],
+      "ai_override": "aggressive"
+    },
+    {
+      "enemy_id": "bandit_elite",
+      "level": 10,
+      "position": [
+        13,
+        5
+      ],
+      "ai_override": "aggressive"
+    },
+    {
+      "enemy_id": "bandit_elite",
+      "level": 10,
+      "position": [
+        8,
+        6
+      ],
+      "ai_override": "aggressive"
+    },
+    {
+      "enemy_id": "bandit_elite",
+      "level": 11,
+      "position": [
+        15,
+        4
+      ],
+      "ai_override": "aggressive"
+    },
+    {
+      "enemy_id": "bandit_mage",
+      "level": 11,
+      "position": [
+        12,
+        2
+      ],
+      "ai_override": "ranged_support"
+    },
+    {
+      "enemy_id": "bandit_mage",
+      "level": 11,
+      "position": [
+        14,
+        7
+      ],
+      "ai_override": "ranged_support"
+    },
+    {
+      "enemy_id": "bandit_boss",
+      "level": 12,
+      "position": [
+        11,
+        1
+      ],
+      "ai_override": "guard"
+    },
+    {
+      "enemy_id": "bandit_archer",
+      "level": 11,
+      "position": [
+        9,
+        4
+      ],
+      "ai_override": "ranged_support"
+    },
+    {
+      "enemy_id": "bandit_archer",
+      "level": 11,
+      "position": [
+        16,
+        3
+      ],
+      "ai_override": "ranged_support"
+    },
+    {
+      "enemy_id": "bandit_archer",
+      "level": 12,
+      "position": [
+        7,
+        8
+      ],
+      "ai_override": "ranged_support"
+    },
+    {
+      "enemy_id": "mercenary_swordsman",
+      "level": 12,
+      "position": [
+        17,
+        5
+      ],
+      "ai_override": "aggressive"
+    },
+    {
+      "enemy_id": "mercenary_swordsman",
+      "level": 12,
+      "position": [
+        6,
+        7
+      ],
+      "ai_override": "aggressive"
+    }
   ],
   "terrain_layout": "crowfell_pass",
   "tileset_id": "crowfell",
   "bgm": "battle_normal",
   "rewards": {
     "gold": 450,
-    "items": ["magic_academy_staff", "mana_potion_x3"],
+    "items": [
+      "magic_academy_staff",
+      "mana_potion_x3"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -46,6 +183,192 @@
     "on_victory": "2-9_battle_end"
   },
   "special_rules": [
-    {"type": "ally_join", "turn": 3, "unit_id": "drana", "position": [19, 8], "description_ko": "3턴째에 드라나가 동쪽에서 합류"}
+    {
+      "type": "ally_join",
+      "turn": 3,
+      "unit_id": "drana",
+      "position": [
+        19,
+        8
+      ],
+      "description_ko": "3턴째에 드라나가 동쪽에서 합류"
+    }
+  ],
+  "objects": [
+    {
+      "type": "tent",
+      "position": [
+        9,
+        3
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        5,
+        3
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        7,
+        3
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        3,
+        7
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        5,
+        0
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        2,
+        0
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        7,
+        0
+      ]
+    },
+    {
+      "type": "weapon_rack",
+      "position": [
+        17,
+        4
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        3,
+        2
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        15,
+        0
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        1,
+        2
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        14,
+        0
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        1,
+        4
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        17,
+        2
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        8,
+        2
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        3,
+        5
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        13,
+        0
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        0,
+        2
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        19,
+        1
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        14,
+        1
+      ]
+    },
+    {
+      "type": "weapon_rack",
+      "position": [
+        13,
+        4
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        5,
+        2
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        12,
+        4
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        16,
+        5
+      ]
+    }
   ]
 }

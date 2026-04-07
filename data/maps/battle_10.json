@@ -4,34 +4,182 @@
   "name_en": "Defense of Silvaren 2",
   "act": 2,
   "scene_id": "2-4",
-  "map_size": {"width": 20, "height": 16},
+  "map_size": {
+    "width": 20,
+    "height": 16
+  },
   "map_type": "medium",
   "battle_type": "defense",
   "difficulty_rating": 5,
   "is_optional": false,
   "deploy_count": 6,
-  "deploy_zones": [[8, 6], [9, 6], [10, 6], [11, 6], [9, 7], [10, 7]],
+  "deploy_zones": [
+    [
+      8,
+      6
+    ],
+    [
+      9,
+      6
+    ],
+    [
+      10,
+      6
+    ],
+    [
+      11,
+      6
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      10,
+      7
+    ]
+  ],
   "victory_conditions": [
-    {"type": "survive", "description_ko": "5턴째에 피나 이벤트 발생 후 전투 종료", "turn_limit": 5}
+    {
+      "type": "survive",
+      "description_ko": "5턴째에 피나 이벤트 발생 후 전투 종료",
+      "turn_limit": 5
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "conscript_elite_footsoldier", "level": 9, "position": [4, 13], "ai_override": null},
-    {"enemy_id": "conscript_elite_footsoldier", "level": 9, "position": [8, 14], "ai_override": null},
-    {"enemy_id": "conscript_elite_footsoldier", "level": 9, "position": [12, 13], "ai_override": null},
-    {"enemy_id": "conscript_elite_footsoldier", "level": 9, "position": [16, 14], "ai_override": null},
-    {"enemy_id": "conscript_mage", "level": 9, "position": [6, 12], "ai_override": null},
-    {"enemy_id": "conscript_mage", "level": 9, "position": [10, 12], "ai_override": null},
-    {"enemy_id": "conscript_mage", "level": 10, "position": [14, 12], "ai_override": null},
-    {"enemy_id": "conscript_assault_captain", "level": 11, "position": [10, 15], "ai_override": "miniboss"},
-    {"enemy_id": "ash_beast_small", "level": 10, "position": [2, 3], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 10, "position": [5, 2], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 10, "position": [15, 2], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 10, "position": [18, 3], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 10, "position": [3, 1], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 10, "position": [17, 1], "ai_override": null}
+    {
+      "enemy_id": "conscript_elite_footsoldier",
+      "level": 9,
+      "position": [
+        4,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_elite_footsoldier",
+      "level": 9,
+      "position": [
+        8,
+        14
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_elite_footsoldier",
+      "level": 9,
+      "position": [
+        12,
+        13
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_elite_footsoldier",
+      "level": 9,
+      "position": [
+        16,
+        14
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_mage",
+      "level": 9,
+      "position": [
+        6,
+        12
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_mage",
+      "level": 9,
+      "position": [
+        10,
+        12
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_mage",
+      "level": 10,
+      "position": [
+        14,
+        12
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_assault_captain",
+      "level": 11,
+      "position": [
+        10,
+        15
+      ],
+      "ai_override": "miniboss"
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 10,
+      "position": [
+        2,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 10,
+      "position": [
+        5,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 10,
+      "position": [
+        15,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 10,
+      "position": [
+        18,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 10,
+      "position": [
+        3,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 10,
+      "position": [
+        17,
+        1
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "silvaren_forest_clearing",
   "tileset_id": "silvaren",
@@ -47,7 +195,191 @@
     "on_victory": "2-4b_battle_end"
   },
   "special_rules": [
-    {"type": "dual_faction", "description_ko": "징발대와 재의 짐승이 동시 출현. 두 진영은 서로 공격하지 않음"},
-    {"type": "event_end", "turn": 5, "description_ko": "5턴째에 피나 이벤트 발생 후 전투 종료"}
+    {
+      "type": "dual_faction",
+      "description_ko": "징발대와 재의 짐승이 동시 출현. 두 진영은 서로 공격하지 않음"
+    },
+    {
+      "type": "event_end",
+      "turn": 5,
+      "description_ko": "5턴째에 피나 이벤트 발생 후 전투 종료"
+    }
+  ],
+  "objects": [
+    {
+      "type": "roots",
+      "position": [
+        0,
+        2
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        19,
+        6
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        3,
+        11
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        5,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        3,
+        2
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        17,
+        10
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        18,
+        2
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        18,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        2,
+        1
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        3,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        1,
+        10
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        16,
+        11
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        7,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        17,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        2,
+        4
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        1,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        6,
+        1
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        6,
+        4
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        19,
+        0
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        1,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        16,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        15,
+        1
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        3,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        0,
+        7
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        2,
+        5
+      ]
+    }
   ]
 }

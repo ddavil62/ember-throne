@@ -4,42 +4,209 @@
   "name_en": "Entrance to the Sea of Ash",
   "act": 3,
   "scene_id": "3-13",
-  "map_size": {"width": 25, "height": 20},
+  "map_size": {
+    "width": 25,
+    "height": 20
+  },
   "map_type": "large",
   "battle_type": "boss",
   "difficulty_rating": 9,
   "is_optional": false,
   "deploy_count": 8,
-  "deploy_zones": [[4, 16], [5, 16], [6, 16], [7, 16], [4, 17], [5, 17], [6, 17], [7, 17]],
+  "deploy_zones": [
+    [
+      4,
+      16
+    ],
+    [
+      5,
+      16
+    ],
+    [
+      6,
+      16
+    ],
+    [
+      7,
+      16
+    ],
+    [
+      4,
+      17
+    ],
+    [
+      5,
+      17
+    ],
+    [
+      6,
+      17
+    ],
+    [
+      7,
+      17
+    ]
+  ],
   "victory_conditions": [
-    {"type": "boss_kill", "description_ko": "재의 군주 수하 격파", "target_unit": "ash_lord_vassal"}
+    {
+      "type": "boss_kill",
+      "description_ko": "재의 군주 수하 격파",
+      "target_unit": "ash_lord_vassal"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "ash_beast_large", "level": 18, "position": [8, 5], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 18, "position": [14, 4], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 18, "position": [18, 6], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 18, "position": [6, 8], "ai_override": null},
-    {"enemy_id": "ash_colossus", "level": 19, "position": [10, 3], "ai_override": null},
-    {"enemy_id": "ash_colossus", "level": 19, "position": [16, 7], "ai_override": null},
-    {"enemy_id": "ash_spirit", "level": 19, "position": [9, 6], "ai_override": null},
-    {"enemy_id": "ash_spirit", "level": 19, "position": [13, 5], "ai_override": null},
-    {"enemy_id": "ash_spirit", "level": 19, "position": [19, 4], "ai_override": null},
-    {"enemy_id": "ash_venomite", "level": 19, "position": [7, 4], "ai_override": null},
-    {"enemy_id": "ash_venomite", "level": 20, "position": [15, 8], "ai_override": null},
-    {"enemy_id": "ash_venomite", "level": 20, "position": [20, 6], "ai_override": null},
-    {"enemy_id": "ash_knight", "level": 20, "position": [11, 2], "ai_override": null},
-    {"enemy_id": "ash_knight", "level": 20, "position": [17, 3], "ai_override": null},
-    {"enemy_id": "ash_lord_vassal", "level": 22, "position": [12, 1], "ai_override": "boss"}
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 18,
+      "position": [
+        8,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 18,
+      "position": [
+        14,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 18,
+      "position": [
+        18,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 18,
+      "position": [
+        6,
+        8
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_colossus",
+      "level": 19,
+      "position": [
+        10,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_colossus",
+      "level": 19,
+      "position": [
+        16,
+        7
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_spirit",
+      "level": 19,
+      "position": [
+        9,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_spirit",
+      "level": 19,
+      "position": [
+        13,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_spirit",
+      "level": 19,
+      "position": [
+        19,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_venomite",
+      "level": 19,
+      "position": [
+        7,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_venomite",
+      "level": 20,
+      "position": [
+        15,
+        8
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_venomite",
+      "level": 20,
+      "position": [
+        20,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_knight",
+      "level": 20,
+      "position": [
+        11,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_knight",
+      "level": 20,
+      "position": [
+        17,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_lord_vassal",
+      "level": 22,
+      "position": [
+        12,
+        1
+      ],
+      "ai_override": "boss"
+    }
   ],
   "terrain_layout": "sea_of_ash_entrance",
   "tileset_id": "ashland",
   "bgm": "battle_boss",
   "rewards": {
     "gold": 700,
-    "items": ["ash_essence", "phoenix_feather_x1"],
+    "items": [
+      "ash_essence",
+      "phoenix_feather_x1"
+    ],
     "exp_bonus": 45
   },
   "events": {
@@ -47,7 +214,310 @@
     "on_victory": "3-13_linen_memory_event"
   },
   "special_rules": [
-    {"type": "terrain_damage", "description_ko": "재의 땅 전역 HP 감소. 결계석 타일 3개 활용 필수"},
-    {"type": "ward_stones", "count": 3, "positions": [[5, 10], [12, 8], [20, 10]], "description_ko": "결계석 타일 3개를 확보하며 전진"}
+    {
+      "type": "terrain_damage",
+      "description_ko": "재의 땅 전역 HP 감소. 결계석 타일 3개 활용 필수"
+    },
+    {
+      "type": "ward_stones",
+      "count": 3,
+      "positions": [
+        [
+          5,
+          10
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          20,
+          10
+        ]
+      ],
+      "description_ko": "결계석 타일 3개를 확보하며 전진"
+    }
+  ],
+  "objects": [
+    {
+      "type": "ash_crystal",
+      "position": [
+        1,
+        5
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        6,
+        11
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        21,
+        0
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        23,
+        11
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        17,
+        7
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        12,
+        0
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        5,
+        4
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        10,
+        0
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        10,
+        1
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        22,
+        12
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        23,
+        9
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        2,
+        5
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        13,
+        4
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        21,
+        3
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        20,
+        8
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        3,
+        8
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        16,
+        1
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        24,
+        8
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        5,
+        3
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        0,
+        1
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        7,
+        11
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        6,
+        13
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        9,
+        4
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        22,
+        8
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        1,
+        1
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        1,
+        6
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        16,
+        0
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        18,
+        4
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        5,
+        5
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        14,
+        5
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        0,
+        3
+      ]
+    },
+    {
+      "type": "ash_crystal",
+      "position": [
+        15,
+        1
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        1,
+        7
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        22,
+        5
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        3,
+        5
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        12,
+        4
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        22,
+        2
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        23,
+        2
+      ]
+    }
   ]
 }

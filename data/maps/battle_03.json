@@ -4,34 +4,112 @@
   "name_en": "Back Alley Ambush",
   "act": 1,
   "scene_id": "1-6",
-  "map_size": {"width": 15, "height": 12},
+  "map_size": {
+    "width": 15,
+    "height": 12
+  },
   "map_type": "small",
   "battle_type": "rout",
   "difficulty_rating": 2,
   "is_optional": false,
   "deploy_count": 3,
-  "deploy_zones": [[2, 8], [3, 8], [4, 8]],
+  "deploy_zones": [
+    [
+      2,
+      8
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      4,
+      8
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"},
-    {"type": "unit_hp_threshold", "unit_id": "linen", "hp_percent": 50, "description_ko": "리넨 HP 50% 이하"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    },
+    {
+      "type": "unit_hp_threshold",
+      "unit_id": "linen",
+      "hp_percent": 50,
+      "description_ko": "리넨 HP 50% 이하"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "alley_thug", "level": 2, "position": [6, 2], "ai_override": null},
-    {"enemy_id": "alley_thug", "level": 2, "position": [9, 3], "ai_override": null},
-    {"enemy_id": "alley_thug", "level": 3, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "alley_thug", "level": 3, "position": [13, 2], "ai_override": null},
-    {"enemy_id": "rampaging_smuggler", "level": 4, "position": [8, 1], "ai_override": null},
-    {"enemy_id": "rampaging_smuggler", "level": 4, "position": [12, 5], "ai_override": null}
+    {
+      "enemy_id": "alley_thug",
+      "level": 2,
+      "position": [
+        6,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "alley_thug",
+      "level": 2,
+      "position": [
+        9,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "alley_thug",
+      "level": 3,
+      "position": [
+        11,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "alley_thug",
+      "level": 3,
+      "position": [
+        13,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "rampaging_smuggler",
+      "level": 4,
+      "position": [
+        8,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "rampaging_smuggler",
+      "level": 4,
+      "position": [
+        12,
+        5
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "belmar_alley",
   "tileset_id": "belmar",
   "bgm": "battle_tension",
   "rewards": {
     "gold": 150,
-    "items": ["old_dagger"],
+    "items": [
+      "old_dagger"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -40,7 +118,117 @@
     "on_victory": "1-6_battle_end"
   },
   "special_rules": [
-    {"type": "ally_join", "turn": 1, "unit_id": "linen", "description_ko": "리넨 합류전. 리넨을 3턴간 보호"},
-    {"type": "protect_unit", "unit_id": "linen", "duration": 3, "description_ko": "리넨 HP 50% 이하 시 패배"}
+    {
+      "type": "ally_join",
+      "turn": 1,
+      "unit_id": "linen",
+      "description_ko": "리넨 합류전. 리넨을 3턴간 보호"
+    },
+    {
+      "type": "protect_unit",
+      "unit_id": "linen",
+      "duration": 3,
+      "description_ko": "리넨 HP 50% 이하 시 패배"
+    }
+  ],
+  "objects": [
+    {
+      "type": "dock",
+      "position": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "dock",
+      "position": [
+        12,
+        7
+      ]
+    },
+    {
+      "type": "crate",
+      "position": [
+        6,
+        0
+      ]
+    },
+    {
+      "type": "dock",
+      "position": [
+        5,
+        2
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        3,
+        4
+      ]
+    },
+    {
+      "type": "lantern",
+      "position": [
+        0,
+        5
+      ]
+    },
+    {
+      "type": "crate",
+      "position": [
+        7,
+        3
+      ]
+    },
+    {
+      "type": "dock",
+      "position": [
+        7,
+        1
+      ]
+    },
+    {
+      "type": "dock",
+      "position": [
+        14,
+        1
+      ]
+    },
+    {
+      "type": "lantern",
+      "position": [
+        8,
+        2
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        0,
+        4
+      ]
+    },
+    {
+      "type": "dock",
+      "position": [
+        14,
+        0
+      ]
+    },
+    {
+      "type": "rope_anchor",
+      "position": [
+        11,
+        1
+      ]
+    },
+    {
+      "type": "crate",
+      "position": [
+        13,
+        1
+      ]
+    }
   ]
 }

@@ -4,35 +4,137 @@
   "name_en": "Wandering Battle 3: Forest Fiends",
   "act": 2,
   "scene_id": null,
-  "map_size": {"width": 15, "height": 12},
+  "map_size": {
+    "width": 15,
+    "height": 12
+  },
   "map_type": "small",
   "battle_type": "rout",
   "difficulty_rating": 5,
   "is_optional": true,
   "deploy_count": 6,
-  "deploy_zones": [[1, 9], [2, 9], [3, 9], [1, 10], [2, 10], [3, 10]],
+  "deploy_zones": [
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      3,
+      10
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "forest_fiend", "level": 6, "position": [8, 2], "ai_override": null},
-    {"enemy_id": "forest_fiend", "level": 6, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "forest_fiend", "level": 7, "position": [6, 5], "ai_override": null},
-    {"enemy_id": "poison_spider", "level": 7, "position": [10, 1], "ai_override": null},
-    {"enemy_id": "poison_spider", "level": 7, "position": [13, 3], "ai_override": null},
-    {"enemy_id": "poison_spider", "level": 7, "position": [7, 6], "ai_override": null},
-    {"enemy_id": "poison_snake", "level": 8, "position": [12, 5], "ai_override": null},
-    {"enemy_id": "poison_snake", "level": 8, "position": [9, 7], "ai_override": null}
+    {
+      "enemy_id": "forest_fiend",
+      "level": 6,
+      "position": [
+        8,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "forest_fiend",
+      "level": 6,
+      "position": [
+        11,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "forest_fiend",
+      "level": 7,
+      "position": [
+        6,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "poison_spider",
+      "level": 7,
+      "position": [
+        10,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "poison_spider",
+      "level": 7,
+      "position": [
+        13,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "poison_spider",
+      "level": 7,
+      "position": [
+        7,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "poison_snake",
+      "level": 8,
+      "position": [
+        12,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "poison_snake",
+      "level": 8,
+      "position": [
+        9,
+        7
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "deep_forest",
   "tileset_id": "silvaren",
   "bgm": "battle_forest",
   "rewards": {
     "gold": 250,
-    "items": ["antidote_x3", "spider_silk"],
+    "items": [
+      "antidote_x3",
+      "spider_silk"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -40,6 +142,109 @@
     "on_victory": null
   },
   "special_rules": [
-    {"type": "repeatable", "description_ko": "반복 가능"}
+    {
+      "type": "repeatable",
+      "description_ko": "반복 가능"
+    }
+  ],
+  "objects": [
+    {
+      "type": "ancient_tree",
+      "position": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        4,
+        2
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        2,
+        2
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        3,
+        7
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        6,
+        0
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        5,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        2,
+        4
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        10,
+        0
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        12,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        4,
+        1
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        1,
+        1
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        0,
+        2
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        3,
+        3
+      ]
+    }
   ]
 }

@@ -4,43 +4,217 @@
   "name_en": "Recapture of Silvaren",
   "act": 3,
   "scene_id": "3-11",
-  "map_size": {"width": 25, "height": 20},
+  "map_size": {
+    "width": 25,
+    "height": 20
+  },
   "map_type": "large",
   "battle_type": "rout",
   "difficulty_rating": 8,
   "is_optional": false,
   "deploy_count": 8,
-  "deploy_zones": [[3, 16], [4, 16], [5, 16], [6, 16], [3, 17], [4, 17], [5, 17], [6, 17]],
+  "deploy_zones": [
+    [
+      3,
+      16
+    ],
+    [
+      4,
+      16
+    ],
+    [
+      5,
+      16
+    ],
+    [
+      6,
+      16
+    ],
+    [
+      3,
+      17
+    ],
+    [
+      4,
+      17
+    ],
+    [
+      5,
+      17
+    ],
+    [
+      6,
+      17
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "conscript_remnant_footsoldier", "level": 17, "position": [8, 5], "ai_override": null},
-    {"enemy_id": "conscript_remnant_footsoldier", "level": 17, "position": [12, 4], "ai_override": null},
-    {"enemy_id": "conscript_remnant_footsoldier", "level": 17, "position": [16, 6], "ai_override": null},
-    {"enemy_id": "conscript_remnant_footsoldier", "level": 17, "position": [10, 7], "ai_override": null},
-    {"enemy_id": "conscript_remnant_footsoldier", "level": 18, "position": [20, 5], "ai_override": null},
-    {"enemy_id": "conscript_remnant_archer", "level": 18, "position": [9, 3], "ai_override": null},
-    {"enemy_id": "conscript_remnant_archer", "level": 18, "position": [14, 3], "ai_override": null},
-    {"enemy_id": "conscript_remnant_archer", "level": 18, "position": [18, 4], "ai_override": null},
-    {"enemy_id": "conscript_remnant_mage", "level": 18, "position": [11, 2], "ai_override": null},
-    {"enemy_id": "conscript_remnant_mage", "level": 18, "position": [17, 3], "ai_override": null},
-    {"enemy_id": "bandit", "level": 18, "position": [5, 8], "ai_override": null},
-    {"enemy_id": "bandit", "level": 18, "position": [7, 10], "ai_override": null},
-    {"enemy_id": "bandit", "level": 19, "position": [21, 8], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 19, "position": [3, 4], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 19, "position": [22, 3], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 19, "position": [13, 9], "ai_override": null}
+    {
+      "enemy_id": "conscript_remnant_footsoldier",
+      "level": 17,
+      "position": [
+        8,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_footsoldier",
+      "level": 17,
+      "position": [
+        12,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_footsoldier",
+      "level": 17,
+      "position": [
+        16,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_footsoldier",
+      "level": 17,
+      "position": [
+        10,
+        7
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_footsoldier",
+      "level": 18,
+      "position": [
+        20,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_archer",
+      "level": 18,
+      "position": [
+        9,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_archer",
+      "level": 18,
+      "position": [
+        14,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_archer",
+      "level": 18,
+      "position": [
+        18,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_mage",
+      "level": 18,
+      "position": [
+        11,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "conscript_remnant_mage",
+      "level": 18,
+      "position": [
+        17,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit",
+      "level": 18,
+      "position": [
+        5,
+        8
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit",
+      "level": 18,
+      "position": [
+        7,
+        10
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "bandit",
+      "level": 19,
+      "position": [
+        21,
+        8
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 19,
+      "position": [
+        3,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 19,
+      "position": [
+        22,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 19,
+      "position": [
+        13,
+        9
+      ],
+      "ai_override": null
+    }
   ],
   "terrain_layout": "silvaren_recapture",
   "tileset_id": "silvaren",
   "bgm": "battle_intense",
   "rewards": {
     "gold": 550,
-    "items": ["ward_stone_remnant_silvaren", "pinas_ribbon"],
+    "items": [
+      "ward_stone_remnant_silvaren",
+      "pinas_ribbon"
+    ],
     "exp_bonus": 0
   },
   "events": {
@@ -48,7 +222,295 @@
     "on_victory": "3-11b_battle_end"
   },
   "special_rules": [
-    {"type": "triple_faction", "description_ko": "세 진영(징발대, 산적, 재의 짐승) 혼재. 징발대와 산적은 서로 비공격, 재의 짐승은 전부 공격"},
-    {"type": "collect_remnant", "description_ko": "결계석 잔영 수집"}
+    {
+      "type": "triple_faction",
+      "description_ko": "세 진영(징발대, 산적, 재의 짐승) 혼재. 징발대와 산적은 서로 비공격, 재의 짐승은 전부 공격"
+    },
+    {
+      "type": "collect_remnant",
+      "description_ko": "결계석 잔영 수집"
+    }
+  ],
+  "objects": [
+    {
+      "type": "roots",
+      "position": [
+        18,
+        7
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        17,
+        8
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        0,
+        10
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        16,
+        1
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        17,
+        4
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        13,
+        2
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        2,
+        6
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        1,
+        3
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        7,
+        7
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        11,
+        3
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        24,
+        7
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        7,
+        2
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        19,
+        7
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        22,
+        13
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        24,
+        8
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        15,
+        5
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        16,
+        0
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        21,
+        5
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        11,
+        4
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        0,
+        6
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        2,
+        0
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        15,
+        1
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        9,
+        2
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        0,
+        7
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        4,
+        8
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        8,
+        1
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        18,
+        2
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        19,
+        6
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        22,
+        11
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        22,
+        4
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        5,
+        6
+      ]
+    },
+    {
+      "type": "ward_pillar",
+      "position": [
+        24,
+        13
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        23,
+        5
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        16,
+        3
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        1,
+        5
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        17,
+        14
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        19,
+        5
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        1,
+        7
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        1,
+        2
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        21,
+        11
+      ]
+    }
   ]
 }

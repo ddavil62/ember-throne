@@ -4,42 +4,337 @@
   "name_en": "Harben Ash Beasts",
   "act": 2,
   "scene_id": "2-7",
-  "map_size": {"width": 20, "height": 16},
+  "map_size": {
+    "width": 20,
+    "height": 16
+  },
   "map_type": "medium",
   "battle_type": "rout",
   "difficulty_rating": 5,
   "is_optional": false,
   "deploy_count": 6,
-  "deploy_zones": [[2, 12], [3, 12], [4, 12], [2, 13], [3, 13], [4, 13]],
+  "deploy_zones": [
+    [
+      2,
+      12
+    ],
+    [
+      3,
+      12
+    ],
+    [
+      4,
+      12
+    ],
+    [
+      2,
+      13
+    ],
+    [
+      3,
+      13
+    ],
+    [
+      4,
+      13
+    ]
+  ],
   "victory_conditions": [
-    {"type": "rout", "description_ko": "모든 적 섬멸"}
+    {
+      "type": "rout",
+      "description_ko": "모든 적 섬멸"
+    }
   ],
   "defeat_conditions": [
-    {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
+    {
+      "type": "unit_death",
+      "unit_id": "kael",
+      "description_ko": "카엘 전사"
+    }
   ],
   "enemy_placements": [
-    {"enemy_id": "ash_beast_medium", "level": 10, "position": [8, 3], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 10, "position": [12, 4], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 10, "position": [15, 2], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 11, "position": [10, 6], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 11, "position": [7, 1], "ai_override": null},
-    {"enemy_id": "ash_beast_large", "level": 11, "position": [16, 5], "ai_override": null},
-    {"enemy_id": "ash_maggot", "level": 11, "position": [9, 5], "ai_override": null},
-    {"enemy_id": "ash_maggot", "level": 12, "position": [13, 3], "ai_override": null},
-    {"enemy_id": "ash_maggot", "level": 12, "position": [11, 7], "ai_override": null},
-    {"enemy_id": "ash_venomite", "level": 12, "position": [14, 1], "ai_override": "priority_target"}
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 10,
+      "position": [
+        8,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 10,
+      "position": [
+        12,
+        4
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 10,
+      "position": [
+        15,
+        2
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_medium",
+      "level": 11,
+      "position": [
+        10,
+        6
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 11,
+      "position": [
+        7,
+        1
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_large",
+      "level": 11,
+      "position": [
+        16,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_maggot",
+      "level": 11,
+      "position": [
+        9,
+        5
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_maggot",
+      "level": 12,
+      "position": [
+        13,
+        3
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_maggot",
+      "level": 12,
+      "position": [
+        11,
+        7
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_venomite",
+      "level": 12,
+      "position": [
+        14,
+        1
+      ],
+      "ai_override": "priority_target"
+    }
   ],
   "terrain_layout": "harben_granary",
   "tileset_id": "harben",
   "bgm": "battle_ash",
   "rewards": {
     "gold": 350,
-    "items": ["antidote_x3", "panacea_x1"],
+    "items": [
+      "antidote_x3",
+      "panacea_x1"
+    ],
     "exp_bonus": 0
   },
   "events": {
     "on_start": "2-7_battle_start",
     "on_victory": "2-7_battle_end"
   },
-  "special_rules": []
+  "special_rules": [],
+  "objects": [
+    {
+      "type": "farm_cart",
+      "position": [
+        19,
+        0
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        3,
+        7
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        3,
+        3
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        3,
+        8
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        18,
+        2
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        17,
+        6
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        10,
+        4
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        19,
+        4
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        9,
+        1
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        11,
+        3
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        19,
+        6
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        15,
+        0
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        0,
+        11
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        1,
+        6
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        14,
+        9
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        3,
+        6
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        9,
+        0
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        15,
+        10
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        2,
+        10
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        8,
+        4
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        1,
+        1
+      ]
+    }
+  ]
 }

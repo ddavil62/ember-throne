@@ -219,7 +219,7 @@
         "sage_robe"
       ],
       "accessories": [
-        "heros_insignia",
+        "hero_seal",
         {
           "item": "phoenix_wing",
           "stock": 1

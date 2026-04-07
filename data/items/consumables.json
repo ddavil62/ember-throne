@@ -239,7 +239,7 @@
     "usable_in_battle": false,
     "description_ko": "재의 마안 드롭 소재. 마안의 지팡이 제작에 사용",
     "description_en": "Dropped by Ashen Eye. Used to craft Ashen Eye Staff",
-    "craft_result": "ashen_eye_staff",
+    "craft_result": "evil_eye_staff",
     "act_available": 3
   },
   {

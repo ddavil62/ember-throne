@@ -16,7 +16,7 @@
         "leather_armor",
         "iron_armor",
         "cotton_robe",
-        "travelers_cloak",
+        "traveler_cloak",
         "reinforced_leather",
         "silk_robe"
       ],
@@ -60,18 +60,18 @@
         "silver_necklace",
         "mana_necklace",
         "frost_charm",
-        "silence_charm",
-        "sleep_charm"
+        "mental_charm",
+        "awakening_charm"
       ],
       "consumables": [
         "herb",
-        "superior_herb",
+        "herb_superior",
         "mana_potion",
         "antidote",
         "panacea",
-        "fire_bottle",
+        "fire_bomb",
         "light_talisman",
-        "iron_wall_talisman",
+        "iron_talisman",
         "speed_talisman"
       ],
       "forge": [
@@ -115,7 +115,7 @@
       ],
       "additional_armor": [],
       "additional_accessories": [
-        "crit_ring"
+        "critical_ring"
       ],
       "additional_consumables": [],
       "additional_forge": [
@@ -161,16 +161,16 @@
       ],
       "consumables": [
         "herb",
-        "superior_herb",
+        "herb_superior",
         "mana_potion",
-        "superior_mana_potion",
+        "mana_potion_superior",
         "antidote",
         "panacea",
-        "barrier_fragment",
-        "fire_bottle",
+        "barrier_shard",
+        "fire_bomb",
         "smoke_bomb",
         "light_talisman",
-        "iron_wall_talisman",
+        "iron_talisman",
         "speed_talisman"
       ],
       "forge": [
@@ -227,16 +227,16 @@
       ],
       "consumables": [
         "herb",
-        "superior_herb",
+        "herb_superior",
         "mana_potion",
-        "superior_mana_potion",
+        "mana_potion_superior",
         "antidote",
         "panacea",
-        "barrier_fragment",
-        "fire_bottle",
+        "barrier_shard",
+        "fire_bomb",
         "smoke_bomb",
         "light_talisman",
-        "iron_wall_talisman",
+        "iron_talisman",
         "speed_talisman",
         {
           "item": "phoenix_feather",

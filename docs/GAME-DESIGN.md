@@ -43,6 +43,7 @@
 | [WORLD-PROGRESSION.md](WORLD-PROGRESSION.md) | 월드맵/진행 -- 6지역 30+거점, 유대 13쌍, 세이브 시스템, 이벤트 CG 19장, BGM 16트랙, SE 39종 | v0.1 |
 | [SKILL-ANIMATIONS.md](SKILL-ANIMATIONS.md) | 스킬 연출 -- 연출 등급 4단계, 컷인 시스템, 시전 모션 17종, 이펙트 36종, 88개 스킬 애니메이션 상세 | v0.1 |
 | [STORY.md](STORY.md) | 스토리 -- 세계관, 등장인물, 4막 서사 구조, 러브라인, 비극 서사, 엔딩 | v0.3 |
+| [LEVEL-DESIGN.md](LEVEL-DESIGN.md) | 레벨 밸런스 -- EXP 테이블, 막별 권장 레벨, 35전 밸런스 시트, 캐릭터 합류 레벨, 유랑 파밍, 골드 흐름, 난이도 차이, 데미지 검증 | v0.1 |
 
 ---
 

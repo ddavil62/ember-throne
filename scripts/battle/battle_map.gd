@@ -324,19 +324,24 @@ func _get_cached_tex(path: String, cache: Dictionary) -> Texture2D:
 		cache[path] = load(path) as Texture2D
 	return cache[path]
 
-## Wang 오토타일링 코너 판정: 꼭짓점 공유 셀 중 upper_t가 있으면 true
+## Wang 오토타일링 코너 판정: 자신 + 수평/수직 이웃만 검사 (대각선 제외)
+## 대각선 셀을 포함하면 1칸 떨어진 지형까지 번져 모서리가 겹쳐 보이므로 제외.
+## 검사 셀: (x,y) 자신, (x+dx, y) 수평 이웃, (x, y+dy) 수직 이웃
 ## @param dx -1(왼쪽) 또는 +1(오른쪽)
 ## @param dy -1(위) 또는 +1(아래)
 ## @returns 해당 코너가 upper 지형인지 여부
 func _corner_upper(tiles: Array, x: int, y: int, dx: int, dy: int,
 		w: int, h: int, upper_t: String) -> bool:
-	# 이 꼭짓점을 공유하는 4개 셀: (x,y), (x+dx,y), (x,y+dy), (x+dx,y+dy)
-	for cy: int in [y, y + dy]:
-		for cx: int in [x, x + dx]:
-			if cx >= 0 and cx < w and cy >= 0 and cy < h:
-				if cy < tiles.size() and cx < tiles[cy].size():
-					if tiles[cy][cx] == upper_t:
-						return true
+	var check: Array[Vector2i] = [
+		Vector2i(x, y),          # 자신
+		Vector2i(x + dx, y),     # 수평 이웃
+		Vector2i(x, y + dy),     # 수직 이웃
+	]
+	for c: Vector2i in check:
+		if c.x >= 0 and c.x < w and c.y >= 0 and c.y < h:
+			if c.y < tiles.size() and c.x < tiles[c.y].size():
+				if tiles[c.y][c.x] == upper_t:
+					return true
 	return false
 
 ## 지형 타입별 폴백 색상 반환 (타일셋 미정의 지형용)

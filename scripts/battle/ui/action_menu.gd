@@ -26,6 +26,7 @@ const ACTION_LABELS: Dictionary = {
 	"skill": "스킬",
 	"item": "아이템",
 	"wait": "대기",
+	"undo_move": "되돌리기",
 }
 
 ## NinePatch 에셋 경로

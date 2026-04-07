@@ -71,8 +71,11 @@ var _move_cells: Array[Vector2i] = []
 ## 공격 가능 셀 목록
 var _attack_cells: Array[Vector2i] = []
 
-## 유닛의 이동 전 원래 위치 (취소용)
+## 유닛의 이동 전 원래 위치 (되돌리기용)
 var _original_cell: Vector2i = Vector2i.ZERO
+
+## 유닛이 실제로 이동했는지 여부 (되돌리기 가능 판정용)
+var _has_moved: bool = false
 
 ## 행동 메뉴 CanvasLayer 참조
 var _action_menu_layer: CanvasLayer = null
@@ -106,6 +109,14 @@ func _ready() -> void:
 
 	# 사망 유닛 추적 (벤치 EXP 오지급 방지)
 	EventBus.unit_died.connect(_on_unit_died_for_exp_tracking)
+
+## 입력 처리 — 행동 메뉴 표시 중 취소 키로 이동 되돌리기
+func _unhandled_input(event: InputEvent) -> void:
+	if _state == TurnState.UNIT_MOVED and event.is_action_pressed("ui_cancel"):
+		if _has_moved:
+			_hide_action_menu()
+			_undo_move()
+			get_viewport().set_input_as_handled()
 
 ## BattleMap 시그널을 연결한다. battle_map 주입 후 호출해야 한다.
 func connect_battle_map() -> void:
@@ -269,6 +280,7 @@ func _deselect_unit() -> void:
 	_selected_unit = null
 	_move_cells.clear()
 	_attack_cells.clear()
+	_has_moved = false
 	if battle_map:
 		battle_map.clear_highlights()
 	_state = TurnState.IDLE
@@ -298,6 +310,9 @@ func _move_unit_to(target_cell: Vector2i) -> void:
 	# 유닛 이동 애니메이션
 	_selected_unit.move_to(target_cell, path)
 	await _selected_unit.move_finished
+
+	# 이동 완료 플래그
+	_has_moved = (_original_cell != target_cell)
 
 	# 이동 시그널
 	EventBus.unit_moved.emit(_selected_unit.unit_id, _original_cell, target_cell)
@@ -343,6 +358,10 @@ func _show_action_menu() -> void:
 		{"id": "wait", "label": "대기"},
 	]
 
+	# 이동한 경우에만 되돌리기 버튼 추가
+	if _has_moved:
+		actions.append({"id": "undo_move", "label": "되돌리기"})
+
 	for action_info: Dictionary in actions:
 		var btn := Button.new()
 		btn.text = action_info["label"]
@@ -375,6 +394,8 @@ func _on_action_menu_pressed(action: String) -> void:
 			_execute_wait()
 		"wait":
 			_execute_wait()
+		"undo_move":
+			_undo_move()
 
 # ── 대상 선택 ──
 
@@ -401,6 +422,52 @@ func _cancel_target_select() -> void:
 	_state = TurnState.UNIT_MOVED
 	_show_action_menu()
 
+# ── 이동 되돌리기 ──
+
+## 유닛의 이동을 되돌리고 원래 위치로 복귀시킨다.
+## 행동(공격/스킬/아이템/대기)을 확정하기 전에만 가능하다.
+func _undo_move() -> void:
+	if _selected_unit == null or battle_map == null:
+		return
+	if not _has_moved:
+		return
+
+	var current_cell: Vector2i = _selected_unit.cell
+
+	# BattleMap 유닛 매핑을 원래 위치로 복원
+	battle_map.move_unit(current_cell, _original_cell)
+
+	# 유닛 위치를 즉시 원래 셀로 이동 (애니메이션 없이)
+	_selected_unit.cell = _original_cell
+	_selected_unit.position = GridSystem.cell_to_world(_original_cell)
+
+	# idle 애니메이션 복귀
+	if _selected_unit._sprite and _selected_unit._sprite.sprite_frames:
+		var idle_anim := "idle_%s" % _selected_unit.facing
+		if _selected_unit._sprite.sprite_frames.has_animation(idle_anim):
+			_selected_unit._sprite.play(idle_anim)
+
+	_has_moved = false
+
+	# 시그널 발신
+	EventBus.unit_move_undone.emit(_selected_unit.unit_id, current_cell, _original_cell)
+
+	# 하이라이트 정리 후 이동 범위 재표시, UNIT_SELECTED 상태로 복귀
+	battle_map.clear_highlights()
+
+	# 이동 범위 재계산 및 표시
+	if battle_map.grid:
+		_move_cells = battle_map.grid.get_movement_range(
+			_selected_unit.cell, _selected_unit.stats.get("mov", 0), _selected_unit.team
+		)
+		battle_map.show_movement_range(_move_cells)
+
+	_state = TurnState.UNIT_SELECTED
+	print("[TurnManager] %s 이동 되돌리기: (%d,%d) → (%d,%d)" % [
+		_selected_unit.unit_id, current_cell.x, current_cell.y,
+		_original_cell.x, _original_cell.y
+	])
+
 # ── 공격 실행 ──
 
 ## 공격을 실행한다 (데미지 계산 + 애니메이션 + 반격 처리, 코루틴)
@@ -420,7 +487,7 @@ func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
 
 	# 공격 히트 타이밍 대기 — 6프레임 중 3번째(중반)에 데미지 적용
 	# 6frames @ 8fps → 0.75s 총 재생 / 2 = 0.375s
-	await get_tree().create_timer(3.0 / 8.0).timeout
+	await get_tree().create_timer(BattleSpeed.apply(3.0 / 8.0)).timeout
 
 	# 물리 데미지 계산
 	var result: Dictionary = combat_calc.calc_physical_damage(
@@ -462,7 +529,7 @@ func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
 		print("[TurnManager] %s의 공격이 빗나감!" % attacker.unit_id)
 
 	# 공격 애니메이션 나머지 완료 대기 (남은 3프레임 분)
-	await get_tree().create_timer(3.0 / 8.0).timeout
+	await get_tree().create_timer(BattleSpeed.apply(3.0 / 8.0)).timeout
 
 	# 반격 처리 (방어자 생존 + 적중 + 사거리 내)
 	if defender.is_alive() and result["hit"]:
@@ -491,7 +558,7 @@ func _execute_counterattack(counter_attacker: BattleUnit, counter_target: Battle
 
 	# 반격 애니메이션 시작
 	counter_attacker.play_attack_anim()
-	await get_tree().create_timer(3.0 / 8.0).timeout
+	await get_tree().create_timer(BattleSpeed.apply(3.0 / 8.0)).timeout
 
 	# 반격 데미지 계산 (기본 공격, skill_mult 1.0)
 	var counter_result: Dictionary = combat_calc.calc_physical_damage(
@@ -524,7 +591,7 @@ func _execute_counterattack(counter_attacker: BattleUnit, counter_target: Battle
 		else:
 			counter_target.play_hit_anim()
 
-	await get_tree().create_timer(3.0 / 8.0).timeout
+	await get_tree().create_timer(BattleSpeed.apply(3.0 / 8.0)).timeout
 
 # ── 대기 ──
 
@@ -554,6 +621,7 @@ func _complete_action() -> void:
 	_selected_unit = null
 	_move_cells.clear()
 	_attack_cells.clear()
+	_has_moved = false
 
 	# 전투 종료 상태면 중단 (VCC가 이미 BATTLE_END 처리함)
 	if _state == TurnState.BATTLE_END:
@@ -837,7 +905,7 @@ func _execute_ai_unit_action(unit: BattleUnit) -> void:
 	EventBus.unit_action_completed.emit(unit.unit_id)
 
 	# 대기 (연출 간격)
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(BattleSpeed.apply(0.3)).timeout
 
 # ── 경험치 처리 ──
 

@@ -10,6 +10,8 @@ signal turn_started(phase: String, turn_number: int)
 signal turn_ended(phase: String, turn_number: int)
 ## 유닛 이동 완료
 signal unit_moved(unit_id: String, from: Vector2i, to: Vector2i)
+## 유닛 이동 되돌리기 (원래 위치로 복귀)
+signal unit_move_undone(unit_id: String, from: Vector2i, to: Vector2i)
 ## 유닛 행동 완료
 signal unit_action_completed(unit_id: String)
 ## 유닛 사망
@@ -73,6 +75,14 @@ signal cell_hovered(cell: Vector2i)
 ## 메뉴 열기/닫기
 signal menu_opened(menu_name: String)
 signal menu_closed(menu_name: String)
+## 적 위험 범위 토글
+signal danger_zone_toggled(enabled: bool)
+## 유닛 상세 정보 팝업 요청
+signal unit_info_requested(cell: Vector2i)
+## 턴 종료 요청 (확인 필요)
+signal end_turn_requested()
+## 턴 종료 확인 완료
+signal end_turn_confirmed()
 
 # ── 세이브/로드 시그널 ──
 

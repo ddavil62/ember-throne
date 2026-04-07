@@ -33,6 +33,18 @@ var _tests: Array[Dictionary] = [
 		"wait_frames": 60,
 		"setup": "new_game",
 	},
+	{
+		"name": "battle_scene",
+		"scene": "res://scenes/battle/battle_scene.tscn",
+		"wait_frames": 90,
+		"setup": "battle",
+	},
+	{
+		"name": "dialogue_scene",
+		"scene": "res://scenes/dialogue/dialogue_scene.tscn",
+		"wait_frames": 60,
+		"setup": "dialogue",
+	},
 ]
 
 # ── 내부 상태 ──
@@ -87,6 +99,10 @@ func _load_next() -> void:
 	var setup: String = test.get("setup", "")
 	if setup == "new_game":
 		_setup_new_game()
+	elif setup == "battle":
+		_setup_battle()
+	elif setup == "dialogue":
+		_setup_dialogue()
 
 	get_tree().change_scene_to_file(test.scene)
 	_frames = 0
@@ -103,6 +119,19 @@ func _setup_new_game() -> void:
 	var pm: Node = get_node("/root/PartyManager")
 	if pm.has_method("init_default_party"):
 		pm.init_default_party()
+
+## 전투 씬 진입을 위한 셋업 (battle_01)
+func _setup_battle() -> void:
+	_setup_new_game()
+	var gm: Node = get_node("/root/GameManager")
+	gm.current_battle_id = "battle_01"
+	gm.current_scene_id = "1-3"
+
+## 대화 씬 진입을 위한 셋업 (act1 첫 번째 씬)
+func _setup_dialogue() -> void:
+	_setup_new_game()
+	var gm: Node = get_node("/root/GameManager")
+	gm.current_scene_id = "1-1"
 
 # ── 캡처 및 비교 ──
 

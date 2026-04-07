@@ -347,7 +347,7 @@ func _update_character_buttons() -> void:
 				break
 
 		# 선택 여부
-		var is_selected := _selected_character.get("id", "") == char_id
+		var is_selected: bool = _selected_character.get("id", "") == char_id
 
 		if is_deployed:
 			btn.text = "%s (Lv.%d) [배치됨]" % [char_data.get("name_ko", "???"), char_data.get("level", 1)]

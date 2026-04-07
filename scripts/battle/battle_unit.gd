@@ -2,6 +2,10 @@
 class_name BattleUnit
 extends Node2D
 
+# class_name(SpriteLoader)은 에디터 없이 실행 시 클래스 레지스트리에 등록되지 않을 수 있으므로
+# preload로 명시적으로 참조하여 컴파일 오류를 방지한다.
+const SpriteLoader = preload("res://scripts/utils/sprite_loader.gd")
+
 # ── 상수 ──
 
 ## 이동 Tween 세그먼트당 소요 시간 (초)

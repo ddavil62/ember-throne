@@ -86,6 +86,9 @@ var _battle_exp_gained: Dictionary = {}
 ## 이번 전투에서 적 처치로 누적된 골드
 var _battle_gold_gained: int = 0
 
+## 이번 전투에서 사망한 플레이어 유닛 ID 추적 (벤치 EXP 제외용)
+var _battle_dead_player_ids: Dictionary = {}
+
 ## 승리/패배 조건 판별기
 var _vcc: VictoryConditionChecker = null
 
@@ -100,6 +103,9 @@ func _ready() -> void:
 	add_child(_vcc)
 	_vcc.victory_achieved.connect(_on_victory_achieved)
 	_vcc.defeat_achieved.connect(_on_defeat_achieved)
+
+	# 사망 유닛 추적 (벤치 EXP 오지급 방지)
+	EventBus.unit_died.connect(_on_unit_died_for_exp_tracking)
 
 ## BattleMap 시그널을 연결한다. battle_map 주입 후 호출해야 한다.
 func connect_battle_map() -> void:
@@ -116,6 +122,7 @@ func start_battle() -> void:
 	turn_number = 1
 	_battle_exp_gained.clear()
 	_battle_gold_gained = 0
+	_battle_dead_player_ids.clear()
 
 	# VCC 초기화 — 맵 데이터에서 승리/패배 조건 로드
 	if _vcc and battle_map:
@@ -875,17 +882,22 @@ func _apply_battle_exp() -> void:
 	if bench_exp > 0:
 		var pm: Node = _get_party_manager()
 		if pm:
-			# 전투 맵에 배치된 플레이어 유닛 ID 목록
+			# 전투 맵에 배치된 플레이어 유닛 ID 목록 (생존 유닛)
 			var active_ids: Dictionary = {}
 			var player_units: Array[BattleUnit] = _get_units_by_team("player")
 			for pu: BattleUnit in player_units:
 				active_ids[pu.unit_id] = true
 
 			# 파티 전체 멤버 중 전투에 참전하지 않은 유닛에 벤치 EXP 적용
+			# 사망한 플레이어 유닛은 벤치 유닛이 아니므로 제외한다
 			for member: Dictionary in pm.party:
 				var char_id: String = member.get("id", "")
-				if char_id != "" and not active_ids.has(char_id):
-					pm.gain_exp(char_id, bench_exp)
+				if char_id == "" or active_ids.has(char_id):
+					continue
+				# 전투 중 사망한 유닛은 벤치 EXP 대상에서 제외
+				if _battle_dead_player_ids.has(char_id):
+					continue
+				pm.gain_exp(char_id, bench_exp)
 
 	# 전투 클리어 보너스 EXP: 맵 rewards.exp_bonus > 0이면 참전 유닛 전체에 flat EXP 추가
 	if battle_map != null:
@@ -897,6 +909,24 @@ func _apply_battle_exp() -> void:
 				if bunit != null and bunit.team == "player":
 					exp_system.apply_exp(bunit, bonus_exp)
 			print("[TurnManager] 클리어 보너스 EXP: %d (참전 유닛 전체)" % bonus_exp)
+
+# ── 사망 유닛 추적 ──
+
+## 유닛 사망 시 플레이어 유닛이면 기록한다 (벤치 EXP 오지급 방지).
+## 전투 중 사망한 유닛이 맵에서 제거된 후 벤치 유닛으로 잘못 분류되지 않도록 한다.
+## @param unit_id 사망한 유닛 ID
+## @param _killer_id 처치한 유닛 ID (미사용)
+func _on_unit_died_for_exp_tracking(unit_id: String, _killer_id: String) -> void:
+	# 맵에서 유닛을 조회하여 플레이어 팀인지 확인 (시그널은 remove_unit 전에 발생)
+	if battle_map:
+		var unit: BattleUnit = battle_map.get_unit_by_id(unit_id)
+		if unit and unit.team == "player":
+			_battle_dead_player_ids[unit_id] = true
+			return
+	# 폴백: 맵에서 조회 불가 시 파티 매니저로 플레이어 유닛 여부 확인
+	var pm: Node = _get_party_manager()
+	if pm and pm.get_party_member(unit_id).size() > 0:
+		_battle_dead_player_ids[unit_id] = true
 
 # ── 유틸 ──
 

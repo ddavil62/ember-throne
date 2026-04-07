@@ -132,15 +132,17 @@ Phase 8: 출시 준비 (스토어, 마케팅, 빌드)
 
 | 작업 ID | 작업 | 관련 파일 | 예상 규모 |
 |---------|------|-----------|-----------|
-| 2-1 | **이동 되돌리기 (Undo Move)** — 행동 확정 전 이전 위치로 복귀 | turn_manager.gd, battle_unit.gd | M |
-| 2-2 | **전투 애니메이션 배속** — 1x/2x/스킵 토글 (옵션 저장) | battle_scene.gd, skill_executor.gd, vfx_player.gd | M |
-| 2-3 | **전투 로그 패널** — 최근 N개 행동 기록 표시 | 신규: battle_log.gd, battle_hud.gd | M |
-| 2-4 | **적 위험 범위 표시** — 모든 적의 공격 범위 합산 오버레이 (토글) | range_overlay.gd, grid_system.gd | S |
-| 2-5 | **유닛 정보 조회** — 적/아군 클릭 시 상세 스탯 팝업 | 신규: unit_info_popup.gd | S |
-| 2-6 | **지형 정보 팝업** — 커서 위치 지형 이름/효과 표시 | battle_hud.gd, terrain.json | S |
-| 2-7 | **턴 종료 확인** — 미행동 유닛 있을 때 "정말 종료?" 확인 | turn_manager.gd | S |
+| 2-1 | ~~이동 되돌리기 (Undo Move)~~ | turn_manager.gd, action_menu.gd | ✅ Esc키 + 메뉴 버튼, FSM UNIT_SELECTED로 복귀 |
+| 2-2 | ~~전투 애니메이션 배속~~ | battle_speed.gd(신규), battle_unit.gd, vfx_player.gd, cutin_overlay.gd | ✅ 1x/2x/스킵, Tab 토글, 옵션 저장 |
+| 2-3 | ~~전투 로그 패널~~ | battle_log.gd(신규), battle_hud.gd | ✅ EventBus 9시그널 구독, L키 토글, 색상 구분 |
+| 2-4 | ~~적 위험 범위 표시~~ | range_overlay.gd, battle_map.gd | ✅ R키 토글, 적 전체 이동+공격 범위 합산 |
+| 2-5 | ~~유닛 정보 조회~~ | battle_hud.gd, battle_map.gd | ✅ I키, 상세 스탯 팝업 |
+| 2-6 | ~~지형 정보 팝업~~ | battle_hud.gd, terrain.json | ✅ 커서 위치 지형 상시 표시 |
+| 2-7 | ~~턴 종료 확인~~ | turn_manager.gd, battle_hud.gd | ✅ 미행동 유닛 경고 대화상자 |
 
 **산출물**: 전투 플레이가 쾌적한 빌드
+
+> **Phase 2 완료**: 2026-04-08. 7개 항목 전체 완료.
 
 ---
 

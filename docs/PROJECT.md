@@ -59,7 +59,8 @@ ember-throne/
 | 턴 관리 | `scripts/battle/turn_manager.gd` | 플레이어/적 페이즈 전환 |
 | 그리드 시스템 | `scripts/battle/grid_system.gd` | 이동/공격 범위 계산 |
 | 전투 계산기 | `scripts/battle/combat_calculator.gd` | 데미지/명중/회피 공식 |
-| 경험치 시스템 | `scripts/battle/experience_system.gd` | EXP 공식 (level * 100) |
+| 경험치 시스템 | `scripts/battle/experience_system.gd` | EXP 공식 (level * 100), 벤치 EXP 계산 |
+| 파티 매니저 | `scripts/systems/party_manager.gd` | 파티 관리, gain_exp/레벨업, EXP 공식 (level * 100) |
 | 스킬 시스템 | `scripts/battle/skill_system.gd` | 스킬 실행/쿨다운 |
 | AI 컨트롤러 | `scripts/battle/ai/ai_controller.gd` | 적 AI 의사결정 |
 | 승리/패배 조건 | `scripts/battle/victory_condition_checker.gd` | JSON 기반 6종 조건 판별 (rout, escape, survive, unit_death, turn_limit, hp_threshold) |
@@ -81,7 +82,7 @@ ember-throne/
 | 승리/패배 조건 | 데이터 드리븐 6종 조건 판별 (VictoryConditionChecker), EventBus 연동 | 완료 |
 | 전투 UI | HUD, 액션 메뉴, 데미지 프리뷰, 범위 오버레이, 전투 결과 | 완료 |
 | 컷인 연출 | 스킬 컷인 오버레이 + VFX | 완료 |
-| 경험치/레벨업 | level * 100 공식, 레벨 차이 보정 | 완료 |
+| 경험치/레벨업 | level * 100 공식, 레벨 차이 보정, 벤치 유닛 50% EXP | 완료 |
 | 출격 편성 | 12인 중 8명 선택, 카엘 고정 | 완료 |
 | 대화 시스템 | 대화창, 선택지, CG 뷰어 | 완료 |
 | 스토리 매니저 | 4막 진행, 이벤트 트리거 | 완료 |
@@ -117,14 +118,17 @@ ember-throne/
 ## 알려진 제약사항
 
 - 캐릭터 합류 레벨(`data/characters/*.json`의 `join_level`)이 LEVEL-DESIGN.md 기획값과 5인 불일치 -- 별도 Coder 작업에서 JSON 일괄 갱신 예정
-- battle_XX.json의 일부 수치(적 레벨 상한, 난이도 등급)가 기획 문서와 차이 -- LEVEL-DESIGN.md 확정 후 JSON 동기화 예정
+- battle_XX.json 적 레벨은 LEVEL-DESIGN.md 기준으로 동기화 완료. 보상(gold) 수치는 Phase 2에서 갱신 예정
 - battle_34.json 보스전 페이즈가 2단계로 구현되어 있으나 기획은 3페이즈 -- 추후 구현 필요
 - VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완 -- 현재 배틀 데이터에 해당 케이스 없으나 별도 작업 필요
+- 전투 중 사망한 유닛이 벤치 유닛으로 분류되어 벤치 EXP를 받는 엣지케이스 -- 밸런스 영향 미미, 전투 EXP 시스템 확장 시 함께 수정 예정
+- 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈 -- 게임 플레이 루프 완성 전 별도 작업 필요
 
 ## 향후 계획
 
 - 캐릭터 합류 레벨 JSON 일괄 갱신 (LEVEL-DESIGN.md 기준)
-- battle_XX.json 밸런스 수치 동기화
+- battle_XX.json 보상(gold/item) 수치 동기화 (Phase 2)
+- 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
 - battle_34 3페이즈 보스전 구현
 - Steam 연동 (GodotSteam: 업적, 클라우드 세이브)
 - 스토어 페이지 에셋 준비

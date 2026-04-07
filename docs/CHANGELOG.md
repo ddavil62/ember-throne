@@ -2,6 +2,27 @@
 
 ## [미출시] - 2026-04-07
 
+### Changed (Phase 1 레벨 밸런스)
+- 35개 battle JSON enemy_placements 적 레벨을 LEVEL-DESIGN.md 기준으로 갱신
+  (Act 2: Lv7~13, Act 3: Lv14~22, Act 4: Lv22~28 범위로 상향)
+- party_manager.gd EXP 공식 통합: `100+(level-1)*10` → `level*100`
+  (experience_system.gd와 동일 공식, LEVEL-DESIGN.md 기준에 맞춤)
+- 벤치 유닛 EXP 활성화: 비참전 파티원이 참전 유닛 평균 50% EXP 획득
+  (PartyManager 연동, gain_exp() 경로로 레벨업 자동 처리)
+- tests/verify_battle_levels.js: battle JSON 레벨 자동 검증 스크립트 추가 (회귀 테스트용)
+
+#### Phase 1 상세
+- battle JSON 30개 수정, 5개(01, 17, 33, 34, 35)는 이미 목표 범위 일치로 미변경
+- 399적 전수 레벨 조정 (보스: 상한값, 미니보스: 조건부 상한/상한-1, support: 중간값, 일반: 균등 분포)
+- 스펙 대비 변경: 미니보스 레벨 할당을 보스 유무에 따라 조건부로 변경 (보스 없는 전투에서 미니보스가 상한값 담당)
+- 벤치 유닛 조회: 스펙의 `GameManager.get_party_members()` 대신 `_get_party_manager().party` 직접 접근으로 구현
+- QA MEDIUM 2건(사망 유닛 벤치 EXP 수령, 사망 유닛 참전 EXP 소실)은 후속 작업으로 분리
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-07-ember-throne-phase1-level-balance-spec.md`
+- 리포트: `.claude/specs/2026-04-07-ember-throne-phase1-1a-report.md`, `.claude/specs/2026-04-07-ember-throne-phase1-1bc-report.md`
+- QA: `.claude/specs/2026-04-07-ember-throne-phase1-level-balance-qa.md`
+
 ### Added
 - VictoryConditionChecker: JSON 기반 데이터 드리븐 승리/패배 조건 시스템
   - 6가지 조건 타입: rout, escape, survive/survive_turns, unit_death, turn_limit_exceeded, unit_hp_threshold

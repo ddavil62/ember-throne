@@ -212,13 +212,13 @@
           {
             "text_ko": "시원화 재점화 — 리넨의 불꽃을 시원화에 되돌린다.",
             "text_en": "Rekindle the Siwon Fire — Return Linen's flame to the Siwon Fire.",
-            "flag": "ending_a",
+            "flag": "ending_a_chosen",
             "next_scene": "4-8A"
           },
           {
             "text_ko": "불꽃의 분산 — 시원화를 여러 불꽃으로 나눈다.",
             "text_en": "Disperse the Flame — Split the Siwon Fire into many flames.",
-            "flag": "ending_b",
+            "flag": "ending_b_chosen",
             "next_scene": "4-8B"
           }
         ]

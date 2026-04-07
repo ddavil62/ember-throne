@@ -138,6 +138,15 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 		skills.append(s as String)
 
 	_update_health_bar()
+
+	# 스프라이트 로딩 시도 (플레이어 캐릭터)
+	var sid: String = char_data.get("sprite_id", unit_id)
+	var frames := SpriteLoader.load_sprite_frames(sid, false)
+	if frames != null and _sprite != null:
+		_sprite.sprite_frames = frames
+		_sprite.visible = true
+		_sprite.play("idle_south")
+
 	_setup_placeholder_visual()
 
 ## 적 데이터로 유닛 초기화
@@ -179,6 +188,15 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 		skills.append(s as String)
 
 	_update_health_bar()
+
+	# 스프라이트 로딩 시도 (적 유닛)
+	var sid: String = enemy_data.get("sprite_id", unit_id)
+	var frames := SpriteLoader.load_sprite_frames(sid, true)
+	if frames != null and _sprite != null:
+		_sprite.sprite_frames = frames
+		_sprite.visible = true
+		_sprite.play("idle_south")
+
 	_setup_placeholder_visual()
 
 # ── 이동 ──

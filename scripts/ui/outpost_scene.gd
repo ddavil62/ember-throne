@@ -4,9 +4,6 @@ extends Control
 
 # ── 상수 ──
 
-const COLOR_BG := Color(0.06, 0.05, 0.08, 1.0)
-const COLOR_TAB_ACTIVE := Color(0.25, 0.22, 0.18, 1.0)
-const COLOR_TAB_INACTIVE := Color(0.12, 0.12, 0.18, 1.0)
 const COLOR_ACCENT := Color(0.85, 0.55, 0.2, 1.0)
 const COLOR_TEXT := Color(0.9, 0.9, 0.85, 1.0)
 
@@ -21,7 +18,6 @@ var _inventory_screen: Control = null
 var _tab_party: Button = null
 var _tab_equip: Button = null
 var _tab_item: Button = null
-var _tab_back: Button = null
 
 ## 현재 활성 탭
 var _current_tab: String = "party"
@@ -31,9 +27,25 @@ var _current_tab: String = "party"
 func _ready() -> void:
 	anchors_preset = Control.PRESET_FULL_RECT
 
-	_party_screen = $PartyScreen
-	_equipment_screen = $EquipmentScreen
-	_inventory_screen = $InventoryScreen
+	# 하위 화면 생성 (class_name이 없으므로 preload)
+	var PartyScript := preload("res://scripts/ui/party_screen.gd")
+	var EquipScript := preload("res://scripts/ui/equipment_screen.gd")
+	var InvScript := preload("res://scripts/ui/inventory_screen.gd")
+
+	_party_screen = Control.new()
+	_party_screen.set_script(PartyScript)
+	_party_screen.name = "PartyScreen"
+	add_child(_party_screen)
+
+	_equipment_screen = Control.new()
+	_equipment_screen.set_script(EquipScript)
+	_equipment_screen.name = "EquipmentScreen"
+	add_child(_equipment_screen)
+
+	_inventory_screen = Control.new()
+	_inventory_screen.set_script(InvScript)
+	_inventory_screen.name = "InventoryScreen"
+	add_child(_inventory_screen)
 
 	_build_tab_bar()
 	_switch_tab("party")
@@ -65,11 +77,11 @@ func _build_tab_bar() -> void:
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tab_bar.add_child(spacer)
 
-	_tab_back = Button.new()
-	_tab_back.text = "월드맵"
-	_tab_back.custom_minimum_size = Vector2(120, 44)
-	_tab_back.pressed.connect(_return_to_world_map)
-	tab_bar.add_child(_tab_back)
+	var back_btn := Button.new()
+	back_btn.text = "월드맵"
+	back_btn.custom_minimum_size = Vector2(120, 44)
+	back_btn.pressed.connect(_return_to_world_map)
+	tab_bar.add_child(back_btn)
 
 	# 하위 화면들의 상단 여백 확보
 	for screen in [_party_screen, _equipment_screen, _inventory_screen]:

@@ -1,5 +1,5 @@
 ## @fileoverview 대화 씬 오케스트레이터. DialogueManager, DialogueBox, ChoicePanel,
-## CGViewer를 조합하고 register_ui로 연결한 뒤 대화를 시작한다.
+## CGViewer를 코드에서 생성하고 register_ui로 연결한 뒤 대화를 시작한다.
 extends Node
 
 # ── 노드 참조 ──
@@ -19,11 +19,22 @@ var _cg_viewer: Control = null
 # ── 초기화 ──
 
 func _ready() -> void:
-	# 자식 노드 참조 취득
-	_dialogue_manager = $DialogueManager
-	_dialogue_box = $DialogueBox
-	_choice_panel = $ChoicePanel
-	_cg_viewer = $CGViewer
+	# 노드 생성
+	_dialogue_manager = DialogueManagerClass.new()
+	_dialogue_manager.name = "DialogueManager"
+	add_child(_dialogue_manager)
+
+	_cg_viewer = CGViewerClass.new()
+	_cg_viewer.name = "CGViewer"
+	add_child(_cg_viewer)
+
+	_dialogue_box = DialogueBoxClass.new()
+	_dialogue_box.name = "DialogueBox"
+	add_child(_dialogue_box)
+
+	_choice_panel = ChoicePanelClass.new()
+	_choice_panel.name = "ChoicePanel"
+	add_child(_choice_panel)
 
 	# UI 등록 (의존성 주입)
 	_dialogue_manager.register_ui(_dialogue_box, _choice_panel, _cg_viewer)

@@ -3,9 +3,14 @@
 ## 의존성을 주입한 뒤 전투 플로우를 진행한다.
 extends Node
 
+# ── 상수 ──
+
+## BattleMap 씬 경로
+const BATTLE_MAP_SCENE_PATH := "res://scenes/battle/battle_map.tscn"
+
 # ── 노드 참조 ──
 
-## 전투 맵 (서브씬 인스턴스)
+## 전투 맵 (코드에서 인스턴스 생성)
 var _battle_map: Node2D = null
 
 ## 턴 매니저
@@ -26,28 +31,52 @@ var _skill_executor: SkillExecutor = null
 # ── 초기화 ──
 
 func _ready() -> void:
-	# 자식 노드 참조 취득
-	_battle_map = $BattleMap
-	_turn_manager = $TurnManager
-	_battle_hud = $BattleHUD
-	_deployment = $DeploymentScreen
-	_battle_result = $BattleResult
-	_skill_executor = $SkillExecutor
+	# 1) BattleMap 씬 로드 및 인스턴스 생성
+	var battle_map_res := load(BATTLE_MAP_SCENE_PATH)
+	if battle_map_res == null:
+		push_error("[BattleScene] BattleMap 씬 로드 실패: %s" % BATTLE_MAP_SCENE_PATH)
+		_return_to_world_map()
+		return
+	_battle_map = battle_map_res.instantiate()
+	add_child(_battle_map)
+	move_child(_battle_map, 0)  # 맵을 가장 아래(뒤)에 배치
 
-	# 의존성 주입
+	# 2) 하위 시스템 노드 생성
+	_turn_manager = TurnManager.new()
+	_turn_manager.name = "TurnManager"
+	add_child(_turn_manager)
+
+	_skill_executor = SkillExecutor.new()
+	_skill_executor.name = "SkillExecutor"
+	add_child(_skill_executor)
+
+	_battle_hud = BattleHUD.new()
+	_battle_hud.name = "BattleHUD"
+	_battle_hud.visible = false  # 배치 단계에서는 숨김
+	add_child(_battle_hud)
+
+	_deployment = DeploymentScreen.new()
+	_deployment.name = "DeploymentScreen"
+	add_child(_deployment)
+
+	_battle_result = BattleResult.new()
+	_battle_result.name = "BattleResult"
+	add_child(_battle_result)
+
+	# 3) 의존성 주입
 	_turn_manager.battle_map = _battle_map
 	_turn_manager.connect_battle_map()
 	_battle_hud.battle_map = _battle_map
-	# SkillExecutor는 _ready()에서 자동 초기화 (CutinOverlay, VfxPlayer 자동 생성)
+	# SkillExecutor는 _ready()에서 CutinOverlay, VfxPlayer 자동 생성
 
-	# 시그널 연결
+	# 4) 시그널 연결
 	_deployment.deployment_finished.connect(_on_deployment_finished)
 	_deployment.deployment_cancelled.connect(_on_deployment_cancelled)
 	_battle_result.result_confirmed.connect(_on_result_confirmed)
 	_battle_result.retry_requested.connect(_on_retry_requested)
 	_battle_result.return_to_map.connect(_on_return_to_map)
 
-	# 전투 데이터 로드 및 배치 화면 시작
+	# 5) 전투 데이터 로드 및 배치 화면 시작
 	_start_battle()
 
 # ── 전투 플로우 ──
@@ -67,18 +96,25 @@ func _start_battle() -> void:
 	# 맵 로드
 	_battle_map.load_map(battle_id)
 
-	# 배치 화면 초기화
+	# 배치 데이터 준비
 	var dm: Node = get_node("/root/DataManager")
 	var map_data: Dictionary = dm.get_map(battle_id)
 	var deploy_cells: Array[Vector2i] = []
-	for cell_arr in map_data.get("deploy_cells", []):
+	# 맵 JSON의 deploy_zones 필드에서 배치 가능 셀 추출
+	for cell_arr in map_data.get("deploy_zones", []):
 		if cell_arr is Array and cell_arr.size() >= 2:
 			deploy_cells.append(Vector2i(int(cell_arr[0]), int(cell_arr[1])))
 
+	# 파티 데이터
 	var pm: Node = get_node("/root/PartyManager")
-	var party: Array[Dictionary] = pm.get_active_party_data() if pm.has_method("get_active_party_data") else []
+	var party: Array[Dictionary] = pm.get_active_party()
 	var deploy_limit: int = map_data.get("deploy_count", 8)
 
+	print("[BattleScene] 배치 구역: %d개, 파티: %d명, 제한: %d" % [
+		deploy_cells.size(), party.size(), deploy_limit
+	])
+
+	# 배치 화면 시작
 	_deployment.setup(_battle_map, deploy_cells, party, deploy_limit)
 	_deployment.visible = true
 	_battle_hud.visible = false

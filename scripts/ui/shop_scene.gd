@@ -1,16 +1,23 @@
-## @fileoverview 상점 씬 오케스트레이터. shop_screen.gd에 shop_id와 act를 주입하고
-## 월드맵 복귀 처리를 담당한다.
+## @fileoverview 상점 씬 오케스트레이터. shop_screen.gd를 코드에서 생성하고
+## shop_id와 act를 주입한다. 월드맵 복귀 처리를 담당한다.
 extends Control
 
 # ── 노드 참조 ──
 
 ## 실제 상점 화면
-@onready var _shop_screen: Control = $ShopScreen
+var _shop_screen: Control = null
 
 # ── 초기화 ──
 
 func _ready() -> void:
 	anchors_preset = Control.PRESET_FULL_RECT
+
+	# 상점 화면 생성 (shop_screen.gd는 class_name이 없으므로 preload)
+	var ShopScreenScript := preload("res://scripts/ui/shop_screen.gd")
+	_shop_screen = Control.new()
+	_shop_screen.set_script(ShopScreenScript)
+	_shop_screen.name = "ShopScreen"
+	add_child(_shop_screen)
 
 	# GameManager에서 현재 노드 정보 취득
 	var gm: Node = get_node("/root/GameManager")
@@ -23,6 +30,7 @@ func _ready() -> void:
 	var act: String = "act_%d" % node_data.get("act", 1)
 
 	print("[ShopScene] 상점 초기화: shop_id=%s, act=%s" % [shop_id, act])
+	# _shop_screen._ready()에서 _build_ui()가 이미 호출됨 → init으로 데이터 주입
 	_shop_screen.init(shop_id, act)
 
 	# EventBus 메뉴 닫기 시그널 수신

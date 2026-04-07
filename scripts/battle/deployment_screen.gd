@@ -82,22 +82,23 @@ func setup(battle_map: Node2D, deploy_cells: Array[Vector2i], party: Array[Dicti
 func _build_ui() -> void:
 	layer = 10
 
+	# 뷰포트 크기를 기준으로 패널 사이즈를 명시적으로 설정한다.
+	# CanvasLayer 직속 Control에 anchor_bottom=1.0을 쓰면 높이가 0으로
+	# 계산되어 클릭 hitbox가 사라지는 버그가 있으므로 직접 지정한다.
+	var vp_size: Vector2 = get_viewport().get_visible_rect().size
+
 	# 왼쪽 패널 (캐릭터 목록)
 	_panel = Panel.new()
 	_panel.name = "DeployPanel"
-	_panel.custom_minimum_size = Vector2(280, 0)
-	_panel.anchors_preset = Control.PRESET_LEFT_WIDE
-	_panel.anchor_right = 0.0
-	_panel.offset_right = 280.0
+	_panel.position = Vector2(0, 0)
+	_panel.size = Vector2(280, vp_size.y)
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.1, 0.1, 0.15, 0.9)
 	_panel.add_theme_stylebox_override("panel", style)
 	add_child(_panel)
 
 	var margin := MarginContainer.new()
-	margin.anchors_preset = Control.PRESET_FULL_RECT
-	margin.anchor_right = 1.0
-	margin.anchor_bottom = 1.0
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	margin.add_theme_constant_override("margin_left", 10)
 	margin.add_theme_constant_override("margin_right", 10)
 	margin.add_theme_constant_override("margin_top", 10)

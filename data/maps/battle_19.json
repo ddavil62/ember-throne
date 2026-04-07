@@ -19,16 +19,16 @@
     {"type": "turn_limit_exceeded", "turn_limit": 3, "description_ko": "3턴 내 도달 실패"}
   ],
   "enemy_placements": [
-    {"enemy_id": "lucid_agent", "level": 13, "position": [8, 3], "ai_override": null},
-    {"enemy_id": "lucid_agent", "level": 13, "position": [10, 5], "ai_override": null},
-    {"enemy_id": "lucid_agent", "level": 13, "position": [6, 4], "ai_override": null},
-    {"enemy_id": "lucid_agent", "level": 13, "position": [13, 6], "ai_override": null},
-    {"enemy_id": "secret_police_elite", "level": 13, "position": [9, 2], "ai_override": null},
-    {"enemy_id": "secret_police_elite", "level": 13, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "secret_police_elite", "level": 13, "position": [7, 6], "ai_override": null},
-    {"enemy_id": "trap_specialist", "level": 13, "position": [10, 3], "ai_override": null},
-    {"enemy_id": "secret_police_captain", "level": 14, "position": [12, 2], "ai_override": "miniboss"},
-    {"enemy_id": "lucid", "level": 16, "position": [13, 1], "ai_override": "retreat"}
+    {"enemy_id": "lucid_agent", "level": 14, "position": [8, 3], "ai_override": null},
+    {"enemy_id": "lucid_agent", "level": 14, "position": [10, 5], "ai_override": null},
+    {"enemy_id": "lucid_agent", "level": 14, "position": [6, 4], "ai_override": null},
+    {"enemy_id": "lucid_agent", "level": 14, "position": [13, 6], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 15, "position": [9, 2], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 15, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "secret_police_elite", "level": 15, "position": [7, 6], "ai_override": null},
+    {"enemy_id": "trap_specialist", "level": 15, "position": [10, 3], "ai_override": null},
+    {"enemy_id": "secret_police_captain", "level": 16, "position": [12, 2], "ai_override": "miniboss"},
+    {"enemy_id": "lucid", "level": 15, "position": [13, 1], "ai_override": "retreat"}
   ],
   "terrain_layout": "ascalon_prison",
   "tileset_id": "ascalon",

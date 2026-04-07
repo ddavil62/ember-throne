@@ -20,11 +20,11 @@
   "enemy_placements": [
     {"enemy_id": "ash_beast_small", "level": 3, "position": [9, 2], "ai_override": null},
     {"enemy_id": "ash_beast_small", "level": 3, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 3, "position": [7, 5], "ai_override": null},
-    {"enemy_id": "ash_beast_small", "level": 3, "position": [13, 3], "ai_override": null},
+    {"enemy_id": "ash_beast_small", "level": 4, "position": [7, 5], "ai_override": null},
+    {"enemy_id": "ash_beast_small", "level": 4, "position": [13, 3], "ai_override": null},
     {"enemy_id": "ash_beast_medium", "level": 4, "position": [10, 1], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 4, "position": [8, 6], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 4, "position": [12, 5], "ai_override": null}
+    {"enemy_id": "ash_beast_medium", "level": 5, "position": [8, 6], "ai_override": null},
+    {"enemy_id": "ash_beast_medium", "level": 5, "position": [12, 5], "ai_override": null}
   ],
   "terrain_layout": "plain_ash",
   "tileset_id": "irhen",

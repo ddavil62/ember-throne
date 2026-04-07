@@ -18,14 +18,14 @@
     {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
   ],
   "enemy_placements": [
-    {"enemy_id": "royal_guard_soldier", "level": 8, "position": [10, 2], "ai_override": null},
-    {"enemy_id": "royal_guard_soldier", "level": 8, "position": [12, 4], "ai_override": null},
-    {"enemy_id": "royal_guard_soldier", "level": 8, "position": [8, 5], "ai_override": null},
-    {"enemy_id": "royal_guard_soldier", "level": 8, "position": [11, 6], "ai_override": null},
-    {"enemy_id": "royal_guard_knight", "level": 9, "position": [13, 1], "ai_override": null},
-    {"enemy_id": "royal_guard_knight", "level": 9, "position": [9, 3], "ai_override": null},
-    {"enemy_id": "royal_guard_mage", "level": 8, "position": [12, 2], "ai_override": null},
-    {"enemy_id": "royal_guard_mage", "level": 8, "position": [7, 4], "ai_override": null}
+    {"enemy_id": "royal_guard_soldier", "level": 11, "position": [10, 2], "ai_override": null},
+    {"enemy_id": "royal_guard_soldier", "level": 11, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "royal_guard_soldier", "level": 12, "position": [8, 5], "ai_override": null},
+    {"enemy_id": "royal_guard_soldier", "level": 12, "position": [11, 6], "ai_override": null},
+    {"enemy_id": "royal_guard_knight", "level": 12, "position": [13, 1], "ai_override": null},
+    {"enemy_id": "royal_guard_knight", "level": 12, "position": [9, 3], "ai_override": null},
+    {"enemy_id": "royal_guard_mage", "level": 13, "position": [12, 2], "ai_override": null},
+    {"enemy_id": "royal_guard_mage", "level": 13, "position": [7, 4], "ai_override": null}
   ],
   "terrain_layout": "crowfell_narrow",
   "tileset_id": "crowfell",

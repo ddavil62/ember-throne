@@ -21,16 +21,16 @@
     {"type": "unit_death", "unit_id": "linen", "description_ko": "리넨 전사"}
   ],
   "enemy_placements": [
-    {"enemy_id": "conscript_cavalry", "level": 3, "position": [5, 3], "ai_override": "pursue"},
-    {"enemy_id": "conscript_cavalry", "level": 3, "position": [8, 12], "ai_override": "pursue"},
-    {"enemy_id": "conscript_cavalry", "level": 3, "position": [3, 6], "ai_override": "pursue"},
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [6, 5], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [7, 10], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [10, 7], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [12, 4], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 3, "position": [9, 2], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 3, "position": [11, 11], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 3, "position": [14, 6], "ai_override": null}
+    {"enemy_id": "conscript_cavalry", "level": 4, "position": [5, 3], "ai_override": "pursue"},
+    {"enemy_id": "conscript_cavalry", "level": 4, "position": [8, 12], "ai_override": "pursue"},
+    {"enemy_id": "conscript_cavalry", "level": 4, "position": [3, 6], "ai_override": "pursue"},
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [7, 10], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [10, 7], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 6, "position": [9, 2], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 6, "position": [11, 11], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 6, "position": [14, 6], "ai_override": null}
   ],
   "terrain_layout": "irhen_road",
   "tileset_id": "irhen",

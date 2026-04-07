@@ -18,17 +18,17 @@
     {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
   ],
   "enemy_placements": [
-    {"enemy_id": "morgan_elite_guard", "level": 15, "position": [8, 3], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 15, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 15, "position": [14, 3], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 15, "position": [9, 6], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 15, "position": [16, 5], "ai_override": null},
-    {"enemy_id": "morgan_elite_guard", "level": 15, "position": [6, 5], "ai_override": null},
-    {"enemy_id": "morgan_elite_mage", "level": 16, "position": [10, 2], "ai_override": null},
-    {"enemy_id": "morgan_elite_mage", "level": 16, "position": [13, 5], "ai_override": null},
-    {"enemy_id": "morgan_elite_mage", "level": 16, "position": [7, 4], "ai_override": null},
-    {"enemy_id": "morgan_elite_knight", "level": 16, "position": [12, 1], "ai_override": null},
-    {"enemy_id": "morgan_elite_knight", "level": 16, "position": [15, 4], "ai_override": null}
+    {"enemy_id": "morgan_elite_guard", "level": 18, "position": [8, 3], "ai_override": null},
+    {"enemy_id": "morgan_elite_guard", "level": 18, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "morgan_elite_guard", "level": 18, "position": [14, 3], "ai_override": null},
+    {"enemy_id": "morgan_elite_guard", "level": 19, "position": [9, 6], "ai_override": null},
+    {"enemy_id": "morgan_elite_guard", "level": 19, "position": [16, 5], "ai_override": null},
+    {"enemy_id": "morgan_elite_guard", "level": 19, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "morgan_elite_mage", "level": 19, "position": [10, 2], "ai_override": null},
+    {"enemy_id": "morgan_elite_mage", "level": 19, "position": [13, 5], "ai_override": null},
+    {"enemy_id": "morgan_elite_mage", "level": 20, "position": [7, 4], "ai_override": null},
+    {"enemy_id": "morgan_elite_knight", "level": 20, "position": [12, 1], "ai_override": null},
+    {"enemy_id": "morgan_elite_knight", "level": 20, "position": [15, 4], "ai_override": null}
   ],
   "npc_allies": [
     {"unit_id": "conscript_defector", "level": 14, "position": [18, 8], "ai_override": "support_flank"},

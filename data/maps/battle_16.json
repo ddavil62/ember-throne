@@ -20,12 +20,12 @@
   "enemy_placements": [
     {"enemy_id": "ash_beast_medium", "level": 9, "position": [8, 2], "ai_override": null},
     {"enemy_id": "ash_beast_medium", "level": 9, "position": [11, 4], "ai_override": null},
-    {"enemy_id": "ash_beast_medium", "level": 9, "position": [6, 5], "ai_override": null},
+    {"enemy_id": "ash_beast_medium", "level": 10, "position": [6, 5], "ai_override": null},
     {"enemy_id": "ash_beast_large", "level": 10, "position": [10, 1], "ai_override": null},
     {"enemy_id": "ash_beast_large", "level": 10, "position": [13, 3], "ai_override": null},
-    {"enemy_id": "ash_venomite", "level": 9, "position": [7, 3], "ai_override": null},
-    {"enemy_id": "ash_venomite", "level": 9, "position": [12, 5], "ai_override": null},
-    {"enemy_id": "ash_spirit", "level": 10, "position": [9, 2], "ai_override": "priority_target"}
+    {"enemy_id": "ash_venomite", "level": 10, "position": [7, 3], "ai_override": null},
+    {"enemy_id": "ash_venomite", "level": 11, "position": [12, 5], "ai_override": null},
+    {"enemy_id": "ash_spirit", "level": 11, "position": [9, 2], "ai_override": "priority_target"}
   ],
   "terrain_layout": "ashland_erosion",
   "tileset_id": "ashland",

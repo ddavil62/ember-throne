@@ -21,12 +21,12 @@
   "enemy_placements": [
     {"enemy_id": "conscript_footsoldier", "level": 2, "position": [10, 2], "ai_override": null},
     {"enemy_id": "conscript_footsoldier", "level": 2, "position": [12, 3], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 2, "position": [8, 4], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 2, "position": [13, 1], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 2, "position": [11, 5], "ai_override": null},
-    {"enemy_id": "conscript_lancer", "level": 2, "position": [9, 3], "ai_override": null},
-    {"enemy_id": "conscript_lancer", "level": 2, "position": [12, 6], "ai_override": null},
-    {"enemy_id": "smuggler", "level": 3, "position": [7, 1], "ai_override": "neutral_then_hostile"}
+    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [8, 4], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 3, "position": [13, 1], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 3, "position": [11, 5], "ai_override": null},
+    {"enemy_id": "conscript_lancer", "level": 3, "position": [9, 3], "ai_override": null},
+    {"enemy_id": "conscript_lancer", "level": 4, "position": [12, 6], "ai_override": null},
+    {"enemy_id": "smuggler", "level": 4, "position": [7, 1], "ai_override": "neutral_then_hostile"}
   ],
   "terrain_layout": "belmar_docks",
   "tileset_id": "belmar",

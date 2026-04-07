@@ -21,10 +21,10 @@
   "enemy_placements": [
     {"enemy_id": "alley_thug", "level": 2, "position": [6, 2], "ai_override": null},
     {"enemy_id": "alley_thug", "level": 2, "position": [9, 3], "ai_override": null},
-    {"enemy_id": "alley_thug", "level": 2, "position": [11, 4], "ai_override": null},
+    {"enemy_id": "alley_thug", "level": 3, "position": [11, 4], "ai_override": null},
     {"enemy_id": "alley_thug", "level": 3, "position": [13, 2], "ai_override": null},
-    {"enemy_id": "rampaging_smuggler", "level": 3, "position": [8, 1], "ai_override": null},
-    {"enemy_id": "rampaging_smuggler", "level": 3, "position": [12, 5], "ai_override": null}
+    {"enemy_id": "rampaging_smuggler", "level": 4, "position": [8, 1], "ai_override": null},
+    {"enemy_id": "rampaging_smuggler", "level": 4, "position": [12, 5], "ai_override": null}
   ],
   "terrain_layout": "belmar_alley",
   "tileset_id": "belmar",

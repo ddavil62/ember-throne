@@ -25,9 +25,9 @@
     {"enemy_id": "ash_beast_large", "level": 17, "position": [13, 3], "ai_override": null},
     {"enemy_id": "ash_knight", "level": 17, "position": [9, 3], "ai_override": null},
     {"enemy_id": "ash_knight", "level": 17, "position": [12, 5], "ai_override": null},
-    {"enemy_id": "ash_spirit", "level": 17, "position": [7, 4], "ai_override": null},
-    {"enemy_id": "ash_spore", "level": 16, "position": [5, 2], "ai_override": "summoner"},
-    {"enemy_id": "ash_spore", "level": 16, "position": [14, 3], "ai_override": "summoner"}
+    {"enemy_id": "ash_spirit", "level": 18, "position": [7, 4], "ai_override": null},
+    {"enemy_id": "ash_spore", "level": 18, "position": [5, 2], "ai_override": "summoner"},
+    {"enemy_id": "ash_spore", "level": 18, "position": [14, 3], "ai_override": "summoner"}
   ],
   "terrain_layout": "ash_sea_border",
   "tileset_id": "ashland",

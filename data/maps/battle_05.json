@@ -18,13 +18,13 @@
     {"type": "unit_death", "unit_id": "kael", "description_ko": "카엘 전사"}
   ],
   "enemy_placements": [
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [10, 3], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [12, 5], "ai_override": null},
-    {"enemy_id": "conscript_footsoldier", "level": 3, "position": [8, 7], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 3, "position": [13, 2], "ai_override": null},
-    {"enemy_id": "conscript_archer", "level": 3, "position": [11, 8], "ai_override": null},
-    {"enemy_id": "conscript_mage", "level": 4, "position": [12, 4], "ai_override": null},
-    {"enemy_id": "conscript_captain", "level": 5, "position": [11, 1], "ai_override": "miniboss"}
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [10, 3], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [12, 5], "ai_override": null},
+    {"enemy_id": "conscript_footsoldier", "level": 5, "position": [8, 7], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 6, "position": [13, 2], "ai_override": null},
+    {"enemy_id": "conscript_archer", "level": 6, "position": [11, 8], "ai_override": null},
+    {"enemy_id": "conscript_mage", "level": 6, "position": [12, 4], "ai_override": null},
+    {"enemy_id": "conscript_captain", "level": 7, "position": [11, 1], "ai_override": "miniboss"}
   ],
   "terrain_layout": "silvaren_entrance",
   "tileset_id": "silvaren",

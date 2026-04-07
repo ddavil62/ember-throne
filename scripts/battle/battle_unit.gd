@@ -150,8 +150,8 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 		_sprite.sprite_frames = frames
 		_sprite.visible = true
 		_sprite.play("idle_south")
-
-	_setup_placeholder_visual()
+	else:
+		_setup_placeholder_visual()
 
 ## 적 데이터로 유닛 초기화
 ## @param enemy_data DataManager.get_enemy()에서 가져온 적 Dictionary
@@ -200,8 +200,8 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 		_sprite.sprite_frames = frames
 		_sprite.visible = true
 		_sprite.play("idle_south")
-
-	_setup_placeholder_visual()
+	else:
+		_setup_placeholder_visual()
 
 # ── 이동 ──
 

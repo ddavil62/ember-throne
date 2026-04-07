@@ -51,14 +51,15 @@ static func load_sprite_frames(sprite_id: String, is_enemy: bool = false) -> Spr
 	var resolved_id: String = sprite_id
 	var base_path: String = _build_base_path(resolved_id, is_enemy)
 
-	# rotation 디렉토리 존재 확인 (south.png 필수)
-	var south_path: String = base_path + "/rotations/south.png"
+	# animations/breathing-idle/south/frame_000.png 존재 여부로 유효성 확인
+	# (rotations/ 단일 PNG 구조는 사용하지 않음 — PixelLab 출력은 animations/ 구조)
+	var south_path: String = base_path + "/animations/breathing-idle/south/frame_000.png"
 	if not ResourceLoader.exists(south_path):
 		# 별칭으로 재시도
 		if SPRITE_ALIASES.has(sprite_id):
 			resolved_id = SPRITE_ALIASES[sprite_id]
 			base_path = _build_base_path(resolved_id, is_enemy)
-			south_path = base_path + "/rotations/south.png"
+			south_path = base_path + "/animations/breathing-idle/south/frame_000.png"
 			if not ResourceLoader.exists(south_path):
 				return null
 		else:
@@ -69,32 +70,11 @@ static func load_sprite_frames(sprite_id: String, is_enemy: bool = false) -> Spr
 	if frames.has_animation("default"):
 		frames.remove_animation("default")
 
-	# 8방향 idle 로딩
-	var loaded_any: bool = false
-	for dir_info: Dictionary in DIRECTIONS:
-		var file_name: String = dir_info["file"]
-		var anim_suffix: String = dir_info["anim"]
-		var anim_name: String = "idle_" + anim_suffix
-
-		var tex_path: String = base_path + "/rotations/" + file_name + ".png"
-		if not ResourceLoader.exists(tex_path):
-			continue
-
-		var tex: Texture2D = load(tex_path) as Texture2D
-		if tex == null:
-			continue
-
-		frames.add_animation(anim_name)
-		frames.set_animation_speed(anim_name, IDLE_FPS)
-		frames.set_animation_loop(anim_name, true)
-		frames.add_frame(anim_name, tex)
-		loaded_any = true
-
-	if not loaded_any:
-		return null
-
-	# 멀티프레임 애니메이션 로딩 (animations/ 디렉토리)
+	# 모든 애니메이션을 animations/ 디렉토리에서 로딩
 	_load_animations(frames, base_path)
+
+	if frames.get_animation_names().size() == 0:
+		return null
 
 	return frames
 
@@ -124,7 +104,7 @@ static func _load_animations(frames: SpriteFrames, base_path: String) -> void:
 
 	# 알려진 애니메이션 목록 (PixelLab 출력 기준)
 	var known_anims: Array[Dictionary] = [
-		{"folder": "breathing-idle", "prefix": "breathe", "fps": IDLE_FPS},
+		{"folder": "breathing-idle", "prefix": "idle", "fps": IDLE_FPS},
 		{"folder": "walk", "prefix": "walk", "fps": DEFAULT_FPS},
 		{"folder": "cross-punch", "prefix": "attack", "fps": DEFAULT_FPS},
 		{"folder": "fireball", "prefix": "cast", "fps": DEFAULT_FPS},

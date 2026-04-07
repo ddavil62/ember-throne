@@ -50,6 +50,8 @@ var _window_mode_btn: OptionButton
 var _resolution_btn: OptionButton
 ## 언어 드롭다운
 var _language_btn: OptionButton
+## 전투 배속 드롭다운
+var _battle_speed_btn: OptionButton
 
 # ── 초기화 ──
 
@@ -186,6 +188,18 @@ func _build_ui() -> void:
 	_language_btn.item_selected.connect(_on_language_changed)
 	lang_row.add_child(_language_btn)
 
+	# 전투 애니메이션 속도
+	var speed_row := _create_setting_row("전투 배속")
+	settings_vbox.add_child(speed_row)
+	_battle_speed_btn = OptionButton.new()
+	_battle_speed_btn.add_item("1x (기본)", 0)
+	_battle_speed_btn.add_item("2x (빠르게)", 1)
+	_battle_speed_btn.add_item("스킵 (즉시)", 2)
+	_battle_speed_btn.selected = BattleSpeed.get_speed_index()
+	_battle_speed_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_battle_speed_btn.item_selected.connect(_on_battle_speed_changed)
+	speed_row.add_child(_battle_speed_btn)
+
 	# ── 디스플레이 섹션 ──
 	_add_section_label(settings_vbox, "디스플레이")
 
@@ -286,6 +300,7 @@ func save_settings() -> void:
 	_config.set_value("game", "text_speed", _text_speed_btn.selected)
 	var locale: String = "ko" if _language_btn.selected == 0 else "en"
 	_config.set_value("game", "language", locale)
+	_config.set_value("battle", "speed_index", _battle_speed_btn.selected)
 
 	var err := _config.save(SETTINGS_PATH)
 	if err != OK:
@@ -322,6 +337,10 @@ func load_settings() -> void:
 	_text_speed_btn.selected = clampi(ts_idx, 0, 2)
 	_language_btn.selected = 0 if locale == "ko" else 1
 
+	# 전투 배속
+	var speed_idx: int = _config.get_value("battle", "speed_index", 0)
+	_battle_speed_btn.selected = clampi(speed_idx, 0, 2)
+
 	# 로드한 값을 시스템에 적용
 	_apply_all_current()
 
@@ -333,6 +352,7 @@ func _apply_all_current() -> void:
 	_apply_resolution(_resolution_btn.selected)
 	_apply_text_speed(_text_speed_btn.selected)
 	_apply_language(_language_btn.selected)
+	_apply_battle_speed(_battle_speed_btn.selected)
 
 # ── 실시간 적용 함수 ──
 
@@ -429,6 +449,16 @@ func _on_resolution_changed(idx: int) -> void:
 func _on_language_changed(idx: int) -> void:
 	_apply_language(idx)
 
+## 전투 배속 변경 시 호출. BattleSpeed에 즉시 반영한다.
+## @param idx 선택된 인덱스 (0=1x, 1=2x, 2=스킵)
+func _on_battle_speed_changed(idx: int) -> void:
+	_apply_battle_speed(idx)
+
+## 전투 배속을 BattleSpeed에 반영한다.
+## @param idx 속도 인덱스
+func _apply_battle_speed(idx: int) -> void:
+	BattleSpeed.set_speed_index(idx)
+
 ## 초기화 버튼: 모든 설정을 기본값으로 복원한다.
 func _on_reset_pressed() -> void:
 	_bgm_slider.value = 80
@@ -437,6 +467,7 @@ func _on_reset_pressed() -> void:
 	_window_mode_btn.selected = 0
 	_resolution_btn.selected = 0
 	_language_btn.selected = 0
+	_battle_speed_btn.selected = 0
 	_apply_all_current()
 	print("[OptionsScreen] 설정 초기화")
 

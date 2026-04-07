@@ -300,7 +300,8 @@ func move_to(target_cell: Vector2i, path: Array[Vector2i]) -> void:
 		if _sprite.sprite_frames.has_animation(walk_anim):
 			_sprite.play(walk_anim)
 
-	# 경로 포인트를 순회하며 Tween 이동
+	# 경로 포인트를 순회하며 Tween 이동 (배속 적용)
+	var seg_dur: float = BattleSpeed.apply(MOVE_SEGMENT_DURATION)
 	var tween := create_tween()
 	for i: int in range(1, path.size()):
 		var world_pos := GridSystem.cell_to_world(path[i])
@@ -309,7 +310,7 @@ func move_to(target_cell: Vector2i, path: Array[Vector2i]) -> void:
 		var next_cell: Vector2i = path[i]
 		var dir := GridSystem.get_direction(prev_cell, next_cell)
 		tween.tween_callback(_set_facing_walk.bind(dir))
-		tween.tween_property(self, "position", world_pos, MOVE_SEGMENT_DURATION)
+		tween.tween_property(self, "position", world_pos, seg_dur)
 
 	await tween.finished
 
@@ -363,7 +364,7 @@ func play_attack_anim() -> void:
 	_sprite.play(anim)
 	var frames_n := _sprite.sprite_frames.get_frame_count(anim)
 	var fps: float = _sprite.sprite_frames.get_animation_speed(anim)
-	await get_tree().create_timer(float(frames_n) / fps).timeout
+	await get_tree().create_timer(BattleSpeed.apply(float(frames_n) / fps)).timeout
 	if is_instance_valid(_sprite) and _sprite.animation == anim:
 		_sprite.play("idle_%s" % facing)
 
@@ -378,7 +379,7 @@ func play_hit_anim() -> void:
 	_sprite.play(anim)
 	var frames_n := _sprite.sprite_frames.get_frame_count(anim)
 	var fps: float = _sprite.sprite_frames.get_animation_speed(anim)
-	await get_tree().create_timer(float(frames_n) / fps).timeout
+	await get_tree().create_timer(BattleSpeed.apply(float(frames_n) / fps)).timeout
 	if is_instance_valid(_sprite) and _sprite.animation == anim:
 		_sprite.play("idle_%s" % facing)
 
@@ -392,8 +393,12 @@ func play_death_anim() -> void:
 		anim = "death_south"  # 방향별 애니메이션 없을 때 fallback
 		if not _sprite.sprite_frames.has_animation(anim):
 			return
+	# 배속 적용 (speed_scale은 애니메이션 재생 속도 배율)
+	var speed_div: float = BattleSpeed.SPEED_DIVISORS[BattleSpeed.get_speed_index()]
+	_sprite.speed_scale = speed_div
 	_sprite.play(anim)
 	await _sprite.animation_finished
+	_sprite.speed_scale = 1.0
 
 ## 피해를 입힌다
 ## @param amount 피해량

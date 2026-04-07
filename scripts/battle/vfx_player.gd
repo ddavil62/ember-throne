@@ -95,24 +95,24 @@ func _setup_dim_layer() -> void:
 ## @param world_pos 이펙트 표시 월드 좌표
 ## @param tier 등급 문자열 ("S", "A", "B", "C")
 func play_effect(effect_id: String, world_pos: Vector2, tier: String) -> void:
-	var duration: float = TIER_DURATION.get(tier, 1.0)
+	var duration: float = BattleSpeed.apply(TIER_DURATION.get(tier, 1.0))
 
-	# 등급별 추가 연출
+	# 등급별 추가 연출 (모든 타이밍에 배속 적용)
 	match tier:
 		"S":
 			# S등급: 화면 암전 + 플래시 + 강조 이펙트
-			await _play_screen_dim(0.5)
-			play_screen_flash(Color(1, 1, 1, 0.8), 0.2)
-			await _play_effect_at(effect_id, world_pos, duration - 1.0)
-			play_screen_shake(DEFAULT_SHAKE_INTENSITY * 1.5, 0.4)
-			play_screen_flash(DEFAULT_FLASH_COLOR, 0.2)
-			await _end_screen_dim(0.3)
+			await _play_screen_dim(BattleSpeed.apply(0.5))
+			play_screen_flash(Color(1, 1, 1, 0.8), BattleSpeed.apply(0.2))
+			await _play_effect_at(effect_id, world_pos, maxf(duration - BattleSpeed.apply(1.0), 0.01))
+			play_screen_shake(DEFAULT_SHAKE_INTENSITY * 1.5, BattleSpeed.apply(0.4))
+			play_screen_flash(DEFAULT_FLASH_COLOR, BattleSpeed.apply(0.2))
+			await _end_screen_dim(BattleSpeed.apply(0.3))
 
 		"A":
 			# A등급: 카메라 흔들림 + 강조 이펙트
-			play_screen_shake(DEFAULT_SHAKE_INTENSITY, DEFAULT_SHAKE_DURATION)
+			play_screen_shake(DEFAULT_SHAKE_INTENSITY, BattleSpeed.apply(DEFAULT_SHAKE_DURATION))
 			await _play_effect_at(effect_id, world_pos, duration)
-			play_screen_flash(Color(1, 1, 0.8, 0.4), 0.15)
+			play_screen_flash(Color(1, 1, 0.8, 0.4), BattleSpeed.apply(0.15))
 
 		"B":
 			# B등급: 기본 이펙트
@@ -123,7 +123,7 @@ func play_effect(effect_id: String, world_pos: Vector2, tier: String) -> void:
 			await _play_placeholder_flash(world_pos, duration)
 
 		_:
-			await _play_placeholder_flash(world_pos, 0.5)
+			await _play_placeholder_flash(world_pos, BattleSpeed.apply(0.5))
 
 	effect_finished.emit()
 
@@ -199,7 +199,7 @@ func _play_particle_effect(path: String, world_pos: Vector2, duration: float) ->
 	particles.lifetime = duration
 	add_child(particles)
 
-	await get_tree().create_timer(duration + 0.5).timeout
+	await get_tree().create_timer(duration + BattleSpeed.apply(0.5)).timeout
 
 	particles.queue_free()
 

@@ -104,34 +104,40 @@ func play_cutin(character_id: String) -> void:
 	_cutin_image.modulate = Color(1, 1, 1, 0)
 	_flash_rect.color = Color(1, 1, 1, 0)
 
+	# 배속 적용된 타이밍
+	var fade_in: float = BattleSpeed.apply(FADE_IN_DURATION)
+	var slide: float = BattleSpeed.apply(SLIDE_DURATION)
+	var hold: float = BattleSpeed.apply(HOLD_DURATION)
+	var fade_out: float = BattleSpeed.apply(FADE_OUT_DURATION)
+
 	# 연출 시퀀스
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 
-	# 1단계: 배경 페이드 인 (0.1초)
-	tween.tween_property(_bg_rect, "color", Color(0, 0, 0, 0.8), FADE_IN_DURATION)
+	# 1단계: 배경 페이드 인
+	tween.tween_property(_bg_rect, "color", Color(0, 0, 0, 0.8), fade_in)
 
-	# 2단계: 컷인 이미지 슬라이드 인 (0.3초)
+	# 2단계: 컷인 이미지 슬라이드 인
 	var target_x: float = (_viewport_size.x - CUTIN_IMAGE_WIDTH) / 2.0
 	var target_y: float = (_viewport_size.y - CUTIN_IMAGE_HEIGHT) / 2.0
 	tween.parallel().tween_property(
 		_cutin_image, "position",
-		Vector2(target_x, target_y), SLIDE_DURATION
+		Vector2(target_x, target_y), slide
 	)
 	tween.parallel().tween_property(
 		_cutin_image, "modulate",
-		Color(1, 1, 1, 1), SLIDE_DURATION
+		Color(1, 1, 1, 1), slide
 	)
 
-	# 3단계: 유지 (0.2초)
-	tween.tween_interval(HOLD_DURATION)
+	# 3단계: 유지
+	tween.tween_interval(hold)
 
-	# 4단계: 플래시 + 페이드 아웃 (0.2초)
-	tween.tween_property(_flash_rect, "color", Color(1, 1, 1, 0.8), FADE_OUT_DURATION * 0.3)
-	tween.parallel().tween_property(_bg_rect, "color", Color(0, 0, 0, 0), FADE_OUT_DURATION * 0.7)
-	tween.parallel().tween_property(_cutin_image, "modulate", Color(1, 1, 1, 0), FADE_OUT_DURATION * 0.7)
-	tween.tween_property(_flash_rect, "color", Color(1, 1, 1, 0), FADE_OUT_DURATION * 0.5)
+	# 4단계: 플래시 + 페이드 아웃
+	tween.tween_property(_flash_rect, "color", Color(1, 1, 1, 0.8), fade_out * 0.3)
+	tween.parallel().tween_property(_bg_rect, "color", Color(0, 0, 0, 0), fade_out * 0.7)
+	tween.parallel().tween_property(_cutin_image, "modulate", Color(1, 1, 1, 0), fade_out * 0.7)
+	tween.tween_property(_flash_rect, "color", Color(1, 1, 1, 0), fade_out * 0.5)
 
 	await tween.finished
 

@@ -74,6 +74,24 @@ var _target_advantage: Label = null
 ## 현재 선택된 유닛 참조
 var _current_selected_unit: BattleUnit = null
 
+## 지형 정보 패널 (2-6: 좌하단 지형 표시)
+var _terrain_panel: PanelContainer = null
+var _terrain_name: Label = null
+var _terrain_cost: Label = null
+var _terrain_evade: Label = null
+var _terrain_def: Label = null
+var _terrain_special: Label = null
+
+## 유닛 상세 정보 팝업 (2-5)
+var _detail_popup: PanelContainer = null
+var _detail_content: VBoxContainer = null
+var _detail_visible: bool = false
+
+## 턴 종료 확인 대화상자 (2-7)
+var _confirm_dialog: PanelContainer = null
+var _confirm_label: Label = null
+var _confirm_visible: bool = false
+
 ## 전투 로그 패널
 var _battle_log: BattleLog = null
 
@@ -101,6 +119,12 @@ func _build_ui() -> void:
 	# 대상 유닛 패널 (우하단)
 	_target_panel = _build_unit_panel(false)
 	_target_panel.visible = false
+	# 지형 정보 패널 (우하단 위)
+	_build_terrain_panel()
+	# 유닛 상세 정보 팝업 (중앙)
+	_build_detail_popup()
+	# 턴 종료 확인 대화상자 (중앙)
+	_build_confirm_dialog()
 	# 전투 로그 패널 (우측, 미니맵 아래)
 	_build_battle_log()
 
@@ -123,6 +147,8 @@ func _connect_signals() -> void:
 			eb.cell_hovered.connect(_on_cell_hovered)
 			eb.damage_dealt.connect(_on_damage_dealt)
 			eb.heal_applied.connect(_on_heal_applied)
+			eb.unit_info_requested.connect(_on_unit_info_requested)
+			eb.end_turn_requested.connect(_on_end_turn_requested)
 
 # ── 턴 표시 ──
 
@@ -606,8 +632,12 @@ func _on_unit_deselected() -> void:
 	hide_unit_info(false)
 
 ## 셀 호버 시그널 콜백. 호버된 셀에 유닛이 있으면 우측 패널 갱신.
+## 지형 정보도 갱신한다.
 ## @param cell 호버된 셀 좌표
 func _on_cell_hovered(cell: Vector2i) -> void:
+	# 지형 정보 갱신 (2-6)
+	_update_terrain_info(cell)
+
 	if battle_map == null:
 		return
 	var unit: BattleUnit = battle_map.get_unit_at(cell)
@@ -664,3 +694,435 @@ func _get_data_manager() -> Node:
 	if tree and tree.root.has_node("DataManager"):
 		return tree.root.get_node("DataManager")
 	return null
+
+# ── 지형 정보 패널 (2-6) ──
+
+## 우하단 상단에 지형 정보 패널을 생성한다. 커서 위치의 지형을 상시 표시.
+func _build_terrain_panel() -> void:
+	_terrain_panel = PanelContainer.new()
+	_terrain_panel.custom_minimum_size = Vector2(180, 100)
+	_terrain_panel.size = Vector2(180, 100)
+	# 우상단 미니맵 아래에 배치
+	_terrain_panel.position = Vector2(1920 - 180 - 16, 140)
+
+	var style := StyleBoxFlat.new()
+	style.bg_color = COLOR_BG_PANEL
+	style.corner_radius_top_left = 6
+	style.corner_radius_top_right = 6
+	style.corner_radius_bottom_left = 6
+	style.corner_radius_bottom_right = 6
+	style.content_margin_left = 8
+	style.content_margin_right = 8
+	style.content_margin_top = 6
+	style.content_margin_bottom = 6
+	_terrain_panel.add_theme_stylebox_override("panel", style)
+	add_child(_terrain_panel)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 2)
+	_terrain_panel.add_child(vbox)
+
+	_terrain_name = Label.new()
+	_terrain_name.text = "—"
+	_terrain_name.add_theme_font_size_override("font_size", 14)
+	_terrain_name.add_theme_color_override("font_color", COLOR_ACCENT)
+	vbox.add_child(_terrain_name)
+
+	_terrain_cost = Label.new()
+	_terrain_cost.text = ""
+	_terrain_cost.add_theme_font_size_override("font_size", 11)
+	_terrain_cost.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+	vbox.add_child(_terrain_cost)
+
+	_terrain_evade = Label.new()
+	_terrain_evade.text = ""
+	_terrain_evade.add_theme_font_size_override("font_size", 11)
+	_terrain_evade.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+	vbox.add_child(_terrain_evade)
+
+	_terrain_def = Label.new()
+	_terrain_def.text = ""
+	_terrain_def.add_theme_font_size_override("font_size", 11)
+	_terrain_def.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+	vbox.add_child(_terrain_def)
+
+	_terrain_special = Label.new()
+	_terrain_special.text = ""
+	_terrain_special.add_theme_font_size_override("font_size", 10)
+	_terrain_special.add_theme_color_override("font_color", COLOR_TEXT)
+	_terrain_special.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(_terrain_special)
+
+## 지형 정보를 갱신한다.
+## @param cell 대상 셀 좌표
+func _update_terrain_info(cell: Vector2i) -> void:
+	if _terrain_panel == null:
+		return
+
+	var dm: Node = _get_data_manager()
+	if dm == null:
+		return
+
+	if battle_map == null or battle_map.grid == null:
+		return
+
+	var terrain_type: String = battle_map.grid.get_tile_at(cell)
+	if terrain_type.is_empty():
+		_terrain_name.text = "—"
+		_terrain_cost.text = ""
+		_terrain_evade.text = ""
+		_terrain_def.text = ""
+		_terrain_special.text = ""
+		return
+
+	var terrain_data: Dictionary = dm.get_terrain(terrain_type)
+	if terrain_data.is_empty():
+		_terrain_name.text = terrain_type
+		_terrain_cost.text = ""
+		_terrain_evade.text = ""
+		_terrain_def.text = ""
+		_terrain_special.text = ""
+		return
+
+	_terrain_name.text = terrain_data.get("name_ko", terrain_type)
+	var move_cost: int = terrain_data.get("move_cost", 1)
+	_terrain_cost.text = "이동 비용: %s" % (str(move_cost) if move_cost > 0 else "통행 불가")
+	var evade_bonus: int = terrain_data.get("evade_bonus", 0)
+	_terrain_evade.text = "회피: %+d%%" % evade_bonus if evade_bonus != 0 else "회피: —"
+	var def_bonus: int = terrain_data.get("def_bonus", 0)
+	_terrain_def.text = "방어: %+d%%" % def_bonus if def_bonus != 0 else "방어: —"
+
+	var special: Variant = terrain_data.get("special_effect", null)
+	if special != null and special is String and special != "":
+		_terrain_special.text = _translate_special_effect(special as String)
+	else:
+		_terrain_special.text = ""
+
+## 지형 특수 효과 키를 한국어 설명으로 변환한다.
+## @param effect_key 특수 효과 키
+## @returns 한국어 설명 문자열
+func _translate_special_effect(effect_key: String) -> String:
+	match effect_key:
+		"bow_range_minus_1":
+			return "활 사거리 -1"
+		"heavy_unit_blocked":
+			return "중장갑/기마 통과 불가"
+		"magic_attack_plus_10":
+			return "마법 공격 +10%"
+		"special_skill_only":
+			return "특수 스킬만 통과"
+		"destructible":
+			return "파괴 가능"
+		"mounted_mov_minus_1":
+			return "기마 이동력 -1"
+		"impassable_burn_adjacent":
+			return "인접 유닛 화상"
+		"adjacent_ally_hp_regen_5_percent":
+			return "인접 아군 HP 5% 회복"
+		"turn_start_hp_minus_5_percent":
+			return "턴 시작 시 HP 5% 감소"
+		"destructible_building":
+			return "파괴 가능 건물"
+		"boss_stat_boost":
+			return "보스 스탯 강화"
+		"turn_start_hp_regen_3_percent":
+			return "턴 시작 시 HP 3% 회복"
+		_:
+			return effect_key
+
+# ── 유닛 상세 정보 팝업 (2-5) ──
+
+## 화면 중앙에 유닛 상세 정보 팝업을 생성한다 (I키로 토글).
+func _build_detail_popup() -> void:
+	_detail_popup = PanelContainer.new()
+	_detail_popup.custom_minimum_size = Vector2(400, 500)
+	_detail_popup.size = Vector2(400, 500)
+	_detail_popup.position = Vector2(
+		(1920 - 400) / 2.0,
+		(1080 - 500) / 2.0
+	)
+
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.06, 0.06, 0.1, 0.95)
+	style.border_color = COLOR_ACCENT
+	style.border_width_left = 2
+	style.border_width_right = 2
+	style.border_width_top = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	style.content_margin_left = PADDING
+	style.content_margin_right = PADDING
+	style.content_margin_top = PADDING
+	style.content_margin_bottom = PADDING
+	_detail_popup.add_theme_stylebox_override("panel", style)
+	_detail_popup.visible = false
+	add_child(_detail_popup)
+
+	# 스크롤 컨테이너 (내용이 길 수 있으므로)
+	var scroll := ScrollContainer.new()
+	scroll.anchors_preset = Control.PRESET_FULL_RECT
+	_detail_popup.add_child(scroll)
+
+	_detail_content = VBoxContainer.new()
+	_detail_content.add_theme_constant_override("separation", 4)
+	_detail_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(_detail_content)
+
+## 유닛 상세 정보 팝업에 내용을 채운다.
+## @param unit 표시할 유닛
+func _show_detail_popup(unit: BattleUnit) -> void:
+	if _detail_popup == null or _detail_content == null:
+		return
+
+	# 기존 내용 제거
+	for child: Node in _detail_content.get_children():
+		child.queue_free()
+
+	# 이름 + 레벨
+	var header := Label.new()
+	header.text = "%s  Lv.%d" % [
+		unit.unit_name_ko if unit.unit_name_ko != "" else unit.unit_id,
+		unit.level
+	]
+	header.add_theme_font_size_override("font_size", 20)
+	header.add_theme_color_override("font_color", COLOR_ACCENT)
+	_detail_content.add_child(header)
+
+	# 클래스
+	var class_label := Label.new()
+	class_label.text = "클래스: %s" % (unit.class_name_ko if unit.class_name_ko != "" else "—")
+	class_label.add_theme_font_size_override("font_size", 14)
+	class_label.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+	_detail_content.add_child(class_label)
+
+	# 구분선
+	_add_separator(_detail_content)
+
+	# HP / MP
+	var hp_label := Label.new()
+	hp_label.text = "HP: %d / %d" % [unit.current_hp, unit.stats.get("hp", 0)]
+	hp_label.add_theme_font_size_override("font_size", 14)
+	hp_label.add_theme_color_override("font_color", COLOR_HP_HIGH)
+	_detail_content.add_child(hp_label)
+
+	var mp_label := Label.new()
+	mp_label.text = "MP: %d / %d" % [unit.current_mp, unit.stats.get("mp", 0)]
+	mp_label.add_theme_font_size_override("font_size", 14)
+	mp_label.add_theme_color_override("font_color", COLOR_MP)
+	_detail_content.add_child(mp_label)
+
+	# 구분선
+	_add_separator(_detail_content)
+
+	# 기본 스탯
+	var stat_keys: Array = [
+		["atk", "ATK"], ["def", "DEF"], ["matk", "MATK"],
+		["mdef", "MDEF"], ["spd", "SPD"], ["mov", "MOV"]
+	]
+	for pair: Array in stat_keys:
+		var stat_label := Label.new()
+		stat_label.text = "%s: %d" % [pair[1], unit.stats.get(pair[0], 0)]
+		stat_label.add_theme_font_size_override("font_size", 13)
+		stat_label.add_theme_color_override("font_color", COLOR_TEXT)
+		_detail_content.add_child(stat_label)
+
+	# 구분선
+	_add_separator(_detail_content)
+
+	# 장비
+	var equip_header := Label.new()
+	equip_header.text = "장비"
+	equip_header.add_theme_font_size_override("font_size", 14)
+	equip_header.add_theme_color_override("font_color", COLOR_ACCENT)
+	_detail_content.add_child(equip_header)
+
+	var equip_slots: Array = [
+		["weapon", "무기"], ["armor", "방어구"], ["accessory", "장신구"]
+	]
+	for slot: Array in equip_slots:
+		var equip_id: String = unit.equipment.get(slot[0], "")
+		var equip_label := Label.new()
+		equip_label.text = "%s: %s" % [slot[1], equip_id if equip_id != "" else "없음"]
+		equip_label.add_theme_font_size_override("font_size", 12)
+		equip_label.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+		_detail_content.add_child(equip_label)
+
+	# 구분선
+	_add_separator(_detail_content)
+
+	# 스킬 목록
+	var skill_header := Label.new()
+	skill_header.text = "스킬"
+	skill_header.add_theme_font_size_override("font_size", 14)
+	skill_header.add_theme_color_override("font_color", COLOR_ACCENT)
+	_detail_content.add_child(skill_header)
+
+	if unit.skills.is_empty():
+		var no_skill := Label.new()
+		no_skill.text = "  없음"
+		no_skill.add_theme_font_size_override("font_size", 12)
+		no_skill.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+		_detail_content.add_child(no_skill)
+	else:
+		for skill_id: String in unit.skills:
+			var skill_label := Label.new()
+			skill_label.text = "  - %s" % skill_id
+			skill_label.add_theme_font_size_override("font_size", 12)
+			skill_label.add_theme_color_override("font_color", COLOR_TEXT)
+			_detail_content.add_child(skill_label)
+
+	# 구분선
+	_add_separator(_detail_content)
+
+	# 상태이상
+	var status_header := Label.new()
+	status_header.text = "상태이상"
+	status_header.add_theme_font_size_override("font_size", 14)
+	status_header.add_theme_color_override("font_color", COLOR_ACCENT)
+	_detail_content.add_child(status_header)
+
+	if unit.status_effects.is_empty():
+		var no_status := Label.new()
+		no_status.text = "  없음"
+		no_status.add_theme_font_size_override("font_size", 12)
+		no_status.add_theme_color_override("font_color", COLOR_TEXT_DIM)
+		_detail_content.add_child(no_status)
+	else:
+		for effect: Dictionary in unit.status_effects:
+			var status_label := Label.new()
+			var duration: int = effect.get("duration", 0)
+			status_label.text = "  - %s (%d턴)" % [effect.get("status_id", "?"), duration]
+			status_label.add_theme_font_size_override("font_size", 12)
+			status_label.add_theme_color_override("font_color", COLOR_HP_LOW)
+			_detail_content.add_child(status_label)
+
+	_detail_popup.visible = true
+	_detail_visible = true
+
+## 유닛 상세 정보 팝업을 숨긴다.
+func _hide_detail_popup() -> void:
+	if _detail_popup:
+		_detail_popup.visible = false
+	_detail_visible = false
+
+## 유닛 정보 요청 콜백 (I키)
+## @param cell 대상 셀 좌표
+func _on_unit_info_requested(cell: Vector2i) -> void:
+	# 이미 표시 중이면 닫기
+	if _detail_visible:
+		_hide_detail_popup()
+		return
+
+	if battle_map == null:
+		return
+
+	var unit: BattleUnit = battle_map.get_unit_at(cell)
+	if unit:
+		_show_detail_popup(unit)
+
+## 구분선을 추가한다.
+## @param container 부모 컨테이너
+func _add_separator(container: VBoxContainer) -> void:
+	var sep := HSeparator.new()
+	sep.add_theme_constant_override("separation", 4)
+	var sep_style := StyleBoxFlat.new()
+	sep_style.bg_color = Color(0.3, 0.3, 0.4, 0.5)
+	sep_style.content_margin_top = 2
+	sep_style.content_margin_bottom = 2
+	sep.add_theme_stylebox_override("separator", sep_style)
+	container.add_child(sep)
+
+# ── 턴 종료 확인 대화상자 (2-7) ──
+
+## 턴 종료 확인 대화상자를 생성한다.
+func _build_confirm_dialog() -> void:
+	_confirm_dialog = PanelContainer.new()
+	_confirm_dialog.custom_minimum_size = Vector2(360, 140)
+	_confirm_dialog.size = Vector2(360, 140)
+	_confirm_dialog.position = Vector2(
+		(1920 - 360) / 2.0,
+		(1080 - 140) / 2.0
+	)
+
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.06, 0.06, 0.1, 0.95)
+	style.border_color = Color(0.8, 0.4, 0.2)
+	style.border_width_left = 2
+	style.border_width_right = 2
+	style.border_width_top = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	style.content_margin_top = 16
+	style.content_margin_bottom = 16
+	_confirm_dialog.add_theme_stylebox_override("panel", style)
+	_confirm_dialog.visible = false
+	add_child(_confirm_dialog)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	_confirm_dialog.add_child(vbox)
+
+	_confirm_label = Label.new()
+	_confirm_label.text = ""
+	_confirm_label.add_theme_font_size_override("font_size", 15)
+	_confirm_label.add_theme_color_override("font_color", COLOR_TEXT)
+	_confirm_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_confirm_label.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(_confirm_label)
+
+	var btn_row := HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 16)
+	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(btn_row)
+
+	var yes_btn := Button.new()
+	yes_btn.text = "예"
+	yes_btn.custom_minimum_size = Vector2(80, 32)
+	yes_btn.pressed.connect(_on_confirm_yes)
+	btn_row.add_child(yes_btn)
+
+	var no_btn := Button.new()
+	no_btn.text = "아니오"
+	no_btn.custom_minimum_size = Vector2(80, 32)
+	no_btn.pressed.connect(_on_confirm_no)
+	btn_row.add_child(no_btn)
+
+## 턴 종료 확인 대화상자를 표시한다.
+## @param unacted_count 미행동 유닛 수
+func show_end_turn_confirm(unacted_count: int) -> void:
+	if _confirm_dialog == null:
+		return
+	_confirm_label.text = "%d명의 유닛이 행동하지 않았습니다.\n턴을 종료하시겠습니까?" % unacted_count
+	_confirm_dialog.visible = true
+	_confirm_visible = true
+
+## 턴 종료 확인 - 예 버튼 콜백
+func _on_confirm_yes() -> void:
+	_confirm_dialog.visible = false
+	_confirm_visible = false
+	EventBus.end_turn_confirmed.emit()
+
+## 턴 종료 확인 - 아니오 버튼 콜백
+func _on_confirm_no() -> void:
+	_confirm_dialog.visible = false
+	_confirm_visible = false
+
+## 턴 종료 요청 콜백 (E키). TurnManager 로직을 호출하지 않고 시그널만 발신.
+## TurnManager에서 미행동 유닛 수를 체크하여 확인 팝업 또는 즉시 종료를 결정한다.
+func _on_end_turn_requested() -> void:
+	# 확인 대화상자가 이미 열려 있으면 무시
+	if _confirm_visible:
+		return
+	# 상세 팝업이 열려 있으면 닫기
+	if _detail_visible:
+		_hide_detail_popup()
+		return
+	# TurnManager에서 처리 (시그널은 이미 발신됨)

@@ -294,21 +294,34 @@ func move_to(target_cell: Vector2i, path: Array[Vector2i]) -> void:
 
 	_is_moving = true
 
+	# 이동 시작 시 walk 애니메이션 재생
+	if _sprite != null and _sprite.sprite_frames != null:
+		var walk_anim := "walk_%s" % facing
+		if _sprite.sprite_frames.has_animation(walk_anim):
+			_sprite.play(walk_anim)
+
 	# 경로 포인트를 순회하며 Tween 이동
 	var tween := create_tween()
 	for i: int in range(1, path.size()):
 		var world_pos := GridSystem.cell_to_world(path[i])
-		# 각 세그먼트 시작 시 방향 갱신
+		# 각 세그먼트 시작 시 방향 갱신 및 walk 애니메이션 전환
 		var prev_cell: Vector2i = path[i - 1]
 		var next_cell: Vector2i = path[i]
 		var dir := GridSystem.get_direction(prev_cell, next_cell)
-		tween.tween_callback(_set_facing.bind(dir))
+		tween.tween_callback(_set_facing_walk.bind(dir))
 		tween.tween_property(self, "position", world_pos, MOVE_SEGMENT_DURATION)
 
 	await tween.finished
 
 	cell = target_cell
 	_is_moving = false
+
+	# 이동 완료 후 idle 복귀
+	if _sprite != null and _sprite.sprite_frames != null:
+		var idle_anim := "idle_%s" % facing
+		if _sprite.sprite_frames.has_animation(idle_anim):
+			_sprite.play(idle_anim)
+
 	move_finished.emit()
 
 ## 방향 설정 (Tween 콜백용)
@@ -316,6 +329,16 @@ func move_to(target_cell: Vector2i, path: Array[Vector2i]) -> void:
 func _set_facing(dir: String) -> void:
 	facing = dir
 	_update_sprite_direction()
+
+## 이동 중 방향 전환 콜백 — facing 갱신 후 walk 애니메이션으로 전환
+## @param dir 방향 문자열
+func _set_facing_walk(dir: String) -> void:
+	facing = dir
+	_update_sprite_direction()
+	if _sprite != null and _sprite.sprite_frames != null:
+		var walk_anim := "walk_%s" % facing
+		if _sprite.sprite_frames.has_animation(walk_anim):
+			_sprite.play(walk_anim)
 
 ## 대상 셀 방향으로 facing 갱신
 ## @param target_cell 바라볼 대상 셀 좌표

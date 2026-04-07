@@ -53,7 +53,7 @@
   "rewards": {
     "gold": 0,
     "items": [],
-    "exp_bonus": 0
+    "exp_bonus": 50
   },
   "events": {
     "on_start": "4-7_battle_start",

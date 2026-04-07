@@ -40,7 +40,7 @@
   "rewards": {
     "gold": 700,
     "items": ["ash_essence", "phoenix_feather_x1"],
-    "exp_bonus": 0
+    "exp_bonus": 45
   },
   "events": {
     "on_start": "3-13_battle_start",

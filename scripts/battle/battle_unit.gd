@@ -147,17 +147,27 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 	_source_data = enemy_data
 	unit_id = enemy_data.get("id", "")
 	team = "enemy"
-	level = enemy_level
 	unit_name_ko = enemy_data.get("name_ko", "")
 
-	# 기본 스탯 사용
+	# 난이도 보정: 적 레벨 + 보너스 (Hard: +1, Normal: +0)
+	var diff_mgr := DifficultyManager.new()
+	var actual_level: int = enemy_level + diff_mgr.get_enemy_level_bonus()
+	level = actual_level
+
+	# 기본 스탯 + 레벨 스케일링 계산
 	var base: Dictionary = enemy_data.get("base_stats", {})
 	var scaling: Dictionary = enemy_data.get("scaling_per_level", {})
 
 	for key: String in stats:
 		var base_val: float = float(base.get(key, 0))
 		var scale_val: float = float(scaling.get(key, 0))
-		stats[key] = int(base_val + scale_val * maxi(enemy_level - 1, 0))
+		stats[key] = int(base_val + scale_val * maxi(actual_level - 1, 0))
+
+	# 난이도 스탯 배율 적용 (Hard: HP×1.3, ATK×1.2, DEF×1.15, SPD×1.1 / Normal: 배율 1.0)
+	var scaled: Dictionary = diff_mgr.apply_enemy_stats(stats)
+	for key: String in stats:
+		if scaled.has(key):
+			stats[key] = scaled[key]
 
 	current_hp = stats["hp"]
 	current_mp = stats["mp"]

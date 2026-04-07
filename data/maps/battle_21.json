@@ -35,7 +35,7 @@
   "rewards": {
     "gold": 450,
     "items": ["ward_stone_remnant_irhen", "toms_hammer"],
-    "exp_bonus": 0
+    "exp_bonus": 35
   },
   "events": {
     "on_start": "3-10_battle_start",

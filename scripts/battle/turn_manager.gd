@@ -858,6 +858,17 @@ func _apply_battle_exp() -> void:
 				if char_id != "" and not active_ids.has(char_id):
 					pm.gain_exp(char_id, bench_exp)
 
+	# 전투 클리어 보너스 EXP: 맵 rewards.exp_bonus > 0이면 참전 유닛 전체에 flat EXP 추가
+	if battle_map != null:
+		var map_data: Dictionary = battle_map.get_map_data()
+		var bonus_exp: int = int(map_data.get("rewards", {}).get("exp_bonus", 0))
+		if bonus_exp > 0:
+			for bid: String in _battle_exp_gained:
+				var bunit: BattleUnit = battle_map.get_unit_by_id(bid)
+				if bunit != null and bunit.team == "player":
+					exp_system.apply_exp(bunit, bonus_exp)
+			print("[TurnManager] 클리어 보너스 EXP: %d (참전 유닛 전체)" % bonus_exp)
+
 # ── 유틸 ──
 
 ## 팀별 유닛 목록 조회

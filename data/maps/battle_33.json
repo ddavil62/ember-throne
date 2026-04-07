@@ -43,7 +43,7 @@
   "rewards": {
     "gold": 700,
     "items": ["sacred_elision"],
-    "exp_bonus": 0
+    "exp_bonus": 45
   },
   "events": {
     "on_start": "4-5_battle_start",

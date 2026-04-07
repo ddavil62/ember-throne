@@ -38,7 +38,7 @@
   "rewards": {
     "gold": 550,
     "items": ["lucids_glasses"],
-    "exp_bonus": 0
+    "exp_bonus": 40
   },
   "events": {
     "on_start": "4-2_battle_start",

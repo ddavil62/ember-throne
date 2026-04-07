@@ -37,7 +37,7 @@
   "rewards": {
     "gold": 450,
     "items": ["ward_stone_remnant_harben", "life_dew_x1"],
-    "exp_bonus": 0
+    "exp_bonus": 35
   },
   "events": {
     "on_start": "3-11a_battle_start",

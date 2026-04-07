@@ -45,7 +45,7 @@
   "rewards": {
     "gold": 650,
     "items": ["kingdom_knight_sword"],
-    "exp_bonus": 0
+    "exp_bonus": 45
   },
   "events": {
     "on_start": "4-1b_battle_start",

@@ -2,6 +2,38 @@
 
 ## [미출시] - 2026-04-07
 
+### Added (Phase 2 골드 보상 시스템)
+- `party_manager.gd`: `gold: int` 필드, `add_gold()`, `spend_gold()`, `get_gold()` 메서드 추가
+- `event_bus.gd`: `gold_gained(amount: int)` 시그널 추가
+- `turn_manager.gd`: `_battle_gold_gained` 누적 변수, 적 사망 시 골드 드롭 처리 (공격/반격 양쪽)
+- `turn_manager.gd`: `_apply_battle_gold()` 함수 -- 드롭 골드 + `rewards.gold` 합산 후 `PartyManager.add_gold()` 지급
+- `save_manager.gd`: 세이브/로드에 `gold` 필드 포함 (`_serialize_game_state()`, `_apply_save_data()`)
+
+#### Phase 2-A 상세
+- 적 사망 시 `defender._source_data.get("gold_reward", {})` 직접 접근 (불필요한 DataManager 재조회 회피)
+- 반격 사망 시에도 동일 골드 누적 로직 적용 (스펙 미명시, 일관성 위해 추가)
+- `gold` 직렬화는 `party_manager.serialize()`(Array 반환)가 아닌 `save_manager.gd`에서 직접 처리 (기존 아키텍처 적합)
+- `add_gold()`: amount <= 0 가드 포함
+- `gold_reward.max = 0`인 적(보스 등)은 `if g_max > 0` 조건으로 골드 드롭 안 함
+
+### Changed (Phase 2 캐릭터 합류 레벨 갱신)
+- `story_manager.gd` CHARACTER_JOINS 전면 재편 (LEVEL-DESIGN.md Section 4 기준):
+  - kael(1-1 Lv1), seria(1-4 Lv1), grid(1-5 Lv2), rinen(1-6 Lv2)
+  - roc/nael(2-1 Lv6), drana(2-9 Lv10), voldt(2-10 Lv11)
+  - irene(3-1 Lv13), hazel(3-12 Lv18), cyr(3-14 Lv18), elmira(4-5 Lv25)
+- 캐릭터 JSON `join_level` 갱신 5건: roc(5->6), nael(5->6), drana(9->10), voldt(10->11), irene(12->13)
+- 나머지 7인(kael, seria, grid, rinen, hazel, cyr, elmira)은 기존 값 일치로 미변경
+- `party_manager.gd` `add_character()`: 초기 EXP를 0으로 설정 (스펙의 누적 EXP 공식 대신 -- `exp`가 "잔여 경험치" 방식이므로 누적값 설정 시 연쇄 레벨업 버그 발생)
+
+#### Phase 2 QA MEDIUM 이슈 (후속 작업 필요)
+- M1: `spend_gold()` 음수 amount 미검증 -- 현재 호출부 없어 즉시 위험 없음, 상점 구현 시 `if amount <= 0: return false` 가드 추가 필요
+- M2: `init_default_party()`가 seria/rinen을 1-1에서 합류시키지만 CHARACTER_JOINS는 1-4/1-6 -- 기획 확인 후 정리 필요
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-07-ember-throne-phase2-balance-spec.md`
+- 리포트: `.claude/specs/2026-04-07-ember-throne-phase2-2a-report.md`, `.claude/specs/2026-04-07-ember-throne-phase2-2b-report.md`
+- QA: `.claude/specs/2026-04-07-ember-throne-phase2-balance-qa.md`
+
 ### Changed (Phase 1 레벨 밸런스)
 - 35개 battle JSON enemy_placements 적 레벨을 LEVEL-DESIGN.md 기준으로 갱신
   (Act 2: Lv7~13, Act 3: Lv14~22, Act 4: Lv22~28 범위로 상향)

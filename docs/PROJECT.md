@@ -83,9 +83,10 @@ ember-throne/
 | 전투 UI | HUD, 액션 메뉴, 데미지 프리뷰, 범위 오버레이, 전투 결과 | 완료 |
 | 컷인 연출 | 스킬 컷인 오버레이 + VFX | 완료 |
 | 경험치/레벨업 | level * 100 공식, 레벨 차이 보정, 벤치 유닛 50% EXP | 완료 |
+| 골드 경제 | 적 처치 gold_reward + battle rewards.gold 지급, 세이브/로드 연동 | 완료 |
 | 출격 편성 | 12인 중 8명 선택, 카엘 고정 | 완료 |
 | 대화 시스템 | 대화창, 선택지, CG 뷰어 | 완료 |
-| 스토리 매니저 | 4막 진행, 이벤트 트리거 | 완료 |
+| 스토리 매니저 | 4막 진행, 이벤트 트리거, CHARACTER_JOINS LEVEL-DESIGN.md 기준 동기화 완료 | 완료 |
 | 전직 시스템 | 스토리 연동 자동 전직 | 완료 |
 | 유대 시스템 | 13쌍 유대, 인접 보정, 이벤트 | 완료 |
 | 월드맵 | 6지역 30+ 거점, 유랑 전투 해금 | 완료 |
@@ -123,11 +124,17 @@ ember-throne/
 - VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완 -- 현재 배틀 데이터에 해당 케이스 없으나 별도 작업 필요
 - 전투 중 사망한 유닛이 벤치 유닛으로 분류되어 벤치 EXP를 받는 엣지케이스 -- 밸런스 영향 미미, 전투 EXP 시스템 확장 시 함께 수정 예정
 - 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈 -- 게임 플레이 루프 완성 전 별도 작업 필요
+- `spend_gold()` 음수 amount 미검증 -- 현재 호출부 없으나 상점 구현 시 가드 추가 필요 (Phase 2 QA M1)
+- `init_default_party()`의 seria/rinen이 CHARACTER_JOINS와 불일치 -- 기획 확인 필요 (Phase 2 QA M2)
 
 ## 향후 계획
 
 - ~~캐릭터 합류 레벨 JSON 일괄 갱신~~ -- 완료 (Phase 2-B)
-- battle_XX.json 보상(gold/item) 수치 동기화 (Phase 2)
+- ~~골드 보상 시스템 구현~~ -- 완료 (Phase 2-A: 적 처치 gold_reward + 전투 보너스 지급)
+- battle_XX.json 보상(gold/item) 수치 동기화
+- 골드 UI 표시 (전투 결과 화면에 획득 골드 표시)
+- spend_gold() 음수 가드 추가 (상점 구현 시)
+- init_default_party() CHARACTER_JOINS 정합성 정리
 - 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
 - battle_34 3페이즈 보스전 구현
 - Steam 연동 (GodotSteam: 업적, 클라우드 세이브)

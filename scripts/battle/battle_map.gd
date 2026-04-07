@@ -66,6 +66,20 @@ const TILESET_COVERED: Array = [
 	"mountain", "wall", "village", "lava", "deep_water", "sand",
 ]
 
+## 지형 타입 → 베이스 타일 파일명 (assets/tiles/base/ 아래 PNG)
+## 순수 지형 셀(Wang 전이 불필요 구간)에 적용되는 단일 베이스 텍스처
+const BASE_TILE_MAP: Dictionary = {
+	"plains":       "grass_plain_a",
+	"road":         "cobblestone_clean",
+	"ruins":        "dungeon_dry",
+	"ashen_land":   "ashen_cracked",
+	"forest":       "forest_moss",
+	"mountain":     "rocky_light",
+	"village":      "wheat_golden",
+	"sand":         "sand_dry",
+	"wall":         "wall_clean",
+}
+
 # ── 시그널 ──
 
 ## 유닛 클릭 시 발생
@@ -259,13 +273,24 @@ func _render_terrain(tiles: Array, w: int, h: int) -> void:
 		for t in row:
 			present[t] = true
 
-	# ── 베이스 레이어: 전체 맵을 IRH-01 초원으로 채움 ──
-	# 오버레이 타일의 하위 지형(잔디) 영역이 투명하므로, 모든 셀에 기본 잔디를 깔아
-	# 어떤 지형이든 하위 지형 부분이 일관된 베이스 잔디로 자연스럽게 보인다.
-	var plains_tex: Texture2D = _get_cached_tex("res://assets/tilesets/irhen/IRH-01.png", tex_cache)
+	# ── 베이스 레이어: 지형별 전용 베이스 타일 PNG로 채움 ──
+	# 순수 셀은 BASE_TILE_MAP의 독립 타일 PNG가 그대로 노출된다.
+	# 경계 셀은 Wang 오버레이가 위에 적층되며, 오버레이의 하위 지형 픽셀이 투명하므로
+	# 베이스 타일이 자연스럽게 비쳐 최종 전이 패턴을 완성한다.
+	# BASE_TILE_MAP 미정의 지형(water, lava 등)은 IRH-01 plains 타일을 폴백으로 사용한다.
+	var plains_fallback_tex: Texture2D = _get_cached_tex("res://assets/tilesets/irhen/IRH-01.png", tex_cache)
 	for y: int in range(h):
 		for x: int in range(w):
-			_place_wang_sprite(terrain_node, plains_tex, Rect2(64, 32, 32, 32), x, y)
+			var t: String = tiles[y][x] if y < tiles.size() and x < tiles[y].size() else "plains"
+			var base_name: String = BASE_TILE_MAP.get(t, "")
+			if base_name != "":
+				var base_path := "res://assets/tiles/base/%s.png" % base_name
+				var base_tex: Texture2D = _get_cached_tex(base_path, tex_cache)
+				if base_tex:
+					_place_wang_sprite(terrain_node, base_tex, Rect2(0, 0, 32, 32), x, y)
+					continue
+			# 폴백: IRH-01 순수 plains 타일 (water, lava 등 미정의 지형)
+			_place_wang_sprite(terrain_node, plains_fallback_tex, Rect2(64, 32, 32, 32), x, y)
 
 	# ── 폴백 레이어: 타일셋 미정의 지형 → ColorRect ──
 	for y: int in range(h):

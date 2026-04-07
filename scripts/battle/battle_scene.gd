@@ -103,12 +103,11 @@ func _on_deployment_cancelled() -> void:
 	print("[BattleScene] 배치 취소 — 월드맵 복귀")
 	_return_to_world_map()
 
-## 전투 결과 확인 (승리)
+## 전투 결과 확인 (승리) — 월드맵으로 복귀한다.
+## 노드 완료 처리는 ProgressionManager._on_battle_won()이
+## battle_won 시그널 수신 시 battle_id 기반으로 이미 수행하므로
+## 여기서는 중복 호출하지 않는다.
 func _on_result_confirmed() -> void:
-	# 진행도 갱신
-	var gm: Node = get_node("/root/GameManager")
-	var prog: Node = get_node("/root/ProgressionManager")
-	prog.complete_node(gm.current_scene_id)
 	_return_to_world_map()
 
 ## 재도전 요청

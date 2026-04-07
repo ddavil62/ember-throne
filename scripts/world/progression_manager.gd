@@ -15,6 +15,22 @@ const FLAG_CURRENT_NODE := "current_node"
 ## 1막 시작 시 자동 해금되는 노드 ID
 const INITIAL_NODE := "irhen_village"
 
+## 막 전환 트리거 노드: 해당 노드 완료 시 다음 막으로 전환한다.
+## { 노드 ID: 전환할 막 번호 }
+const ACT_TRIGGER_NODES: Dictionary = {
+	"irhen_road": 2,           # 1막 마지막 이동 노드 → 2막
+	"crowfel_foothills": 3,    # 2막 마지막 전투 (볼드 합류) → 3막
+	"ashen_sea_lord": 4,       # 3막 마지막 이벤트 (재의 군주 대화) → 4막
+}
+
+## 막 진입 시 강제 해금하는 노드 목록 (unlock_condition 무시).
+## enter_act() 호출 시 해당 막의 진입 노드를 직접 해금한다.
+const ACT_ENTRY_NODES: Dictionary = {
+	2: ["silvaren_entrance"],
+	3: ["ascalon_outskirts", "ascalon_city"],
+	4: ["ascalon_outskirts_assault"],
+}
+
 # ── 내부 상태 ──
 
 ## 해금된 노드 ID 집합
@@ -58,6 +74,7 @@ func unlock_nodes(node_ids: Array) -> void:
 # ── 노드 완료 ──
 
 ## 노드를 완료 처리하고, 연결된 다음 노드들을 자동 해금한다.
+## 막 전환 트리거 노드인 경우 다음 막 진입도 수행한다.
 ## @param node_id 완료할 노드 ID
 func complete_node(node_id: String) -> void:
 	if not _unlocked.has(node_id):
@@ -69,6 +86,10 @@ func complete_node(node_id: String) -> void:
 	# 연결된 다음 노드 자동 해금
 	_unlock_connected_nodes(node_id)
 	print("[ProgressionManager] 노드 완료: %s" % node_id)
+	# 막 전환 트리거 확인
+	if ACT_TRIGGER_NODES.has(node_id):
+		var next_act: int = ACT_TRIGGER_NODES[node_id]
+		_trigger_act_transition(next_act)
 
 ## 연결된 노드 중 해금 조건을 만족하는 노드를 자동 해금한다.
 ## @param node_id 완료된 노드 ID
@@ -169,9 +190,41 @@ func get_enterable_nodes() -> Array[String]:
 
 # ── 막(Act) 전환 ──
 
-## 새로운 막에 진입하여 해당 막의 첫 노드들을 해금한다.
+## 막별 기본 BGM (StoryManager.ACT_BGM과 동일)
+const ACT_BGM: Dictionary = {
+	1: "irhen_theme",
+	2: "road_theme",
+	3: "war_theme",
+	4: "final_theme",
+}
+
+## 막 전환 트리거를 처리한다. current_act 플래그를 설정하고
+## enter_act()를 호출하여 진입 노드를 해금, BGM도 변경한다.
+## @param act 진입할 막 번호 (2~4)
+func _trigger_act_transition(act: int) -> void:
+	var gm: Node = get_node("/root/GameManager")
+	var current_act: int = gm.get_flag("current_act", 1)
+	if act <= current_act:
+		return
+	gm.set_flag("current_act", act)
+	enter_act(act)
+	# BGM 변경
+	if ACT_BGM.has(act):
+		var eb: Node = get_node("/root/EventBus")
+		eb.bgm_change_requested.emit(ACT_BGM[act])
+	print("[ProgressionManager] %d막 전환 트리거" % act)
+
+## 새로운 막에 진입하여 해당 막의 진입 노드들을 해금한다.
+## ACT_ENTRY_NODES에 정의된 노드는 unlock_condition을 무시하고 강제 해금하며,
+## 그 외 해당 막의 노드 중 조건이 null인 것도 해금한다.
 ## @param act 진입할 막 번호 (1~4)
 func enter_act(act: int) -> void:
+	# ACT_ENTRY_NODES에 정의된 진입 노드 강제 해금
+	if ACT_ENTRY_NODES.has(act):
+		var entry_nodes: Array = ACT_ENTRY_NODES[act]
+		for nid: String in entry_nodes:
+			unlock_node(nid)
+	# 해당 막의 노드 중 조건이 null인 것도 해금
 	var dm: Node = get_node("/root/DataManager")
 	for nid: String in dm.world_nodes:
 		var node_data: Dictionary = dm.world_nodes[nid]

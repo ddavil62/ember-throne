@@ -218,14 +218,22 @@ func _build_tiles_array(w: int, h: int) -> Array:
 func _setup_camera_limits(map_w: int, map_h: int) -> void:
 	if _camera == null:
 		return
+	# 뷰포트 크기 기준 자동 줌 — 맵이 항상 화면에 꽉 차도록 비율 계산
+	var vp_size: Vector2 = get_viewport_rect().size
+	var map_px_w: float = float(map_w * GridSystem.TILE_SIZE)
+	var map_px_h: float = float(map_h * GridSystem.TILE_SIZE)
+	var zoom: float = min(vp_size.x / map_px_w, vp_size.y / map_px_h)
+	_camera.zoom = Vector2(zoom, zoom)
+
+	# 카메라 이동 한계는 맵 픽셀 범위로 고정
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = map_w * GridSystem.TILE_SIZE
 	_camera.limit_bottom = map_h * GridSystem.TILE_SIZE
 	# 카메라 초기 위치: 맵 중앙
 	_camera.position = Vector2(
-		map_w * GridSystem.TILE_SIZE / 2.0,
-		map_h * GridSystem.TILE_SIZE / 2.0
+		map_px_w / 2.0,
+		map_px_h / 2.0
 	)
 
 ## 지형 렌더링 — Wang 타일셋 오토타일링으로 픽셀아트 표시

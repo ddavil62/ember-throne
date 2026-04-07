@@ -14,9 +14,12 @@ const MOVE_SEGMENT_DURATION: float = 0.15
 ## 스프라이트 배율 (1.0 = 원본 크기)
 const SPRITE_SCALE: float = 1.2
 
-## 스프라이트 Y 오프셋 — 발이 타일 중점(0,0)에 오도록 스프라이트를 위로 올림
-## 80px 스프라이트 기준: 발 위치(y≈70) - 중심(y=40) = 30px → 위로 30 올림
-const SPRITE_OFFSET_Y: float = -30.0
+## 스프라이트 Y 오프셋 (sprite local space)
+const SPRITE_OFFSET_Y: float = -10.0
+
+## 스프라이트에서 머리까지의 추정 높이 (픽셀, 로컬 언스케일)
+## PixelLab 48px 캐릭터 기준 — 68px 캔버스 내 실제 머리 위치에서 역산
+const SPRITE_HEAD_H: float = 20.0
 
 ## 8방향 이름 배열
 const DIRECTION_NAMES: Array[String] = [
@@ -116,6 +119,23 @@ func _find_child_nodes() -> void:
 	if has_node("SelectionIndicator"):
 		_selection_indicator = get_node("SelectionIndicator") as Sprite2D
 		_selection_indicator.visible = false
+	_reposition_hud()
+
+## HP바·상태이상 아이콘을 캐릭터 머리 바로 위에 배치한다.
+## SPRITE_HEAD_H = 캔버스 내 머리 위치까지의 추정 높이 (언스케일, 경험적 값)
+func _reposition_hud() -> void:
+	var bar_h := 4.0
+	var gap   := 2.0
+	# 머리 Y = (offset - head_height) * scale
+	var head_y: float = (SPRITE_OFFSET_Y - SPRITE_HEAD_H) * SPRITE_SCALE
+	var bar_top: float = head_y - gap - bar_h
+
+	if _health_bar:
+		_health_bar.offset_top    = bar_top
+		_health_bar.offset_bottom = bar_top + bar_h
+	if _status_icons:
+		_status_icons.offset_top    = bar_top - 8.0
+		_status_icons.offset_bottom = bar_top
 
 ## 캐릭터 데이터로 유닛 초기화 (플레이어 유닛)
 ## @param char_data DataManager.get_character()에서 가져온 캐릭터 Dictionary
@@ -159,6 +179,7 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 		_sprite.offset = Vector2(0.0, SPRITE_OFFSET_Y)
 		_sprite.visible = true
 		_sprite.play("idle_south")
+		_reposition_hud()  # 실제 프레임 크기 기반 재계산
 	else:
 		_setup_placeholder_visual()
 
@@ -211,6 +232,7 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 		_sprite.offset = Vector2(0.0, SPRITE_OFFSET_Y)
 		_sprite.visible = true
 		_sprite.play("idle_south")
+		_reposition_hud()  # 실제 프레임 크기 기반 재계산
 	else:
 		_setup_placeholder_visual()
 

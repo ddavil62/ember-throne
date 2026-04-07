@@ -11,6 +11,9 @@ const SpriteLoader = preload("res://scripts/utils/sprite_loader.gd")
 ## 이동 Tween 세그먼트당 소요 시간 (초)
 const MOVE_SEGMENT_DURATION: float = 0.15
 
+## 스프라이트 배율 (1.0 = 원본 크기)
+const SPRITE_SCALE: float = 1.2
+
 ## 8방향 이름 배열
 const DIRECTION_NAMES: Array[String] = [
 	"south", "south_west", "west", "north_west",
@@ -148,6 +151,7 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 	var frames := SpriteLoader.load_sprite_frames(sid, false)
 	if frames != null and _sprite != null:
 		_sprite.sprite_frames = frames
+		_sprite.scale = Vector2(SPRITE_SCALE, SPRITE_SCALE)
 		_sprite.visible = true
 		_sprite.play("idle_south")
 	else:
@@ -198,6 +202,7 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 	var frames := SpriteLoader.load_sprite_frames(sid, true)
 	if frames != null and _sprite != null:
 		_sprite.sprite_frames = frames
+		_sprite.scale = Vector2(SPRITE_SCALE, SPRITE_SCALE)
 		_sprite.visible = true
 		_sprite.play("idle_south")
 	else:

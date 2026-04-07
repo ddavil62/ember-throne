@@ -1,5 +1,33 @@
 # Changelog
 
+## [미출시] - 2026-04-07
+
+### Added
+- VictoryConditionChecker: JSON 기반 데이터 드리븐 승리/패배 조건 시스템
+  - 6가지 조건 타입: rout, escape, survive/survive_turns, unit_death, turn_limit_exceeded, unit_hp_threshold
+  - EventBus 시그널 연동 (unit_died, unit_moved, turn_started, damage_dealt)
+  - 조건별 커스텀 한국어 결과 메시지
+  - _active 플래그로 중복 전투 종료 시그널 방지
+
+### Changed
+- TurnManager: VictoryConditionChecker를 자식 노드로 통합, 기존 check_battle_end() 제거, BATTLE_END 상태 보호 가드 추가
+- BattleMap: check_battle_end() 메서드 제거, get_map_data() 추가
+- BattleResult: show_result()에 condition_type/reason_ko 파라미터 추가, 조건별 한국어 메시지 표시
+- EventBus: battle_condition_triggered, turn_limit_warning 시그널 추가
+- BattleScene: battle_condition_triggered 시그널 연결
+
+### Fixed
+- survive vs survive_turns 타입명 불일치: 복수 패턴 매칭으로 양쪽 모두 지원 (QA HIGH-2)
+- turn_limit: null인 escape 조건에서 타입 체크 누락: typeof() 가드 추가 (QA HIGH-3)
+- _complete_action()에서 BATTLE_END 상태 덮어쓰기: 메서드 시작부에 상태 가드 추가 (QA HIGH-1)
+
+### 참고
+- 스펙: `.claude/specs/2026-04-07-ember-throne-victory-conditions-spec.md`
+- 리포트: `.claude/specs/2026-04-07-ember-throne-victory-conditions-report.md`
+- QA: `.claude/specs/2026-04-07-ember-throne-victory-conditions-reqa.md`
+- 스펙 대비 추가 변경: battle_scene.gd에 battle_condition_triggered 콜백 추가, defeat_achieved 시그널에 reason_ko 파라미터 추가, 아군 전멸 기본 패배 처리 추가
+- MEDIUM 이슈(defeat turn_limit_exceeded의 null 안전성) 미해결 -- 현재 배틀 데이터에 해당 케이스 없음, 별도 작업으로 분리
+
 ## 2026-04-07 - 레벨 밸런스 기획서 추가
 
 ### 추가

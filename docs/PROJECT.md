@@ -62,6 +62,7 @@ ember-throne/
 | 경험치 시스템 | `scripts/battle/experience_system.gd` | EXP 공식 (level * 100) |
 | 스킬 시스템 | `scripts/battle/skill_system.gd` | 스킬 실행/쿨다운 |
 | AI 컨트롤러 | `scripts/battle/ai/ai_controller.gd` | 적 AI 의사결정 |
+| 승리/패배 조건 | `scripts/battle/victory_condition_checker.gd` | JSON 기반 6종 조건 판별 (rout, escape, survive, unit_death, turn_limit, hp_threshold) |
 | 무기 상성 | `scripts/battle/weapon_triangle.gd` | 검>도끼>창>검 삼각 |
 | 대화 시스템 | `scripts/dialogue/dialogue_manager.gd` | 스토리 대화 진행 |
 | 스토리 매니저 | `scripts/story/story_manager.gd` | 막별 진행/이벤트 |
@@ -77,6 +78,7 @@ ember-throne/
 |------|------|------|
 | 턴제 전투 | 플레이어/적 페이즈 그리드 전투 | 완료 |
 | 전투 AI | 6종 AI 패턴 + 보스 AI | 완료 |
+| 승리/패배 조건 | 데이터 드리븐 6종 조건 판별 (VictoryConditionChecker), EventBus 연동 | 완료 |
 | 전투 UI | HUD, 액션 메뉴, 데미지 프리뷰, 범위 오버레이, 전투 결과 | 완료 |
 | 컷인 연출 | 스킬 컷인 오버레이 + VFX | 완료 |
 | 경험치/레벨업 | level * 100 공식, 레벨 차이 보정 | 완료 |
@@ -117,6 +119,7 @@ ember-throne/
 - 캐릭터 합류 레벨(`data/characters/*.json`의 `join_level`)이 LEVEL-DESIGN.md 기획값과 5인 불일치 -- 별도 Coder 작업에서 JSON 일괄 갱신 예정
 - battle_XX.json의 일부 수치(적 레벨 상한, 난이도 등급)가 기획 문서와 차이 -- LEVEL-DESIGN.md 확정 후 JSON 동기화 예정
 - battle_34.json 보스전 페이즈가 2단계로 구현되어 있으나 기획은 3페이즈 -- 추후 구현 필요
+- VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완 -- 현재 배틀 데이터에 해당 케이스 없으나 별도 작업 필요
 
 ## 향후 계획
 

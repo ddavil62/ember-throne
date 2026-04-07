@@ -1,6 +1,6 @@
 ## @fileoverview 대화 씬 오케스트레이터. DialogueManager, DialogueBox, ChoicePanel,
 ## CGViewer를 .tscn에서 인스턴스하고 register_ui로 연결한 뒤 대화를 시작한다.
-extends Node
+extends Control
 
 # ── 노드 참조 (.tscn에서 정의된 자식 노드) ──
 

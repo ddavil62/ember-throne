@@ -6,17 +6,50 @@
 [ext_resource type="Script" path="res://scripts/dialogue/dialogue_box.gd" id="4_dialogue_box"]
 [ext_resource type="Script" path="res://scripts/dialogue/choice_panel.gd" id="5_choice_panel"]
 
-[node name="DialogueScene" type="Node"]
+[node name="DialogueScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_orchestrator")
 
 [node name="DialogueManager" type="Node" parent="."]
 script = ExtResource("2_dialogue_manager")
 
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.06, 0.12, 1)
+
 [node name="CGViewer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3_cg_viewer")
 
 [node name="DialogueBox" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("4_dialogue_box")
 
 [node name="ChoicePanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("5_choice_panel")

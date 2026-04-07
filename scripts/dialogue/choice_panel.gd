@@ -81,7 +81,6 @@ func _build_ui() -> void:
 	# 배경 패널
 	_bg_panel = Panel.new()
 	_bg_panel.name = "BgPanel"
-	_bg_panel.anchors_preset = Control.PRESET_FULL_RECT
 	var style := StyleBoxFlat.new()
 	style.bg_color = BG_COLOR
 	style.border_color = Color(0.6, 0.5, 0.3, 0.8)
@@ -90,13 +89,14 @@ func _build_ui() -> void:
 	style.set_content_margin_all(20)
 	_bg_panel.add_theme_stylebox_override("panel", style)
 	add_child(_bg_panel)
+	_bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	# VBoxContainer — 프롬프트 + 버튼들
 	var vbox := VBoxContainer.new()
 	vbox.name = "MainVBox"
-	vbox.anchors_preset = Control.PRESET_FULL_RECT
 	vbox.set("theme_override_constants/separation", BUTTON_SPACING)
 	_bg_panel.add_child(vbox)
+	vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	# 프롬프트 레이블
 	_prompt_label = Label.new()

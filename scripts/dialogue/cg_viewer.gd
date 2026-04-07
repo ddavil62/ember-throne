@@ -42,23 +42,23 @@ func _ready() -> void:
 ## UI 노드를 동적으로 생성한다.
 func _build_ui() -> void:
 	# 자신의 앵커를 전체 화면으로
-	anchors_preset = Control.PRESET_FULL_RECT
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
 	# 배경 (검정)
 	_bg_panel = ColorRect.new()
 	_bg_panel.name = "BgPanel"
-	_bg_panel.anchors_preset = Control.PRESET_FULL_RECT
 	_bg_panel.color = BG_COLOR
 	add_child(_bg_panel)
+	_bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	# CG 이미지
 	_cg_rect = TextureRect.new()
 	_cg_rect.name = "CGImage"
-	_cg_rect.anchors_preset = Control.PRESET_FULL_RECT
 	_cg_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_cg_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_bg_panel.add_child(_cg_rect)
+	_cg_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 # ── CG 표시 ──
 

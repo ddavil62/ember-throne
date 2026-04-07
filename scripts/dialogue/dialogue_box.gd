@@ -142,7 +142,6 @@ func _build_ui() -> void:
 	# 배경 패널
 	_bg_panel = Panel.new()
 	_bg_panel.name = "BgPanel"
-	_bg_panel.anchors_preset = Control.PRESET_FULL_RECT
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.05, 0.05, 0.1, 0.85)
 	style.border_color = Color(0.6, 0.5, 0.3, 0.9)
@@ -151,13 +150,14 @@ func _build_ui() -> void:
 	style.set_content_margin_all(12)
 	_bg_panel.add_theme_stylebox_override("panel", style)
 	add_child(_bg_panel)
+	_bg_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	# HBoxContainer — 초상화 + 텍스트 영역
 	var hbox := HBoxContainer.new()
 	hbox.name = "HBox"
-	hbox.anchors_preset = Control.PRESET_FULL_RECT
 	hbox.set("theme_override_constants/separation", 16)
 	_bg_panel.add_child(hbox)
+	hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 	# 초상화 TextureRect
 	_portrait_rect = TextureRect.new()

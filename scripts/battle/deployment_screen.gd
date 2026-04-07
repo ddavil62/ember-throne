@@ -148,10 +148,18 @@ func _populate_character_list() -> void:
 	for child: Node in _character_list.get_children():
 		child.queue_free()
 
+	var dm: Node = get_node("/root/DataManager")
 	for char_data: Dictionary in _party_characters:
 		var char_id: String = char_data.get("id", "")
+		# 파티 데이터에 name_ko가 없으면 DataManager에서 풀 데이터 조회
+		var display_name: String = char_data.get("name_ko", "")
+		if display_name.is_empty() and dm and dm.has_method("get_character"):
+			var full: Dictionary = dm.get_character(char_id)
+			display_name = full.get("name_ko", "???")
+		if display_name.is_empty():
+			display_name = "???"
 		var btn := Button.new()
-		btn.text = "%s (Lv.%d)" % [char_data.get("name_ko", "???"), char_data.get("level", 1)]
+		btn.text = "%s (Lv.%d)" % [display_name, char_data.get("level", 1)]
 		btn.custom_minimum_size = Vector2(0, 40)
 		btn.toggle_mode = true
 		btn.pressed.connect(_on_character_button_pressed.bind(char_data))
@@ -330,6 +338,7 @@ func _update_character_buttons() -> void:
 	if _character_list == null:
 		return
 
+	var dm: Node = get_node("/root/DataManager")
 	for i: int in range(_party_characters.size()):
 		var char_data: Dictionary = _party_characters[i]
 		var char_id: String = char_data.get("id", "")
@@ -337,6 +346,14 @@ func _update_character_buttons() -> void:
 		if not _character_list.has_node(btn_name):
 			continue
 		var btn: Button = _character_list.get_node(btn_name) as Button
+
+		# DataManager에서 표시 이름 조회
+		var display_name: String = char_data.get("name_ko", "")
+		if display_name.is_empty() and dm and dm.has_method("get_character"):
+			var full: Dictionary = dm.get_character(char_id)
+			display_name = full.get("name_ko", "???")
+		if display_name.is_empty():
+			display_name = "???"
 
 		# 배치 여부 확인
 		var is_deployed := false
@@ -350,14 +367,14 @@ func _update_character_buttons() -> void:
 		var is_selected: bool = _selected_character.get("id", "") == char_id
 
 		if is_deployed:
-			btn.text = "%s (Lv.%d) [배치됨]" % [char_data.get("name_ko", "???"), char_data.get("level", 1)]
+			btn.text = "%s (Lv.%d) [배치됨]" % [display_name, char_data.get("level", 1)]
 			btn.button_pressed = true
 			btn.disabled = (char_id == KAEL_ID)  # 카엘은 비활성화
 		elif is_selected:
-			btn.text = "%s (Lv.%d) [선택]" % [char_data.get("name_ko", "???"), char_data.get("level", 1)]
+			btn.text = "%s (Lv.%d) [선택]" % [display_name, char_data.get("level", 1)]
 			btn.button_pressed = true
 			btn.disabled = false
 		else:
-			btn.text = "%s (Lv.%d)" % [char_data.get("name_ko", "???"), char_data.get("level", 1)]
+			btn.text = "%s (Lv.%d)" % [display_name, char_data.get("level", 1)]
 			btn.button_pressed = false
 			btn.disabled = (_deployed.size() >= _deploy_limit)

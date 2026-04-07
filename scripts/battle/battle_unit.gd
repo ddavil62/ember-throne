@@ -138,6 +138,7 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 		skills.append(s as String)
 
 	_update_health_bar()
+	_setup_placeholder_visual()
 
 ## 적 데이터로 유닛 초기화
 ## @param enemy_data DataManager.get_enemy()에서 가져온 적 Dictionary
@@ -168,6 +169,7 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 		skills.append(s as String)
 
 	_update_health_bar()
+	_setup_placeholder_visual()
 
 # ── 이동 ──
 
@@ -291,6 +293,48 @@ func clear_acted_visual() -> void:
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 # ── 내부 유틸 ──
+
+## 스프라이트 프레임이 없으면 컬러 placeholder를 표시한다.
+## 플레이어=파랑, 적=빨강. 첫 글자를 레이블로 표시.
+func _setup_placeholder_visual() -> void:
+	# 이미 유효한 스프라이트가 있으면 건너뜀
+	if _sprite and _sprite.sprite_frames and _sprite.sprite_frames.get_animation_names().size() > 0:
+		return
+
+	# 기존 AnimatedSprite2D를 숨김
+	if _sprite:
+		_sprite.visible = false
+
+	# 기존 placeholder 제거
+	if has_node("PlaceholderRect"):
+		get_node("PlaceholderRect").queue_free()
+
+	var tile_size := 28  # GridSystem.TILE_SIZE(32) 보다 약간 작게
+	var color: Color
+	if team == "player":
+		color = Color(0.2, 0.4, 0.9, 0.9)   # 파랑
+	else:
+		color = Color(0.85, 0.2, 0.2, 0.9)   # 빨강
+
+	# 컬러 사각형
+	var rect := ColorRect.new()
+	rect.name = "PlaceholderRect"
+	rect.color = color
+	rect.size = Vector2(tile_size, tile_size)
+	rect.position = Vector2(-tile_size / 2, -tile_size / 2)
+	add_child(rect)
+
+	# 유닛 이름 첫 글자 레이블
+	var initial := unit_name_ko.substr(0, 1) if not unit_name_ko.is_empty() else "?"
+	var lbl := Label.new()
+	lbl.text = initial
+	lbl.add_theme_font_size_override("font_size", 16)
+	lbl.add_theme_color_override("font_color", Color.WHITE)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.size = Vector2(tile_size, tile_size)
+	lbl.position = Vector2(-tile_size / 2, -tile_size / 2)
+	rect.add_child(lbl)
 
 ## HP바 갱신
 func _update_health_bar() -> void:

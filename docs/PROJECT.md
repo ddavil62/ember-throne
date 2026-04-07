@@ -92,7 +92,8 @@ ember-throne/
 | 월드맵 | 6지역 30+ 거점, 유랑 전투 해금 | 완료 |
 | 상점/거점 | 장비 구매, 대장간 소재 교환 | 완료 |
 | 인벤토리/장비 | 소비/무기/방어구/악세서리 관리 | 완료 |
-| 난이도 | Normal/Hard 2단계, AI 차이 | 완료 |
+| 난이도 | Normal/Hard 2단계, AI 차이, Hard 적 스케일링(레벨+1, 스탯 배율) | 완료 |
+| 클리어 보너스 EXP | 보스/특수 전투 rewards.exp_bonus -> 참전 유닛 flat EXP 지급 | 완료 |
 | 세이브/로드 | 다중 슬롯, 오토세이브 | 완료 |
 | CG 갤러리 | 이벤트 CG 회상 | 완료 |
 | 옵션 | 사운드/화면 설정 | 완료 |
@@ -126,16 +127,21 @@ ember-throne/
 - 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈 -- 게임 플레이 루프 완성 전 별도 작업 필요
 - `spend_gold()` 음수 amount 미검증 -- 현재 호출부 없으나 상점 구현 시 가드 추가 필요 (Phase 2 QA M1)
 - `init_default_party()`의 seria/rinen이 CHARACTER_JOINS와 불일치 -- 기획 확인 필요 (Phase 2 QA M2)
+- DifficultyManager 인스턴스가 `init_from_enemy()` 호출마다 생성됨 -- 성능 영향 미미, 추후 싱글톤/캐싱 검토 (Phase 3 QA L1)
 
 ## 향후 계획
 
 - ~~캐릭터 합류 레벨 JSON 일괄 갱신~~ -- 완료 (Phase 2-B)
 - ~~골드 보상 시스템 구현~~ -- 완료 (Phase 2-A: 적 처치 gold_reward + 전투 보너스 지급)
+- ~~Hard 난이도 적 스케일링~~ -- 완료 (Phase 3: DifficultyManager 연동, 레벨+1/스탯 배율)
+- ~~전투 클리어 보너스 EXP~~ -- 완료 (Phase 3: 보스/특수 전투 exp_bonus 8전 설정)
 - battle_XX.json 보상(gold/item) 수치 동기화
 - 골드 UI 표시 (전투 결과 화면에 획득 골드 표시)
 - spend_gold() 음수 가드 추가 (상점 구현 시)
 - init_default_party() CHARACTER_JOINS 정합성 정리
 - 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
+- 보너스 EXP 대상 확장 검토 (배치 유닛 전체 -> 현재는 공격 행동 유닛만)
+- DifficultyManager 싱글톤/캐싱 전환 검토
 - battle_34 3페이즈 보스전 구현
 - Steam 연동 (GodotSteam: 업적, 클라우드 세이브)
 - 스토어 페이지 에셋 준비

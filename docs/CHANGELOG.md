@@ -2,6 +2,32 @@
 
 ## [미출시] - 2026-04-07
 
+### Changed (Phase 3 Hard 난이도 적 스케일링)
+- `battle_unit.gd`: `init_from_enemy()`에 `DifficultyManager` 연동
+  - `DifficultyManager.new()` 생성 후 `get_enemy_level_bonus()` + `apply_enemy_stats()` 호출
+  - Hard: 적 레벨 +1, HP x1.3, ATK x1.2, DEF x1.15, SPD x1.1
+  - Normal: 레벨 보너스 0, 배율 1.0 (기존 동작과 수학적 동치)
+  - `actual_level` 변수 도입, 스탯 계산 및 `level` 필드에 보정 레벨 사용
+  - `apply_enemy_stats()`의 범용 배율(`enemy_stat_multiplier`): Hard 시 mp/matk/mdef/mov에 1.2 배율 적용 (ENEMY_MULTIPLIER_KEYS 외 스탯)
+
+### Added (Phase 3 전투 클리어 보너스 EXP)
+- `turn_manager.gd`: `_apply_battle_exp()` 끝에 `rewards.exp_bonus` 처리 블록 추가
+  - `battle_map.get_map_data()` -> `rewards.exp_bonus` 조회 (골드 처리와 동일 패턴)
+  - `bonus_exp > 0`인 전투에서 승리 시 `_battle_exp_gained` 키의 플레이어 유닛에게 flat EXP 지급
+  - `exp_bonus = 0`인 전투에서는 조기 종료 (기존 전투 영향 없음)
+- battle JSON 8개 `exp_bonus` 설정 (공식: `difficulty_rating x 5`):
+  - battle_21(35), battle_22(35), battle_26(45), battle_29(45), battle_30(40), battle_33(45), battle_34(50), battle_35(50)
+  - battle_34/35: `gold=0 + exp_bonus=50` 케이스 (골드 보상 없이 EXP 보너스만 지급)
+
+#### Phase 3 QA LOW 이슈
+- L1: `DifficultyManager` 인스턴스가 `init_from_enemy()` 호출마다 생성됨 (RefCounted 기반 즉시 해제, 성능 영향 미미). 장기적으로 싱글톤 또는 BattleScene 레벨 1회 생성 검토
+- L2: 보너스 EXP 대상이 `_battle_exp_gained` 키(공격 행동 유닛)로 한정 -- 배치만 하고 공격 미수행 유닛(힐러 등)은 보너스 미수령. 기존 설계 특성이므로 Phase 3 범위 밖
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-07-ember-throne-phase3-balance-spec.md`
+- 리포트: `.claude/specs/2026-04-07-ember-throne-phase3-report.md`
+- QA: `.claude/specs/2026-04-07-ember-throne-phase3-qa.md`
+
 ### Added (Phase 2 골드 보상 시스템)
 - `party_manager.gd`: `gold: int` 필드, `add_gold()`, `spend_gold()`, `get_gold()` 메서드 추가
 - `event_bus.gd`: `gold_gained(amount: int)` 시그널 추가

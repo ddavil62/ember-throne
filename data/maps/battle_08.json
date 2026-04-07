@@ -147,178 +147,157 @@
   ],
   "objects": [
     {
-      "type": "mushroom",
+      "type": "ancient_tree",
       "position": [
-        4,
-        3
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        9,
-        1
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        14,
-        3
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        13,
-        3
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        19,
+        2,
         2
       ]
     },
     {
-      "type": "rock_medium",
-      "position": [
-        7,
-        4
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        15,
-        4
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        16,
-        7
-      ]
-    },
-    {
-      "type": "ancient_tree",
+      "type": "mushroom",
       "position": [
         1,
-        0
+        4
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        17,
-        7
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        17,
-        3
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        5,
-        2
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        4,
-        1
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        16,
-        2
+        7,
+        0
       ]
     },
     {
       "type": "mushroom",
       "position": [
         2,
-        11
+        4
       ]
     },
     {
       "type": "roots",
       "position": [
-        12,
+        16,
+        1
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        5,
+        10
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        5,
+        8
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        3,
         1
       ]
     },
     {
       "type": "ancient_tree",
       "position": [
-        19,
+        17,
+        0
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        9,
+        2
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        9,
         5
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        18,
-        8
-      ]
-    },
-    {
-      "type": "rock_medium",
-      "position": [
         19,
-        10
+        4
       ]
     },
     {
-      "type": "roots",
+      "type": "pine",
+      "position": [
+        12,
+        2
+      ]
+    },
+    {
+      "type": "pine",
       "position": [
         0,
         1
       ]
     },
     {
-      "type": "roots",
+      "type": "mushroom",
       "position": [
-        12,
-        0
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        3,
+        14,
         5
       ]
     },
     {
-      "type": "mushroom",
+      "type": "ancient_tree",
       "position": [
-        6,
-        1
+        18,
+        5
       ]
     },
     {
-      "type": "ward_pillar",
+      "type": "roots",
       "position": [
-        10,
-        0
+        1,
+        8
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        15,
+        7
       ]
     },
     {
       "type": "ancient_tree",
       "position": [
-        4,
-        9
+        14,
+        1
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        17,
+        8
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        7,
+        1
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        18,
+        8
       ]
     }
   ]

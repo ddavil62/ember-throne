@@ -185,101 +185,94 @@
   ],
   "objects": [
     {
-      "type": "dead_tree",
+      "type": "rock_large",
       "position": [
-        14,
-        4
-      ]
-    },
-    {
-      "type": "burnt_stump",
-      "position": [
-        12,
-        0
-      ]
-    },
-    {
-      "type": "burnt_stump",
-      "position": [
-        4,
-        2
+        0,
+        3
       ]
     },
     {
       "type": "rock_large",
       "position": [
-        1,
-        0
-      ]
-    },
-    {
-      "type": "burnt_stump",
-      "position": [
         14,
-        0
-      ]
-    },
-    {
-      "type": "burnt_stump",
-      "position": [
-        7,
-        2
-      ]
-    },
-    {
-      "type": "fissure",
-      "position": [
-        14,
-        2
-      ]
-    },
-    {
-      "type": "fissure",
-      "position": [
-        3,
-        0
+        7
       ]
     },
     {
       "type": "ash_crystal",
       "position": [
         3,
-        2
-      ]
-    },
-    {
-      "type": "fissure",
-      "position": [
-        9,
-        0
-      ]
-    },
-    {
-      "type": "ash_crystal",
-      "position": [
-        13,
-        1
-      ]
-    },
-    {
-      "type": "dead_tree",
-      "position": [
-        13,
-        2
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        13,
         6
       ]
     },
     {
-      "type": "burnt_stump",
+      "type": "ash_crystal",
+      "position": [
+        0,
+        7
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        13,
+        7
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        12,
+        4
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        10,
+        0
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        2,
+        4
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        10,
+        3
+      ]
+    },
+    {
+      "type": "fissure",
       "position": [
         11,
-        1
+        6
+      ]
+    },
+    {
+      "type": "fissure",
+      "position": [
+        2,
+        3
+      ]
+    },
+    {
+      "type": "ward_stone_active",
+      "position": [
+        14,
+        3
       ]
     }
   ]

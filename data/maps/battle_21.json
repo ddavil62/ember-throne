@@ -176,178 +176,164 @@
   ],
   "objects": [
     {
-      "type": "well",
+      "type": "dead_tree",
       "position": [
-        14,
-        9
-      ]
-    },
-    {
-      "type": "well",
-      "position": [
-        17,
-        2
-      ]
-    },
-    {
-      "type": "wildflower",
-      "position": [
-        18,
-        6
-      ]
-    },
-    {
-      "type": "tree_oak",
-      "position": [
-        16,
+        3,
         1
       ]
     },
     {
-      "type": "well",
+      "type": "fallen_log",
       "position": [
-        19,
+        2,
+        0
+      ]
+    },
+    {
+      "type": "fallen_log",
+      "position": [
+        14,
+        8
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        1,
         4
       ]
     },
     {
-      "type": "burnt_stump",
+      "type": "fallen_log",
       "position": [
-        14,
-        0
+        10,
+        3
       ]
     },
     {
-      "type": "wildflower",
-      "position": [
-        9,
-        2
-      ]
-    },
-    {
-      "type": "well",
-      "position": [
-        6,
-        0
-      ]
-    },
-    {
-      "type": "well",
+      "type": "rock_large",
       "position": [
         1,
-        1
+        10
       ]
     },
     {
-      "type": "well",
-      "position": [
-        5,
-        1
-      ]
-    },
-    {
-      "type": "burnt_stump",
-      "position": [
-        3,
-        0
-      ]
-    },
-    {
-      "type": "bush",
-      "position": [
-        0,
-        7
-      ]
-    },
-    {
-      "type": "tree_oak",
+      "type": "rock_large",
       "position": [
         7,
         1
       ]
     },
     {
-      "type": "wildflower",
+      "type": "burnt_stump",
       "position": [
-        15,
-        6
+        18,
+        9
       ]
     },
     {
-      "type": "tree_oak",
+      "type": "fallen_log",
       "position": [
-        15,
-        2
-      ]
-    },
-    {
-      "type": "tree_oak",
-      "position": [
-        14,
+        18,
         5
       ]
     },
     {
-      "type": "rock",
+      "type": "dead_tree",
       "position": [
-        6,
-        3
+        15,
+        7
+      ]
+    },
+    {
+      "type": "fallen_log",
+      "position": [
+        3,
+        9
       ]
     },
     {
       "type": "burnt_stump",
       "position": [
-        5,
-        3
+        15,
+        9
       ]
     },
     {
-      "type": "bush",
+      "type": "rock_medium",
+      "position": [
+        11,
+        0
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        3,
+        8
+      ]
+    },
+    {
+      "type": "dead_tree",
       "position": [
         18,
+        4
+      ]
+    },
+    {
+      "type": "dead_tree",
+      "position": [
+        5,
+        9
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        6,
         1
       ]
     },
     {
-      "type": "well",
+      "type": "burnt_stump",
       "position": [
         16,
+        9
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        18,
+        10
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        9,
+        1
+      ]
+    },
+    {
+      "type": "fallen_log",
+      "position": [
+        2,
         8
       ]
     },
     {
       "type": "burnt_stump",
       "position": [
-        3,
-        2
+        14,
+        9
       ]
     },
     {
-      "type": "well",
+      "type": "ward_stone_active",
       "position": [
-        0,
-        5
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        8,
-        3
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        5,
-        6
-      ]
-    },
-    {
-      "type": "well",
-      "position": [
-        19,
-        0
+        12,
+        4
       ]
     }
   ]

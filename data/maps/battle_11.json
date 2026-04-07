@@ -162,178 +162,157 @@
   "special_rules": [],
   "objects": [
     {
-      "type": "farm_cart",
-      "position": [
-        19,
-        0
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        3,
-        7
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        3,
-        3
-      ]
-    },
-    {
       "type": "tree_small",
       "position": [
-        4,
-        0
-      ]
-    },
-    {
-      "type": "tree_small",
-      "position": [
-        3,
-        8
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        3,
-        0
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        18,
+        14,
         2
       ]
     },
     {
-      "type": "farm_cart",
-      "position": [
-        17,
-        6
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        1,
-        0
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        10,
-        4
-      ]
-    },
-    {
       "type": "hay_bale",
-      "position": [
-        19,
-        4
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        9,
-        1
-      ]
-    },
-    {
-      "type": "farm_cart",
       "position": [
         11,
-        3
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        19,
-        6
-      ]
-    },
-    {
-      "type": "tree_small",
-      "position": [
-        15,
-        0
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        0,
-        11
-      ]
-    },
-    {
-      "type": "wildflower",
-      "position": [
-        1,
-        6
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        14,
-        9
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        3,
-        6
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        9,
-        0
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        15,
-        10
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        4,
-        6
+        1
       ]
     },
     {
       "type": "farm_cart",
       "position": [
         2,
+        8
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        0,
         10
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        15,
+        8
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        0,
+        3
       ]
     },
     {
       "type": "farm_cart",
       "position": [
-        8,
+        7,
         4
       ]
     },
     {
       "type": "hay_bale",
       "position": [
+        19,
+        6
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        0,
+        9
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        17,
+        0
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        14,
+        8
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        13,
+        4
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        1,
+        8
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        18,
+        5
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
         1,
         1
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        18,
+        8
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        5,
+        6
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        13,
+        1
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        9,
+        2
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        3,
+        8
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        12,
+        5
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        4,
+        8
       ]
     }
   ]

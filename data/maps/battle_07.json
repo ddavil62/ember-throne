@@ -131,100 +131,86 @@
   ],
   "objects": [
     {
-      "type": "rock",
+      "type": "rock_medium",
       "position": [
-        4,
-        1
-      ]
-    },
-    {
-      "type": "tree_oak",
-      "position": [
-        6,
+        11,
         2
       ]
     },
     {
       "type": "tree_oak",
       "position": [
-        3,
-        4
+        4,
+        7
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        2,
+        6
       ]
     },
     {
       "type": "tree_oak",
+      "position": [
+        2,
+        7
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        14,
+        4
+      ]
+    },
+    {
+      "type": "bush_small",
+      "position": [
+        13,
+        0
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "bush_small",
+      "position": [
+        3,
+        6
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        2,
+        2
+      ]
+    },
+    {
+      "type": "wildflower",
       "position": [
         14,
         7
       ]
     },
     {
-      "type": "well",
-      "position": [
-        8,
-        1
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        2,
-        0
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        14,
-        3
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        8,
-        2
-      ]
-    },
-    {
       "type": "tree_oak",
       "position": [
-        11,
-        3
-      ]
-    },
-    {
-      "type": "tree_oak",
-      "position": [
-        0,
-        3
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        1,
-        4
-      ]
-    },
-    {
-      "type": "wildflower",
-      "position": [
-        4,
-        2
-      ]
-    },
-    {
-      "type": "wildflower",
-      "position": [
-        1,
-        5
-      ]
-    },
-    {
-      "type": "bush",
-      "position": [
-        5,
+        12,
         1
       ]
     }

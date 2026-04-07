@@ -238,178 +238,164 @@
   ],
   "objects": [
     {
-      "type": "rock_small",
+      "type": "fallen_log",
       "position": [
-        8,
+        4,
         3
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        17,
-        0
-      ]
-    },
-    {
-      "type": "castle_wall",
-      "position": [
-        2,
-        2
-      ]
-    },
-    {
-      "type": "iron_gate",
-      "position": [
-        2,
-        7
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        8,
-        0
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        1,
-        2
       ]
     },
     {
       "type": "palace_pillar",
       "position": [
-        13,
-        2
+        19,
+        10
       ]
     },
     {
-      "type": "iron_gate",
+      "type": "rock_large",
       "position": [
-        16,
+        15,
+        5
+      ]
+    },
+    {
+      "type": "fallen_log",
+      "position": [
+        19,
         2
       ]
     },
     {
-      "type": "banner",
+      "type": "rock_large",
       "position": [
         5,
         0
       ]
     },
     {
-      "type": "rock_small",
+      "type": "palace_pillar",
+      "position": [
+        16,
+        5
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        17,
+        1
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "rock_large",
       "position": [
         4,
         4
       ]
     },
     {
-      "type": "rock_small",
+      "type": "fallen_log",
       "position": [
-        0,
-        4
+        9,
+        2
       ]
     },
     {
-      "type": "castle_wall",
+      "type": "rock_large",
       "position": [
         17,
-        8
+        3
       ]
     },
     {
-      "type": "castle_wall",
+      "type": "rock_large",
       "position": [
-        2,
+        19,
+        7
+      ]
+    },
+    {
+      "type": "fallen_log",
+      "position": [
+        3,
+        9
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        4,
         6
       ]
     },
     {
-      "type": "castle_wall",
+      "type": "fallen_log",
       "position": [
-        5,
-        4
+        1,
+        2
       ]
     },
     {
-      "type": "castle_wall",
+      "type": "rock_large",
+      "position": [
+        16,
+        6
+      ]
+    },
+    {
+      "type": "palace_pillar",
+      "position": [
+        16,
+        1
+      ]
+    },
+    {
+      "type": "palace_pillar",
+      "position": [
+        11,
+        0
+      ]
+    },
+    {
+      "type": "fallen_log",
       "position": [
         6,
         1
       ]
     },
     {
-      "type": "castle_wall",
+      "type": "fallen_log",
       "position": [
-        14,
-        0
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        7,
-        4
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        11,
-        2
-      ]
-    },
-    {
-      "type": "iron_gate",
-      "position": [
-        7,
-        1
-      ]
-    },
-    {
-      "type": "rock_small",
-      "position": [
-        2,
+        19,
         3
       ]
     },
     {
-      "type": "banner",
+      "type": "rock_large",
       "position": [
-        0,
-        6
-      ]
-    },
-    {
-      "type": "castle_wall",
-      "position": [
-        1,
-        9
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        17,
-        2
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        8,
-        4
+        18,
+        1
       ]
     },
     {
       "type": "palace_pillar",
       "position": [
-        17,
-        4
+        7,
+        0
+      ]
+    },
+    {
+      "type": "iron_gate",
+      "position": [
+        0,
+        14
       ]
     }
   ]

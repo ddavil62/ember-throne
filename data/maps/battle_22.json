@@ -200,128 +200,9 @@
   ],
   "objects": [
     {
-      "type": "farm_cart",
-      "position": [
-        18,
-        5
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        2,
-        2
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        17,
-        2
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        2,
-        6
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        6,
-        3
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        18,
-        7
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        0,
-        4
-      ]
-    },
-    {
-      "type": "farm_cart",
+      "type": "rock_small",
       "position": [
         7,
-        4
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        14,
-        5
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        13,
-        0
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        4,
-        5
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        3,
-        1
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        12,
-        3
-      ]
-    },
-    {
-      "type": "wildflower",
-      "position": [
-        15,
-        8
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        14,
-        10
-      ]
-    },
-    {
-      "type": "farm_cart",
-      "position": [
-        16,
-        10
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        15,
-        0
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        18,
         2
       ]
     },
@@ -329,35 +210,63 @@
       "type": "tree_small",
       "position": [
         17,
-        8
+        6
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        15,
+        1
+      ]
+    },
+    {
+      "type": "tree_small",
+      "position": [
+        2,
+        3
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        2,
+        1
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        4,
+        10
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        16,
+        5
       ]
     },
     {
       "type": "farm_cart",
       "position": [
         14,
-        3
+        2
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        0,
+        5
       ]
     },
     {
       "type": "hay_bale",
       "position": [
         3,
-        6
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        19,
         4
-      ]
-    },
-    {
-      "type": "wildflower",
-      "position": [
-        7,
-        1
       ]
     },
     {
@@ -368,10 +277,80 @@
       ]
     },
     {
-      "type": "fence",
+      "type": "farm_cart",
       "position": [
-        1,
-        10
+        10,
+        2
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        18,
+        5
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        12,
+        1
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        16,
+        9
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        18,
+        4
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        15,
+        2
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        13,
+        1
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        19,
+        8
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        15,
+        9
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        5,
+        0
       ]
     }
   ]

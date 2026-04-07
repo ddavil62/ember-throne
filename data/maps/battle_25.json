@@ -227,126 +227,112 @@
   ],
   "objects": [
     {
-      "type": "weapon_rack",
+      "type": "rock_medium",
       "position": [
-        17,
-        5
+        18,
+        3
       ]
     },
     {
       "type": "rock_large",
       "position": [
-        19,
+        13,
+        2
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        8,
         4
       ]
     },
     {
       "type": "tent",
       "position": [
-        8,
-        1
+        1,
+        6
       ]
     },
     {
-      "type": "barricade",
-      "position": [
-        19,
-        11
-      ]
-    },
-    {
-      "type": "weapon_rack",
-      "position": [
-        12,
-        2
-      ]
-    },
-    {
-      "type": "tent",
-      "position": [
-        3,
-        0
-      ]
-    },
-    {
-      "type": "barricade",
+      "type": "rock_medium",
       "position": [
         15,
-        0
+        3
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        5,
+        6
       ]
     },
     {
       "type": "weapon_rack",
       "position": [
         2,
-        7
+        6
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        9,
+        4
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        15,
+        10
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        0,
+        8
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        7,
+        1
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        18,
+        9
       ]
     },
     {
       "type": "pine",
       "position": [
         0,
-        7
-      ]
-    },
-    {
-      "type": "barricade",
-      "position": [
-        19,
-        6
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        14,
-        0
-      ]
-    },
-    {
-      "type": "pine",
-      "position": [
-        14,
         2
       ]
     },
     {
-      "type": "barricade",
-      "position": [
-        14,
-        6
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        18,
-        6
-      ]
-    },
-    {
-      "type": "pine",
+      "type": "rock_medium",
       "position": [
         16,
-        7
+        10
       ]
     },
     {
-      "type": "tent",
-      "position": [
-        12,
-        0
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        3,
-        5
-      ]
-    },
-    {
-      "type": "barricade",
+      "type": "weapon_rack",
       "position": [
         4,
         8
@@ -355,50 +341,43 @@
     {
       "type": "pine",
       "position": [
-        18,
-        1
-      ]
-    },
-    {
-      "type": "barricade",
-      "position": [
-        9,
-        1
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        17,
-        7
+        8,
+        5
       ]
     },
     {
       "type": "pine",
       "position": [
-        10,
-        4
+        2,
+        0
       ]
     },
     {
-      "type": "rock_medium",
+      "type": "tent",
       "position": [
-        17,
-        0
+        5,
+        5
       ]
     },
     {
       "type": "barricade",
       "position": [
         18,
-        0
+        2
       ]
     },
     {
-      "type": "rock_medium",
+      "type": "barricade",
       "position": [
-        9,
-        2
+        3,
+        3
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        15,
+        5
       ]
     }
   ]

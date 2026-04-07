@@ -158,83 +158,34 @@
       "type": "castle_wall",
       "position": [
         4,
-        1
-      ]
-    },
-    {
-      "type": "castle_wall",
-      "position": [
-        13,
-        4
-      ]
-    },
-    {
-      "type": "iron_gate",
-      "position": [
-        14,
-        5
-      ]
-    },
-    {
-      "type": "iron_gate",
-      "position": [
-        12,
-        1
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        14,
-        7
-      ]
-    },
-    {
-      "type": "palace_pillar",
-      "position": [
-        14,
-        4
-      ]
-    },
-    {
-      "type": "palace_pillar",
-      "position": [
-        11,
         0
       ]
     },
     {
-      "type": "banner",
+      "type": "palace_pillar",
       "position": [
-        0,
+        14,
         6
       ]
     },
     {
       "type": "rock_small",
       "position": [
-        10,
-        0
+        14,
+        7
       ]
     },
     {
       "type": "rock_small",
       "position": [
-        2,
-        4
+        1,
+        6
       ]
     },
     {
       "type": "rock_small",
       "position": [
-        11,
-        5
-      ]
-    },
-    {
-      "type": "palace_pillar",
-      "position": [
-        5,
+        3,
         2
       ]
     },
@@ -242,14 +193,56 @@
       "type": "palace_pillar",
       "position": [
         8,
-        0
+        3
       ]
     },
     {
       "type": "palace_pillar",
       "position": [
-        2,
+        10,
+        2
+      ]
+    },
+    {
+      "type": "palace_pillar",
+      "position": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "castle_wall",
+      "position": [
+        4,
         3
+      ]
+    },
+    {
+      "type": "castle_wall",
+      "position": [
+        2,
+        4
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        11,
+        2
+      ]
+    },
+    {
+      "type": "banner",
+      "position": [
+        2,
+        2
+      ]
+    },
+    {
+      "type": "iron_gate",
+      "position": [
+        0,
+        7
       ]
     }
   ]

@@ -152,101 +152,87 @@
   ],
   "objects": [
     {
-      "type": "tent",
-      "position": [
-        0,
-        4
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        8,
-        2
-      ]
-    },
-    {
       "type": "barricade",
       "position": [
-        5,
-        0
-      ]
-    },
-    {
-      "type": "barricade",
-      "position": [
-        8,
-        0
-      ]
-    },
-    {
-      "type": "barricade",
-      "position": [
-        5,
-        2
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        6,
-        3
-      ]
-    },
-    {
-      "type": "tent",
-      "position": [
-        11,
-        3
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        2,
-        3
+        3,
+        6
       ]
     },
     {
       "type": "rock_large",
       "position": [
         7,
-        0
+        3
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        13,
+        6
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        2,
+        6
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        12,
+        6
+      ]
+    },
+    {
+      "type": "tent",
+      "position": [
+        14,
+        6
       ]
     },
     {
       "type": "rock_large",
       "position": [
-        1,
-        4
+        3,
+        5
       ]
     },
     {
       "type": "barricade",
       "position": [
         11,
-        4
-      ]
-    },
-    {
-      "type": "rock_medium",
-      "position": [
-        2,
         1
-      ]
-    },
-    {
-      "type": "rock_large",
-      "position": [
-        12,
-        8
       ]
     },
     {
       "type": "barricade",
       "position": [
-        1,
-        0
+        0,
+        5
+      ]
+    },
+    {
+      "type": "rock_large",
+      "position": [
+        0,
+        1
+      ]
+    },
+    {
+      "type": "weapon_rack",
+      "position": [
+        14,
+        7
+      ]
+    },
+    {
+      "type": "barricade",
+      "position": [
+        0,
+        4
       ]
     }
   ]

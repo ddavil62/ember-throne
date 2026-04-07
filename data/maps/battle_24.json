@@ -203,44 +203,65 @@
   ],
   "objects": [
     {
-      "type": "house",
+      "type": "rock_small",
       "position": [
-        17,
-        5
+        18,
+        3
       ]
     },
     {
       "type": "lantern",
       "position": [
-        19,
-        4
+        13,
+        2
       ]
     },
     {
-      "type": "dock",
+      "type": "rope_anchor",
       "position": [
         8,
-        1
+        4
       ]
     },
     {
       "type": "crate",
       "position": [
-        19,
-        11
+        1,
+        6
       ]
     },
     {
-      "type": "house",
+      "type": "rock_small",
       "position": [
-        12,
-        2
+        15,
+        3
       ]
     },
     {
-      "type": "dock",
+      "type": "rope_anchor",
       "position": [
-        3,
+        5,
+        6
+      ]
+    },
+    {
+      "type": "bush_small",
+      "position": [
+        2,
+        6
+      ]
+    },
+    {
+      "type": "crate",
+      "position": [
+        9,
+        4
+      ]
+    },
+    {
+      "type": "lantern",
+      "position": [
+        4,
         0
       ]
     },
@@ -248,105 +269,63 @@
       "type": "crate",
       "position": [
         15,
-        0
-      ]
-    },
-    {
-      "type": "house",
-      "position": [
-        2,
-        7
+        10
       ]
     },
     {
       "type": "rope_anchor",
       "position": [
         0,
-        7
+        8
       ]
     },
     {
       "type": "crate",
       "position": [
-        19,
-        6
+        7,
+        1
       ]
     },
     {
-      "type": "lantern",
+      "type": "crate",
       "position": [
-        14,
-        0
+        18,
+        9
       ]
     },
     {
       "type": "rope_anchor",
       "position": [
-        14,
-        2
-      ]
-    },
-    {
-      "type": "house",
-      "position": [
-        16,
-        5
-      ]
-    },
-    {
-      "type": "rock_small",
-      "position": [
-        19,
-        9
-      ]
-    },
-    {
-      "type": "rock_small",
-      "position": [
-        5,
+        15,
         4
-      ]
-    },
-    {
-      "type": "rock_small",
-      "position": [
-        17,
-        10
-      ]
-    },
-    {
-      "type": "house",
-      "position": [
-        18,
-        3
-      ]
-    },
-    {
-      "type": "dock",
-      "position": [
-        12,
-        0
       ]
     },
     {
       "type": "lantern",
       "position": [
-        3,
-        5
+        4,
+        10
       ]
     },
     {
-      "type": "crate",
+      "type": "rock_small",
+      "position": [
+        16,
+        10
+      ]
+    },
+    {
+      "type": "bush_small",
       "position": [
         4,
         8
       ]
     },
     {
-      "type": "rope_anchor",
+      "type": "bush_small",
       "position": [
-        18,
-        1
+        0,
+        10
       ]
     },
     {
@@ -359,22 +338,36 @@
     {
       "type": "lantern",
       "position": [
-        17,
-        7
-      ]
-    },
-    {
-      "type": "rope_anchor",
-      "position": [
-        10,
-        4
+        1,
+        10
       ]
     },
     {
       "type": "rock_small",
       "position": [
-        17,
-        0
+        11,
+        1
+      ]
+    },
+    {
+      "type": "lantern",
+      "position": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "bridge_intact",
+      "position": [
+        10,
+        8
+      ]
+    },
+    {
+      "type": "bridge_broken",
+      "position": [
+        14,
+        8
       ]
     }
   ]

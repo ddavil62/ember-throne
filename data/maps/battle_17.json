@@ -167,101 +167,87 @@
   ],
   "objects": [
     {
-      "type": "rock",
+      "type": "hay_bale",
+      "position": [
+        13,
+        6
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        11,
+        0
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        7,
+        3
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "hay_bale",
+      "position": [
+        10,
+        2
+      ]
+    },
+    {
+      "type": "farm_cart",
+      "position": [
+        9,
+        1
+      ]
+    },
+    {
+      "type": "hay_bale",
       "position": [
         6,
         1
       ]
     },
     {
-      "type": "hay_bale",
+      "type": "farm_cart",
       "position": [
-        9,
-        0
+        4,
+        5
       ]
     },
     {
-      "type": "wildflower",
+      "type": "hay_bale",
       "position": [
-        12,
-        4
+        4,
+        1
       ]
     },
     {
       "type": "tree_small",
       "position": [
-        1,
-        6
+        6,
+        0
       ]
     },
     {
       "type": "hay_bale",
       "position": [
-        2,
-        3
+        14,
+        6
       ]
     },
     {
-      "type": "fence",
-      "position": [
-        0,
-        3
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        0,
-        1
-      ]
-    },
-    {
-      "type": "fence",
+      "type": "farm_cart",
       "position": [
         3,
-        0
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        4,
         4
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        4,
-        0
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        11,
-        2
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        9,
-        2
-      ]
-    },
-    {
-      "type": "hay_bale",
-      "position": [
-        4,
-        6
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        12,
-        5
       ]
     }
   ]

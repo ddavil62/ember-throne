@@ -184,101 +184,115 @@
   ],
   "objects": [
     {
-      "type": "banner",
-      "position": [
-        13,
-        2
-      ]
-    },
-    {
-      "type": "castle_wall",
-      "position": [
-        2,
-        2
-      ]
-    },
-    {
       "type": "palace_pillar",
       "position": [
-        12,
-        4
+        11,
+        3
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        0,
+        6
       ]
     },
     {
       "type": "banner",
       "position": [
-        9,
+        1,
+        5
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        2,
         1
       ]
     },
     {
       "type": "banner",
       "position": [
-        11,
+        13,
+        4
+      ]
+    },
+    {
+      "type": "banner",
+      "position": [
+        13,
         7
       ]
     },
     {
       "type": "castle_wall",
       "position": [
-        5,
+        3,
+        1
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        10,
         2
       ]
     },
     {
-      "type": "palace_pillar",
+      "type": "rock_small",
       "position": [
-        1,
-        2
+        12,
+        6
       ]
     },
     {
-      "type": "palace_pillar",
+      "type": "rock_small",
       "position": [
-        7,
-        2
-      ]
-    },
-    {
-      "type": "banner",
-      "position": [
-        4,
+        12,
         3
       ]
     },
     {
-      "type": "rock_small",
+      "type": "castle_wall",
       "position": [
-        4,
-        7
+        10,
+        1
       ]
     },
     {
       "type": "rock_small",
       "position": [
-        3,
-        4
+        2,
+        3
       ]
     },
     {
-      "type": "palace_pillar",
+      "type": "iron_gate",
       "position": [
-        4,
+        0,
+        8
+      ]
+    },
+    {
+      "type": "trap_hidden",
+      "position": [
+        5,
+        6
+      ]
+    },
+    {
+      "type": "trap_hidden",
+      "position": [
+        8,
         5
       ]
     },
     {
-      "type": "palace_pillar",
+      "type": "trap_hidden",
       "position": [
-        7,
-        3
-      ]
-    },
-    {
-      "type": "palace_pillar",
-      "position": [
-        14,
-        8
+        11,
+        7
       ]
     }
   ]

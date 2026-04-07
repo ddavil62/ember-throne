@@ -128,101 +128,87 @@
   ],
   "objects": [
     {
-      "type": "well",
-      "position": [
-        4,
-        3
-      ]
-    },
-    {
-      "type": "tree_oak",
-      "position": [
-        12,
-        8
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        6,
-        1
-      ]
-    },
-    {
-      "type": "fence",
-      "position": [
-        0,
-        0
-      ]
-    },
-    {
-      "type": "well",
-      "position": [
-        9,
-        1
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        3,
-        4
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        5,
-        2
-      ]
-    },
-    {
-      "type": "rock",
-      "position": [
-        1,
-        4
-      ]
-    },
-    {
-      "type": "bush",
-      "position": [
-        3,
-        3
-      ]
-    },
-    {
-      "type": "well",
-      "position": [
-        12,
-        3
-      ]
-    },
-    {
-      "type": "well",
+      "type": "wildflower",
       "position": [
         14,
         4
       ]
     },
     {
-      "type": "fence",
+      "type": "tree_oak",
       "position": [
-        2,
+        4,
+        4
+      ]
+    },
+    {
+      "type": "wildflower",
+      "position": [
+        13,
+        6
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        10,
         1
       ]
     },
     {
-      "type": "well",
+      "type": "wildflower",
       "position": [
-        5,
+        14,
+        6
+      ]
+    },
+    {
+      "type": "rock_small",
+      "position": [
+        13,
+        7
+      ]
+    },
+    {
+      "type": "fence",
+      "position": [
+        13,
         3
       ]
     },
     {
-      "type": "rock",
+      "type": "fence",
+      "position": [
+        11,
+        7
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "fence",
       "position": [
         3,
-        2
+        6
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "bush_small",
+      "position": [
+        4,
+        5
       ]
     }
   ]

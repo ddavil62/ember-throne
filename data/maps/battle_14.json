@@ -149,101 +149,87 @@
   ],
   "objects": [
     {
-      "type": "ancient_tree",
-      "position": [
-        4,
-        0
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        4,
-        2
-      ]
-    },
-    {
       "type": "rock_medium",
       "position": [
-        2,
-        2
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        3,
-        7
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        6,
-        0
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        5,
-        3
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        2,
-        4
-      ]
-    },
-    {
-      "type": "pine",
-      "position": [
-        10,
-        0
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        0,
-        0
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        12,
-        3
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        4,
+        8,
         1
       ]
     },
     {
-      "type": "rock_medium",
+      "type": "ancient_tree",
       "position": [
         1,
         1
       ]
     },
     {
+      "type": "ancient_tree",
+      "position": [
+        11,
+        3
+      ]
+    },
+    {
       "type": "pine",
       "position": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
         0,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        6,
         2
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        3,
-        3
+        1,
+        5
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        14,
+        7
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        13,
+        4
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        14,
+        1
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        12,
+        2
       ]
     }
   ]

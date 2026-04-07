@@ -242,35 +242,112 @@
   ],
   "objects": [
     {
+      "type": "ancient_tree",
+      "position": [
+        5,
+        1
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        8,
+        3
+      ]
+    },
+    {
       "type": "roots",
       "position": [
-        24,
-        4
+        5,
+        5
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        18,
-        3
+        19,
+        7
       ]
     },
     {
       "type": "mushroom",
       "position": [
         2,
-        3
+        1
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        20,
+        0
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        15,
-        6
+        17,
+        13
       ]
     },
     {
-      "type": "roots",
+      "type": "pine",
+      "position": [
+        18,
+        10
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        4,
+        9
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        7,
+        4
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        2,
+        0
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        15,
+        1
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        17,
+        11
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        19,
+        9
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        6,
+        13
+      ]
+    },
+    {
+      "type": "rock_medium",
       "position": [
         16,
         6
@@ -279,246 +356,141 @@
     {
       "type": "ancient_tree",
       "position": [
-        14,
-        1
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
         24,
-        14
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        17,
-        4
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        1,
-        9
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        0,
-        6
-      ]
-    },
-    {
-      "type": "pine",
-      "position": [
-        19,
-        2
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        1,
-        6
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        21,
-        8
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        18,
-        1
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        23,
-        4
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        6,
-        2
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        21,
-        4
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        3,
-        6
-      ]
-    },
-    {
-      "type": "pine",
-      "position": [
-        20,
-        2
-      ]
-    },
-    {
-      "type": "pine",
-      "position": [
-        6,
-        4
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        0,
-        10
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        24,
-        3
-      ]
-    },
-    {
-      "type": "rock_medium",
-      "position": [
-        22,
         0
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        23,
+        4,
+        2
+      ]
+    },
+    {
+      "type": "mushroom",
+      "position": [
+        8,
         2
       ]
     },
     {
       "type": "ancient_tree",
       "position": [
-        0,
-        9
-      ]
-    },
-    {
-      "type": "rock_medium",
-      "position": [
-        7,
-        9
+        1,
+        0
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        5,
+        19,
         4
-      ]
-    },
-    {
-      "type": "ward_pillar",
-      "position": [
-        0,
-        12
       ]
     },
     {
       "type": "ancient_tree",
       "position": [
-        17,
+        21,
+        8
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        15,
+        0
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        2,
+        8
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        8,
+        4
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        22,
         5
       ]
     },
     {
       "type": "mushroom",
       "position": [
-        19,
-        8
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        22,
-        7
-      ]
-    },
-    {
-      "type": "mushroom",
-      "position": [
-        23,
-        8
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        19,
-        12
-      ]
-    },
-    {
-      "type": "ancient_tree",
-      "position": [
-        4,
-        3
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        10,
-        6
-      ]
-    },
-    {
-      "type": "rock_medium",
-      "position": [
-        21,
-        9
+        3,
+        10
       ]
     },
     {
       "type": "roots",
       "position": [
         0,
+        4
+      ]
+    },
+    {
+      "type": "roots",
+      "position": [
+        7,
         13
       ]
     },
     {
       "type": "roots",
       "position": [
-        10,
-        1
-      ]
-    },
-    {
-      "type": "roots",
-      "position": [
-        20,
+        4,
         4
       ]
     },
     {
-      "type": "mushroom",
+      "type": "ancient_tree",
       "position": [
-        21,
-        0
+        18,
+        3
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        3,
+        12
+      ]
+    },
+    {
+      "type": "ancient_tree",
+      "position": [
+        23,
+        10
+      ]
+    },
+    {
+      "type": "rock_medium",
+      "position": [
+        18,
+        8
+      ]
+    },
+    {
+      "type": "pine",
+      "position": [
+        3,
+        11
+      ]
+    },
+    {
+      "type": "ward_stone_active",
+      "position": [
+        12,
+        4
       ]
     }
   ]

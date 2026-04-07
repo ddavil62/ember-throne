@@ -801,8 +801,22 @@ func _apply_battle_exp() -> void:
 			exp_system.apply_exp(unit, exp_amount)
 			active_exp_list.append(exp_amount)
 
-	# 벤치 유닛 EXP (추후 파티 시스템 연동 시 구현)
-	# var bench_exp: int = exp_system.calc_bench_exp(active_exp_list)
+	# 벤치 유닛 EXP (비참전 파티원에게 참전 유닛 평균 EXP × 0.5 적용)
+	var bench_exp: int = exp_system.calc_bench_exp(active_exp_list)
+	if bench_exp > 0:
+		var pm: Node = _get_party_manager()
+		if pm:
+			# 전투 맵에 배치된 플레이어 유닛 ID 목록
+			var active_ids: Dictionary = {}
+			var player_units: Array[BattleUnit] = _get_units_by_team("player")
+			for pu: BattleUnit in player_units:
+				active_ids[pu.unit_id] = true
+
+			# 파티 전체 멤버 중 전투에 참전하지 않은 유닛에 벤치 EXP 적용
+			for member: Dictionary in pm.party:
+				var char_id: String = member.get("id", "")
+				if char_id != "" and not active_ids.has(char_id):
+					pm.gain_exp(char_id, bench_exp)
 
 # ── 유틸 ──
 
@@ -852,4 +866,11 @@ func _get_game_manager() -> Node:
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree and tree.root.has_node("GameManager"):
 		return tree.root.get_node("GameManager")
+	return null
+
+## PartyManager 싱글톤 참조 취득
+func _get_party_manager() -> Node:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree and tree.root.has_node("PartyManager"):
+		return tree.root.get_node("PartyManager")
 	return null

@@ -204,8 +204,8 @@ func level_up(char_id: String) -> void:
 ## @param current_level 현재 레벨
 ## @returns 필요 경험치
 func _exp_to_next_level(current_level: int) -> int:
-	# 기본 100 + 레벨당 10 증가
-	return 100 + (current_level - 1) * 10
+	# experience_system.gd와 동일한 공식: level * 100
+	return current_level * 100
 
 # ── 스탯 계산 ──
 

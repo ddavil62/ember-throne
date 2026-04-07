@@ -52,9 +52,8 @@ func _start_battle() -> void:
 	var battle_id: String = gm.current_battle_id
 
 	if battle_id.is_empty():
-		push_error("[BattleScene] battle_id가 비어있음")
-		_return_to_world_map()
-		return
+		battle_id = "battle_01"
+		gm.current_battle_id = battle_id
 
 	print("[BattleScene] 전투 시작: %s" % battle_id)
 
@@ -70,8 +69,10 @@ func _start_battle() -> void:
 		if cell_arr is Array and cell_arr.size() >= 2:
 			deploy_cells.append(Vector2i(int(cell_arr[0]), int(cell_arr[1])))
 
-	# 파티 데이터
+	# 파티 데이터 (타이틀 씬 없이 직접 실행 시 기본 파티로 폴백)
 	var pm: Node = get_node("/root/PartyManager")
+	if pm.get_active_party().is_empty():
+		pm.init_default_party()
 	var party: Array[Dictionary] = pm.get_active_party()
 	var deploy_limit: int = map_data.get("deploy_count", 8)
 

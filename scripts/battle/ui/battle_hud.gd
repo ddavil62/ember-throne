@@ -36,7 +36,11 @@ const PADDING: int = 12
 # ── 멤버 변수 ──
 
 ## BattleMap 참조 (외부에서 주입)
-var battle_map: Node2D = null
+var battle_map: Node2D = null:
+	set(value):
+		battle_map = value
+		if _battle_log:
+			_battle_log.battle_map = value
 
 ## 턴 표시 라벨
 var _turn_label: Label = null
@@ -70,6 +74,12 @@ var _target_advantage: Label = null
 ## 현재 선택된 유닛 참조
 var _current_selected_unit: BattleUnit = null
 
+## 전투 로그 패널
+var _battle_log: BattleLog = null
+
+## 배속 토글 버튼
+var _speed_button: Button = null
+
 # ── 초기화 ──
 
 func _ready() -> void:
@@ -81,6 +91,8 @@ func _ready() -> void:
 func _build_ui() -> void:
 	# 턴 표시 (좌상단)
 	_build_turn_display()
+	# 배속 토글 버튼 (턴 라벨 우측)
+	_build_speed_button()
 	# 미니맵 placeholder (우상단)
 	_build_minimap_placeholder()
 	# 선택 유닛 패널 (좌하단)
@@ -89,6 +101,15 @@ func _build_ui() -> void:
 	# 대상 유닛 패널 (우하단)
 	_target_panel = _build_unit_panel(false)
 	_target_panel.visible = false
+	# 전투 로그 패널 (우측, 미니맵 아래)
+	_build_battle_log()
+
+## 전투 로그 패널을 생성한다.
+func _build_battle_log() -> void:
+	_battle_log = BattleLog.new()
+	_battle_log.name = "BattleLog"
+	_battle_log.battle_map = battle_map
+	add_child(_battle_log)
 
 ## EventBus 시그널을 연결한다.
 func _connect_signals() -> void:
@@ -113,6 +134,48 @@ func _build_turn_display() -> void:
 	_turn_label.add_theme_color_override("font_color", COLOR_PHASE_PLAYER)
 	_turn_label.position = Vector2(16, 12)
 	add_child(_turn_label)
+
+## 배속 토글 버튼을 생성한다. 턴 라벨 우측에 배치.
+func _build_speed_button() -> void:
+	_speed_button = Button.new()
+	_speed_button.text = BattleSpeed.get_speed_label()
+	_speed_button.custom_minimum_size = Vector2(56, 28)
+	_speed_button.position = Vector2(260, 10)
+	_speed_button.add_theme_font_size_override("font_size", 16)
+	_speed_button.pressed.connect(_on_speed_button_pressed)
+
+	# 스타일: 반투명 배경 + 악센트 테두리
+	var style_normal := StyleBoxFlat.new()
+	style_normal.bg_color = Color(0.12, 0.12, 0.18, 0.85)
+	style_normal.border_color = COLOR_ACCENT
+	style_normal.set_border_width_all(1)
+	style_normal.set_corner_radius_all(4)
+	style_normal.content_margin_left = 8
+	style_normal.content_margin_right = 8
+	_speed_button.add_theme_stylebox_override("normal", style_normal)
+
+	var style_hover := style_normal.duplicate()
+	style_hover.bg_color = Color(0.18, 0.18, 0.24, 0.9)
+	_speed_button.add_theme_stylebox_override("hover", style_hover)
+
+	var style_pressed := style_normal.duplicate()
+	style_pressed.bg_color = Color(0.25, 0.2, 0.12, 0.9)
+	_speed_button.add_theme_stylebox_override("pressed", style_pressed)
+
+	_speed_button.add_theme_color_override("font_color", COLOR_ACCENT)
+	add_child(_speed_button)
+
+## 배속 버튼 클릭 콜백
+func _on_speed_button_pressed() -> void:
+	BattleSpeed.cycle_speed()
+	_speed_button.text = BattleSpeed.get_speed_label()
+
+## Tab 키로 배속 토글
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_TAB:
+			_on_speed_button_pressed()
+			get_viewport().set_input_as_handled()
 
 ## 턴 정보를 갱신한다.
 ## @param phase 현재 페이즈 ("player" / "enemy" / "npc")

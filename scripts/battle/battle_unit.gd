@@ -14,6 +14,10 @@ const MOVE_SEGMENT_DURATION: float = 0.15
 ## 스프라이트 배율 (1.0 = 원본 크기)
 const SPRITE_SCALE: float = 1.2
 
+## 스프라이트 Y 오프셋 — 발이 타일 중점(0,0)에 오도록 스프라이트를 위로 올림
+## 80px 스프라이트 기준: 발 위치(y≈70) - 중심(y=40) = 30px → 위로 30 올림
+const SPRITE_OFFSET_Y: float = -30.0
+
 ## 8방향 이름 배열
 const DIRECTION_NAMES: Array[String] = [
 	"south", "south_west", "west", "north_west",
@@ -152,6 +156,7 @@ func init_from_character(char_data: Dictionary, char_level: int) -> void:
 	if frames != null and _sprite != null:
 		_sprite.sprite_frames = frames
 		_sprite.scale = Vector2(SPRITE_SCALE, SPRITE_SCALE)
+		_sprite.offset = Vector2(0.0, SPRITE_OFFSET_Y)
 		_sprite.visible = true
 		_sprite.play("idle_south")
 	else:
@@ -203,6 +208,7 @@ func init_from_enemy(enemy_data: Dictionary, enemy_level: int = 1) -> void:
 	if frames != null and _sprite != null:
 		_sprite.sprite_frames = frames
 		_sprite.scale = Vector2(SPRITE_SCALE, SPRITE_SCALE)
+		_sprite.offset = Vector2(0.0, SPRITE_OFFSET_Y)
 		_sprite.visible = true
 		_sprite.play("idle_south")
 	else:

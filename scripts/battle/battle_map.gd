@@ -106,6 +106,12 @@ var _units_by_id: Dictionary = {}
 ## 그리드 오버레이 표시 여부
 var _grid_visible: bool = false
 
+## 현재 호버 중인 셀 좌표 (유닛 정보 팝업, 지형 정보 등에 사용)
+var _hovered_cell: Vector2i = Vector2i(-1, -1)
+
+## 위험 범위 표시 상태
+var _danger_zone_active: bool = false
+
 ## 현재 하이라이트 중인 셀 목록 (타입별)
 var _highlighted_cells: Dictionary = {
 	"move": [],
@@ -136,12 +142,19 @@ var _grid_overlay: Node2D = null
 ## 전투 UI (CanvasLayer, placeholder)
 var _battle_ui: CanvasLayer = null
 
+## 범위 오버레이 (이동 경로, 스킬 범위, 위험 범위 등)
+var _range_overlay: RangeOverlay = null
+
 # ── 초기화 ──
 
 func _ready() -> void:
 	_find_child_nodes()
 	# 그리드 시스템에 유닛 정보 콜백 연결
 	grid.set_unit_info_callback(_get_unit_info_at)
+	# RangeOverlay 생성 (하이라이트 레이어 위)
+	_range_overlay = RangeOverlay.new()
+	_range_overlay.name = "RangeOverlay"
+	add_child(_range_overlay)
 
 ## 자식 노드 참조 취득
 func _find_child_nodes() -> void:
@@ -173,6 +186,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_mouse_hover(mm.global_position)
 	elif event.is_action_pressed("toggle_grid"):
 		_toggle_grid()
+	elif event.is_action_pressed("toggle_danger_zone"):
+		_toggle_danger_zone()
+	elif event.is_action_pressed("show_unit_info"):
+		if grid.is_within_bounds(_hovered_cell):
+			EventBus.unit_info_requested.emit(_hovered_cell)
+	elif event.is_action_pressed("end_turn"):
+		EventBus.end_turn_requested.emit()
 
 # ── 맵 로드 ──
 
@@ -924,6 +944,7 @@ func _handle_mouse_hover(screen_pos: Vector2) -> void:
 	var hovered_cell := GridSystem.world_to_cell(world_pos)
 
 	if grid.is_within_bounds(hovered_cell):
+		_hovered_cell = hovered_cell
 		EventBus.cell_hovered.emit(hovered_cell)
 
 ## 화면 좌표 → 월드 좌표 변환 (카메라 고려)
@@ -960,3 +981,74 @@ func reset_units_turn(team_name: String = "") -> void:
 ## @returns 맵 데이터 Dictionary
 func get_map_data() -> Dictionary:
 	return _map_data
+
+## 현재 호버 중인 셀 좌표를 반환한다.
+## @returns 호버 셀 좌표 (유효하지 않으면 Vector2i(-1, -1))
+func get_hovered_cell() -> Vector2i:
+	return _hovered_cell
+
+# ── 적 위험 범위 (2-4) ──
+
+## 적 위험 범위 토글 (R키)
+func _toggle_danger_zone() -> void:
+	_danger_zone_active = not _danger_zone_active
+
+	if _danger_zone_active:
+		var danger_cells: Array[Vector2i] = _calc_enemy_danger_zone()
+		if _range_overlay:
+			_range_overlay.show_danger_zone(danger_cells)
+	else:
+		if _range_overlay:
+			_range_overlay.clear_danger_zone()
+
+	EventBus.danger_zone_toggled.emit(_danger_zone_active)
+
+## 모든 적의 이동+공격 범위를 합산하여 위험 범위를 계산한다.
+## @returns 위험 셀 배열 (중복 제거)
+func _calc_enemy_danger_zone() -> Array[Vector2i]:
+	var danger_set: Dictionary = {}  # {Vector2i: true} — 중복 제거용
+	var enemy_units: Array[BattleUnit] = get_units_by_team("enemy")
+
+	for unit: BattleUnit in enemy_units:
+		if not unit.is_alive():
+			continue
+
+		var mov: int = unit.stats.get("mov", 0)
+
+		# 이동 범위 계산 (BFS)
+		var move_cells: Array[Vector2i] = grid.get_movement_range(unit.cell, mov, unit.team)
+		# 유닛 현재 위치도 포함
+		var reachable: Array[Vector2i] = [unit.cell]
+		reachable.append_array(move_cells)
+
+		# 무기 사거리 조회
+		var weapon_id: String = unit.equipment.get("weapon", "")
+		var range_min: int = 1
+		var range_max: int = 1
+		if weapon_id != "":
+			var dm: Node = _get_data_manager()
+			if dm:
+				var weapon_data: Dictionary = dm.get_weapon(weapon_id)
+				range_min = weapon_data.get("range_min", 1)
+				range_max = weapon_data.get("range_max", 1)
+
+		# 각 도달 가능 셀에서 공격 범위 합산
+		for reach_cell: Vector2i in reachable:
+			danger_set[reach_cell] = true
+			var atk_cells: Array[Vector2i] = grid.get_attack_range(reach_cell, range_min, range_max)
+			for atk_cell: Vector2i in atk_cells:
+				danger_set[atk_cell] = true
+
+	# Dictionary 키 → Array[Vector2i] 변환
+	var result: Array[Vector2i] = []
+	for cell_key: Vector2i in danger_set:
+		result.append(cell_key)
+	return result
+
+## DataManager 싱글톤 참조 취득
+## @returns DataManager 노드 또는 null
+func _get_data_manager() -> Node:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree and tree.root.has_node("DataManager"):
+		return tree.root.get_node("DataManager")
+	return null

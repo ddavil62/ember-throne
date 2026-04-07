@@ -14,6 +14,7 @@ const COLOR_SKILL_AREA := Color(0.2, 0.9, 0.3, 0.55)
 const COLOR_PATH := Color(1.0, 1.0, 0.2, 0.6)
 const COLOR_PATH_ARROW := Color(1.0, 1.0, 0.2, 0.8)
 const COLOR_DESTINATION := Color(1.0, 1.0, 0.2, 0.9)
+const COLOR_DANGER := Color(0.9, 0.15, 0.15, 0.25)
 
 ## 화살표 크기 비율 (타일 대비)
 const ARROW_SIZE_RATIO: float = 0.4
@@ -41,6 +42,15 @@ var _skill_container: Node2D = null
 ## 스킬 효과 범위 표시 노드 컨테이너
 var _skill_area_container: Node2D = null
 
+## 위험 범위 표시 노드 컨테이너
+var _danger_container: Node2D = null
+
+## 위험 범위 표시 상태
+var _danger_visible: bool = false
+
+## 위험 범위 셀 목록
+var _danger_cells: Array[Vector2i] = []
+
 # ── 초기화 ──
 
 func _ready() -> void:
@@ -55,6 +65,10 @@ func _ready() -> void:
 	_skill_area_container = Node2D.new()
 	_skill_area_container.name = "SkillAreaContainer"
 	add_child(_skill_area_container)
+
+	_danger_container = Node2D.new()
+	_danger_container.name = "DangerZoneContainer"
+	add_child(_danger_container)
 
 # ── 이동 경로 표시 ──
 
@@ -133,6 +147,33 @@ func clear_all() -> void:
 	clear_path()
 	clear_skill_range()
 	clear_skill_area()
+	clear_danger_zone()
+
+# ── 적 위험 범위 표시 (2-4) ──
+
+## 적 위험 범위를 표시한다. 모든 적의 이동+공격 범위를 합산한 빨간 반투명 오버레이.
+## @param cells 위험 범위 셀 배열 (외부에서 합산 후 전달)
+func show_danger_zone(cells: Array[Vector2i]) -> void:
+	clear_danger_zone()
+	_danger_cells = cells.duplicate()
+	_danger_visible = true
+
+	for cell: Vector2i in cells:
+		var world_pos: Vector2 = GridSystem.cell_to_world(cell)
+		_draw_range_cell(world_pos, COLOR_DANGER, _danger_container)
+
+## 적 위험 범위를 제거한다.
+func clear_danger_zone() -> void:
+	_danger_cells.clear()
+	_danger_visible = false
+	if _danger_container:
+		for child: Node in _danger_container.get_children():
+			child.queue_free()
+
+## 위험 범위 표시 상태를 반환한다.
+## @returns 표시 중이면 true
+func is_danger_visible() -> bool:
+	return _danger_visible
 
 # ── 그리기 유틸 ──
 

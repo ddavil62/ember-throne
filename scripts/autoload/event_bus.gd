@@ -81,6 +81,8 @@ signal danger_zone_toggled(enabled: bool)
 signal unit_info_requested(cell: Vector2i)
 ## 턴 종료 요청 (확인 필요)
 signal end_turn_requested()
+## 턴 종료 확인 필요 (미행동 유닛 있음)
+signal end_turn_confirm_needed(unacted_count: int)
 ## 턴 종료 확인 완료
 signal end_turn_confirmed()
 

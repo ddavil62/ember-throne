@@ -110,6 +110,10 @@ func _ready() -> void:
 	# 사망 유닛 추적 (벤치 EXP 오지급 방지)
 	EventBus.unit_died.connect(_on_unit_died_for_exp_tracking)
 
+	# 턴 종료 요청/확인 시그널 (2-7)
+	EventBus.end_turn_requested.connect(_on_end_turn_requested)
+	EventBus.end_turn_confirmed.connect(_on_end_turn_confirmed)
+
 ## 입력 처리 — 행동 메뉴 표시 중 취소 키로 이동 되돌리기
 func _unhandled_input(event: InputEvent) -> void:
 	if _state == TurnState.UNIT_MOVED and event.is_action_pressed("ui_cancel"):
@@ -995,6 +999,50 @@ func _on_unit_died_for_exp_tracking(unit_id: String, _killer_id: String) -> void
 	var pm: Node = _get_party_manager()
 	if pm and pm.get_party_member(unit_id).size() > 0:
 		_battle_dead_player_ids[unit_id] = true
+
+# ── 턴 종료 확인 (2-7) ──
+
+## 턴 종료 요청 콜백 (E키). 플레이어 페이즈에서만 작동.
+## 미행동 유닛이 있으면 확인 대화상자를 표시하고, 모두 행동 완료면 즉시 종료.
+func _on_end_turn_requested() -> void:
+	# 플레이어 페이즈가 아니면 무시
+	if current_phase != "player":
+		return
+	# 전투 종료/연출 중이면 무시
+	if _state == TurnState.BATTLE_END or _state == TurnState.ACTION_EXECUTE:
+		return
+	# 행동 메뉴 표시 중/대상 선택 중이면 무시
+	if _state == TurnState.UNIT_MOVED or _state == TurnState.TARGET_SELECT:
+		return
+
+	var unacted: Array[BattleUnit] = _get_actionable_units("player")
+	if unacted.is_empty():
+		# 모든 유닛 행동 완료 → 즉시 페이즈 종료
+		_force_end_player_phase()
+	else:
+		# 미행동 유닛 있음 → 확인 필요
+		EventBus.end_turn_confirm_needed.emit(unacted.size())
+
+## 턴 종료 확인 완료 콜백 (확인 대화상자에서 "예" 선택)
+func _on_end_turn_confirmed() -> void:
+	if current_phase != "player":
+		return
+	_force_end_player_phase()
+
+## 플레이어 페이즈를 강제 종료한다.
+func _force_end_player_phase() -> void:
+	# 선택 중인 유닛 정리
+	if _selected_unit:
+		_selected_unit.hide_selection()
+	_selected_unit = null
+	_move_cells.clear()
+	_attack_cells.clear()
+	_hide_action_menu()
+	if battle_map:
+		battle_map.clear_highlights()
+
+	_state = TurnState.PHASE_END
+	_end_phase()
 
 # ── 유틸 ──
 

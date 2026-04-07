@@ -108,19 +108,21 @@ Phase 8: 출시 준비 (스토어, 마케팅, 빌드)
 
 | 작업 ID | 작업 | 관련 파일 | 예상 규모 |
 |---------|------|-----------|-----------|
-| 1-1 | 타이틀 → 난이도 선택 → 1막 진입 흐름 검증 | title_screen.gd, game_manager.gd | S |
-| 1-2 | 각 막 전환 시 월드맵 노드 해금 확인 | progression_manager.gd, nodes.json | S |
-| 1-3 | 전투 → 승리 → 결과화면 → 월드맵 복귀 루프 검증 (35개 맵) | battle_scene.gd, battle_result.gd | M |
-| 1-4 | 대화/선택지 → 스토리 플래그 → 분기 확인 (2엔딩) | story_manager.gd, dialogue_manager.gd | M |
-| 1-5 | 캐릭터 합류 타이밍 검증 (12인 전원) | party_manager.gd, progression_manager.gd | S |
-| 1-6 | 상점 재고 → 막별 변화 확인 | shops.json, shop_screen.gd | S |
-| 1-7 | 세이브/로드 → 모든 상태 복원 검증 | save_manager.gd | S |
-| 1-8 | **battle_34 보스 3페이즈 구현** | battle_scene.gd, battle_35.json | M |
-| 1-9 | **전투 결과 골드 표시 구현** | battle_result.gd | S |
-| 1-10 | ~~DifficultyManager 싱글톤 최적화~~ | difficulty_manager.gd | S | **완료** |
-| 1-11 | 벤치 유닛 EXP 엣지케이스 수정 (사망 유닛 벤치 EXP 오지급) | experience_system.gd | S |
+| 1-1 | ~~타이틀 → 난이도 선택 → 1막 진입 흐름 검증~~ | title_screen.gd, game_manager.gd | ✅ 검증 완료 |
+| 1-2 | ~~각 막 전환 시 월드맵 노드 해금 확인~~ | progression_manager.gd, nodes.json | ✅ **버그 수정**: 막 전환 트리거 미호출 → ACT_TRIGGER_NODES 추가 |
+| 1-3 | ~~전투 → 승리 → 결과화면 → 월드맵 복귀 루프 검증~~ | battle_scene.gd, battle_result.gd | ✅ **버그 수정**: 방랑전투 노드 완료 불가 → battle_id 기반 완료로 변경 |
+| 1-4 | ~~대화/선택지 → 스토리 플래그 → 분기 확인 (2엔딩)~~ | story_manager.gd, act4.json | ✅ **버그 수정**: 엔딩 플래그 불일치 (ending_a → ending_a_chosen) |
+| 1-5 | ~~캐릭터 합류 타이밍 검증 (12인 전원)~~ | party_manager.gd, progression_manager.gd | ✅ 검증 완료 (12/12 정상) |
+| 1-6 | ~~상점 재고 → 막별 변화 확인~~ | shops.json, shop_screen.gd | ✅ **버그 수정**: 아이템 ID 불일치 18건 교정 + 대장간 아이템 2종 추가 |
+| 1-7 | ~~세이브/로드 → 모든 상태 복원 검증~~ | save_manager.gd | ✅ 검증 완료 (flags 기반 전체 상태 복원 확인) |
+| 1-8 | ~~battle_34 보스 3페이즈 구현~~ | battle_scene.gd, battle_34.json, boss_ai.gd | ✅ **구현**: 3페이즈 + boss_kill 승리조건 + ascended_morgan 적 데이터 |
+| 1-9 | ~~전투 결과 골드 표시 구현~~ | battle_result.gd, battle_scene.gd | ✅ **구현**: 맵 JSON rewards에서 골드/아이템 읽어 표시 |
+| 1-10 | ~~DifficultyManager 싱글톤 최적화~~ | difficulty_manager.gd | ✅ **구현**: static var 싱글톤 패턴 |
+| 1-11 | ~~벤치 유닛 EXP 엣지케이스 수정~~ | turn_manager.gd | ✅ **구현**: _battle_dead_player_ids로 사망 유닛 추적, 벤치 EXP 제외 |
 
 **산출물**: 1~4막 풀 플레이 가능한 빌드, 알려진 버그 0건
+
+> **Phase 1 완료**: 2026-04-08. 11개 항목 전체 완료. 검증 과정에서 5건의 크리티컬 버그 발견 및 수정.
 
 ---
 

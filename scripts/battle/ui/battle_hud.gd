@@ -148,7 +148,7 @@ func _connect_signals() -> void:
 			eb.damage_dealt.connect(_on_damage_dealt)
 			eb.heal_applied.connect(_on_heal_applied)
 			eb.unit_info_requested.connect(_on_unit_info_requested)
-			eb.end_turn_requested.connect(_on_end_turn_requested)
+			eb.end_turn_confirm_needed.connect(_on_end_turn_confirm_needed)
 
 # ── 턴 표시 ──
 
@@ -1115,14 +1115,13 @@ func _on_confirm_no() -> void:
 	_confirm_dialog.visible = false
 	_confirm_visible = false
 
-## 턴 종료 요청 콜백 (E키). TurnManager 로직을 호출하지 않고 시그널만 발신.
-## TurnManager에서 미행동 유닛 수를 체크하여 확인 팝업 또는 즉시 종료를 결정한다.
-func _on_end_turn_requested() -> void:
+## 턴 종료 확인 필요 콜백. TurnManager가 미행동 유닛을 감지하여 발신.
+## @param unacted_count 미행동 유닛 수
+func _on_end_turn_confirm_needed(unacted_count: int) -> void:
 	# 확인 대화상자가 이미 열려 있으면 무시
 	if _confirm_visible:
 		return
 	# 상세 팝업이 열려 있으면 닫기
 	if _detail_visible:
 		_hide_detail_popup()
-		return
-	# TurnManager에서 처리 (시그널은 이미 발신됨)
+	show_end_turn_confirm(unacted_count)

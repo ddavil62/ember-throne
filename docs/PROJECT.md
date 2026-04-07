@@ -117,7 +117,7 @@ ember-throne/
 
 ## 알려진 제약사항
 
-- 캐릭터 합류 레벨(`data/characters/*.json`의 `join_level`)이 LEVEL-DESIGN.md 기획값과 5인 불일치 -- 별도 Coder 작업에서 JSON 일괄 갱신 예정
+- ~~캐릭터 합류 레벨 JSON 불일치~~ -- Phase 2-B에서 LEVEL-DESIGN.md 기준으로 갱신 완료 (2026-04-07)
 - battle_XX.json 적 레벨은 LEVEL-DESIGN.md 기준으로 동기화 완료. 보상(gold) 수치는 Phase 2에서 갱신 예정
 - battle_34.json 보스전 페이즈가 2단계로 구현되어 있으나 기획은 3페이즈 -- 추후 구현 필요
 - VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완 -- 현재 배틀 데이터에 해당 케이스 없으나 별도 작업 필요
@@ -126,7 +126,7 @@ ember-throne/
 
 ## 향후 계획
 
-- 캐릭터 합류 레벨 JSON 일괄 갱신 (LEVEL-DESIGN.md 기준)
+- ~~캐릭터 합류 레벨 JSON 일괄 갱신~~ -- 완료 (Phase 2-B)
 - battle_XX.json 보상(gold/item) 수치 동기화 (Phase 2)
 - 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
 - battle_34 3페이즈 보스전 구현

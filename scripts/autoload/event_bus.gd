@@ -42,6 +42,8 @@ signal turn_limit_warning(turns_remaining: int)
 signal exp_gained(unit_id: String, amount: int)
 ## 레벨업
 signal level_up(unit_id: String, new_level: int, stat_gains: Dictionary)
+## 골드 획득
+signal gold_gained(amount: int)
 
 # ── 스토리/진행 시그널 ──
 

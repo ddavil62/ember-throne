@@ -38,6 +38,7 @@ func _serialize_game_state() -> Dictionary:
 		"flags": gm.flags.duplicate(true),
 		"party": _serialize_party(),
 		"active_party": pm.serialize_active(),
+		"gold": pm.gold,
 		"inventory": _serialize_inventory(),
 	}
 
@@ -112,6 +113,7 @@ func _apply_save_data(data: Dictionary) -> void:
 		var active_data: Array = data.get("active_party", [])
 		if active_data.size() > 0:
 			pm.deserialize_active(active_data)
+	pm.gold = int(data.get("gold", 0))
 
 	# 인벤토리 데이터 복원
 	var im: Node = get_node("/root/InventoryManager")

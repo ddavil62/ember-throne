@@ -22,6 +22,9 @@ var party: Array[Dictionary] = []
 ## 출격 파티 ID 배열 (최대 8명, kael 항상 포함)
 var active_party: Array[String] = []
 
+## 파티 공용 골드
+var gold: int = 0
+
 # ── 초기화 ──
 
 func _ready() -> void:
@@ -61,10 +64,15 @@ func add_character(char_id: String, level: int = 1) -> void:
 	# 레벨에 따른 기본 스탯 계산
 	var stats: Dictionary = _calc_base_stats(base_stats, growth, level)
 
+	# 초기 EXP: exp 필드는 "다음 레벨까지의 잔여 경험치"를 나타냄 (누적 아님)
+	# gain_exp()에서 _exp_to_next_level() 초과 시 차감+레벨업하는 구조이므로,
+	# 합류 시점의 캐릭터는 해당 레벨 시작점(잔여 0)으로 초기화한다.
+	var initial_exp: int = 0
+
 	var member: Dictionary = {
 		"id": char_id,
 		"level": level,
-		"exp": 0,
+		"exp": initial_exp,
 		"current_hp": stats.get("hp", 1),
 		"current_mp": stats.get("mp", 0),
 		"equipment": {
@@ -392,6 +400,29 @@ func _return_equipment(char_id: String) -> void:
 		if item_id != "":
 			im.add_item(item_id, 1)
 			equipment[slot] = ""
+
+# ── 골드 관리 ──
+
+## 골드를 획득한다.
+## @param amount 획득량 (양수만 유효)
+func add_gold(amount: int) -> void:
+	if amount <= 0:
+		return
+	gold += amount
+
+## 골드를 소비한다. 잔액 부족 시 소비하지 않고 false를 반환한다.
+## @param amount 소비량
+## @returns 소비 성공 여부
+func spend_gold(amount: int) -> bool:
+	if amount > gold:
+		return false
+	gold -= amount
+	return true
+
+## 현재 보유 골드를 반환한다.
+## @returns 보유 골드
+func get_gold() -> int:
+	return gold
 
 # ── 직렬화 ──
 

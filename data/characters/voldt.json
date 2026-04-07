@@ -10,7 +10,7 @@
   "weapon_types": ["sword_shield"],
   "armor_types": ["heavy"],
   "join_scene": "2-10",
-  "join_level": 10,
+  "join_level": 11,
   "mandatory": false,
   "stats_lv1": {
     "hp": 32, "mp": 5, "atk": 7, "def": 10, "matk": 2, "mdef": 5, "spd": 4, "mov": 3

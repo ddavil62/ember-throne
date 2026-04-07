@@ -6,17 +6,19 @@ extends RefCounted
 # ── 상수 ──
 
 ## 씬 종료 시 자동 합류하는 캐릭터 매핑 {scene_id: [{id, level}]}
+## LEVEL-DESIGN.md 기준 캐릭터 합류 씬/레벨 (2026-04-07 갱신)
 const CHARACTER_JOINS: Dictionary = {
-	"1-1": [{"id": "kael", "level": 1}, {"id": "seria", "level": 1}, {"id": "rinen", "level": 2}],
-	"1-4": [{"id": "roc", "level": 3}],
-	"1-5": [{"id": "nael", "level": 3}],
-	"2-1": [{"id": "grid", "level": 6}],
-	"2-2": [{"id": "voldt", "level": 7}],
-	"2-6": [{"id": "drana", "level": 8}],
-	"2-8": [{"id": "irene", "level": 9}],
-	"3-12": [{"id": "hazel", "level": 15}],
-	"4-1": [{"id": "cyr", "level": 18}],
-	"4-5": [{"id": "elmira", "level": 20}],
+	"1-1": [{"id": "kael", "level": 1}],
+	"1-4": [{"id": "seria", "level": 1}],
+	"1-5": [{"id": "grid", "level": 2}],
+	"1-6": [{"id": "rinen", "level": 2}],
+	"2-1": [{"id": "roc", "level": 6}, {"id": "nael", "level": 6}],
+	"2-9": [{"id": "drana", "level": 10}],
+	"2-10": [{"id": "voldt", "level": 11}],
+	"3-1": [{"id": "irene", "level": 13}],
+	"3-12": [{"id": "hazel", "level": 18}],
+	"3-14": [{"id": "cyr", "level": 18}],
+	"4-5": [{"id": "elmira", "level": 25}],
 }
 
 ## 막(Act)별 기본 BGM 매핑

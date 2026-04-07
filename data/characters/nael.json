@@ -10,7 +10,7 @@
   "weapon_types": ["staff"],
   "armor_types": ["light", "robe"],
   "join_scene": "2-1",
-  "join_level": 5,
+  "join_level": 6,
   "mandatory": false,
   "stats_lv1": {
     "hp": 22, "mp": 14, "atk": 4, "def": 6, "matk": 7, "mdef": 6, "spd": 6, "mov": 4

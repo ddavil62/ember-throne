@@ -10,7 +10,7 @@
   "weapon_types": ["bow"],
   "armor_types": ["light", "cloak"],
   "join_scene": "2-1",
-  "join_level": 5,
+  "join_level": 6,
   "mandatory": false,
   "stats_lv1": {
     "hp": 22, "mp": 7, "atk": 9, "def": 5, "matk": 2, "mdef": 4, "spd": 9, "mov": 5

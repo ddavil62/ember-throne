@@ -10,7 +10,7 @@
   "weapon_types": ["dagger", "throwing_weapon"],
   "armor_types": ["light", "cloak"],
   "join_scene": "3-1",
-  "join_level": 12,
+  "join_level": 13,
   "mandatory": false,
   "stats_lv1": {
     "hp": 21, "mp": 10, "atk": 7, "def": 5, "matk": 4, "mdef": 5, "spd": 9, "mov": 4

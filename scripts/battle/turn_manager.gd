@@ -83,6 +83,9 @@ var _action_menu_container: VBoxContainer = null
 ## 이번 전투에서 각 유닛이 획득한 EXP 누적 {unit_id: int}
 var _battle_exp_gained: Dictionary = {}
 
+## 이번 전투에서 적 처치로 누적된 골드
+var _battle_gold_gained: int = 0
+
 ## 승리/패배 조건 판별기
 var _vcc: VictoryConditionChecker = null
 
@@ -112,6 +115,7 @@ func connect_battle_map() -> void:
 func start_battle() -> void:
 	turn_number = 1
 	_battle_exp_gained.clear()
+	_battle_gold_gained = 0
 
 	# VCC 초기화 — 맵 데이터에서 승리/패배 조건 로드
 	if _vcc and battle_map:
@@ -422,6 +426,15 @@ func _execute_attack(attacker: BattleUnit, defender: BattleUnit) -> void:
 		if not defender.is_alive():
 			var kill_exp: int = exp_system.calc_kill_exp(attacker.level, defender.level)
 			_accumulate_exp(attacker.unit_id, kill_exp)
+
+			# 골드 드롭 처리 (_source_data에서 gold_reward 직접 참조)
+			if defender.team == "enemy":
+				var gr: Dictionary = defender._source_data.get("gold_reward", {})
+				var g_min: int = int(gr.get("min", 0))
+				var g_max: int = int(gr.get("max", 0))
+				if g_max > 0:
+					_battle_gold_gained += randi_range(g_min, g_max)
+
 			EventBus.unit_died.emit(defender.unit_id, attacker.unit_id)
 			if battle_map:
 				battle_map.remove_unit(defender.cell)
@@ -465,6 +478,14 @@ func _execute_counterattack(counter_attacker: BattleUnit, counter_target: Battle
 
 		# 반격으로 사망
 		if not counter_target.is_alive():
+			# 골드 드롭 처리 (반격으로 적 사망 시)
+			if counter_target.team == "enemy":
+				var gr: Dictionary = counter_target._source_data.get("gold_reward", {})
+				var g_min: int = int(gr.get("min", 0))
+				var g_max: int = int(gr.get("max", 0))
+				if g_max > 0:
+					_battle_gold_gained += randi_range(g_min, g_max)
+
 			EventBus.unit_died.emit(counter_target.unit_id, counter_attacker.unit_id)
 			if battle_map:
 				battle_map.remove_unit(counter_target.cell)
@@ -524,6 +545,9 @@ func _on_victory_achieved(condition_type: String, reason_ko: String) -> void:
 
 	# 경험치 적용
 	_apply_battle_exp()
+
+	# 골드 적용
+	_apply_battle_gold()
 
 	var gm: Node = _get_game_manager()
 	var battle_id: String = gm.current_battle_id if gm else ""
@@ -786,6 +810,22 @@ func _execute_ai_unit_action(unit: BattleUnit) -> void:
 ## @param exp_amount 획득 EXP
 func _accumulate_exp(unit_id: String, exp_amount: int) -> void:
 	_battle_exp_gained[unit_id] = _battle_exp_gained.get(unit_id, 0) + exp_amount
+
+## 전투 종료 시 누적된 골드를 파티에 지급한다 (적 드롭 + 맵 보상)
+func _apply_battle_gold() -> void:
+	if battle_map == null:
+		return
+	var map_data: Dictionary = battle_map.get_map_data()
+	var bonus_gold: int = int(map_data.get("rewards", {}).get("gold", 0))
+	var total_gold: int = _battle_gold_gained + bonus_gold
+	if total_gold <= 0:
+		return
+	var pm: Node = _get_party_manager()
+	if pm == null:
+		return
+	pm.add_gold(total_gold)
+	EventBus.gold_gained.emit(total_gold)
+	print("[TurnManager] 골드 획득: %d (드롭: %d + 보상: %d)" % [total_gold, _battle_gold_gained, bonus_gold])
 
 ## 전투 종료 시 누적된 경험치를 각 유닛에 적용한다
 func _apply_battle_exp() -> void:

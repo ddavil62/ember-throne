@@ -66,17 +66,8 @@
       "enemy_id": "ash_beast_small",
       "level": 1,
       "position": [
-        6,
-        11
-      ],
-      "ai_override": null
-    },
-    {
-      "enemy_id": "ash_beast_small",
-      "level": 1,
-      "position": [
-        9,
-        11
+        8,
+        10
       ],
       "ai_override": null
     },
@@ -85,7 +76,7 @@
       "level": 1,
       "position": [
         12,
-        11
+        10
       ],
       "ai_override": null
     },
@@ -94,6 +85,15 @@
       "level": 1,
       "position": [
         15,
+        10
+      ],
+      "ai_override": null
+    },
+    {
+      "enemy_id": "ash_beast_small",
+      "level": 1,
+      "position": [
+        16,
         11
       ],
       "ai_override": null
@@ -103,7 +103,7 @@
       "level": 1,
       "position": [
         18,
-        11
+        10
       ],
       "ai_override": null
     },
@@ -111,8 +111,8 @@
       "enemy_id": "ash_beast_medium",
       "level": 2,
       "position": [
-        4,
-        13
+        5,
+        12
       ],
       "ai_override": null
     },
@@ -120,8 +120,8 @@
       "enemy_id": "ash_beast_medium",
       "level": 2,
       "position": [
-        8,
-        13
+        10,
+        12
       ],
       "ai_override": null
     },
@@ -129,8 +129,8 @@
       "enemy_id": "ash_beast_medium",
       "level": 2,
       "position": [
-        12,
-        13
+        14,
+        12
       ],
       "ai_override": null
     },
@@ -138,8 +138,8 @@
       "enemy_id": "ash_beast_medium",
       "level": 2,
       "position": [
-        16,
-        13
+        17,
+        12
       ],
       "ai_override": null
     },
@@ -147,8 +147,8 @@
       "enemy_id": "ash_beast_large",
       "level": 3,
       "position": [
-        7,
-        15
+        8,
+        14
       ],
       "ai_override": null
     },
@@ -157,7 +157,7 @@
       "level": 3,
       "position": [
         13,
-        15
+        14
       ],
       "ai_override": null
     }
@@ -180,6 +180,21 @@
       "type": "wave_spawn",
       "description_ko": "1턴: 재의 짐승(소), 2턴: 재의 짐승(중/대) 진입"
     }
+  ],
+  "objects": [
+    {"type": "tree_oak", "position": [1, 7]},
+    {"type": "tree_oak", "position": [2, 8]},
+    {"type": "tree_oak", "position": [14, 5]},
+    {"type": "tree_oak", "position": [15, 6]},
+    {"type": "tree_oak", "position": [13, 7]},
+    {"type": "tree_oak", "position": [16, 7]},
+    {"type": "well",     "position": [2, 6]},
+    {"type": "rock",     "position": [10, 6]},
+    {"type": "rock",     "position": [6, 7]},
+    {"type": "rock",     "position": [14, 4]},
+    {"type": "burnt_stump", "position": [3, 9]},
+    {"type": "burnt_stump", "position": [9, 9]},
+    {"type": "burnt_stump", "position": [17, 9]}
   ],
   "tiles": [
     [

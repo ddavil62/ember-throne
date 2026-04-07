@@ -6,11 +6,13 @@ extends Node2D
 ## 카메라 스크롤 속도 (픽셀/초)
 const CAMERA_SCROLL_SPEED: float = 300.0
 
-## 하이라이트 색상
-const COLOR_MOVE: Color = Color(0.2, 0.4, 0.9, 0.35)       # 이동 범위 (파란색 반투명)
-const COLOR_ATTACK: Color = Color(0.9, 0.2, 0.2, 0.35)      # 공격 범위 (빨간색 반투명)
-const COLOR_DEPLOY: Color = Color(0.2, 0.9, 0.3, 0.35)      # 배치 가능 (초록색 반투명)
+## 하이라이트 색상 (테두리용 — fill은 alpha 0.08, border는 0.75로 표시)
+const COLOR_MOVE: Color = Color(0.3, 0.55, 1.0, 1.0)        # 이동 범위 (파란색)
+const COLOR_ATTACK: Color = Color(1.0, 0.25, 0.25, 1.0)     # 공격 범위 (빨간색)
+const COLOR_DEPLOY: Color = Color(0.35, 1.0, 0.45, 1.0)     # 배치 가능 (초록색)
 const COLOR_GRID_LINE: Color = Color(1.0, 1.0, 1.0, 0.15)   # 그리드 선
+## 테두리 두께 (픽셀)
+const HIGHLIGHT_BORDER: float = 2.0
 
 # ── Wang 타일셋 상수 ──
 
@@ -760,16 +762,38 @@ func _redraw_highlights() -> void:
 	for cell_pos: Vector2i in dep_cells:
 		_add_highlight_rect(cell_pos, COLOR_DEPLOY)
 
-## 하이라이트 셀 ColorRect 추가
+## 하이라이트 셀 표시 — 얇은 테두리 + 아주 연한 배경
 ## @param cell_pos 셀 좌표
-## @param color 하이라이트 색상
+## @param color 하이라이트 색상 (alpha=1 기준으로 fill/border에 각각 적용)
 func _add_highlight_rect(cell_pos: Vector2i, color: Color) -> void:
-	var rect := ColorRect.new()
-	rect.size = Vector2(GridSystem.TILE_SIZE, GridSystem.TILE_SIZE)
-	rect.position = Vector2(cell_pos.x * GridSystem.TILE_SIZE, cell_pos.y * GridSystem.TILE_SIZE)
-	rect.color = color
-	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_highlight_layer.add_child(rect)
+	var tile := float(GridSystem.TILE_SIZE)
+	var wx := float(cell_pos.x) * tile
+	var wy := float(cell_pos.y) * tile
+
+	# 연한 배경 (alpha 0.08)
+	var fill := ColorRect.new()
+	fill.size = Vector2(tile, tile)
+	fill.position = Vector2(wx, wy)
+	fill.color = Color(color.r, color.g, color.b, 0.08)
+	fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_highlight_layer.add_child(fill)
+
+	# 테두리 4변 (alpha 0.72)
+	var bw := HIGHLIGHT_BORDER
+	var bc := Color(color.r, color.g, color.b, 0.72)
+	var borders: Array[Dictionary] = [
+		{"pos": Vector2(wx, wy),              "size": Vector2(tile, bw)},   # 상
+		{"pos": Vector2(wx, wy + tile - bw),  "size": Vector2(tile, bw)},   # 하
+		{"pos": Vector2(wx, wy),              "size": Vector2(bw, tile)},   # 좌
+		{"pos": Vector2(wx + tile - bw, wy),  "size": Vector2(bw, tile)},   # 우
+	]
+	for b: Dictionary in borders:
+		var edge := ColorRect.new()
+		edge.size = b["size"]
+		edge.position = b["pos"]
+		edge.color = bc
+		edge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_highlight_layer.add_child(edge)
 
 # ── 그리드 오버레이 ──
 

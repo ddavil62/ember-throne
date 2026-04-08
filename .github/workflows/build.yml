@@ -1,0 +1,214 @@
+# Ember Throne — 멀티 플랫폼 릴리스 빌드 파이프라인
+# Godot 4.6.2 / Windows · Linux · macOS
+# 트리거: main push, 태그 push (v*), 수동 실행
+
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: "4.6.2"
+  PROJECT_NAME: "EmberThrone"
+
+jobs:
+  # ── 빌드 매트릭스 ──────────────────────────────────────────────
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows
+            preset: "Windows Desktop"
+            export_path: "build/windows/EmberThrone.exe"
+            artifact_name: EmberThrone-Windows
+            runs_on: ubuntu-latest
+          - platform: linux
+            preset: "Linux/X11"
+            export_path: "build/linux/EmberThrone.x86_64"
+            artifact_name: EmberThrone-Linux
+            runs_on: ubuntu-latest
+          - platform: macos
+            preset: "macOS"
+            export_path: "build/macos/EmberThrone.zip"
+            artifact_name: EmberThrone-macOS
+            runs_on: ubuntu-latest
+
+    runs-on: ${{ matrix.runs_on }}
+    name: Build (${{ matrix.platform }})
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+          include-templates: true
+
+      - name: Verify Godot version
+        run: godot --version
+
+      # export_presets.cfg 는 .gitignore 에 포함되어 있으므로 CI 에서 생성
+      - name: Generate export_presets.cfg
+        run: |
+          cat > export_presets.cfg << 'PRESETS'
+          [preset.0]
+
+          name="Windows Desktop"
+          platform="Windows Desktop"
+          runnable=true
+          dedicated_server=false
+          custom_features=""
+          export_filter="all_resources"
+          include_filter=""
+          exclude_filter=""
+          export_path="build/windows/EmberThrone.exe"
+          encryption_include_filters=""
+          encryption_exclude_filters=""
+          encrypt_pck=false
+          encrypt_directory=false
+
+          [preset.0.options]
+
+          custom_template/debug=""
+          custom_template/release=""
+          binary_format/embed_pck=true
+          application/modify_resources=true
+          application/icon=""
+          application/console_wrapper=false
+          application/icon_interpolation=4
+          application/file_version=""
+          application/product_version=""
+          application/company_name="Lazy Slime Studio"
+          application/product_name="Ember Throne"
+          application/file_description="Ember Throne"
+          application/copyright="(c) 2026 Lazy Slime Studio"
+
+          [preset.1]
+
+          name="Linux/X11"
+          platform="Linux"
+          runnable=true
+          dedicated_server=false
+          custom_features=""
+          export_filter="all_resources"
+          include_filter=""
+          exclude_filter=""
+          export_path="build/linux/EmberThrone.x86_64"
+          encryption_include_filters=""
+          encryption_exclude_filters=""
+          encrypt_pck=false
+          encrypt_directory=false
+
+          [preset.1.options]
+
+          custom_template/debug=""
+          custom_template/release=""
+          binary_format/embed_pck=true
+
+          [preset.2]
+
+          name="macOS"
+          platform="macOS"
+          runnable=true
+          dedicated_server=false
+          custom_features=""
+          export_filter="all_resources"
+          include_filter=""
+          exclude_filter=""
+          export_path="build/macos/EmberThrone.zip"
+          encryption_include_filters=""
+          encryption_exclude_filters=""
+          encrypt_pck=false
+          encrypt_directory=false
+
+          [preset.2.options]
+
+          custom_template/debug=""
+          custom_template/release=""
+          binary_format/embed_pck=true
+          application/icon=""
+          application/bundle_identifier="com.lazyslimestudio.emberthrone"
+          application/signature=""
+          application/app_category="Games"
+          application/short_version="0.1.0"
+          application/version="0.1.0"
+          application/copyright="(c) 2026 Lazy Slime Studio"
+          codesign/codesign=0
+          notarization/notarization=0
+          PRESETS
+
+      - name: Create build directories
+        run: |
+          mkdir -p build/windows
+          mkdir -p build/linux
+          mkdir -p build/macos
+
+      # Godot 에디터를 한 번 실행하여 .godot/ import 캐시 생성
+      - name: Import project assets
+        run: godot --headless --editor --quit-after 30 2>/dev/null || true
+
+      # GodotSteam 미설치 CI 환경에서 SteamManager가 안전하게 fallback 하도록 환경변수 설정
+      - name: Export (${{ matrix.platform }})
+        env:
+          STEAM_SDK_AVAILABLE: "false"
+        run: |
+          godot --headless --export-release "${{ matrix.preset }}" "${{ matrix.export_path }}" 2>&1 | tee export.log
+          # export가 실패해도 결과 파일이 있으면 성공으로 처리 (경고 허용)
+          if [ ! -f "${{ matrix.export_path }}" ]; then
+            echo "::error::Export failed — output file not found: ${{ matrix.export_path }}"
+            cat export.log
+            exit 1
+          fi
+
+      # 빌드 결과물을 zip 으로 묶기
+      - name: Package artifact
+        run: |
+          cd build/${{ matrix.platform }}
+          zip -r ../../${{ matrix.artifact_name }}.zip .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_name }}.zip
+          retention-days: 14
+
+  # ── GitHub Release (태그 push 시) ──────────────────────────────
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List artifacts
+        run: ls -R artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
+          files: |
+            artifacts/EmberThrone-Windows/EmberThrone-Windows.zip
+            artifacts/EmberThrone-Linux/EmberThrone-Linux.zip
+            artifacts/EmberThrone-macOS/EmberThrone-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

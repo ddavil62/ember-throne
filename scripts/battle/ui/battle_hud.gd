@@ -175,6 +175,20 @@ func _connect_signals() -> void:
 			eb.unit_info_requested.connect(_on_unit_info_requested)
 			eb.end_turn_confirm_needed.connect(_on_end_turn_confirm_needed)
 
+## 씬 트리에서 제거될 때 EventBus 시그널을 해제한다.
+func _exit_tree() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree and tree.root and tree.root.has_node("EventBus"):
+		var eb: Node = tree.root.get_node("EventBus")
+		eb.turn_started.disconnect(_on_turn_started)
+		eb.unit_selected.disconnect(_on_unit_selected)
+		eb.unit_deselected.disconnect(_on_unit_deselected)
+		eb.cell_hovered.disconnect(_on_cell_hovered)
+		eb.damage_dealt.disconnect(_on_damage_dealt)
+		eb.heal_applied.disconnect(_on_heal_applied)
+		eb.unit_info_requested.disconnect(_on_unit_info_requested)
+		eb.end_turn_confirm_needed.disconnect(_on_end_turn_confirm_needed)
+
 # ── 턴 표시 ──
 
 ## 좌상단 턴 표시 라벨을 생성한다.

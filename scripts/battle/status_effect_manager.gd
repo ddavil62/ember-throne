@@ -308,6 +308,10 @@ func get_active_effects(unit: BattleUnit) -> Array[Dictionary]:
 		result.append(effect.duplicate())
 	return result
 
+## 전체 상태이상 데이터를 초기화한다. 전투 종료/시작 시 호출.
+func clear_all_effects() -> void:
+	_effects.clear()
+
 ## 유닛의 모든 상태이상을 제거한다. (전투 종료 시 등)
 ## @param unit 대상 유닛
 func clear_all(unit: BattleUnit) -> void:

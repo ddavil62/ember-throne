@@ -152,6 +152,21 @@ func _connect_signals() -> void:
 	eb.battle_won.connect(_on_battle_won)
 	eb.battle_lost.connect(_on_battle_lost)
 
+## 씬 트리에서 제거될 때 EventBus 시그널을 해제한다.
+func _exit_tree() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree and tree.root and tree.root.has_node("EventBus"):
+		var eb: Node = tree.root.get_node("EventBus")
+		eb.turn_started.disconnect(_on_turn_started)
+		eb.damage_dealt.disconnect(_on_damage_dealt)
+		eb.heal_applied.disconnect(_on_heal_applied)
+		eb.skill_used.disconnect(_on_skill_used)
+		eb.status_applied.disconnect(_on_status_applied)
+		eb.status_removed.disconnect(_on_status_removed)
+		eb.unit_died.disconnect(_on_unit_died)
+		eb.battle_won.disconnect(_on_battle_won)
+		eb.battle_lost.disconnect(_on_battle_lost)
+
 # ── 입력 처리 ──
 
 func _unhandled_input(event: InputEvent) -> void:

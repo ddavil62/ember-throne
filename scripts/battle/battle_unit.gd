@@ -112,6 +112,9 @@ var _status_icons: HBoxContainer = null
 ## 선택 표시 노드
 var _selection_indicator: Sprite2D = null
 
+## 피격 깜빡임 Tween (중복 방지용)
+var _damage_tween: Tween
+
 # ── 초기화 ──
 
 func _ready() -> void:
@@ -554,6 +557,9 @@ func _update_sprite_direction() -> void:
 
 ## 피격 깜빡임 효과
 func _flash_damage() -> void:
-	var tween := create_tween()
-	tween.tween_property(self, "modulate", Color(1.0, 0.3, 0.3, 1.0), 0.05)
-	tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.1)
+	# 기존 피격 Tween이 있으면 정리
+	if _damage_tween and _damage_tween.is_valid():
+		_damage_tween.kill()
+	_damage_tween = create_tween()
+	_damage_tween.tween_property(self, "modulate", Color(1.0, 0.3, 0.3, 1.0), 0.05)
+	_damage_tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.1)

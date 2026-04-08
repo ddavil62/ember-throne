@@ -114,6 +114,12 @@ func _ready() -> void:
 	EventBus.end_turn_requested.connect(_on_end_turn_requested)
 	EventBus.end_turn_confirmed.connect(_on_end_turn_confirmed)
 
+## 씬 트리에서 제거될 때 EventBus 시그널을 해제한다.
+func _exit_tree() -> void:
+	EventBus.unit_died.disconnect(_on_unit_died_for_exp_tracking)
+	EventBus.end_turn_requested.disconnect(_on_end_turn_requested)
+	EventBus.end_turn_confirmed.disconnect(_on_end_turn_confirmed)
+
 ## 입력 처리 — 행동 메뉴 표시 중 취소 키로 이동 되돌리기
 func _unhandled_input(event: InputEvent) -> void:
 	if _state == TurnState.UNIT_MOVED and event.is_action_pressed("ui_cancel"):

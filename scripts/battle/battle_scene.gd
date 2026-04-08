@@ -504,6 +504,13 @@ func _execute_terrain_change(evt: Dictionary) -> void:
 			_battle_map.set_terrain(cell, new_terrain)
 			print("[BattleScene] 지형 변경: %s → %s" % [str(cell), new_terrain])
 
+## 씬 트리에서 제거될 때 EventBus 시그널을 해제한다.
+func _exit_tree() -> void:
+	EventBus.battle_condition_triggered.disconnect(_on_battle_condition_triggered)
+	EventBus.unit_died.disconnect(_on_unit_died_check_phase)
+	EventBus.turn_started.disconnect(_on_turn_started_check_events)
+	EventBus.unit_died.disconnect(_on_unit_died_check_events)
+
 ## 월드맵으로 복귀한다.
 func _return_to_world_map() -> void:
 	var gm: Node = get_node("/root/GameManager")

@@ -43,6 +43,12 @@ signal effect_finished()
 ## 화면 흔들림용 원래 카메라 오프셋
 var _original_camera_offset: Vector2 = Vector2.ZERO
 
+## 화면 흔들림 Tween (중복 방지용)
+var _shake_tween: Tween
+
+## 화면 플래시 Tween (중복 방지용)
+var _flash_tween: Tween
+
 ## 화면 플래시용 CanvasLayer
 var _flash_layer: CanvasLayer = null
 
@@ -131,27 +137,31 @@ func play_effect(effect_id: String, world_pos: Vector2, tier: String) -> void:
 ## @param intensity 흔들림 강도 (픽셀)
 ## @param duration 지속 시간 (초)
 func play_screen_shake(intensity: float, duration: float) -> void:
+	# 기존 흔들림 Tween이 있으면 정리
+	if _shake_tween and _shake_tween.is_valid():
+		_shake_tween.kill()
+
 	var camera: Camera2D = _get_active_camera()
 	if camera == null:
 		# 카메라 없으면 자체 Node2D 위치로 흔들기
-		var tween := create_tween()
+		_shake_tween = create_tween()
 		var original_pos: Vector2 = position
 		var shake_count: int = int(duration / 0.05)
 		for i: int in range(shake_count):
 			var offset := Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
-			tween.tween_property(self, "position", original_pos + offset, 0.05)
-		tween.tween_property(self, "position", original_pos, 0.05)
+			_shake_tween.tween_property(self, "position", original_pos + offset, 0.05)
+		_shake_tween.tween_property(self, "position", original_pos, 0.05)
 		return
 
 	_original_camera_offset = camera.offset
-	var tween := create_tween()
+	_shake_tween = create_tween()
 	var shake_count: int = int(duration / 0.05)
 
 	for i: int in range(shake_count):
 		var offset := Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
-		tween.tween_property(camera, "offset", _original_camera_offset + offset, 0.05)
+		_shake_tween.tween_property(camera, "offset", _original_camera_offset + offset, 0.05)
 
-	tween.tween_property(camera, "offset", _original_camera_offset, 0.05)
+	_shake_tween.tween_property(camera, "offset", _original_camera_offset, 0.05)
 
 ## 화면 플래시 효과를 재생한다.
 ## @param color 플래시 색상
@@ -160,9 +170,13 @@ func play_screen_flash(color: Color, duration: float) -> void:
 	if _flash_rect == null:
 		return
 
+	# 기존 플래시 Tween이 있으면 정리
+	if _flash_tween and _flash_tween.is_valid():
+		_flash_tween.kill()
+
 	_flash_rect.color = color
-	var tween := create_tween()
-	tween.tween_property(_flash_rect, "color", Color(color.r, color.g, color.b, 0), duration)
+	_flash_tween = create_tween()
+	_flash_tween.tween_property(_flash_rect, "color", Color(color.r, color.g, color.b, 0), duration)
 
 # ── 내부 이펙트 재생 ──
 

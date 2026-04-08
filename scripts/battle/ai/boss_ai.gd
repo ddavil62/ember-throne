@@ -652,6 +652,13 @@ func _wait_action(unit: BattleUnit) -> Dictionary:
 		"skill_id": ""
 	}
 
+## 보스 AI 내부 상태를 초기화한다. 전투 시작 시 호출.
+func reset() -> void:
+	_phase_tracker.clear()
+	_summon_count.clear()
+	_turn_counter.clear()
+	_clone_spawned.clear()
+
 ## 알 수 없는 보스용 기본 aggressive 행동을 반환한다.
 ## @param unit 유닛
 ## @param targets 적 유닛 배열

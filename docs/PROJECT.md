@@ -1,6 +1,6 @@
 # Ember Throne 기획서
 
-> 최종 업데이트: 2026-04-08
+> 최종 업데이트: 2026-04-09
 
 ## 프로젝트 개요
 
@@ -62,7 +62,9 @@ ember-throne/
 | 경험치 시스템 | `scripts/battle/experience_system.gd` | EXP 공식 (level * 100), 벤치 EXP 계산 |
 | 파티 매니저 | `scripts/systems/party_manager.gd` | 파티 관리, gain_exp/레벨업, EXP 공식 (level * 100) |
 | 스킬 시스템 | `scripts/battle/skill_system.gd` | 스킬 실행/쿨다운 |
+| 스킬 실행기 | `scripts/battle/skill_executor.gd` | guaranteed_crit 조건 파싱 포함 |
 | AI 컨트롤러 | `scripts/battle/ai/ai_controller.gd` | 적 AI 의사결정 |
+| 오디오 매니저 | `scripts/autoload/audio_manager.gd` | BGM 별칭 테이블 + SFX 배선 + EventBus 자동 연결 |
 | 승리/패배 조건 | `scripts/battle/victory_condition_checker.gd` | JSON 기반 6종 조건 판별 (rout, escape, survive, unit_death, turn_limit, hp_threshold) |
 | 무기 상성 | `scripts/battle/weapon_triangle.gd` | 검>도끼>창>검 삼각 |
 | 대화 시스템 | `scripts/dialogue/dialogue_manager.gd` | 스토리 대화 진행 |
@@ -117,6 +119,8 @@ ember-throne/
 | 게임패드 지원 | D-pad, Stick, A/B/Start/LB/RB 매핑 | 완료 |
 | 키 리바인드 | 옵션에서 키 재설정 + ConfigFile 저장 | 완료 |
 | 데모 모드 | DEMO_MODE + 데모 종료 화면 | 완료 |
+| BGM 시스템 | 16트랙, 61개 시맨틱 ID → 파일 별칭 매핑, 전투 시 맵 JSON 기반 자동 전환 | 완료 |
+| SFX 시스템 | 39종, EventBus 자동 배선 (damage/heal/death/levelup/skill 등 9종) | 완료 |
 | 옵션 | 사운드/화면/키 설정 | 완료 |
 
 ## 기획 문서
@@ -137,10 +141,11 @@ ember-throne/
 | [LEVEL-DESIGN.md](LEVEL-DESIGN.md) | 레벨 밸런스, EXP/골드 흐름, 35전 밸런스 시트 |
 | [PORTRAIT-SPEC.md](PORTRAIT-SPEC.md) | 초상화 사양 |
 | [SCRIPT-ACT1~4.md](SCRIPT-ACT1.md) | 막별 대본 |
+| [STEAM-STORE.md](STEAM-STORE.md) | Steam 스토어 설명 (한/영) |
+| `assets/audio/AUDIO-CREDITS.md` | 오디오 라이선스 귀속 표기 |
 
 ## 알려진 제약사항
 
-- BGM/SFX 에셋 0개 -- 오디오 소싱 미결정 (Phase 3 미착수)
 - Steam App ID 480 (Spacewar) 테스트용 -- 실제 ID 발급 후 교체 필요
 - Steam Cloud timestamp 비교 미구현 -- 로컬 세이브 존재 시 Cloud 무시 (Phase 6 QA MEDIUM)
 - 키 리바인드 중 ESC 캡처 가능 -- 취소 메커니즘 없음 (Phase 6 QA LOW)
@@ -153,9 +158,8 @@ ember-throne/
 
 ## 향후 계획
 
-- BGM 16트랙 + SFX 39종 확보 및 AudioManager 통합 (Phase 3)
 - 전 전투 35개 밸런스 플레이테스트 (Phase 7)
-- Steam 스토어 페이지/트레일러/빌드 파이프라인 (Phase 8)
+- Steam 스토어 페이지 캡슐 아트/트레일러 (Phase 8-1, 8-3)
 - 엔딩 CG 이미지 제작
 - Steam 실제 App ID 발급 및 교체
 - spend_gold() 음수 가드 추가 (상점 구현 시)

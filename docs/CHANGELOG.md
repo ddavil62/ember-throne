@@ -1,5 +1,40 @@
 # Changelog
 
+## [미출시] - 2026-04-09
+
+### Added (Phase 3 — 오디오 파이프라인)
+- BGM 16트랙 소싱 (`assets/audio/bgm/`)
+  - CC0 14트랙: bgm_title, bgm_worldmap2, bgm_town1/2, bgm_battle1/2, bgm_boss1/2, bgm_tense1/2, bgm_sad1/2, bgm_victory, bgm_ending1
+  - CC-BY 3.0 2트랙: bgm_worldmap1, bgm_ending2 (Jonathan Shaw)
+- SFX 39종 소싱 (`assets/audio/sfx/`)
+  - 출처: Kenney CC0 (RPG Audio, Interface Sounds, Impact Sounds), OGA 80 CC0 RPG SFX
+- `scripts/autoload/audio_manager.gd` 대폭 업데이트:
+  - MP3 지원 추가
+  - BGM 61개 시맨틱 ID → 16개 파일 별칭 테이블 (BGM_ALIASES)
+  - SFX 별칭 테이블 (SFX_ALIASES)
+  - EventBus 자동 SFX 배선 (damage_dealt, heal_applied, unit_died, level_up, skill_used, gold_gained, game_saved, game_loaded, battle_won)
+- `scripts/battle/battle_scene.gd`: 전투 시작 시 맵 JSON bgm 필드로 BGM 자동 전환, 종료 시 페이드아웃
+- `assets/audio/AUDIO-CREDITS.md`: 라이선스 귀속 표기 문서
+
+### Changed (Phase 7-B 잔여 수정)
+- `scripts/battle/turn_manager.gd`: `start_battle()`에서 `experience_system.reset()`, `ai_controller.reset()`, `status_manager.clear_all_effects()` 호출 추가
+- `scripts/battle/ai/ai_controller.gd`: `reset()` 메서드 추가
+- `scripts/battle/combat_calculator.gd`: `force_crit` 파라미터 추가
+- `scripts/battle/skill_executor.gd`: `guaranteed_crit` 조건 파싱 (`_check_guaranteed_crit`, `target_hp_below_N` 동적 파싱)
+
+### Added (Phase 8-4 — 빌드 파이프라인)
+- `.github/workflows/build.yml`: Windows/Linux/macOS 3플랫폼 자동 빌드
+  - 트리거: main push (빌드만), `v*` 태그 push (빌드+Release), workflow_dispatch
+  - chickensoft-games/setup-godot@v2, Godot 4.6.2-stable
+
+### Added (Phase 8-2 — 스토어 설명)
+- `docs/STEAM-STORE.md`: Steam 스토어 페이지용 숏/롱 디스크립션 (한/영), 핵심 특징 7개, 태그 10개
+
+#### 참고
+- Phase 3 리포트: `.claude/specs/2026-04-08-ember-throne-audio-pipeline-report.md` (해당 시)
+- Phase 7-B 리포트: `.claude/specs/2026-04-06-ember-throne-turn-battle-logic-report.md`
+- Phase 8-4 리포트: `.claude/specs/2026-04-08-ember-throne-build-pipeline-report.md` (해당 시)
+
 ## [미출시] - 2026-04-08
 
 ### Added (Phase 6 — Steam 플랫폼 통합)

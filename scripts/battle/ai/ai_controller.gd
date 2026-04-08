@@ -431,6 +431,12 @@ func reset_focus_fire() -> void:
 	_last_attacked_target = null
 	_current_turn_targets.clear()
 
+## 전투 시작 시 AI 전체 상태를 초기화한다. 패턴/보스 내부 상태 + 집중 공격 추적 초기화.
+func reset() -> void:
+	_patterns.reset()
+	_boss_ai.reset()
+	reset_focus_fire()
+
 ## DataManager 싱글톤 참조 취득
 ## @returns DataManager 노드 또는 null
 func _get_data_manager() -> Node:

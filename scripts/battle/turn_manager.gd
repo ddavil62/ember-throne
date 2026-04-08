@@ -53,6 +53,12 @@ var combat_calc: CombatCalculator = CombatCalculator.new()
 ## 경험치 시스템
 var exp_system: ExperienceSystem = ExperienceSystem.new()
 
+## AI 컨트롤러 (패턴/보스 AI 내부 상태 관리)
+var ai_controller: AIController = AIController.new()
+
+## 상태이상 매니저
+var status_manager: StatusEffectManager = StatusEffectManager.new()
+
 ## 현재 페이즈 ("player" / "enemy" / "npc")
 var current_phase: String = "player"
 
@@ -144,6 +150,11 @@ func start_battle() -> void:
 	_battle_exp_gained.clear()
 	_battle_gold_gained = 0
 	_battle_dead_player_ids.clear()
+
+	# 서브시스템 상태 초기화 (메모리 누수 방지)
+	exp_system.reset()
+	ai_controller.reset()
+	status_manager.clear_all_effects()
 
 	# VCC 초기화 — 맵 데이터에서 승리/패배 조건 로드
 	if _vcc and battle_map:

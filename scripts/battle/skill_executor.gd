@@ -148,13 +148,16 @@ func _apply_damage(caster: BattleUnit, skill_data: Dictionary, target_cells: Arr
 		if target == null or not target.is_alive():
 			continue
 
+		# guaranteed_crit 조건 판정
+		var force_crit: bool = _check_guaranteed_crit(skill_data, caster, target)
+
 		match damage_type:
 			"physical":
-				_apply_physical_damage(caster, target, multiplier, grid)
+				_apply_physical_damage(caster, target, multiplier, grid, force_crit)
 
 			"magical", "magic":
 				var element: String = skill_data.get("element", "")
-				_apply_magic_damage(caster, target, multiplier, element, grid)
+				_apply_magic_damage(caster, target, multiplier, element, grid, force_crit)
 
 			"heal":
 				_apply_heal(caster, target, multiplier)
@@ -164,15 +167,16 @@ func _apply_damage(caster: BattleUnit, skill_data: Dictionary, target_cells: Arr
 				if skill_type == "heal":
 					_apply_heal(caster, target, multiplier)
 				else:
-					_apply_physical_damage(caster, target, multiplier, grid)
+					_apply_physical_damage(caster, target, multiplier, grid, force_crit)
 
 ## 물리 데미지를 적용한다.
 ## @param caster 시전 유닛
 ## @param target 대상 유닛
 ## @param multiplier 스킬 배율
 ## @param grid GridSystem
-func _apply_physical_damage(caster: BattleUnit, target: BattleUnit, multiplier: float, grid: GridSystem) -> void:
-	var result: Dictionary = combat_calc.calc_physical_damage(caster, target, multiplier, grid)
+## @param force_crit 크리티컬 확정 여부
+func _apply_physical_damage(caster: BattleUnit, target: BattleUnit, multiplier: float, grid: GridSystem, force_crit: bool = false) -> void:
+	var result: Dictionary = combat_calc.calc_physical_damage(caster, target, multiplier, grid, force_crit)
 
 	if result["hit"]:
 		var damage: int = result["damage"]
@@ -194,8 +198,9 @@ func _apply_physical_damage(caster: BattleUnit, target: BattleUnit, multiplier: 
 ## @param multiplier 스킬 배율
 ## @param element 마법 속성
 ## @param grid GridSystem
-func _apply_magic_damage(caster: BattleUnit, target: BattleUnit, multiplier: float, element: String, grid: GridSystem) -> void:
-	var result: Dictionary = combat_calc.calc_magic_damage(caster, target, multiplier, element, grid)
+## @param force_crit 크리티컬 확정 여부
+func _apply_magic_damage(caster: BattleUnit, target: BattleUnit, multiplier: float, element: String, grid: GridSystem, force_crit: bool = false) -> void:
+	var result: Dictionary = combat_calc.calc_magic_damage(caster, target, multiplier, element, grid, force_crit)
 
 	if result["hit"]:
 		var damage: int = result["damage"]
@@ -275,6 +280,77 @@ func _apply_effects(caster: BattleUnit, skill_data: Dictionary, targets: Array[B
 				# 기본: 모든 대상에게 적용
 				for target: BattleUnit in targets:
 					status_manager.apply_status(target, status_id, duration, value)
+
+# ── guaranteed_crit 조건 판정 ──
+
+## 스킬 effects에서 guaranteed_crit 효과의 조건을 평가하여 크리티컬 확정 여부를 반환한다.
+## 지원 조건: "backstab" (시전자가 대상 뒤에 있음), "target_hp_below_N" (대상 HP N% 이하)
+## @param skill_data 스킬 데이터
+## @param caster 시전 유닛
+## @param target 대상 유닛
+## @returns 크리티컬 확정이면 true
+func _check_guaranteed_crit(skill_data: Dictionary, caster: BattleUnit, target: BattleUnit) -> bool:
+	var effects: Array = skill_data.get("effects", [])
+	for effect: Dictionary in effects:
+		var status_id: String = effect.get("status", "")
+		if status_id != "guaranteed_crit":
+			continue
+
+		# 확률 판정
+		var chance: float = effect.get("chance", 1.0)
+		if randf() > chance:
+			continue
+
+		# 조건 확인
+		var cond: String = effect.get("condition", "")
+		if cond.is_empty():
+			# 조건 없으면 무조건 확정 크리티컬
+			return true
+
+		if _evaluate_crit_condition(cond, caster, target):
+			return true
+
+	return false
+
+## guaranteed_crit 조건 문자열을 평가한다.
+## @param cond 조건 문자열 ("backstab", "target_hp_below_20" 등)
+## @param caster 시전 유닛
+## @param target 대상 유닛
+## @returns 조건 충족 시 true
+func _evaluate_crit_condition(cond: String, caster: BattleUnit, target: BattleUnit) -> bool:
+	# backstab — 시전자가 대상의 뒤에 있는지 (facing 반대 방향)
+	if cond == "backstab":
+		return _is_backstab(caster, target)
+
+	# target_hp_below_N — 대상 HP가 N% 이하인지
+	if cond.begins_with("target_hp_below_"):
+		var threshold_str: String = cond.substr("target_hp_below_".length())
+		var threshold_pct: float = float(threshold_str) / 100.0
+		if threshold_pct <= 0.0:
+			return false
+		var max_hp: int = maxi(target.stats.get("hp", 1), 1)
+		var hp_ratio: float = float(target.current_hp) / float(max_hp)
+		return hp_ratio <= threshold_pct
+
+	# 알 수 없는 조건 — 충족하지 않은 것으로 처리
+	print("[SkillExecutor] 알 수 없는 guaranteed_crit 조건: %s" % cond)
+	return false
+
+## 시전자가 대상의 뒤를 공격하는지 판정한다 (backstab).
+## 대상의 facing 방향과 시전자의 상대적 위치를 비교한다.
+## @param caster 시전 유닛
+## @param target 대상 유닛
+## @returns 뒤에서 공격이면 true
+func _is_backstab(caster: BattleUnit, target: BattleUnit) -> bool:
+	# facing_direction이 있으면 사용, 없으면 false
+	if not "facing_direction" in target:
+		return false
+	var facing: Vector2i = target.facing_direction
+	# 시전자가 대상의 facing 반대쪽에 있는지
+	var diff: Vector2i = caster.cell - target.cell
+	# 내적이 음수면 뒤에서 공격 (대상이 바라보는 방향의 반대)
+	var dot: int = facing.x * diff.x + facing.y * diff.y
+	return dot < 0
 
 # ── 유틸 ──
 

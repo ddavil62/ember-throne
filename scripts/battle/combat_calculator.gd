@@ -30,8 +30,9 @@ const MAX_CRIT_RATE: int = 50
 ## @param defender 방어 유닛
 ## @param skill_mult 스킬 배율 (기본 공격 시 1.0)
 ## @param grid GridSystem (지형 조회용)
+## @param force_crit 크리티컬 확정 여부 (guaranteed_crit 등)
 ## @returns {"damage": int, "is_crit": bool, "hit": bool}
-func calc_physical_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult: float, grid: GridSystem) -> Dictionary:
+func calc_physical_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult: float, grid: GridSystem, force_crit: bool = false) -> Dictionary:
 	var result: Dictionary = {"damage": 0, "is_crit": false, "hit": false}
 
 	# 명중 판정
@@ -63,12 +64,16 @@ func calc_physical_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult
 	var weapon_mod: float = WeaponTriangle.get_weapon_damage_mod(attacker_weapon_type, defender_weapon_type)
 
 	# 크리티컬 판정
-	var crit_rate: int = calc_crit_rate(attacker, defender)
-	var crit_roll: int = randi() % 100
 	var crit_mod: float = 1.0
-	if crit_roll < crit_rate:
+	if force_crit:
 		crit_mod = CRIT_MULTIPLIER
 		result["is_crit"] = true
+	else:
+		var crit_rate: int = calc_crit_rate(attacker, defender)
+		var crit_roll: int = randi() % 100
+		if crit_roll < crit_rate:
+			crit_mod = CRIT_MULTIPLIER
+			result["is_crit"] = true
 
 	# 최종 데미지 계산
 	var damage: float = base * terrain_mod * weapon_mod * crit_mod
@@ -84,8 +89,9 @@ func calc_physical_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult
 ## @param skill_mult 스킬 배율
 ## @param element 마법 속성 ("fire", "wind", "thunder" 등)
 ## @param grid GridSystem (지형 조회용)
+## @param force_crit 크리티컬 확정 여부 (guaranteed_crit 등)
 ## @returns {"damage": int, "is_crit": bool, "hit": bool}
-func calc_magic_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult: float, element: String, grid: GridSystem) -> Dictionary:
+func calc_magic_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult: float, element: String, grid: GridSystem, force_crit: bool = false) -> Dictionary:
 	var result: Dictionary = {"damage": 0, "is_crit": false, "hit": false}
 
 	# 명중 판정
@@ -113,11 +119,15 @@ func calc_magic_damage(attacker: BattleUnit, defender: BattleUnit, skill_mult: f
 	var terrain_mod: float = get_terrain_def_bonus(defender.cell, grid)
 
 	# 크리티컬 판정
-	var crit_rate: int = calc_crit_rate(attacker, defender)
 	var crit_mod: float = 1.0
-	if (randi() % 100) < crit_rate:
+	if force_crit:
 		crit_mod = CRIT_MULTIPLIER
 		result["is_crit"] = true
+	else:
+		var crit_rate: int = calc_crit_rate(attacker, defender)
+		if (randi() % 100) < crit_rate:
+			crit_mod = CRIT_MULTIPLIER
+			result["is_crit"] = true
 
 	# 최종 데미지
 	var damage: float = base * terrain_mod * magic_mod * crit_mod

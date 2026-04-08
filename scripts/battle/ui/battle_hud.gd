@@ -296,13 +296,12 @@ func _build_minimap() -> void:
 	_minimap_dots.anchors_preset = Control.PRESET_FULL_RECT
 	_minimap_panel.add_child(_minimap_dots)
 
-## 미니맵 유닛 도트를 갱신한다. battle_map.units 딕셔너리를 폴링한다.
+## 미니맵 유닛 도트를 갱신한다.
+## ColorRect를 재사용하여 매 호출마다 노드를 생성/파괴하지 않는다.
+## 풀에 있는 dot은 위치/색상만 갱신하고, 남은 dot은 숨긴다.
 func refresh_minimap() -> void:
 	if _minimap_dots == null or battle_map == null:
 		return
-	# 기존 도트 제거
-	for child in _minimap_dots.get_children():
-		child.queue_free()
 
 	# 맵 크기 조회
 	var grid: GridSystem = battle_map.grid if battle_map.grid != null else null
@@ -312,13 +311,24 @@ func refresh_minimap() -> void:
 	var scale_x: float = MINIMAP_SIZE.x / float(map_cols)
 	var scale_y: float = MINIMAP_SIZE.y / float(map_rows)
 
+	var existing: Array = _minimap_dots.get_children()
+	var pool_idx: int = 0
+
 	for cell_pos: Vector2i in battle_map.units:
 		var unit: BattleUnit = battle_map.units[cell_pos]
 		if not unit.is_alive():
 			continue
 
-		var dot := ColorRect.new()
-		dot.size = Vector2(MINIMAP_DOT_SIZE, MINIMAP_DOT_SIZE)
+		# 기존 dot 재사용, 없으면 새로 생성
+		var dot: ColorRect
+		if pool_idx < existing.size():
+			dot = existing[pool_idx] as ColorRect
+			dot.visible = true
+		else:
+			dot = ColorRect.new()
+			dot.size = Vector2(MINIMAP_DOT_SIZE, MINIMAP_DOT_SIZE)
+			_minimap_dots.add_child(dot)
+
 		dot.position = Vector2(
 			float(cell_pos.x) * scale_x + (scale_x - MINIMAP_DOT_SIZE) / 2.0,
 			float(cell_pos.y) * scale_y + (scale_y - MINIMAP_DOT_SIZE) / 2.0,
@@ -332,7 +342,11 @@ func refresh_minimap() -> void:
 			_:
 				dot.color = COLOR_MINIMAP_NPC
 
-		_minimap_dots.add_child(dot)
+		pool_idx += 1
+
+	# 사용하지 않은 기존 dot 숨기기 (다음 호출에서 재사용)
+	for i in range(pool_idx, existing.size()):
+		existing[i].visible = false
 
 # ── 턴 순서 바 ──
 

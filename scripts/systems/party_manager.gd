@@ -30,12 +30,12 @@ var gold: int = 0
 func _ready() -> void:
 	pass
 
-## 1막 시작 시 초기 파티를 구성한다. (kael, seria, rinen 기본 합류)
+## 1막 시작 시 초기 파티를 구성한다.
+## CHARACTER_JOINS 기준 "1-1" 씬 합류 캐릭터(kael)만 포함한다.
+## seria(1-4), rinen(1-6)는 스토리 진행 후 합류하므로 초기 파티에 넣지 않는다.
 func init_default_party() -> void:
 	add_character("kael", 1)
-	add_character("seria", 1)
-	add_character("rinen", 2)
-	set_active(["kael", "seria", "rinen"])
+	set_active(["kael"])
 
 # ── 파티원 관리 ──
 

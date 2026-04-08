@@ -179,7 +179,11 @@ func _check_defeat_conditions(event_type: String, context: Dictionary) -> bool:
 					return true
 
 			"turn_limit_exceeded":
-				var turn_limit: int = cond.get("turn_limit", 999)
+				# null 안전성: JSON에서 turn_limit이 null이면 제한 없음으로 취급
+				var tl_value: Variant = cond.get("turn_limit", null)
+				if tl_value == null:
+					continue
+				var turn_limit: int = tl_value as int
 				var current_turn: int = context.get("turn_number", 0)
 				if current_turn > turn_limit:
 					var msg: String = DEFEAT_MESSAGES.get("turn_limit_exceeded", "시간 제한을 초과했다...")

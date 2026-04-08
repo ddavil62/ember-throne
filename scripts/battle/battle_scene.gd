@@ -180,6 +180,8 @@ func _on_battle_condition_triggered(is_victory: bool, condition_type: String, re
 	# 승리 시 on_victory 이벤트 처리 후 보상 정보를 읽어 표시 + 인벤토리에 반영
 	if is_victory:
 		_process_trigger_events("on_victory")
+		# 전투에서 올린 레벨/EXP를 PartyManager 영구 데이터에 동기화
+		_sync_exp_to_party()
 		result_data["exp_results"] = []
 
 		var gm: Node = get_node("/root/GameManager")
@@ -514,6 +516,24 @@ func _exit_tree() -> void:
 	EventBus.unit_died.disconnect(_on_unit_died_check_phase)
 	EventBus.turn_started.disconnect(_on_turn_started_check_events)
 	EventBus.unit_died.disconnect(_on_unit_died_check_events)
+
+## 전투 종료 후 BattleUnit의 레벨/EXP를 PartyManager 영구 데이터에 동기화한다.
+## ExperienceSystem이 BattleUnit.level을 직접 올리므로, 전투 결과를 세이브에 반영하려면
+## PartyManager 멤버 데이터도 동일하게 갱신해야 한다.
+func _sync_exp_to_party() -> void:
+	var pm: Node = get_node("/root/PartyManager")
+	# ExperienceSystem의 내부 EXP 트래킹 데이터 (유닛ID → 잔여 EXP)
+	var exp_data: Dictionary = _turn_manager.exp_system._unit_exp
+
+	for unit: BattleUnit in _battle_map.get_units_by_team("player"):
+		var member: Dictionary = pm.get_party_member(unit.unit_id)
+		if member.is_empty():
+			continue
+		member["level"] = unit.level
+		member["exp"] = exp_data.get(unit.unit_id, 0)
+		print("[BattleScene] EXP 동기화: %s Lv.%d EXP=%d" % [
+			unit.unit_id, member["level"], member["exp"]
+		])
 
 ## 월드맵으로 복귀한다.
 func _return_to_world_map() -> void:

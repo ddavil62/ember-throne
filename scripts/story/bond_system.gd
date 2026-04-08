@@ -45,6 +45,14 @@ func on_scene_ended(scene_id: String) -> void:
 			entry.get("old_level", 0),
 			entry.get("new_level", 0),
 		])
+		# EventBus에 시그널 emit
+		var eb: Node = _get_event_bus()
+		if eb:
+			eb.bond_leveled_up.emit(
+				entry.get("pair", []),
+				entry.get("name_ko", ""),
+				entry.get("new_level", 0),
+			)
 
 # ── 유대 레벨 관리 ──
 
@@ -370,3 +378,11 @@ func _get_data_manager() -> Node:
 	if tree == null:
 		return null
 	return tree.root.get_node_or_null("DataManager")
+
+## EventBus 싱글톤 참조 취득
+## @returns EventBus 노드 또는 null
+func _get_event_bus() -> Node:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree and tree.root.has_node("EventBus"):
+		return tree.root.get_node("EventBus")
+	return null

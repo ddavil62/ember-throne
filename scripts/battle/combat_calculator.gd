@@ -181,6 +181,29 @@ func calc_crit_rate(attacker: BattleUnit, defender: BattleUnit) -> int:
 	var crit_rate: int = int(float(weapon_crit) + spd_bonus)
 	return clampi(crit_rate, MIN_CRIT_RATE, MAX_CRIT_RATE)
 
+## 방어자가 반격 가능한지 판정한다.
+## 조건: 방어자가 생존 + 무기 장착 + 공격자가 방어자 사거리 내에 있음
+## @param attacker 공격 유닛
+## @param defender 방어 유닛
+## @param grid GridSystem
+## @returns 반격 가능 여부
+func can_counter(attacker: BattleUnit, defender: BattleUnit, grid: GridSystem) -> bool:
+	if not defender.is_alive():
+		return false
+	# 무기 장착 확인
+	var weapon_id: String = defender.equipment.get("weapon", "")
+	if weapon_id.is_empty():
+		return false
+	# 무기 사거리 조회
+	var dm: Node = _get_data_manager()
+	if dm == null:
+		return false
+	var weapon_data: Dictionary = dm.get_weapon(weapon_id)
+	var weapon_range: int = weapon_data.get("range", 1)
+	# 거리 계산 (맨해튼 거리)
+	var dist: int = absi(attacker.cell.x - defender.cell.x) + absi(attacker.cell.y - defender.cell.y)
+	return dist <= weapon_range
+
 # ── 지형 보정 조회 ──
 
 ## 방어자 위치의 지형 방어 보정을 반환한다

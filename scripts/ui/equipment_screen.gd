@@ -448,29 +448,26 @@ func _create_equip_item_row(item_info: Dictionary, slot: String) -> Control:
 	stat_label.add_theme_color_override("font_color", COLOR_TEXT_DIM)
 	hbox.add_child(stat_label)
 
-	# 스탯 차이 표시
-	var diff_label := Label.new()
-	var diff_parts: Array = []
+	# 스탯 차이 표시 — 개별 스탯별 독립 색상
+	var diff_container := HBoxContainer.new()
+	diff_container.add_theme_constant_override("separation", 6)
+	diff_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
 	for key in ["atk", "def", "matk", "mdef", "spd", "hp", "mp"]:
 		var d: int = stat_diff.get(key, 0)
-		if d != 0:
-			var arrow: String = "+" if d > 0 else ""
-			diff_parts.append("%s%s%d" % [STAT_NAMES.get(key, key), arrow, d])
-	diff_label.text = "  ".join(diff_parts) if diff_parts.size() > 0 else ""
+		if d == 0:
+			continue
+		var arrow: String = "+" if d > 0 else ""
+		var part_label := Label.new()
+		part_label.text = "%s%s%d" % [STAT_NAMES.get(key, key), arrow, d]
+		part_label.add_theme_font_size_override("font_size", 13)
+		if d > 0:
+			part_label.add_theme_color_override("font_color", COLOR_STAT_UP)
+		else:
+			part_label.add_theme_color_override("font_color", COLOR_STAT_DOWN)
+		diff_container.add_child(part_label)
 
-	# 색상: 전체적으로 이득이면 녹색, 손해면 적색
-	var total_diff: int = 0
-	for key in stat_diff.keys():
-		total_diff += stat_diff.get(key, 0)
-	if total_diff > 0:
-		diff_label.add_theme_color_override("font_color", COLOR_STAT_UP)
-	elif total_diff < 0:
-		diff_label.add_theme_color_override("font_color", COLOR_STAT_DOWN)
-	else:
-		diff_label.add_theme_color_override("font_color", COLOR_TEXT_DIM)
-
-	diff_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hbox.add_child(diff_label)
+	hbox.add_child(diff_container)
 
 	# 장착 버튼
 	var equip_btn := Button.new()

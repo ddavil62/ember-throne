@@ -1054,6 +1054,24 @@ func _get_units_by_team(team_name: String) -> Array[BattleUnit]:
 		return battle_map.get_units_by_team(team_name)
 	return []
 
+## 모든 생존 유닛을 SPD 내림차순으로 정렬하여 반환한다. 턴 순서 UI용.
+## @returns SPD 내림차순 정렬된 생존 유닛 배열
+func get_turn_order_units() -> Array[BattleUnit]:
+	var all_units: Array[BattleUnit] = []
+	if not battle_map:
+		return all_units
+	var checked: Dictionary = {}
+	for cell_pos: Vector2i in battle_map.units:
+		var unit: BattleUnit = battle_map.units[cell_pos]
+		if unit.is_alive() and not checked.has(unit.unit_id):
+			all_units.append(unit)
+			checked[unit.unit_id] = true
+	# SPD 내림차순
+	all_units.sort_custom(func(a: BattleUnit, b: BattleUnit) -> bool:
+		return a.stats.get("spd", 0) > b.stats.get("spd", 0)
+	)
+	return all_units
+
 ## 행동 가능한 유닛 목록 조회
 ## @param team_name 팀 이름
 ## @returns 아직 행동하지 않은 생존 유닛 배열

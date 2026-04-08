@@ -1,5 +1,5 @@
-## @fileoverview 전투 HUD. 턴 표시, 미니맵 placeholder, 선택/대상 유닛 정보 패널을
-## 상시 표시한다. 모든 요소를 코드로 생성하며 EventBus 시그널에 반응한다.
+## @fileoverview 전투 HUD. 턴 표시, 미니맵, 턴 순서 바, 선택/대상 유닛 정보 패널,
+## 대미지 팝업 spawn을 상시 표시한다. 모든 요소를 코드로 생성하며 EventBus 시그널에 반응한다.
 class_name BattleHUD
 extends CanvasLayer
 
@@ -24,6 +24,20 @@ const COLOR_ADVANTAGE := Color(0.3, 0.9, 0.3)
 const COLOR_DISADVANTAGE := Color(0.9, 0.3, 0.3)
 const COLOR_NEUTRAL := Color(0.6, 0.6, 0.6)
 
+## 미니맵 크기
+const MINIMAP_SIZE := Vector2(160, 120)
+## 미니맵 도트 크기
+const MINIMAP_DOT_SIZE: float = 6.0
+## 미니맵 색상
+const COLOR_MINIMAP_ALLY := Color(0.3, 0.5, 1.0, 1.0)
+const COLOR_MINIMAP_ENEMY := Color(1.0, 0.3, 0.3, 1.0)
+const COLOR_MINIMAP_NPC := Color(0.3, 0.9, 0.3, 1.0)
+
+## 턴 순서 아이콘 크기
+const TURN_ORDER_ICON_SIZE := Vector2(36, 36)
+## 턴 순서 바 Y 위치
+const TURN_ORDER_BAR_Y: float = 44.0
+
 ## 유닛 패널 크기
 const UNIT_PANEL_SIZE := Vector2(220, 170)
 
@@ -47,6 +61,12 @@ var _turn_label: Label = null
 
 ## 미니맵 placeholder 패널
 var _minimap_panel: Panel = null
+
+## 미니맵 도트 컨테이너
+var _minimap_dots: Control = null
+
+## 턴 순서 바 컨테이너
+var _turn_order_bar: HBoxContainer = null
 
 ## 좌측 유닛 패널 (선택 유닛)
 var _selected_panel: PanelContainer = null
@@ -111,8 +131,10 @@ func _build_ui() -> void:
 	_build_turn_display()
 	# 배속 토글 버튼 (턴 라벨 우측)
 	_build_speed_button()
-	# 미니맵 placeholder (우상단)
-	_build_minimap_placeholder()
+	# 턴 순서 바 (상단, 턴 라벨 아래)
+	_build_turn_order_bar()
+	# 미니맵 (우상단)
+	_build_minimap()
 	# 선택 유닛 패널 (좌하단)
 	_selected_panel = _build_unit_panel(true)
 	_selected_panel.visible = false
@@ -230,15 +252,14 @@ func update_turn_info(phase: String, turn_number: int) -> void:
 	_turn_label.text = "Turn %d - %s" % [turn_number, phase_label]
 	_turn_label.add_theme_color_override("font_color", phase_color)
 
-# ── 미니맵 Placeholder ──
+# ── 미니맵 ──
 
-## 우상단 미니맵 placeholder를 생성한다 (추후 SubViewport + TextureRect로 교체 예정).
-func _build_minimap_placeholder() -> void:
+## 우상단 미니맵을 생성한다. 유닛 위치를 도트로 표시한다.
+func _build_minimap() -> void:
 	_minimap_panel = Panel.new()
-	_minimap_panel.custom_minimum_size = Vector2(160, 120)
-	_minimap_panel.size = Vector2(160, 120)
-	# 화면 우상단 배치
-	_minimap_panel.position = Vector2(1920 - 160 - 16, 12)
+	_minimap_panel.custom_minimum_size = MINIMAP_SIZE
+	_minimap_panel.size = MINIMAP_SIZE
+	_minimap_panel.position = Vector2(1920 - MINIMAP_SIZE.x - 16, 12)
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.1, 0.1, 0.15, 0.7)
 	style.border_color = Color(0.4, 0.4, 0.5, 0.5)
@@ -253,15 +274,109 @@ func _build_minimap_placeholder() -> void:
 	_minimap_panel.add_theme_stylebox_override("panel", style)
 	add_child(_minimap_panel)
 
-	# placeholder 텍스트
-	var placeholder_label := Label.new()
-	placeholder_label.text = "Minimap"
-	placeholder_label.add_theme_font_size_override("font_size", 14)
-	placeholder_label.add_theme_color_override("font_color", COLOR_TEXT_DIM)
-	placeholder_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	placeholder_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	placeholder_label.anchors_preset = Control.PRESET_FULL_RECT
-	_minimap_panel.add_child(placeholder_label)
+	# 도트 컨테이너
+	_minimap_dots = Control.new()
+	_minimap_dots.anchors_preset = Control.PRESET_FULL_RECT
+	_minimap_panel.add_child(_minimap_dots)
+
+## 미니맵 유닛 도트를 갱신한다. battle_map.units 딕셔너리를 폴링한다.
+func refresh_minimap() -> void:
+	if _minimap_dots == null or battle_map == null:
+		return
+	# 기존 도트 제거
+	for child in _minimap_dots.get_children():
+		child.queue_free()
+
+	# 맵 크기 조회
+	var grid: GridSystem = battle_map.grid if battle_map.grid != null else null
+	var map_cols: int = grid.columns if grid else 20
+	var map_rows: int = grid.rows if grid else 15
+
+	var scale_x: float = MINIMAP_SIZE.x / float(map_cols)
+	var scale_y: float = MINIMAP_SIZE.y / float(map_rows)
+
+	for cell_pos: Vector2i in battle_map.units:
+		var unit: BattleUnit = battle_map.units[cell_pos]
+		if not unit.is_alive():
+			continue
+
+		var dot := ColorRect.new()
+		dot.size = Vector2(MINIMAP_DOT_SIZE, MINIMAP_DOT_SIZE)
+		dot.position = Vector2(
+			float(cell_pos.x) * scale_x + (scale_x - MINIMAP_DOT_SIZE) / 2.0,
+			float(cell_pos.y) * scale_y + (scale_y - MINIMAP_DOT_SIZE) / 2.0,
+		)
+
+		match unit.team:
+			"player":
+				dot.color = COLOR_MINIMAP_ALLY
+			"enemy":
+				dot.color = COLOR_MINIMAP_ENEMY
+			_:
+				dot.color = COLOR_MINIMAP_NPC
+
+		_minimap_dots.add_child(dot)
+
+# ── 턴 순서 바 ──
+
+## 상단 턴 순서 바를 생성한다. SPD 순서대로 유닛 아이콘을 배열한다.
+func _build_turn_order_bar() -> void:
+	_turn_order_bar = HBoxContainer.new()
+	_turn_order_bar.position = Vector2(16, TURN_ORDER_BAR_Y)
+	_turn_order_bar.add_theme_constant_override("separation", 4)
+	add_child(_turn_order_bar)
+
+## 턴 순서 바를 갱신한다. turn_manager에서 SPD 정렬 배열을 받아 아이콘을 재생성한다.
+func _refresh_turn_order_bar() -> void:
+	if _turn_order_bar == null:
+		return
+	for child in _turn_order_bar.get_children():
+		child.queue_free()
+
+	# TurnManager 참조
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree == null or not tree.root.has_node("TurnManager"):
+		return
+	var tm: TurnManager = tree.root.get_node("TurnManager") as TurnManager
+	if tm == null:
+		return
+
+	var ordered: Array[BattleUnit] = tm.get_turn_order_units()
+	for unit: BattleUnit in ordered:
+		var icon := PanelContainer.new()
+		icon.custom_minimum_size = TURN_ORDER_ICON_SIZE
+
+		var icon_style := StyleBoxFlat.new()
+		var team_color: Color
+		match unit.team:
+			"player":
+				team_color = COLOR_PHASE_PLAYER
+			"enemy":
+				team_color = COLOR_PHASE_ENEMY
+			_:
+				team_color = COLOR_PHASE_NPC
+
+		# 행동 완료 유닛은 어둡게
+		if unit.acted:
+			team_color = team_color.darkened(0.5)
+
+		icon_style.bg_color = team_color.darkened(0.6)
+		icon_style.border_color = team_color
+		icon_style.set_border_width_all(1)
+		icon_style.set_corner_radius_all(4)
+		icon.add_theme_stylebox_override("panel", icon_style)
+
+		var lbl := Label.new()
+		# 이름 첫 2글자
+		var display_name: String = unit.unit_name_ko if unit.unit_name_ko != "" else unit.unit_id
+		lbl.text = display_name.substr(0, 2)
+		lbl.add_theme_font_size_override("font_size", 12)
+		lbl.add_theme_color_override("font_color", COLOR_TEXT)
+		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		icon.add_child(lbl)
+
+		_turn_order_bar.add_child(icon)
 
 # ── 유닛 정보 패널 ──
 
@@ -616,6 +731,8 @@ func _try_load_portrait(unit: BattleUnit, portrait_node: Control) -> void:
 ## @param turn_number 턴 번호
 func _on_turn_started(phase: String, turn_number: int) -> void:
 	update_turn_info(phase, turn_number)
+	refresh_minimap()
+	_refresh_turn_order_bar()
 
 ## 유닛 선택 시그널 콜백
 ## @param unit_id 선택된 유닛 ID
@@ -659,20 +776,66 @@ func _on_cell_hovered(cell: Vector2i) -> void:
 ## @param defender_id 피격자 ID
 ## @param _amount 데미지량
 ## @param _is_crit 크리티컬 여부
-func _on_damage_dealt(_attacker_id: String, defender_id: String, _amount: int, _is_crit: bool) -> void:
+func _on_damage_dealt(_attacker_id: String, defender_id: String, amount: int, is_crit: bool) -> void:
 	# 선택 유닛이 맞았으면 좌측 갱신
 	if _current_selected_unit and _current_selected_unit.unit_id == defender_id:
 		show_unit_info(_current_selected_unit, true)
+	# 대미지 팝업 spawn
+	_spawn_damage_popup(defender_id, amount, is_crit)
+	refresh_minimap()
+	_refresh_turn_order_bar()
 
 ## 힐 발생 시 패널 갱신
 ## @param _healer_id 힐러 ID
 ## @param target_id 대상 ID
 ## @param _amount 힐량
-func _on_heal_applied(_healer_id: String, target_id: String, _amount: int) -> void:
+func _on_heal_applied(_healer_id: String, target_id: String, amount: int) -> void:
 	if _current_selected_unit and _current_selected_unit.unit_id == target_id:
 		show_unit_info(_current_selected_unit, true)
+	# 회복 팝업 spawn
+	_spawn_heal_popup(target_id, amount)
+	refresh_minimap()
 
 # ── 내부 유틸 ──
+
+## 대미지 팝업을 유닛 위치에 생성한다.
+## @param unit_id 피격 유닛 ID
+## @param amount 대미지량
+## @param is_crit 크리티컬 여부
+func _spawn_damage_popup(unit_id: String, amount: int, is_crit: bool) -> void:
+	if battle_map == null:
+		return
+	var unit: BattleUnit = _find_unit_by_id(unit_id)
+	if unit == null:
+		return
+	var world_pos: Vector2 = battle_map.grid.cell_to_world(unit.cell)
+	var popup := DamagePopup.create_damage(amount, is_crit, world_pos)
+	battle_map.add_child(popup)
+
+## 회복 팝업을 유닛 위치에 생성한다.
+## @param unit_id 대상 유닛 ID
+## @param amount 회복량
+func _spawn_heal_popup(unit_id: String, amount: int) -> void:
+	if battle_map == null:
+		return
+	var unit: BattleUnit = _find_unit_by_id(unit_id)
+	if unit == null:
+		return
+	var world_pos: Vector2 = battle_map.grid.cell_to_world(unit.cell)
+	var popup := DamagePopup.create_heal(amount, world_pos)
+	battle_map.add_child(popup)
+
+## 유닛 ID로 BattleUnit을 찾는다.
+## @param unit_id 유닛 ID
+## @returns BattleUnit 또는 null
+func _find_unit_by_id(unit_id: String) -> BattleUnit:
+	if battle_map == null:
+		return null
+	for cell_pos: Vector2i in battle_map.units:
+		var unit: BattleUnit = battle_map.units[cell_pos]
+		if unit.unit_id == unit_id:
+			return unit
+	return null
 
 ## 유닛의 무기 타입을 조회한다.
 ## @param unit 대상 유닛

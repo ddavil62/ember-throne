@@ -74,8 +74,11 @@ func show_preview(attacker: BattleUnit, defender: BattleUnit, combat_calc: Comba
 	var defender_weapon: String = _get_unit_weapon_type(defender)
 	var advantage: int = WeaponTriangle.get_weapon_advantage(attacker_weapon, defender_weapon)
 
+	# 반격 판정
+	var can_counter_flag: bool = combat_calc.can_counter(attacker, defender, grid)
+
 	# 패널 생성
-	_panel = _build_preview_panel(attacker, defender, damage_min, damage_max, hit_rate, crit_rate, advantage)
+	_panel = _build_preview_panel(attacker, defender, damage_min, damage_max, hit_rate, crit_rate, advantage, can_counter_flag)
 	add_child(_panel)
 
 	visible = true
@@ -139,7 +142,7 @@ func hide_preview() -> void:
 ## @param crit 크리티컬률
 ## @param advantage 무기 상성 (-1/0/+1)
 ## @returns Control 패널 노드
-func _build_preview_panel(attacker: BattleUnit, defender: BattleUnit, dmg_min: int, dmg_max: int, hit: int, crit: int, advantage: int) -> Control:
+func _build_preview_panel(attacker: BattleUnit, defender: BattleUnit, dmg_min: int, dmg_max: int, hit: int, crit: int, advantage: int, counter: bool = false) -> Control:
 	var panel := _create_panel_background()
 
 	var vbox := VBoxContainer.new()
@@ -230,6 +233,11 @@ func _build_preview_panel(attacker: BattleUnit, defender: BattleUnit, dmg_min: i
 			advantage_text = "— 중립"
 			advantage_color = COLOR_NEUTRAL
 	_add_stat_row(stats_grid, "상성:", advantage_text, advantage_color)
+
+	# 반격 여부
+	var counter_text: String = "가능" if counter else "불가"
+	var counter_color: Color = COLOR_ADVANTAGE if counter else COLOR_DISADVANTAGE
+	_add_stat_row(stats_grid, "반격:", counter_text, counter_color)
 
 	return panel
 

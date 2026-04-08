@@ -121,6 +121,10 @@ func _start_battle() -> void:
 	_deployment.visible = true
 	_battle_hud.visible = false
 
+	# 전투 BGM 시작 (맵 JSON의 bgm 필드 우선, 없으면 battle_normal)
+	var battle_bgm: String = map_data.get("bgm", "battle_normal")
+	EventBus.bgm_change_requested.emit(battle_bgm)
+
 ## 배치 완료 시 전투 시작
 func _on_deployment_finished(deployed_units: Array) -> void:
 	print("[BattleScene] 배치 완료: %d명" % deployed_units.size())
@@ -513,5 +517,7 @@ func _exit_tree() -> void:
 
 ## 월드맵으로 복귀한다.
 func _return_to_world_map() -> void:
+	# 전투 BGM 페이드아웃 (월드맵이 자체 BGM을 트리거함)
+	get_node("/root/AudioManager").stop_bgm(0.5)
 	var gm: Node = get_node("/root/GameManager")
 	gm.transition_to_scene("res://scenes/world/world_map.tscn", 0.3, gm.GameState.WORLD_MAP)

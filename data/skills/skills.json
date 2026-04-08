@@ -734,8 +734,8 @@
     "cutin": false,
     "unlock": "base",
     "effects": [],
-    "description_ko": "단일 대상 HP 회복 (MATK*1.2)",
-    "description_en": "Single target HP recovery (MATK*1.2)"
+    "description_ko": "단일 대상 HP 회복 (MATK*1.4)",
+    "description_en": "Single target HP recovery (MATK*1.4)"
   },
   {
     "id": "area_heal",

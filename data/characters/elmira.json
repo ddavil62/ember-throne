@@ -25,8 +25,8 @@
   "stats_lv30_with_bonus": {
     "hp": 74, "mp": 59, "atk": 13, "def": 14, "matk": 39, "mdef": 25, "spd": 15, "mov": 3
   },
-  "skills": ["high_priestess_heal", "sacred_light", "high_priestess_prayer", "divine_judgement",
-             "primordial_blessing", "purifying_flame", "source_of_life", "flame_ritual"],
+  "skills": ["high_priestess_heal", "holy_light", "high_priestess_prayer", "divine_judgment",
+             "primordial_blessing", "purifying_flame", "wellspring_of_life", "flame_ritual"],
   "post_class_skills": [],
   "passives": [
     {

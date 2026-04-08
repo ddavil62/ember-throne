@@ -27,7 +27,7 @@
   "stats_lv30_with_bonus": {
     "hp": 92, "mp": 29, "atk": 33, "def": 24, "matk": 19, "mdef": 20, "spd": 20, "mov": 4
   },
-  "skills": ["ashen_thrust", "ashification", "piercing_thrust", "ashen_barrier"],
+  "skills": ["ashen_thrust", "ashen_decay", "piercing_thrust", "ashen_barrier"],
   "post_class_skills": ["returnees_oath", "ashen_storm", "century_memory", "cycle_spear"],
   "passives": [
     {

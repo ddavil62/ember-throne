@@ -453,7 +453,7 @@
     "price": 0,
     "equippable_by": ["irene"],
     "unique": true,
-    "effects": [{"type": "skill_bonus", "skill": "exploit_weakness", "value": 30}, {"type": "boss_damage_bonus", "value": 15}],
+    "effects": [{"type": "skill_bonus", "skill": "expose_weakness", "value": 30}, {"type": "boss_damage_bonus", "value": 15}],
     "description_ko": "\"약점 간파\" 디버프 효과 +30%, 보스 대상 데미지 +15%. 이렌 전용",
     "description_en": "Exploit Weakness +30%, boss damage +15%. Irene only",
     "act_available": 4
@@ -472,7 +472,7 @@
     "price": 0,
     "equippable_by": ["grid"],
     "unique": true,
-    "effects": [{"type": "skill_range_bonus", "skill": "pirates_command", "value": 1}, {"type": "gold_drop_bonus", "value": 50}],
+    "effects": [{"type": "skill_range_bonus", "skill": "pirate_command", "value": 1}, {"type": "gold_drop_bonus", "value": 50}],
     "description_ko": "\"해적의 호령\" 범위 +1칸, 적 처치 시 골드 드롭 +50%. 그리드 전용",
     "description_en": "Pirate's Command range +1, gold drop +50% on kill. Grid only",
     "act_available": 3

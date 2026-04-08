@@ -27,7 +27,7 @@
   "stats_lv30_with_bonus": {
     "hp": 114, "mp": 24, "atk": 45, "def": 28, "matk": 5, "mdef": 14, "spd": 15, "mov": 4
   },
-  "skills": ["cleave", "command", "intimidate", "heavy_strike"],
+  "skills": ["cleave", "command", "intimidate", "heavy_strike_hazel"],
   "post_class_skills": ["all_out_attack", "greatsword_whirlwind", "judgement_strike", "liberation_banner"],
   "passives": [
     {

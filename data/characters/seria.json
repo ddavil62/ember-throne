@@ -27,7 +27,7 @@
   "stats_lv30_with_bonus": {
     "hp": 68, "mp": 59, "atk": 14, "def": 14, "matk": 39, "mdef": 28, "spd": 15, "mov": 3
   },
-  "skills": ["healing_light", "purify", "light_arrow", "protective_prayer"],
+  "skills": ["healing_light", "purify", "light_arrow", "prayer_of_protection"],
   "post_class_skills": ["flame_of_life", "sacred_flame", "resurrection_prayer", "apostle_blessing"],
   "passives": [
     {

@@ -28,7 +28,7 @@
     "hp": 76, "mp": 33, "atk": 27, "def": 19, "matk": 14, "mdef": 19, "spd": 26, "mov": 4
   },
   "skills": ["weak_point", "throwing_blade", "poison_needle", "chain_trap"],
-  "post_class_skills": ["underground_support", "exploit_weakness", "shadow_assault", "supreme_command"],
+  "post_class_skills": ["underground_support", "expose_weakness", "shadow_assault", "supreme_command"],
   "passives": [
     {
       "id": "intelligence_network",

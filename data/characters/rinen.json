@@ -27,7 +27,7 @@
   "stats_lv30_with_bonus": {
     "hp": 75, "mp": 44, "atk": 19, "def": 14, "matk": 33, "mdef": 19, "spd": 25, "mov": 5
   },
-  "skills": ["trickery", "flame_flick", "smoke_screen", "vital_strike"],
+  "skills": ["trick", "fire_spark", "smoke_screen", "vital_stab"],
   "post_class_skills": ["primordial_blaze", "barrier_light", "flame_resonance", "heirs_will"],
   "passives": [
     {

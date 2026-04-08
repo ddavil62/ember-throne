@@ -27,7 +27,7 @@
   "stats_lv30_with_bonus": {
     "hp": 84, "mp": 50, "atk": 14, "def": 20, "matk": 30, "mdef": 23, "spd": 16, "mov": 4
   },
-  "skills": ["emergency_heal", "area_heal", "empathy", "poison_mist"],
+  "skills": ["first_aid", "area_heal", "empathy", "poison_dust"],
   "post_class_skills": ["song_of_life", "protective_melody", "purifying_song", "resonance_of_bonds"],
   "passives": [
     {

@@ -84,7 +84,7 @@
     "new_class_ko": "폭풍해적",
     "new_class_en": "Storm Corsair",
     "stat_bonus": {"hp": 3, "mp": 2, "atk": 5, "def": 2, "matk": 0, "mdef": 1, "spd": 2, "mov": 0},
-    "new_skills": ["pirates_command", "chain_strike", "storm_charge", "fathers_oath"],
+    "new_skills": ["pirate_command", "chain_strike", "storm_charge", "fathers_oath"],
     "new_passives": ["marinas_promise"],
     "new_weapon_types": ["curved_sword"],
     "new_armor_types": []
@@ -129,7 +129,7 @@
     "new_class_ko": "그림자 지휘관",
     "new_class_en": "Shadow Commander",
     "stat_bonus": {"hp": 3, "mp": 3, "atk": 3, "def": 2, "matk": 1, "mdef": 2, "spd": 2, "mov": 0},
-    "new_skills": ["underground_support", "exploit_weakness", "shadow_strike", "supreme_command"],
+    "new_skills": ["underground_support", "expose_weakness", "shadow_assault", "supreme_command"],
     "new_passives": ["end_of_revenge"],
     "new_weapon_types": [],
     "new_armor_types": []

@@ -209,7 +209,21 @@ func _on_scene_ended(scene_id: String) -> void:
 		_start_credits()
 		return
 
-	# 엔딩 분기 확인
+	# 분기 씬(4-8A/4-8B) 종료 → 에필로그 시작
+	if scene_id == ENDING_A_SCENE:
+		var dlg: Node = _get_dialogue_manager()
+		if dlg:
+			print("[StoryManager] 4-8A 종료 → 엔딩 A 에필로그 시작")
+			dlg.start_scene(ENDING_A_EPILOGUE)
+		return
+	if scene_id == ENDING_B_SCENE:
+		var dlg: Node = _get_dialogue_manager()
+		if dlg:
+			print("[StoryManager] 4-8B 종료 → 엔딩 B 에필로그 시작")
+			dlg.start_scene(ENDING_B_EPILOGUE)
+		return
+
+	# 엔딩 분기 확인 (4-8 종료 시 4-8A/4-8B 씬 시작)
 	if scene_id == ENDING_BRANCH_SCENE:
 		_check_ending_branch()
 		return
@@ -401,18 +415,18 @@ func _check_ending_branch() -> void:
 		return
 
 	if gm.get_flag("ending_a_chosen", false):
-		# 엔딩 A: 리넨 희생
-		print("[StoryManager] 엔딩 A 분기 (리넨 희생)")
-		dlg.start_scene(ENDING_A_EPILOGUE)
+		# 엔딩 A: 리넨 희생 → 4-8A 분기 씬 재생 후 에필로그
+		print("[StoryManager] 엔딩 A 분기 → 4-8A 씬 시작")
+		dlg.start_scene(ENDING_A_SCENE)
 	elif gm.get_flag("ending_b_chosen", false):
-		# 엔딩 B: 리넨 기억 상실
-		print("[StoryManager] 엔딩 B 분기 (리넨 기억 상실)")
-		dlg.start_scene(ENDING_B_EPILOGUE)
+		# 엔딩 B: 리넨 기억 상실 → 4-8B 분기 씬 재생 후 에필로그
+		print("[StoryManager] 엔딩 B 분기 → 4-8B 씬 시작")
+		dlg.start_scene(ENDING_B_SCENE)
 	else:
 		# 분기 플래그가 설정되지 않은 경우 (안전 장치)
 		push_warning("[StoryManager] 엔딩 분기 플래그 미설정, 엔딩 A로 기본 진행")
 		gm.set_flag("ending_a_chosen", true)
-		dlg.start_scene(ENDING_A_EPILOGUE)
+		dlg.start_scene(ENDING_A_SCENE)
 
 # ── 전직 트리거 ──
 

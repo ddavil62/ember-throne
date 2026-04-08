@@ -134,6 +134,9 @@ func _on_deployment_finished(deployed_units: Array) -> void:
 	# 턴 매니저 시작
 	_turn_manager.start_battle()
 
+	# on_start 이벤트 처리
+	_process_trigger_events("on_start")
+
 	# 튜토리얼이 활성화되어 있으면 시작
 	if _tutorial:
 		_tutorial.start()
@@ -170,8 +173,9 @@ func _on_battle_condition_triggered(is_victory: bool, condition_type: String, re
 		"reason_ko": reason_ko,
 	}
 
-	# 승리 시 맵 데이터에서 보상 정보를 읽어 표시 + 인벤토리에 반영
+	# 승리 시 on_victory 이벤트 처리 후 보상 정보를 읽어 표시 + 인벤토리에 반영
 	if is_victory:
+		_process_trigger_events("on_victory")
 		result_data["exp_results"] = []
 
 		var gm: Node = get_node("/root/GameManager")
@@ -387,6 +391,18 @@ func _cache_map_events(map_data: Dictionary) -> void:
 
 	if _map_events.size() > 0:
 		print("[BattleScene] 맵 이벤트 캐시: %d건" % _map_events.size())
+
+## 특정 트리거 키와 일치하는 모든 이벤트를 실행한다.
+## on_start, on_victory 등 단순 문자열 트리거 전용.
+## @param trigger_key 트리거 키 문자열
+func _process_trigger_events(trigger_key: String) -> void:
+	for i: int in range(_map_events.size()):
+		if _fired_events.has(i):
+			continue
+		var evt: Dictionary = _map_events[i] as Dictionary
+		if evt.get("trigger", "") == trigger_key:
+			_fired_events[i] = true
+			_execute_event(evt)
 
 ## 턴 시작 시 on_turn_N 트리거를 확인한다.
 ## @param phase 페이즈 문자열 ("player" / "enemy")

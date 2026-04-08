@@ -383,6 +383,11 @@ func _hide_action_menu() -> void:
 ## 행동 메뉴 버튼 클릭 콜백
 ## @param action 선택된 행동 ID ("attack", "skill", "item", "wait")
 func _on_action_menu_pressed(action: String) -> void:
+	# 튜토리얼 행동 차단 확인 (undo_move는 튜토리얼과 무관하게 허용)
+	if action != "undo_move" and _is_tutorial_action_blocked(action):
+		print("[TurnManager] 튜토리얼에 의해 행동 차단: %s" % action)
+		return
+
 	_hide_action_menu()
 
 	match action:
@@ -1043,6 +1048,20 @@ func _force_end_player_phase() -> void:
 
 	_state = TurnState.PHASE_END
 	_end_phase()
+
+# ── 튜토리얼 행동 차단 ──
+
+## 부모 BattleScene의 튜토리얼 오버레이를 통해 행동 차단 여부를 확인한다.
+## @param action_type 행동 타입 ("attack", "skill", "item", "wait")
+## @returns 차단 여부 (true이면 해당 행동을 실행하면 안 됨)
+func _is_tutorial_action_blocked(action_type: String) -> bool:
+	var parent: Node = get_parent()
+	if parent == null:
+		return false
+	var tutorial: TutorialOverlay = parent.get("_tutorial") as TutorialOverlay
+	if tutorial == null:
+		return false
+	return tutorial.is_action_blocked(action_type)
 
 # ── 유틸 ──
 

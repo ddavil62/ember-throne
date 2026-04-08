@@ -134,7 +134,7 @@
   "tileset_id": "ascalon",
   "bgm": "battle_stealth",
   "rewards": {
-    "gold": 400,
+    "gold": 1000,
     "items": [
       "secret_police_coat"
     ],

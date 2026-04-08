@@ -123,7 +123,7 @@
   "tileset_id": "belmar",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 300,
+    "gold": 600,
     "items": [
       "old_cutlass"
     ],

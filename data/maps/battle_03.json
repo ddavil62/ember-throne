@@ -106,7 +106,7 @@
   "tileset_id": "belmar",
   "bgm": "battle_tension",
   "rewards": {
-    "gold": 150,
+    "gold": 300,
     "items": [
       "old_dagger"
     ],

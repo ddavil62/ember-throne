@@ -208,7 +208,7 @@
   "tileset_id": "silvaren",
   "bgm": "battle_intense",
   "rewards": {
-    "gold": 500,
+    "gold": 1000,
     "items": [
       "silvaren_bow",
       "superior_herb_x2"

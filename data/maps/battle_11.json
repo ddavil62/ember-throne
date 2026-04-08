@@ -148,7 +148,7 @@
   "tileset_id": "harben",
   "bgm": "battle_ash",
   "rewards": {
-    "gold": 350,
+    "gold": 700,
     "items": [
       "antidote_x3",
       "panacea_x1"

@@ -175,7 +175,7 @@
   "tileset_id": "harben",
   "bgm": "battle_ash",
   "rewards": {
-    "gold": 450,
+    "gold": 1100,
     "items": [
       "ward_stone_remnant_harben",
       "life_dew_x1"

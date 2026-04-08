@@ -163,7 +163,7 @@
   "tileset_id": "ascalon",
   "bgm": "battle_tension",
   "rewards": {
-    "gold": 350,
+    "gold": 900,
     "items": [],
     "exp_bonus": 0
   },

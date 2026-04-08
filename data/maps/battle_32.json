@@ -207,7 +207,7 @@
   "tileset_id": "ascalon_dungeon",
   "bgm": "battle_dungeon",
   "rewards": {
-    "gold": 600,
+    "gold": 1500,
     "items": [
       "rendors_staff"
     ],

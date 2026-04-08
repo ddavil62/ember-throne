@@ -104,7 +104,7 @@
   "tileset_id": "irhen",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 200,
+    "gold": 400,
     "items": [
       "herb_x2"
     ],

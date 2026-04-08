@@ -113,7 +113,7 @@
   "tileset_id": "silvaren",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 350,
+    "gold": 700,
     "items": [
       "steel_sword",
       "herb_x3"

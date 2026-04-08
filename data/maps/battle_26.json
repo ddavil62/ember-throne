@@ -202,7 +202,7 @@
   "tileset_id": "ashland",
   "bgm": "battle_boss",
   "rewards": {
-    "gold": 700,
+    "gold": 1750,
     "items": [
       "ash_essence",
       "phoenix_feather_x1"

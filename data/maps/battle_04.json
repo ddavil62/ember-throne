@@ -161,7 +161,7 @@
   "tileset_id": "irhen",
   "bgm": "battle_chase",
   "rewards": {
-    "gold": 250,
+    "gold": 500,
     "items": [],
     "exp_bonus": 0
   },

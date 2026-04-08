@@ -194,7 +194,7 @@
   "tileset_id": "crowfell",
   "bgm": "battle_intense",
   "rewards": {
-    "gold": 550,
+    "gold": 1400,
     "items": [
       "ward_stone_remnant_crowfell",
       "ivan_greatsword"

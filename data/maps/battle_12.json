@@ -170,7 +170,7 @@
   "tileset_id": "crowfell",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 450,
+    "gold": 900,
     "items": [
       "magic_academy_staff",
       "mana_potion_x3"

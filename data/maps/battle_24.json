@@ -174,7 +174,7 @@
   "tileset_id": "belmar",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 500,
+    "gold": 1250,
     "items": [
       "ward_stone_remnant_belmar",
       "marinas_painting"

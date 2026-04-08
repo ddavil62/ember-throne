@@ -236,7 +236,7 @@
   "tileset_id": "ascalon",
   "bgm": "battle_epic",
   "rewards": {
-    "gold": 650,
+    "gold": 1600,
     "items": [
       "kingdom_knight_sword"
     ],

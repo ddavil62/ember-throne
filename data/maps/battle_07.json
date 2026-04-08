@@ -113,7 +113,7 @@
   "tileset_id": "irhen",
   "bgm": "battle_ash",
   "rewards": {
-    "gold": 180,
+    "gold": 350,
     "items": [
       "ward_shard_x1"
     ],

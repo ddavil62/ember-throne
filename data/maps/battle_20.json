@@ -198,7 +198,7 @@
   "tileset_id": "ascalon",
   "bgm": "battle_chase",
   "rewards": {
-    "gold": 500,
+    "gold": 1250,
     "items": [],
     "exp_bonus": 0
   },

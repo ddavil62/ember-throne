@@ -122,7 +122,7 @@
   "tileset_id": "silvaren",
   "bgm": "battle_tension",
   "rewards": {
-    "gold": 100,
+    "gold": 400,
     "items": [],
     "exp_bonus": 0
   },

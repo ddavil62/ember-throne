@@ -139,7 +139,7 @@
   "tileset_id": "crowfell",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 350,
+    "gold": 700,
     "items": [
       "fine_dagger",
       "gold_pouch"

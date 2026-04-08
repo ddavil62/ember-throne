@@ -130,7 +130,7 @@
   "tileset_id": "crowfell",
   "bgm": "battle_intense",
   "rewards": {
-    "gold": 400,
+    "gold": 800,
     "items": [
       "royal_guard_armor",
       "superior_herb_x2"

@@ -210,7 +210,7 @@
   "tileset_id": "silvaren",
   "bgm": "battle_intense",
   "rewards": {
-    "gold": 550,
+    "gold": 1400,
     "items": [
       "ward_stone_remnant_silvaren",
       "pinas_ribbon"

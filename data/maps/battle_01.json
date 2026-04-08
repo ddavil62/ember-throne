@@ -4,6 +4,9 @@
   "name_en": "Defense of Irhen",
   "act": 1,
   "scene_id": "1-3",
+  "tutorial": {
+    "enabled": true
+  },
   "map_size": {
     "width": 20,
     "height": 16
@@ -166,15 +169,50 @@
   "tileset_id": "irhen",
   "bgm": "battle_normal",
   "rewards": {
-    "gold": 200,
+    "gold": 400,
     "items": [],
     "exp_bonus": 0
   },
-  "events": {
-    "on_start": "1-3_battle_start",
-    "on_turn_3": null,
-    "on_victory": "1-3_battle_end"
-  },
+  "events": [
+    {
+      "trigger": "on_start",
+      "type": "dialogue",
+      "scene_id": "1-3_battle_start"
+    },
+    {
+      "trigger": "on_victory",
+      "type": "dialogue",
+      "scene_id": "1-3_battle_end"
+    },
+    {
+      "trigger": "on_turn_2",
+      "type": "wave_spawn",
+      "enemies": [
+        {
+          "enemy_id": "ash_beast_small",
+          "level": 1,
+          "position": [
+            6,
+            13
+          ]
+        },
+        {
+          "enemy_id": "ash_beast_small",
+          "level": 1,
+          "position": [
+            11,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "trigger": "on_unit_death",
+      "target": "ash_beast_large",
+      "type": "dialogue",
+      "scene_id": "1-3_boss_taunt"
+    }
+  ],
   "special_rules": [
     {
       "type": "wave_spawn",
@@ -182,19 +220,97 @@
     }
   ],
   "objects": [
-    {"type": "tree_oak", "position": [1, 7]},
-    {"type": "tree_oak", "position": [2, 8]},
-    {"type": "tree_oak", "position": [14, 5]},
-    {"type": "tree_oak", "position": [15, 6]},
-    {"type": "tree_oak", "position": [13, 7]},
-    {"type": "tree_oak", "position": [16, 7]},
-    {"type": "well",     "position": [2, 6]},
-    {"type": "rock",     "position": [10, 6]},
-    {"type": "rock",     "position": [6, 7]},
-    {"type": "rock",     "position": [14, 4]},
-    {"type": "burnt_stump", "position": [3, 9]},
-    {"type": "burnt_stump", "position": [9, 9]},
-    {"type": "burnt_stump", "position": [17, 9]}
+    {
+      "type": "tree_oak",
+      "position": [
+        1,
+        7
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        2,
+        8
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        14,
+        5
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        15,
+        6
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        13,
+        7
+      ]
+    },
+    {
+      "type": "tree_oak",
+      "position": [
+        16,
+        7
+      ]
+    },
+    {
+      "type": "well",
+      "position": [
+        2,
+        6
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        10,
+        6
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        6,
+        7
+      ]
+    },
+    {
+      "type": "rock",
+      "position": [
+        14,
+        4
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        3,
+        9
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        9,
+        9
+      ]
+    },
+    {
+      "type": "burnt_stump",
+      "position": [
+        17,
+        9
+      ]
+    }
   ],
   "tiles": [
     [

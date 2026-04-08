@@ -130,7 +130,7 @@
   "tileset_id": "silvaren",
   "bgm": "battle_forest",
   "rewards": {
-    "gold": 250,
+    "gold": 500,
     "items": [
       "antidote_x3",
       "spider_silk"

@@ -9,20 +9,20 @@ const MAX_LEVEL: int = 30
 
 ## 행동별 기본 EXP
 const BASE_EXP: Dictionary = {
-	"attack": 10,
+	"attack": 25,
 	"heal": 10,
 	"buff": 8,
 	"item": 3,
 }
 
 ## 킬 보너스 EXP
-const KILL_BONUS_EXP: int = 30
+const KILL_BONUS_EXP: int = 80
 
 ## 레벨 차이 보정 최소값 (diff = -5일 때)
 const LEVEL_DIFF_MIN_MULT: float = 0.25
 
 ## 레벨 차이 보정 최대값 (diff = +5일 때)
-const LEVEL_DIFF_MAX_MULT: float = 2.0
+const LEVEL_DIFF_MAX_MULT: float = 3.5
 
 ## 레벨 차이 보정 범위
 const LEVEL_DIFF_RANGE: int = 5
@@ -224,6 +224,10 @@ func _get_game_manager() -> Node:
 	if tree and tree.root.has_node("GameManager"):
 		return tree.root.get_node("GameManager")
 	return null
+
+## 내부 EXP 트래킹 데이터를 초기화한다. 전투 시작 시 호출.
+func reset() -> void:
+	_unit_exp.clear()
 
 ## EventBus 싱글톤 참조 취득
 func _get_event_bus() -> Node:

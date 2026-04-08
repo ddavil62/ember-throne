@@ -157,7 +157,7 @@
   "tileset_id": "irhen_ruins",
   "bgm": "battle_ash",
   "rewards": {
-    "gold": 450,
+    "gold": 1100,
     "items": [
       "ward_stone_remnant_irhen",
       "toms_hammer"

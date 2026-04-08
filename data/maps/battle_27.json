@@ -156,7 +156,7 @@
   "tileset_id": "ashland",
   "bgm": "battle_ash",
   "rewards": {
-    "gold": 500,
+    "gold": 1250,
     "items": [
       "ward_shard_x3",
       "ash_essence_x1"

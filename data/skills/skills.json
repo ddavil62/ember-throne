@@ -320,7 +320,7 @@
     "area": "single",
     "multiplier": 0,
     "mp_cost": 25,
-    "uses_per_battle": -1,
+    "uses_per_battle": 1,
     "animation_tier": "A",
     "cutin": false,
     "unlock": "class_change",
@@ -727,7 +727,7 @@
     "range_min": 1,
     "range_max": 2,
     "area": "single",
-    "multiplier": 1.2,
+    "multiplier": 1.4,
     "mp_cost": 5,
     "uses_per_battle": -1,
     "animation_tier": "B",
@@ -1019,7 +1019,7 @@
     "range_max": 1,
     "area": "single",
     "multiplier": 1.5,
-    "mp_cost": 15,
+    "mp_cost": 20,
     "uses_per_battle": -1,
     "animation_tier": "A",
     "cutin": false,
@@ -1071,10 +1071,10 @@
     "cutin": true,
     "unlock": "class_change",
     "effects": [
-      { "status": "guaranteed_crit", "chance": 1.0, "condition": "target_hp_below_30" }
+      { "status": "guaranteed_crit", "chance": 1.0, "condition": "target_hp_below_20" }
     ],
-    "description_ko": "단일 대상 최강 일격. HP 30% 이하 시 치명타 확정",
-    "description_en": "Strongest single-target strike. Guaranteed crit when target HP is below 30%"
+    "description_ko": "단일 대상 최강 일격. HP 20% 이하 시 치명타 확정",
+    "description_en": "Strongest single-target strike. Guaranteed crit when target HP is below 20%"
   },
   {
     "id": "ice_lance",
@@ -1435,10 +1435,10 @@
     "cutin": true,
     "unlock": "class_change",
     "effects": [
-      { "status": "undying", "chance": 1.0, "duration": 3, "trigger": "hp_below_10_percent" }
+      { "status": "undying", "chance": 1.0, "duration": 2, "trigger": "hp_below_10_percent" }
     ],
-    "description_ko": "HP 10% 이하 도달 시 자동 발동. 3턴간 전투불능 불가 (HP 1 유지)",
-    "description_en": "Auto-trigger at HP below 10%. Cannot be KO'd for 3 turns (HP stays at 1)"
+    "description_ko": "HP 10% 이하 도달 시 자동 발동. 2턴간 전투불능 불가 (HP 1 유지)",
+    "description_en": "Auto-trigger at HP below 10%. Cannot be KO'd for 2 turns (HP stays at 1)"
   },
   {
     "id": "weak_point",
@@ -1637,7 +1637,7 @@
     "range_max": 1,
     "area": "line_3",
     "multiplier": 1.8,
-    "mp_cost": 6,
+    "mp_cost": 8,
     "uses_per_battle": -1,
     "animation_tier": "B",
     "cutin": false,

@@ -130,7 +130,7 @@
   "tileset_id": "ashland",
   "bgm": "battle_ash",
   "rewards": {
-    "gold": 400,
+    "gold": 800,
     "items": [
       "ward_shard_x2",
       "superior_mana_potion_x1"

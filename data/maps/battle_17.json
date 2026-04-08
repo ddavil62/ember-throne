@@ -148,7 +148,7 @@
   "tileset_id": "harben",
   "bgm": "battle_intense",
   "rewards": {
-    "gold": 500,
+    "gold": 1000,
     "items": [
       "mercenary_sword",
       "defense_amulet"

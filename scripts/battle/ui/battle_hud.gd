@@ -49,6 +49,9 @@ const PADDING: int = 12
 
 # ── 멤버 변수 ──
 
+## TurnManager 참조 (외부에서 주입)
+var turn_manager: TurnManager = null
+
 ## BattleMap 참조 (외부에서 주입)
 var battle_map: Node2D = null:
 	set(value):
@@ -333,13 +336,10 @@ func _refresh_turn_order_bar() -> void:
 	for child in _turn_order_bar.get_children():
 		child.queue_free()
 
-	# TurnManager 참조
-	var tree := Engine.get_main_loop() as SceneTree
-	if tree == null or not tree.root.has_node("TurnManager"):
+	# TurnManager 참조 (외부에서 주입된 변수 사용)
+	if turn_manager == null:
 		return
-	var tm: TurnManager = tree.root.get_node("TurnManager") as TurnManager
-	if tm == null:
-		return
+	var tm: TurnManager = turn_manager
 
 	var ordered: Array[BattleUnit] = tm.get_turn_order_units()
 	for unit: BattleUnit in ordered:

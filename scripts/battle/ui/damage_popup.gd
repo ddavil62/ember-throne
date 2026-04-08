@@ -43,7 +43,6 @@ static func create_damage(amount: int, is_crit: bool, world_pos: Vector2) -> Dam
 		COLOR_CRITICAL if is_crit else COLOR_NORMAL,
 		FONT_SIZE_CRITICAL if is_crit else FONT_SIZE_NORMAL,
 	)
-	popup._animate()
 	return popup
 
 ## 회복 팝업을 생성한다.
@@ -54,7 +53,6 @@ static func create_heal(amount: int, world_pos: Vector2) -> DamagePopup:
 	var popup := DamagePopup.new()
 	popup.position = world_pos
 	popup._setup_label("+%d" % amount, COLOR_HEAL, FONT_SIZE_HEAL)
-	popup._animate()
 	return popup
 
 ## 회피 팝업을 생성한다.
@@ -64,7 +62,6 @@ static func create_miss(world_pos: Vector2) -> DamagePopup:
 	var popup := DamagePopup.new()
 	popup.position = world_pos
 	popup._setup_label("MISS", COLOR_MISS, FONT_SIZE_MISS)
-	popup._animate()
 	return popup
 
 # ── 내부 메서드 ──
@@ -79,6 +76,10 @@ func _setup_label(text: String, color: Color, font_size: int) -> void:
 	_label.position = Vector2(-40, -20)
 	_label.size = Vector2(80, 30)
 	add_child(_label)
+
+## 씬 트리에 추가된 후 애니메이션을 자동 재생한다.
+func _ready() -> void:
+	_animate()
 
 ## 상승 + 페이드아웃 애니메이션을 재생한다.
 func _animate() -> void:

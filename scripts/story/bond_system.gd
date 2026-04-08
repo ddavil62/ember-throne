@@ -379,10 +379,3 @@ func _get_data_manager() -> Node:
 		return null
 	return tree.root.get_node_or_null("DataManager")
 
-## EventBus 싱글톤 참조 취득
-## @returns EventBus 노드 또는 null
-func _get_event_bus() -> Node:
-	var tree := Engine.get_main_loop() as SceneTree
-	if tree and tree.root.has_node("EventBus"):
-		return tree.root.get_node("EventBus")
-	return null

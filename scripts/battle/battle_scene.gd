@@ -23,6 +23,15 @@ extends Node
 ## 전투 결과 화면
 @onready var _battle_result: BattleResult = $BattleResult
 
+## 튜토리얼 오버레이 (battle_01 전용, 런타임 인스턴스)
+var _tutorial: TutorialOverlay = null
+
+## 맵 이벤트 캐시 (events 배열)
+var _map_events: Array = []
+
+## 이미 발동된 이벤트 인덱스 (중복 방지)
+var _fired_events: Dictionary = {}
+
 ## 현재 전투의 다단계 보스전 페이즈 (1부터 시작)
 var _current_boss_phase: int = 1
 
@@ -40,6 +49,7 @@ func _ready() -> void:
 	_turn_manager.battle_map = _battle_map
 	_turn_manager.connect_battle_map()
 	_battle_hud.battle_map = _battle_map
+	_battle_hud.turn_manager = _turn_manager
 
 	# 시그널 연결
 	_deployment.deployment_finished.connect(_on_deployment_finished)
@@ -53,6 +63,10 @@ func _ready() -> void:
 
 	# 유닛 사망 시 페이즈 전환 확인 (다단계 보스전)
 	EventBus.unit_died.connect(_on_unit_died_check_phase)
+
+	# 맵 이벤트: 턴 시작 / 유닛 사망 트리거
+	EventBus.turn_started.connect(_on_turn_started_check_events)
+	EventBus.unit_died.connect(_on_unit_died_check_events)
 
 	# 전투 데이터 로드 및 배치 화면 시작
 	_start_battle()
@@ -96,6 +110,12 @@ func _start_battle() -> void:
 	# 다단계 보스전 페이즈 초기화
 	_init_boss_phases(map_data)
 
+	# 맵 이벤트 캐시
+	_cache_map_events(map_data)
+
+	# 튜토리얼 초기화 (battle_01 전용)
+	_init_tutorial(map_data)
+
 	# 배치 화면 시작
 	_deployment.setup(_battle_map, deploy_cells, party, deploy_limit)
 	_deployment.visible = true
@@ -113,6 +133,10 @@ func _on_deployment_finished(deployed_units: Array) -> void:
 
 	# 턴 매니저 시작
 	_turn_manager.start_battle()
+
+	# 튜토리얼이 활성화되어 있으면 시작
+	if _tutorial:
+		_tutorial.start()
 
 ## 배치 취소 시 월드맵 복귀
 func _on_deployment_cancelled() -> void:
@@ -322,6 +346,147 @@ func _spawn_phase_enemies(phase: int) -> void:
 	# 승리 조건은 이미 최종 보스(ascended_morgan)로 설정되어 있으므로
 	# VCC를 다시 설정할 필요 없음 — boss_kill target_unit이 최종 보스를 가리킴
 	print("[BattleScene] Phase %d 적 스폰 완료 (%d체)" % [phase, phase_enemies.size()])
+
+# ── 튜토리얼 (4-1) ──
+
+## 맵 데이터에 tutorial 필드가 있으면 튜토리얼 오버레이를 인스턴스화한다.
+## @param map_data 맵 데이터 Dictionary
+func _init_tutorial(map_data: Dictionary) -> void:
+	var tutorial_cfg: Dictionary = map_data.get("tutorial", {})
+	if not tutorial_cfg.get("enabled", false):
+		return
+
+	var scene := load("res://scenes/battle/tutorial_overlay.tscn") as PackedScene
+	if scene == null:
+		push_warning("[BattleScene] tutorial_overlay.tscn 로드 실패")
+		return
+
+	_tutorial = scene.instantiate() as TutorialOverlay
+	add_child(_tutorial)
+	_tutorial.tutorial_completed.connect(_on_tutorial_completed)
+	print("[BattleScene] 튜토리얼 오버레이 초기화")
+
+## 튜토리얼 완료 콜백.
+func _on_tutorial_completed() -> void:
+	print("[BattleScene] 튜토리얼 완료")
+
+# ── 맵 이벤트 런타임 (4-2) ──
+
+## 맵 JSON의 events 필드를 캐시한다.
+## @param map_data 맵 데이터 Dictionary
+func _cache_map_events(map_data: Dictionary) -> void:
+	_map_events.clear()
+	_fired_events.clear()
+
+	var events: Variant = map_data.get("events", null)
+	if events is Array:
+		_map_events = events
+	elif events is Dictionary:
+		# 구형 포맷 호환 (key-value → 배열 변환은 생략, 런타임 이벤트 없음)
+		pass
+
+	if _map_events.size() > 0:
+		print("[BattleScene] 맵 이벤트 캐시: %d건" % _map_events.size())
+
+## 턴 시작 시 on_turn_N 트리거를 확인한다.
+## @param phase 페이즈 문자열 ("player" / "enemy")
+## @param turn_number 턴 번호
+func _on_turn_started_check_events(phase: String, turn_number: int) -> void:
+	if phase != "player":
+		return
+
+	var trigger_key := "on_turn_%d" % turn_number
+	for i: int in range(_map_events.size()):
+		if _fired_events.has(i):
+			continue
+		var evt: Dictionary = _map_events[i] as Dictionary
+		if evt.get("trigger", "") == trigger_key:
+			_fired_events[i] = true
+			_execute_event(evt)
+
+## 유닛 사망 시 on_unit_death 트리거를 확인한다.
+## @param unit_id 사망한 유닛 ID
+## @param _killer_id 처치한 유닛 ID
+func _on_unit_died_check_events(unit_id: String, _killer_id: String) -> void:
+	var died_enemy_id: String = _extract_enemy_id_from_uid(unit_id)
+
+	for i: int in range(_map_events.size()):
+		if _fired_events.has(i):
+			continue
+		var evt: Dictionary = _map_events[i] as Dictionary
+		if evt.get("trigger", "") != "on_unit_death":
+			continue
+		var target: String = evt.get("target", "")
+		if target == "" or target == died_enemy_id:
+			_fired_events[i] = true
+			_execute_event(evt)
+
+## 이벤트를 타입별로 실행한다.
+## @param evt 이벤트 데이터
+func _execute_event(evt: Dictionary) -> void:
+	var event_type: String = evt.get("type", "")
+	print("[BattleScene] 맵 이벤트 실행: %s (trigger=%s)" % [event_type, evt.get("trigger", "")])
+
+	match event_type:
+		"wave_spawn":
+			_execute_wave_spawn(evt)
+		"dialogue":
+			_execute_dialogue(evt)
+		"terrain_change":
+			_execute_terrain_change(evt)
+		_:
+			push_warning("[BattleScene] 알 수 없는 이벤트 타입: %s" % event_type)
+
+## wave_spawn 이벤트: 적 증원을 스폰한다.
+## @param evt 이벤트 데이터
+func _execute_wave_spawn(evt: Dictionary) -> void:
+	var enemies: Array = evt.get("enemies", [])
+	var dm: Node = get_node("/root/DataManager")
+	var spawn_offset: int = _battle_map.get_units_by_team("enemy").size()
+
+	for i: int in range(enemies.size()):
+		var placement: Variant = enemies[i]
+		if not placement is Dictionary:
+			continue
+		var p: Dictionary = placement as Dictionary
+		var enemy_id: String = p.get("enemy_id", "")
+		var enemy_level: int = p.get("level", 1)
+		var pos: Array = p.get("position", [0, 0])
+		var spawn_cell := Vector2i(int(pos[0]), int(pos[1]))
+
+		var enemy_data: Dictionary = dm.get_enemy(enemy_id)
+		if enemy_data.is_empty():
+			push_warning("[BattleScene] 이벤트 적 데이터 없음: %s" % enemy_id)
+			continue
+
+		var uid: String = "%s_%d" % [enemy_id, spawn_offset + i]
+		_battle_map.spawn_unit(enemy_data, spawn_cell, "enemy", uid, enemy_level)
+		print("[BattleScene] 이벤트 적 스폰: %s (lv%d) at %s" % [enemy_id, enemy_level, str(spawn_cell)])
+
+## dialogue 이벤트: 대사를 재생한다.
+## @param evt 이벤트 데이터
+func _execute_dialogue(evt: Dictionary) -> void:
+	var scene_id: String = evt.get("scene_id", "")
+	if scene_id == "":
+		return
+	var dlg: Node = get_node_or_null("/root/DialogueManager")
+	if dlg:
+		dlg.start_scene(scene_id)
+
+## terrain_change 이벤트: 지형을 변경한다.
+## @param evt 이벤트 데이터
+func _execute_terrain_change(evt: Dictionary) -> void:
+	var changes: Array = evt.get("changes", [])
+	for change: Variant in changes:
+		if not change is Dictionary:
+			continue
+		var c: Dictionary = change as Dictionary
+		var pos: Array = c.get("position", [0, 0])
+		var new_terrain: String = c.get("terrain", "")
+		if new_terrain != "":
+			var cell := Vector2i(int(pos[0]), int(pos[1]))
+			_battle_map.set_terrain(cell, new_terrain)
+			print("[BattleScene] 지형 변경: %s → %s" % [str(cell), new_terrain])
 
 ## 월드맵으로 복귀한다.
 func _return_to_world_map() -> void:

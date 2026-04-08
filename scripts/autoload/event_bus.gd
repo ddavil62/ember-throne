@@ -38,6 +38,9 @@ signal battle_condition_triggered(is_victory: bool, condition_type: String, reas
 ## 턴 제한 경고 (남은 턴이 2 이하일 때)
 signal turn_limit_warning(turns_remaining: int)
 
+## 유대 레벨업 발생
+signal bond_leveled_up(pair: Array, bond_name: String, new_level: int)
+
 # ── 경험치/레벨 시그널 ──
 
 ## 경험치 획득
@@ -99,3 +102,8 @@ signal game_loaded(slot: int)
 signal bgm_change_requested(track_id: String)
 ## SFX 재생 요청
 signal sfx_play_requested(sfx_id: String)
+
+# ── 업적 시그널 ──
+
+## 업적 해금 (achievement_key: 내부 업적 키)
+signal achievement_unlocked(achievement_key: String)

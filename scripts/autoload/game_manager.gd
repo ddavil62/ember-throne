@@ -16,6 +16,9 @@ enum GameState {
 	LOADING,       ## 로딩
 }
 
+## 데모 모드 상수. true이면 1막 종료 시 데모 종료 화면으로 전환한다.
+const DEMO_MODE: bool = false
+
 ## 현재 게임 상태
 var current_state: GameState = GameState.TITLE
 
@@ -164,3 +167,11 @@ func get_formatted_play_time() -> String:
 	var minutes := (int(play_time) % 3600) / 60
 	var seconds := int(play_time) % 60
 	return "%02d:%02d:%02d" % [hours, minutes, seconds]
+
+## 데모 모드에서 1막 종료 시 호출. 데모 종료 화면으로 전환한다.
+## @returns true이면 데모 분기 실행됨 (호출자는 이후 로직 중단)
+func check_demo_end() -> bool:
+	if not DEMO_MODE:
+		return false
+	transition_to_scene("res://scenes/ui/demo_end_screen.tscn", 0.5, GameState.TITLE)
+	return true

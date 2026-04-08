@@ -66,6 +66,7 @@ func save_game(slot: int) -> bool:
 		return false
 	file.store_string(json_text)
 	file.close()
+	_mirror_to_steam_cloud(slot, json_text)
 	print("[SaveManager] 저장 완료: 슬롯 %d" % slot)
 	var eb: Node = get_node("/root/EventBus")
 	eb.game_saved.emit(slot)
@@ -75,6 +76,7 @@ func save_game(slot: int) -> bool:
 ## @param slot 슬롯 번호
 ## @returns 성공 여부
 func load_game(slot: int) -> bool:
+	_sync_from_steam_cloud(slot)
 	var path := _get_save_path(slot)
 	if not FileAccess.file_exists(path):
 		push_warning("[SaveManager] 세이브 파일 없음: %s" % path)
@@ -168,3 +170,45 @@ func delete_save(slot: int) -> bool:
 		DirAccess.remove_absolute(path)
 		return true
 	return false
+
+# ── Steam Cloud 미러링 ──
+
+## 세이브 파일명을 Steam Cloud용 파일명으로 변환
+## @param slot 슬롯 번호
+func _get_cloud_filename(slot: int) -> String:
+	if slot == AUTO_SLOT:
+		return "autosave.json"
+	return "save_%d.json" % slot
+
+## 세이브를 Steam Cloud에 미러링한다.
+## @param slot 슬롯 번호
+## @param json_text 세이브 JSON 문자열
+func _mirror_to_steam_cloud(slot: int, json_text: String) -> void:
+	var sm: Node = get_node_or_null("/root/SteamManager")
+	if sm == null or not sm.steam_available:
+		return
+	var cloud_name := _get_cloud_filename(slot)
+	sm.write_cloud_file(cloud_name, json_text)
+
+## Steam Cloud에서 최신 세이브를 로컬에 동기화한다.
+## 로컬 파일이 없거나 Cloud가 최신이면 Cloud 데이터로 덮어쓴다.
+## @param slot 슬롯 번호
+func _sync_from_steam_cloud(slot: int) -> void:
+	var sm: Node = get_node_or_null("/root/SteamManager")
+	if sm == null or not sm.steam_available:
+		return
+	var cloud_name := _get_cloud_filename(slot)
+	if not sm.cloud_file_exists(cloud_name):
+		return
+	var cloud_text: String = sm.read_cloud_file(cloud_name)
+	if cloud_text.is_empty():
+		return
+	# 로컬 파일이 없으면 Cloud에서 복원
+	var local_path := _get_save_path(slot)
+	if not FileAccess.file_exists(local_path):
+		_ensure_save_dir()
+		var file := FileAccess.open(local_path, FileAccess.WRITE)
+		if file:
+			file.store_string(cloud_text)
+			file.close()
+			print("[SaveManager] Cloud에서 로컬로 복원: 슬롯 %d" % slot)

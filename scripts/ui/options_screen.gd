@@ -52,6 +52,28 @@ var _resolution_btn: OptionButton
 var _language_btn: OptionButton
 ## 전투 배속 드롭다운
 var _battle_speed_btn: OptionButton
+## 키 리바인드 버튼 맵 (action_name -> Button)
+var _keybind_buttons: Dictionary = {}
+## 리바인드 대기 중인 액션 이름 (빈 문자열이면 대기 아님)
+var _waiting_rebind_action: String = ""
+## 리바인드 대기 중인 버튼 참조
+var _waiting_rebind_button: Button = null
+
+## 리바인드 가능한 액션 목록 [action_name, display_name]
+const REBINDABLE_ACTIONS: Array = [
+	["ui_confirm", "확인"],
+	["ui_cancel", "취소"],
+	["camera_up", "카메라 위"],
+	["camera_down", "카메라 아래"],
+	["camera_left", "카메라 왼쪽"],
+	["camera_right", "카메라 오른쪽"],
+	["toggle_grid", "그리드 토글"],
+	["end_turn", "턴 종료"],
+	["show_unit_info", "유닛 정보"],
+	["toggle_danger_zone", "위험 범위"],
+	["quick_save", "빠른 저장"],
+	["quick_load", "빠른 불러오기"],
+]
 
 # ── 초기화 ──
 
@@ -227,6 +249,9 @@ func _build_ui() -> void:
 	_resolution_btn.item_selected.connect(_on_resolution_changed)
 	res_row.add_child(_resolution_btn)
 
+	# ── 키 리바인드 섹션 ──
+	_build_keybind_section(settings_vbox)
+
 	# ── 하단 버튼 ──
 	var footer_sep := HSeparator.new()
 	root_vbox.add_child(footer_sep)
@@ -282,9 +307,69 @@ func _create_setting_row(label_text: String) -> HBoxContainer:
 
 	return row
 
+## 키 리바인드 섹션을 구성한다.
+## @param parent 부모 VBoxContainer
+func _build_keybind_section(parent: VBoxContainer) -> void:
+	_add_section_label(parent, "키 설정")
+	for entry in REBINDABLE_ACTIONS:
+		var action_name: String = entry[0]
+		var display_name: String = entry[1]
+		var row := _create_setting_row(display_name)
+		parent.add_child(row)
+		var btn := Button.new()
+		btn.text = _get_key_display_name(action_name)
+		btn.custom_minimum_size = Vector2(200, 0)
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.pressed.connect(_on_keybind_pressed.bind(action_name, btn))
+		row.add_child(btn)
+		_keybind_buttons[action_name] = btn
+
+## 액션의 첫 번째 키보드 이벤트 이름을 반환한다.
+## @param action_name 입력 액션 이름
+func _get_key_display_name(action_name: String) -> String:
+	var events := InputMap.action_get_events(action_name)
+	for event in events:
+		if event is InputEventKey:
+			var key_event: InputEventKey = event
+			return OS.get_keycode_string(key_event.keycode)
+	return "없음"
+
+## 키 리바인드 버튼 클릭 시 호출. 다음 키 입력을 대기한다.
+## @param action_name 리바인드할 액션
+## @param btn 클릭된 버튼
+func _on_keybind_pressed(action_name: String, btn: Button) -> void:
+	# 이전 대기 취소
+	if _waiting_rebind_button != null:
+		_waiting_rebind_button.text = _get_key_display_name(_waiting_rebind_action)
+	_waiting_rebind_action = action_name
+	_waiting_rebind_button = btn
+	btn.text = "키를 누르세요..."
+
+## 키 리바인드에서 키보드 이벤트의 첫 번째 매핑을 교체한다.
+## @param action_name 액션 이름
+## @param new_event 새 키보드 이벤트
+func _rebind_key(action_name: String, new_event: InputEventKey) -> void:
+	# 기존 키보드 이벤트만 제거 (게임패드 이벤트 유지)
+	var events := InputMap.action_get_events(action_name)
+	for event in events:
+		if event is InputEventKey:
+			InputMap.action_erase_event(action_name, event)
+	# 새 키보드 이벤트 추가
+	InputMap.action_add_event(action_name, new_event)
+
 # ── 입력 처리 ──
 
 func _input(event: InputEvent) -> void:
+	# 키 리바인드 대기 중이면 해당 키를 캡처
+	if _waiting_rebind_action != "" and event is InputEventKey and event.pressed:
+		var key_event: InputEventKey = event
+		_rebind_key(_waiting_rebind_action, key_event)
+		_waiting_rebind_button.text = OS.get_keycode_string(key_event.keycode)
+		_waiting_rebind_action = ""
+		_waiting_rebind_button = null
+		get_viewport().set_input_as_handled()
+		return
+
 	if event.is_action_pressed("ui_cancel"):
 		_on_back_pressed()
 		get_viewport().set_input_as_handled()
@@ -301,6 +386,15 @@ func save_settings() -> void:
 	var locale: String = "ko" if _language_btn.selected == 0 else "en"
 	_config.set_value("game", "language", locale)
 	_config.set_value("battle", "speed_index", _battle_speed_btn.selected)
+
+	# 키 리바인드 저장
+	for entry in REBINDABLE_ACTIONS:
+		var action_name: String = entry[0]
+		var events := InputMap.action_get_events(action_name)
+		for event in events:
+			if event is InputEventKey:
+				_config.set_value("keybinds", action_name, event.keycode)
+				break
 
 	var err := _config.save(SETTINGS_PATH)
 	if err != OK:
@@ -340,6 +434,9 @@ func load_settings() -> void:
 	# 전투 배속
 	var speed_idx: int = _config.get_value("battle", "speed_index", 0)
 	_battle_speed_btn.selected = clampi(speed_idx, 0, 2)
+
+	# 키 리바인드 복원
+	_restore_keybinds()
 
 	# 로드한 값을 시스템에 적용
 	_apply_all_current()
@@ -454,6 +551,22 @@ func _on_language_changed(idx: int) -> void:
 func _on_battle_speed_changed(idx: int) -> void:
 	_apply_battle_speed(idx)
 
+## ConfigFile에서 키 리바인드를 복원한다.
+func _restore_keybinds() -> void:
+	if not _config.has_section("keybinds"):
+		return
+	for entry in REBINDABLE_ACTIONS:
+		var action_name: String = entry[0]
+		if _config.has_section_key("keybinds", action_name):
+			var keycode: int = _config.get_value("keybinds", action_name, 0)
+			if keycode > 0:
+				var new_event := InputEventKey.new()
+				new_event.keycode = keycode
+				_rebind_key(action_name, new_event)
+				# UI 버튼 텍스트 갱신
+				if _keybind_buttons.has(action_name):
+					_keybind_buttons[action_name].text = OS.get_keycode_string(keycode)
+
 ## 전투 배속을 BattleSpeed에 반영한다.
 ## @param idx 속도 인덱스
 func _apply_battle_speed(idx: int) -> void:
@@ -468,6 +581,18 @@ func _on_reset_pressed() -> void:
 	_resolution_btn.selected = 0
 	_language_btn.selected = 0
 	_battle_speed_btn.selected = 0
+	# 키 리바인드 초기화: InputMap을 프로젝트 기본값으로 복원
+	for entry in REBINDABLE_ACTIONS:
+		var action_name: String = entry[0]
+		InputMap.action_erase_events(action_name)
+		var default_events := InputMap.action_get_events(action_name)
+		# 프로젝트 기본값 재로드
+		ProjectSettings.load_resource_pack("", true)
+	# 키 리바인드 버튼 텍스트 갱신
+	for entry2 in REBINDABLE_ACTIONS:
+		var act_name: String = entry2[0]
+		if _keybind_buttons.has(act_name):
+			_keybind_buttons[act_name].text = _get_key_display_name(act_name)
 	_apply_all_current()
 	print("[OptionsScreen] 설정 초기화")
 

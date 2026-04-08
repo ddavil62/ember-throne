@@ -200,6 +200,11 @@ func _on_scene_ended(scene_id: String) -> void:
 	# 유대 트리거 확인
 	_check_bond_trigger(scene_id)
 
+	# 에필로그 종료 → 크레딧 전환
+	if scene_id == ENDING_A_EPILOGUE or scene_id == ENDING_B_EPILOGUE:
+		_start_credits()
+		return
+
 	# 엔딩 분기 확인
 	if scene_id == ENDING_BRANCH_SCENE:
 		_check_ending_branch()
@@ -344,7 +349,39 @@ func advance_to_act(act: int) -> void:
 		if eb:
 			eb.bgm_change_requested.emit(ACT_BGM[act])
 
+	# 이전 막 클리어 업적 + 데모 모드 체크
+	var sm: Node = get_node_or_null("/root/SteamManager")
+	if sm:
+		# 2막 진입 = 1막 클리어, 3막 진입 = 2막 클리어, ...
+		if act > 1:
+			sm.on_act_cleared(act - 1)
+	# 데모 모드: 1막 종료(2막 진입) 시 데모 종료 화면 전환
+	if act == 2 and gm and gm.check_demo_end():
+		return
 	print("[StoryManager] %d막 진입" % act)
+
+# ── 크레딧 전환 ──
+
+## 에필로그 종료 후 크레딧 화면을 시작한다.
+func _start_credits() -> void:
+	print("[StoryManager] 에필로그 종료 → 크레딧 전환")
+	var gm: Node = _get_game_manager()
+	if not gm:
+		return
+
+	# 크레딧 씬 로드 및 표시
+	var credits_scene := load("res://scenes/ui/credits_screen.tscn") as PackedScene
+	if credits_scene == null:
+		push_warning("[StoryManager] credits_screen.tscn 로드 실패")
+		_complete_current_node()
+		return
+
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	if tree and tree.root:
+		var credits: Node = credits_scene.instantiate()
+		tree.root.add_child(credits)
+		# CreditsScreen 내부에서 타이틀 전환 처리
+		credits.start_credits()
 
 # ── 엔딩 분기 ──
 

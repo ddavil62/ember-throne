@@ -2,6 +2,88 @@
 
 ## [미출시] - 2026-04-08
 
+### Added (Phase 6 — Steam 플랫폼 통합)
+- `scripts/autoload/steam_manager.gd` (신규): GodotSteam 래퍼 싱글톤
+  - `Steam.init()` + graceful fallback (`steam_available=false`일 때 모든 호출 no-op)
+  - 업적 15개 트리거 연결 (act1~3_clear, ending_a/b, full_party, no_death_clear, hard_mode, all_cg 등)
+  - Steam Cloud read/write 세이브 미러링
+  - `_process()`에서 `Steam.run_callbacks()` 호출
+- `scripts/ui/demo_end_screen.gd` (신규): DEMO_MODE 종료 화면 (위시리스트 안내)
+- `scripts/autoload/game_manager.gd`: `DEMO_MODE` 상수 + `check_demo_end()` 분기
+- `scripts/autoload/event_bus.gd`: `achievement_unlocked` 시그널 추가
+- `scripts/autoload/save_manager.gd`: Steam Cloud 미러링 (로컬 세이브 후 Cloud 동기 쓰기)
+- `scripts/ui/options_screen.gd`: 키 리바인드 섹션 + ConfigFile 저장/복원 + `_default_input_events` 캐시
+- `scripts/story/story_manager.gd`: `advance_to_act()` 업적/데모 연동, `_get_steam_manager()` 헬퍼
+- `project.godot`: SteamManager autoload + 게임패드 이벤트 (D-pad, Left Stick, A/B/Start/LB/RB) + `ui_up/down/left/right` 매핑
+
+#### Phase 6 QA 수정 사항
+- story_manager.gd: RefCounted에서 `get_node_or_null` 직접 호출 크래시 -> `_get_steam_manager()` 헬퍼 패턴으로 변경
+- options_screen.gd: 키 리바인드 초기화 시 `action_erase_events` 후 빈 배열 반환 버그 -> `_default_input_events` 캐싱으로 수정
+- project.godot: `ui_up/down/left/right`에 게임패드 D-pad + Left Stick 매핑 추가
+
+#### Phase 6 알려진 이슈
+- Steam App ID 480 (Spacewar) 테스트용 — 실제 ID 발급 후 교체 필요 (LOW)
+- Steam Cloud timestamp 비교 미구현 — 로컬 세이브 존재 시 Cloud 무시 (MEDIUM)
+- 리바인드 중 ESC 캡처 가능 — 취소 메커니즘 없음 (LOW)
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-08-ember-throne-phase6-platform-spec.md`
+- 리포트: `.claude/specs/2026-04-08-ember-throne-phase6-platform-report.md`
+- QA: `.claude/specs/2026-04-08-ember-throne-phase6-platform-qa.md`
+- QA Fix: `.claude/specs/2026-04-08-ember-throne-phase6-qa-fix-report.md`
+
+### Added (Phase 5 — UI 폴리시 7종)
+- `scripts/battle/ui/damage_popup.gd` (신규): DamagePopup 팩토리 클래스 — 일반/크리티컬/회복/회피 4종
+- `scripts/ui/loading_screen.gd` + `scenes/ui/loading_screen.tscn` (신규): 로딩 화면 CanvasLayer — 팁 + 일러스트 placeholder
+- `scripts/ui/bond_banner.gd` (신규): 유대 레벨업 배너 (큐 시스템)
+- `scripts/battle/ui/battle_hud.gd`: 미니맵 도트맵 (아군 파랑/적 빨강) + 턴 순서 바 (SPD 내림차순 아이콘) + 대미지 팝업 spawn
+- `scripts/battle/turn_manager.gd`: `get_turn_order_units()` API 추가
+- `scripts/battle/combat_calculator.gd`: `can_counter()` 반격 판정 메서드 추가
+- `scripts/battle/ui/damage_preview.gd`: 반격 가능/불가 행 추가
+- `scripts/story/bond_system.gd`: `bond_leveled_up` emit 추가
+- `scripts/ui/equipment_screen.gd`: 스탯 비교 개별 빨강/초록 색상
+
+#### Phase 5 QA 수정 사항
+- bond_system.gd: `_get_event_bus()` 중복 선언 삭제
+- damage_popup.gd: `create_tween()` 호출 시 씬 트리 밖 이슈 -> `_animate()`를 `_ready()`로 이동
+- battle_hud.gd: TurnManager 경로 오류 -> 외부 주입 패턴 적용
+
+#### Phase 5 알려진 이슈
+- `can_counter()` grid 파라미터 미사용 (LOW)
+- `create_miss()` 호출부 없음 (LOW)
+- `refresh_minimap()` 매 호출 시 ColorRect 생성/파괴 — 대규모 맵에서 성능 우려 (LOW)
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-08-ember-throne-phase5-ui-polish-spec.md`
+- 리포트: `.claude/specs/2026-04-08-ember-throne-phase5-ui-polish-report.md`
+- QA: `.claude/specs/2026-04-08-ember-throne-phase5-ui-polish-qa.md`
+
+### Added (Phase 4 — 내러티브 완성)
+- `scripts/battle/tutorial_overlay.gd` + `scenes/battle/tutorial_overlay.tscn` (신규): 4단계 튜토리얼 오버레이 (이동->공격->스킬->대기) + `is_action_blocked()` API
+- `scripts/ui/credits_screen.gd` + `scenes/ui/credits_screen.tscn` (신규): 크레딧 롤 스크롤 + Enter/Space/Esc 스킵 + 타이틀 복귀
+- `scripts/battle/battle_scene.gd`: `_init_tutorial()` (튜토리얼 초기화) + 맵 이벤트 런타임 3종 (wave_spawn, dialogue, terrain_change)
+- `data/maps/battle_01.json`: tutorial 필드 + events Array 리팩토링
+- `scripts/story/story_manager.gd`: 에필로그 -> 크레딧 전환 (`_start_credits()`)
+- `scripts/dialogue/dialogue_manager.gd`: `_extract_act()` ending_ prefix 처리
+- `data/dialogue/act4.json`: ending_a/b_epilogue 씬 추가 (CG + narration 3건씩)
+
+#### Phase 4 QA 수정 사항
+- E-1 (HIGH): 엔딩 분기 시 4-8A/4-8B 씬 미재생 — `_check_ending_branch` 트리거 시점을 4-8A/B 종료로 이동
+- E-2 (HIGH): `is_action_blocked` 미호출 — turn_manager에서 호출 로직 추가
+- E-3 (MEDIUM): `on_start` 트리거 미처리 — 턴 1에서 on_start 이벤트 확인 로직 추가
+- E-4 (MEDIUM): `on_victory` 트리거 미처리 — 승리 시 on_victory 이벤트 핸들러 추가
+
+#### Phase 4 스펙 대비 차이
+- credits SCROLL_SPEED: 60(스펙) -> 150(구현), 빠른 스크롤 토글(FAST_SCROLL_SPEED 300) 미구현
+- credits FADE_OUT: 1.5s(스펙) -> 1.0s(구현), END_WAIT 2.0s 미구현
+- tutorial JSON steps 배열 미포함 — 하드코딩된 STEPS 사용 (기능상 동일)
+- CG 이미지 미존재 (ending_a_cg.png, ending_b_cg.png) — 자동 스킵 처리
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-08-ember-throne-phase4-narrative-spec.md`
+- 리포트: `.claude/specs/2026-04-08-ember-throne-phase4-narrative-report.md`
+- QA: `.claude/specs/2026-04-08-ember-throne-phase4-narrative-qa.md`
+
 ### Changed (DifficultyManager 싱글톤 최적화)
 - `difficulty_manager.gd`: `static var _instance` + `static func get_instance()` 싱글톤 패턴 도입
   - `RefCounted` 기반 유지, 최초 호출 시 1회만 인스턴스 생성

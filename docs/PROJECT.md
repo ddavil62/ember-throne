@@ -1,6 +1,6 @@
 # Ember Throne 기획서
 
-> 최종 업데이트: 2026-04-07
+> 최종 업데이트: 2026-04-08
 
 ## 프로젝트 개요
 
@@ -70,8 +70,12 @@ ember-throne/
 | 전직 시스템 | `scripts/story/class_change_system.gd` | 스토리 연동 전직 |
 | 유대 시스템 | `scripts/story/bond_system.gd` | 캐릭터 유대 관계 |
 | 월드맵 | `scripts/world/world_map.gd` | 거점 이동/진행 |
-| 세이브 매니저 | `scripts/autoload/save_manager.gd` | 세이브/로드 |
+| 세이브 매니저 | `scripts/autoload/save_manager.gd` | 세이브/로드 + Steam Cloud 미러링 |
 | 데이터 매니저 | `scripts/autoload/data_manager.gd` | JSON 데이터 로딩 |
+| Steam 매니저 | `scripts/autoload/steam_manager.gd` | GodotSteam 래퍼 + 업적 15개 + Cloud |
+| 튜토리얼 오버레이 | `scripts/battle/tutorial_overlay.gd` | 전투 튜토리얼 4단계 안내 |
+| 크레딧 화면 | `scripts/ui/credits_screen.gd` | 엔딩 크레딧 롤 |
+| 로딩 화면 | `scripts/ui/loading_screen.gd` | 씬 전환 로딩 + 팁 |
 
 ## 기능 목록
 
@@ -96,7 +100,24 @@ ember-throne/
 | 클리어 보너스 EXP | 보스/특수 전투 rewards.exp_bonus -> 참전 유닛 flat EXP 지급 | 완료 |
 | 세이브/로드 | 다중 슬롯, 오토세이브 | 완료 |
 | CG 갤러리 | 이벤트 CG 회상 | 완료 |
-| 옵션 | 사운드/화면 설정 | 완료 |
+| 튜토리얼 | battle_01 4단계 오버레이 + 행동 차단 | 완료 |
+| 맵 이벤트 런타임 | wave_spawn/dialogue/terrain_change 3종 트리거 | 완료 |
+| 크레딧 롤 | 엔딩 에필로그 후 스크롤 + 스킵 | 완료 |
+| 엔딩 CG 연출 | 엔딩 A/B별 에필로그 CG + 텍스트 분기 | 완료 |
+| 미니맵 | 전투 HUD 도트맵 (아군 파랑/적 빨강) | 완료 |
+| 로딩 화면 | 씬 전환 팁 + 일러스트 | 완료 |
+| 턴 순서 바 | SPD 기반 행동 순서 아이콘 | 완료 |
+| 대미지 팝업 | 일반/크리티컬/회복/회피 4종 팝업 | 완료 |
+| 스탯 비교 | 장비 교체 시 빨강/초록 색상 | 완료 |
+| 반격 표시 | can_counter 판정 + 데미지 프리뷰 | 완료 |
+| 본드 알림 | 유대 레벨업 배너 (큐 시스템) | 완료 |
+| Steam 연동 | GodotSteam 래퍼 + graceful fallback | 완료 |
+| 업적 시스템 | 15개 업적 (막 클리어, 엔딩, 풀 파티, CG 등) | 완료 |
+| Steam Cloud 세이브 | 로컬-Cloud 미러링 | 완료 |
+| 게임패드 지원 | D-pad, Stick, A/B/Start/LB/RB 매핑 | 완료 |
+| 키 리바인드 | 옵션에서 키 재설정 + ConfigFile 저장 | 완료 |
+| 데모 모드 | DEMO_MODE + 데모 종료 화면 | 완료 |
+| 옵션 | 사운드/화면/키 설정 | 완료 |
 
 ## 기획 문서
 
@@ -119,29 +140,24 @@ ember-throne/
 
 ## 알려진 제약사항
 
-- ~~캐릭터 합류 레벨 JSON 불일치~~ -- Phase 2-B에서 LEVEL-DESIGN.md 기준으로 갱신 완료 (2026-04-07)
-- battle_XX.json 적 레벨은 LEVEL-DESIGN.md 기준으로 동기화 완료. 보상(gold) 수치는 Phase 2에서 갱신 예정
-- battle_34.json 보스전 페이즈가 2단계로 구현되어 있으나 기획은 3페이즈 -- 추후 구현 필요
-- VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완 -- 현재 배틀 데이터에 해당 케이스 없으나 별도 작업 필요
-- 전투 중 사망한 유닛이 벤치 유닛으로 분류되어 벤치 EXP를 받는 엣지케이스 -- 밸런스 영향 미미, 전투 EXP 시스템 확장 시 함께 수정 예정
-- 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈 -- 게임 플레이 루프 완성 전 별도 작업 필요
-- `spend_gold()` 음수 amount 미검증 -- 현재 호출부 없으나 상점 구현 시 가드 추가 필요 (Phase 2 QA M1)
-- `init_default_party()`의 seria/rinen이 CHARACTER_JOINS와 불일치 -- 기획 확인 필요 (Phase 2 QA M2)
-- ~~DifficultyManager 인스턴스가 `init_from_enemy()` 호출마다 생성됨~~ -- 싱글톤 패턴으로 전환 완료 (Phase 3 QA L1 해소)
+- BGM/SFX 에셋 0개 -- 오디오 소싱 미결정 (Phase 3 미착수)
+- Steam App ID 480 (Spacewar) 테스트용 -- 실제 ID 발급 후 교체 필요
+- Steam Cloud timestamp 비교 미구현 -- 로컬 세이브 존재 시 Cloud 무시 (Phase 6 QA MEDIUM)
+- 키 리바인드 중 ESC 캡처 가능 -- 취소 메커니즘 없음 (Phase 6 QA LOW)
+- 엔딩 CG 이미지 미존재 (ending_a_cg.png, ending_b_cg.png) -- 자동 스킵 처리
+- VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완
+- 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈
+- `spend_gold()` 음수 amount 미검증 (Phase 2 QA M1)
+- `init_default_party()`의 seria/rinen이 CHARACTER_JOINS와 불일치 (Phase 2 QA M2)
+- `refresh_minimap()` 매 호출 시 ColorRect 생성/파괴 -- 대규모 맵에서 성능 우려 (Phase 5 QA LOW)
 
 ## 향후 계획
 
-- ~~캐릭터 합류 레벨 JSON 일괄 갱신~~ -- 완료 (Phase 2-B)
-- ~~골드 보상 시스템 구현~~ -- 완료 (Phase 2-A: 적 처치 gold_reward + 전투 보너스 지급)
-- ~~Hard 난이도 적 스케일링~~ -- 완료 (Phase 3: DifficultyManager 연동, 레벨+1/스탯 배율)
-- ~~전투 클리어 보너스 EXP~~ -- 완료 (Phase 3: 보스/특수 전투 exp_bonus 8전 설정)
-- battle_XX.json 보상(gold/item) 수치 동기화
-- 골드 UI 표시 (전투 결과 화면에 획득 골드 표시)
+- BGM 16트랙 + SFX 39종 확보 및 AudioManager 통합 (Phase 3)
+- 전 전투 35개 밸런스 플레이테스트 (Phase 7)
+- Steam 스토어 페이지/트레일러/빌드 파이프라인 (Phase 8)
+- 엔딩 CG 이미지 제작
+- Steam 실제 App ID 발급 및 교체
 - spend_gold() 음수 가드 추가 (상점 구현 시)
-- init_default_party() CHARACTER_JOINS 정합성 정리
 - 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
-- 보너스 EXP 대상 확장 검토 (배치 유닛 전체 -> 현재는 공격 행동 유닛만)
-- ~~DifficultyManager 싱글톤/캐싱 전환 검토~~ -- 완료 (static var 싱글톤 패턴)
-- battle_34 3페이즈 보스전 구현
-- Steam 연동 (GodotSteam: 업적, 클라우드 세이브)
-- 스토어 페이지 에셋 준비
+- 보너스 EXP 대상 확장 검토

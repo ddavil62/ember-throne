@@ -167,6 +167,13 @@ func is_terrain_ai() -> bool:
 	var data: Dictionary = get_difficulty_data()
 	return data.get("ai_use_terrain", false)
 
+## AI 타겟 선택 방식을 반환한다. ("nearest_low_hp" | "threat_based")
+## @returns 타겟 선택 방식 문자열
+func get_target_selection() -> String:
+	var data: Dictionary = get_difficulty_data()
+	var ai_behavior: Dictionary = data.get("ai_behavior", {})
+	return ai_behavior.get("target_selection", "nearest_low_hp")
+
 # ── 게임플레이 설정 ──
 
 ## 불사조 깃털 구매 가능 여부를 반환한다.

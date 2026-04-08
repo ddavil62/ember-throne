@@ -14,6 +14,12 @@ var _boss_ai: BossAI = BossAI.new()
 ## 전투 데미지 계산기
 var _combat_calc: CombatCalculator = CombatCalculator.new()
 
+## 집중 공격 — 직전 턴에 공격받은 타겟 (턴 간 유지)
+var _last_attacked_target: BattleUnit = null
+
+## 집중 공격 — 현재 턴에서 AI 유닛들이 공격한 타겟 목록
+var _current_turn_targets: Array[BattleUnit] = []
+
 # ── 메인 행동 결정 ──
 
 ## 유닛의 AI 행동을 결정한다.
@@ -41,23 +47,30 @@ func decide_action(unit: BattleUnit, battle_map: Node2D) -> Dictionary:
 
 	# 보스 패턴은 BossAI에 직접 위임
 	if ai_pattern == "boss":
-		return _boss_ai.decide(unit, targets, move_cells, battle_map)
+		var action: Dictionary = _boss_ai.decide(unit, targets, move_cells, battle_map)
+		_track_focus_fire(action)
+		return action
 
 	# 일반 패턴 분기
+	var action: Dictionary = {}
 	match ai_pattern:
 		"aggressive":
-			return _patterns.aggressive(unit, targets, move_cells, battle_map, self)
+			action = _patterns.aggressive(unit, targets, move_cells, battle_map, self)
 		"defensive":
-			return _patterns.defensive(unit, targets, move_cells, battle_map, self)
+			action = _patterns.defensive(unit, targets, move_cells, battle_map, self)
 		"support":
-			return _patterns.support(unit, targets, move_cells, battle_map, self)
+			action = _patterns.support(unit, targets, move_cells, battle_map, self)
 		"ambush":
-			return _patterns.ambush(unit, targets, move_cells, battle_map, self)
+			action = _patterns.ambush(unit, targets, move_cells, battle_map, self)
 		"flee":
-			return _patterns.flee(unit, targets, move_cells, battle_map, self)
+			action = _patterns.flee(unit, targets, move_cells, battle_map, self)
 		_:
 			# 알 수 없는 패턴 — aggressive로 폴백
-			return _patterns.aggressive(unit, targets, move_cells, battle_map, self)
+			action = _patterns.aggressive(unit, targets, move_cells, battle_map, self)
+
+	# 집중 공격 추적 — 공격 행동이면 타겟을 기록
+	_track_focus_fire(action)
+	return action
 
 # ── 타겟 선택 ──
 
@@ -83,8 +96,10 @@ func get_best_target(unit: BattleUnit, targets: Array[BattleUnit], battle_map: N
 	if alive_targets.is_empty():
 		return null
 
-	# 난이도 조회 (Hard면 힐러 우선 등)
-	var is_hard: bool = _is_hard_difficulty()
+	# 난이도 매니저에서 AI 설정 조회
+	var diff_mgr: DifficultyManager = DifficultyManager.get_instance()
+	var target_selection: String = diff_mgr.get_target_selection()
+	var focus_fire: bool = diff_mgr.is_focus_fire()
 
 	# 후보 점수 계산
 	var best_target: BattleUnit = null
@@ -99,8 +114,8 @@ func get_best_target(unit: BattleUnit, targets: Array[BattleUnit], battle_map: N
 		if est_damage >= t.current_hp:
 			score += 100.0
 
-		# 2. Hard 난이도: 힐러/서포터 우선
-		if is_hard:
+		# 2. 위협 기반 타겟 선택 (threat_based): 힐러/서포터 우선
+		if target_selection == "threat_based":
 			var target_class: String = t._source_data.get("class", "")
 			var target_role: String = t._source_data.get("role", "")
 			if target_class in ["healer", "support", "cleric", "priest"] or target_role in ["healer", "support"]:
@@ -116,6 +131,13 @@ func get_best_target(unit: BattleUnit, targets: Array[BattleUnit], battle_map: N
 
 		# 5. 가까운 유닛 선호 (거리 패널티)
 		score -= float(dist) * 2.0
+
+		# 6. 집중 공격 보너스 — 이전 턴/현재 턴에 공격받은 타겟에 가산
+		if focus_fire:
+			if _last_attacked_target != null and t == _last_attacked_target and t.is_alive():
+				score += 30.0
+			if t in _current_turn_targets:
+				score += 30.0
 
 		if score > best_score:
 			best_score = score
@@ -380,6 +402,34 @@ func _wait_action(unit: BattleUnit) -> Dictionary:
 		"target": null,
 		"skill_id": ""
 	}
+
+# ── 집중 공격 추적 ──
+
+## 행동 결과에서 공격 타겟을 추출하여 집중 공격 추적에 기록한다.
+## @param action 행동 Dictionary
+func _track_focus_fire(action: Dictionary) -> void:
+	if action.get("type", "") == "move_attack" or action.get("type", "") == "skill":
+		var target: Variant = action.get("target", null)
+		if target is BattleUnit:
+			record_attack_target(target)
+
+## 공격 실행 후 호출하여 타겟을 기록한다. (TurnManager 등에서 호출)
+## @param target 공격받은 유닛
+func record_attack_target(target: BattleUnit) -> void:
+	if target != null and not _current_turn_targets.has(target):
+		_current_turn_targets.append(target)
+
+## 턴 종료 시 호출하여 집중 공격 추적 상태를 갱신한다.
+## 현재 턴 타겟 목록의 마지막 타겟을 _last_attacked_target으로 보관하고 초기화한다.
+func on_turn_end() -> void:
+	if not _current_turn_targets.is_empty():
+		_last_attacked_target = _current_turn_targets[-1]
+	_current_turn_targets.clear()
+
+## 전투 시작 시 호출하여 집중 공격 상태를 초기화한다.
+func reset_focus_fire() -> void:
+	_last_attacked_target = null
+	_current_turn_targets.clear()
 
 ## DataManager 싱글톤 참조 취득
 ## @returns DataManager 노드 또는 null

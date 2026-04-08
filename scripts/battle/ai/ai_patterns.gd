@@ -93,8 +93,11 @@ func defensive(unit: BattleUnit, targets: Array[BattleUnit], move_cells: Array[V
 				"skill_id": ""
 			}
 
-	# 범위 내 적이 없음 — 지형 보너스가 높은 셀로 이동하여 대기
-	var best_cell: Vector2i = _find_best_terrain_cell(unit, move_cells, battle_map)
+	# 범위 내 적이 없음 — 지형 활용 AI가 켜져 있으면 지형 보너스 셀로 이동, 아니면 대기
+	var diff_mgr: DifficultyManager = DifficultyManager.get_instance()
+	var best_cell: Vector2i = unit.cell
+	if diff_mgr.is_terrain_ai():
+		best_cell = _find_best_terrain_cell(unit, move_cells, battle_map)
 	if best_cell != unit.cell:
 		return {
 			"type": "move",
@@ -439,6 +442,10 @@ func _wait_action(unit: BattleUnit) -> Dictionary:
 		"target": null,
 		"skill_id": ""
 	}
+
+## 앰부시 전환 상태를 초기화한다. 전투 시작 시 호출.
+func reset() -> void:
+	_ambush_triggered.clear()
 
 ## DataManager 싱글톤 참조 취득
 ## @returns DataManager 노드 또는 null

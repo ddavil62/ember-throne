@@ -32,6 +32,10 @@ const ACT_BGM: Dictionary = {
 ## 엔딩 분기가 발생하는 씬 ID
 const ENDING_BRANCH_SCENE := "4-8"
 
+## 엔딩 A 분기 씬 ID (리넨 희생 루트)
+const ENDING_A_SCENE := "4-8A"
+## 엔딩 B 분기 씬 ID (리넨 기억 상실 루트)
+const ENDING_B_SCENE := "4-8B"
 ## 엔딩 A 에필로그 씬 ID (리넨 희생)
 const ENDING_A_EPILOGUE := "ending_a_epilogue"
 ## 엔딩 B 에필로그 씬 ID (리넨 기억 상실)
@@ -350,7 +354,7 @@ func advance_to_act(act: int) -> void:
 			eb.bgm_change_requested.emit(ACT_BGM[act])
 
 	# 이전 막 클리어 업적 + 데모 모드 체크
-	var sm: Node = get_node_or_null("/root/SteamManager")
+	var sm: Node = _get_steam_manager()
 	if sm:
 		# 2막 진입 = 1막 클리어, 3막 진입 = 2막 클리어, ...
 		if act > 1:
@@ -530,4 +534,12 @@ func _get_data_manager() -> Node:
 	var tree: SceneTree = Engine.get_main_loop() as SceneTree
 	if tree and tree.root:
 		return tree.root.get_node_or_null("DataManager")
+	return null
+
+## SteamManager 싱글톤을 반환한다.
+## @returns SteamManager 노드 또는 null
+func _get_steam_manager() -> Node:
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	if tree and tree.root:
+		return tree.root.get_node_or_null("SteamManager")
 	return null

@@ -54,6 +54,8 @@ var _language_btn: OptionButton
 var _battle_speed_btn: OptionButton
 ## 키 리바인드 버튼 맵 (action_name -> Button)
 var _keybind_buttons: Dictionary = {}
+## 프로젝트 기본 입력 이벤트 캐시 (action_name -> Array[InputEvent])
+var _default_input_events: Dictionary = {}
 ## 리바인드 대기 중인 액션 이름 (빈 문자열이면 대기 아님)
 var _waiting_rebind_action: String = ""
 ## 리바인드 대기 중인 버튼 참조
@@ -79,6 +81,10 @@ const REBINDABLE_ACTIONS: Array = [
 
 func _ready() -> void:
 	_config = ConfigFile.new()
+	# 프로젝트 기본 입력 이벤트를 캐싱 (리바인드 초기화용)
+	for entry in REBINDABLE_ACTIONS:
+		var action_name: String = entry[0]
+		_default_input_events[action_name] = InputMap.action_get_events(action_name).duplicate()
 	_build_ui()
 	load_settings()
 
@@ -581,13 +587,13 @@ func _on_reset_pressed() -> void:
 	_resolution_btn.selected = 0
 	_language_btn.selected = 0
 	_battle_speed_btn.selected = 0
-	# 키 리바인드 초기화: InputMap을 프로젝트 기본값으로 복원
+	# 키 리바인드 초기화: _ready()에서 캐싱한 프로젝트 기본값으로 복원
 	for entry in REBINDABLE_ACTIONS:
 		var action_name: String = entry[0]
 		InputMap.action_erase_events(action_name)
-		var default_events := InputMap.action_get_events(action_name)
-		# 프로젝트 기본값 재로드
-		ProjectSettings.load_resource_pack("", true)
+		if _default_input_events.has(action_name):
+			for event in _default_input_events[action_name]:
+				InputMap.action_add_event(action_name, event)
 	# 키 리바인드 버튼 텍스트 갱신
 	for entry2 in REBINDABLE_ACTIONS:
 		var act_name: String = entry2[0]

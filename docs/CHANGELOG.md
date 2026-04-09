@@ -2,6 +2,31 @@
 
 ## [미출시] - 2026-04-09
 
+### Fixed (전투 버그 3종 수정)
+
+#### 버그 A: EXP/스탯 동기화 누락
+- `scripts/battle/battle_scene.gd`: 패배/도주 종료 시에도 `_sync_exp_to_party()` 호출 추가
+- `scripts/battle/battle_scene.gd`: `_sync_exp_to_party()`에서 `unit.stats.duplicate()`로 레벨업 스탯을 `member["stats"]`에 동기화
+
+#### 버그 B: 캐릭터 사망/부상 처리
+- `scripts/systems/party_manager.gd`: `injured` 필드 초기화, `set_injured()`, `is_injured()`, `clear_all_injured()` 메서드 추가
+- `scripts/systems/party_manager.gd`: `set_active()`에 부상 캐릭터 출격 불가 가드 추가
+- `scripts/systems/party_manager.gd`: serialize/deserialize에 `injured` 필드 추가 (구세이브 호환: `get("injured", false)`)
+- `scripts/battle/battle_scene.gd`: 플레이어 유닛 사망 시 `set_injured(unit_id, true)` 호출
+- `scripts/battle/battle_scene.gd`: 전투 종료(승리/패배/도주) 후 `clear_all_injured()` 호출
+- `scripts/story/story_manager.gd`: 씬 4-3 종료 시 에리스 영구 이탈 처리 (`_process_eris_death()` 메서드 추가, `eris_death` 플래그 설정 + `remove_character("eris")`)
+
+#### 버그 C: Hard AI flee 폴백
+- `scripts/battle/ai/ai_controller.gd`: Hard 모드 flee 패턴 → targets 유무에 따라 aggressive/defensive 폴백 (Normal 모드 변경 없음)
+
+#### 스펙 대비 차이
+- `get_unit()` → `get_unit_by_id()`: 실제 API 시그니처에 맞춰 변경
+- `BondSystem.ERIS_DEATH_FLAG` 직접 참조 대신 `story_manager.gd` 내부에 `const ERIS_DEATH_FLAG = "eris_death"` 로컬 정의 (RefCounted에서 autoload 노드 접근 불안정)
+
+#### 참고
+- 스펙: `.claude/specs/2026-04-09-ember-throne-battle-bugfix-spec.md`
+- 리포트: `.claude/specs/2026-04-09-ember-throne-battle-bugfix-report.md`
+
 ### Added (Phase 3 — 오디오 파이프라인)
 - BGM 16트랙 소싱 (`assets/audio/bgm/`)
   - CC0 14트랙: bgm_title, bgm_worldmap2, bgm_town1/2, bgm_battle1/2, bgm_boss1/2, bgm_tense1/2, bgm_sad1/2, bgm_victory, bgm_ending1

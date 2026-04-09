@@ -60,7 +60,7 @@ ember-throne/
 | 그리드 시스템 | `scripts/battle/grid_system.gd` | 이동/공격 범위 계산 |
 | 전투 계산기 | `scripts/battle/combat_calculator.gd` | 데미지/명중/회피 공식 |
 | 경험치 시스템 | `scripts/battle/experience_system.gd` | EXP 공식 (level * 100), 벤치 EXP 계산 |
-| 파티 매니저 | `scripts/systems/party_manager.gd` | 파티 관리, gain_exp/레벨업, EXP 공식 (level * 100) |
+| 파티 매니저 | `scripts/systems/party_manager.gd` | 파티 관리, gain_exp/레벨업, EXP 공식 (level * 100), 부상(injured) 시스템 |
 | 스킬 시스템 | `scripts/battle/skill_system.gd` | 스킬 실행/쿨다운 |
 | 스킬 실행기 | `scripts/battle/skill_executor.gd` | guaranteed_crit 조건 파싱 포함 |
 | AI 컨트롤러 | `scripts/battle/ai/ai_controller.gd` | 적 AI 의사결정 |
@@ -98,7 +98,8 @@ ember-throne/
 | 월드맵 | 6지역 30+ 거점, 유랑 전투 해금 | 완료 |
 | 상점/거점 | 장비 구매, 대장간 소재 교환 | 완료 |
 | 인벤토리/장비 | 소비/무기/방어구/악세서리 관리 | 완료 |
-| 난이도 | Normal/Hard 2단계, AI 차이, Hard 적 스케일링(레벨+1, 스탯 배율) | 완료 |
+| 부상 시스템 | FE 방식 부상 처리 (사망=해당 전투 불가, 다음 전투 복귀), 에리스 스토리 사망 연동 | 완료 |
+| 난이도 | Normal/Hard 2단계, AI 차이, Hard 적 스케일링(레벨+1, 스탯 배율), Hard flee 폴백 | 완료 |
 | 클리어 보너스 EXP | 보스/특수 전투 rewards.exp_bonus -> 참전 유닛 flat EXP 지급 | 완료 |
 | 세이브/로드 | 다중 슬롯, 오토세이브 | 완료 |
 | CG 갤러리 | 이벤트 CG 회상 | 완료 |
@@ -151,7 +152,6 @@ ember-throne/
 - 키 리바인드 중 ESC 캡처 가능 -- 취소 메커니즘 없음 (Phase 6 QA LOW)
 - 엔딩 CG 이미지 미존재 (ending_a_cg.png, ending_b_cg.png) -- 자동 스킵 처리
 - VCC defeat `turn_limit_exceeded` 분기의 null 안전성 미보완
-- 활성 유닛 EXP가 BattleUnit에만 반영되고 PartyManager에 동기화되지 않는 아키텍처 이슈
 - `spend_gold()` 음수 amount 미검증 (Phase 2 QA M1)
 - `init_default_party()`의 seria/rinen이 CHARACTER_JOINS와 불일치 (Phase 2 QA M2)
 - `refresh_minimap()` 매 호출 시 ColorRect 생성/파괴 -- 대규모 맵에서 성능 우려 (Phase 5 QA LOW)
@@ -163,5 +163,4 @@ ember-throne/
 - 엔딩 CG 이미지 제작
 - Steam 실제 App ID 발급 및 교체
 - spend_gold() 음수 가드 추가 (상점 구현 시)
-- 전투 EXP -> PartyManager 동기화 + 사망 유닛 EXP 정책 확립
 - 보너스 EXP 대상 확장 검토

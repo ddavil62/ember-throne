@@ -126,7 +126,8 @@ func get_best_target(unit: BattleUnit, targets: Array[BattleUnit], battle_map: N
 			var target_class: String = t._source_data.get("class", "")
 			var target_role: String = t._source_data.get("role", "")
 			if target_class in ["healer", "support", "cleric", "priest"] or target_role in ["healer", "support"]:
-				score += 50.0
+				# Hard 난이도에서는 힐러/서포터 우선도를 강화하여 더 위협적으로 동작
+				score += 80.0 if _is_hard_difficulty() else 50.0
 
 		# 3. 낮은 HP 유닛 선호 (HP 비율이 낮을수록 높은 점수)
 		var hp_ratio: float = float(t.current_hp) / float(maxi(t.stats.get("hp", 1), 1))
@@ -141,10 +142,12 @@ func get_best_target(unit: BattleUnit, targets: Array[BattleUnit], battle_map: N
 
 		# 6. 집중 공격 보너스 — 이전 턴/현재 턴에 공격받은 타겟에 가산
 		if focus_fire:
+			# Hard 난이도에서는 집중 공격 가중치를 강화하여 동일 타겟을 끝까지 노림
+			var focus_bonus: float = 55.0 if _is_hard_difficulty() else 30.0
 			if _last_attacked_target != null and t == _last_attacked_target and t.is_alive():
-				score += 30.0
+				score += focus_bonus
 			if t in _current_turn_targets:
-				score += 30.0
+				score += focus_bonus
 
 		if score > best_score:
 			best_score = score

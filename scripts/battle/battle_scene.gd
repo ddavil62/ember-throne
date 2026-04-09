@@ -539,15 +539,21 @@ func _sync_exp_to_party() -> void:
 	# ExperienceSystem의 내부 EXP 트래킹 데이터 (유닛ID → 잔여 EXP)
 	var exp_data: Dictionary = _turn_manager.exp_system._unit_exp
 
-	for unit: BattleUnit in _battle_map.get_units_by_team("player"):
-		var member: Dictionary = pm.get_party_member(unit.unit_id)
+	# exp_data 기반 순회: 생존 유닛뿐 아니라 사망 유닛도 EXP 동기화 대상에 포함
+	for unit_id: String in exp_data.keys():
+		var member: Dictionary = pm.get_party_member(unit_id)
 		if member.is_empty():
 			continue
-		member["level"] = unit.level
-		member["exp"] = exp_data.get(unit.unit_id, 0)
-		member["stats"] = unit.stats.duplicate()  # 레벨업 스탯 반영
-		print("[BattleScene] EXP 동기화: %s Lv.%d EXP=%d" % [
-			unit.unit_id, member["level"], member["exp"]
+		# 생존 유닛: BattleUnit에서 level/stats 직접 읽기
+		# 사망 유닛: BattleUnit이 맵에서 제거되어 null → exp만 동기화, level/stats 유지
+		var live_unit: BattleUnit = _battle_map.get_unit_by_id(unit_id)
+		if live_unit:
+			member["level"] = live_unit.level
+			member["stats"] = live_unit.stats.duplicate()  # 레벨업 스탯 반영
+		member["exp"] = exp_data[unit_id]
+		print("[BattleScene] EXP 동기화: %s Lv.%d EXP=%d%s" % [
+			unit_id, member.get("level", 0), member["exp"],
+			"" if live_unit else " (사망 유닛)"
 		])
 
 ## 월드맵으로 복귀한다.

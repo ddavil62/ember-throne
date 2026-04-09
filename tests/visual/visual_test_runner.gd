@@ -1,5 +1,6 @@
-## @fileoverview 비주얼 리그레션 테스트 러너. 핵심 씬을 순차 로드하여
-## 뷰포트를 캡처하고 레퍼런스 이미지와 픽셀 단위 비교를 수행한다.
+## @fileoverview 비주얼 리그레션 테스트 러너.
+## 핵심 씬을 순차 로드하여 뷰포트를 캡처하고 레퍼런스 이미지와 픽셀 단위 비교를 수행한다.
+## 인터랙션 시나리오("scenario" 타입)는 코루틴으로 실행되어 클릭 시뮬레이션 후 캡처한다.
 ## run_visual_tests.js가 이 스크립트를 임시 autoload로 등록하여 실행한다.
 extends Node
 
@@ -20,8 +21,11 @@ const REFERENCES_DIR := "res://tests/visual/references"
 ## - name: 테스트 이름 (파일명으로도 사용)
 ## - scene: 로드할 씬 경로
 ## - wait_frames: 렌더링 안정화 대기 프레임 수
-## - setup: 씬 로드 전 실행할 셋업 ("new_game" 등)
+## - setup: 씬 로드 전 실행할 셋업 ("new_game", "battle", "dialogue")
+## - type: "screenshot"(기본) 또는 "scenario"(코루틴 인터랙션 후 캡처)
+## - scenario: type이 "scenario"일 때 실행할 메서드 이름
 var _tests: Array[Dictionary] = [
+	# ── 정적 스크린샷 비교 ──
 	{
 		"name": "main_menu",
 		"scene": "res://scenes/main/main_menu.tscn",
@@ -44,6 +48,23 @@ var _tests: Array[Dictionary] = [
 		"scene": "res://scenes/dialogue/dialogue_scene.tscn",
 		"wait_frames": 60,
 		"setup": "dialogue",
+	},
+	# ── 인터랙션 시나리오 (클릭 시뮬레이션 후 캡처) ──
+	{
+		"name": "battle_player_turn",
+		"scene": "res://scenes/battle/battle_scene.tscn",
+		"wait_frames": 90,
+		"setup": "battle",
+		"type": "scenario",
+		"scenario": "_scenario_battle_player_turn",
+	},
+	{
+		"name": "battle_unit_selected",
+		"scene": "res://scenes/battle/battle_scene.tscn",
+		"wait_frames": 90,
+		"setup": "battle",
+		"type": "scenario",
+		"scenario": "_scenario_battle_unit_selected",
 	},
 ]
 
@@ -74,8 +95,7 @@ func _process(_delta: float) -> void:
 		"stabilizing":
 			_frames += 1
 			if _frames >= _tests[_current].get("wait_frames", 30):
-				_capture_and_compare()
-				_load_next()
+				_dispatch_current()
 		"scene_changing":
 			# change_scene_to_file 후 씬 교체 대기
 			_frames += 1
@@ -84,6 +104,34 @@ func _process(_delta: float) -> void:
 				_frames = 0
 
 # ── 테스트 진행 ──
+
+## 현재 테스트의 타입에 따라 스크린샷 또는 시나리오를 실행한다.
+func _dispatch_current() -> void:
+	var test := _tests[_current]
+	var t: String = test.get("type", "screenshot")
+	if t == "scenario":
+		# 코루틴으로 실행, 완료 후 _load_next 호출
+		_state = "scenario_running"
+		_run_scenario(test).call_deferred()
+	else:
+		_capture_and_compare()
+		_load_next()
+
+## 시나리오 코루틴을 실행하고 결과를 기록한다.
+## @param test 테스트 케이스 딕셔너리
+func _run_scenario(test: Dictionary) -> void:
+	var scenario_name: String = test.get("scenario", "")
+	if scenario_name.is_empty() or not has_method(scenario_name):
+		_results.append({
+			"name": test.name, "pass": false, "diff": 0.0,
+			"note": "시나리오 메서드 없음: %s" % scenario_name,
+		})
+		_load_next()
+		return
+	print("[VisualTest] 시나리오 실행: %s" % scenario_name)
+	await call(scenario_name)
+	_capture_and_compare()
+	_load_next()
 
 ## 다음 테스트 케이스를 로드한다.
 func _load_next() -> void:
@@ -108,6 +156,8 @@ func _load_next() -> void:
 	_frames = 0
 	_state = "scene_changing"
 
+# ── 셋업 ──
+
 ## 새 게임 상태를 초기화한다 (월드맵 진입 전 필수).
 func _setup_new_game() -> void:
 	var gm: Node = get_node("/root/GameManager")
@@ -115,7 +165,6 @@ func _setup_new_game() -> void:
 	gm.difficulty = "normal"
 	gm.current_scene_id = "1-1"
 	gm.play_time = 0.0
-	# PartyManager 초기화 (타이틀에서 호출하는 것과 동일)
 	var pm: Node = get_node("/root/PartyManager")
 	if pm.has_method("init_default_party"):
 		pm.init_default_party()
@@ -132,6 +181,91 @@ func _setup_dialogue() -> void:
 	_setup_new_game()
 	var gm: Node = get_node("/root/GameManager")
 	gm.current_scene_id = "1-1"
+
+# ── 인터랙션 시나리오 ──
+
+## [시나리오] 배치 → 전투 시작 → 플레이어 턴 진입 상태 캡처.
+## 전투 시작 직후의 HUD 레이아웃, 턴 표시 등을 스크린샷으로 검증한다.
+func _scenario_battle_player_turn() -> void:
+	var scene := get_tree().current_scene
+	var deploy: Node = scene.get_node_or_null("DeploymentScreen")
+	var tm: Node = scene.get_node_or_null("TurnManager")
+	if deploy == null or tm == null:
+		push_error("[VisualTest] 시나리오 필수 노드 없음")
+		return
+
+	# 전투 시작
+	deploy._on_start_pressed()
+
+	# 플레이어 턴 대기 (최대 200프레임)
+	var elapsed := 0
+	while elapsed < 200:
+		await get_tree().process_frame
+		elapsed += 1
+		if str(tm.current_phase) == "player":
+			break
+
+	# 렌더링 안정화 후 캡처 (30프레임 대기)
+	for _i in 30:
+		await get_tree().process_frame
+
+	print("[VisualTest] 플레이어 턴 진입 확인 (phase: %s)" % str(tm.current_phase))
+
+## [시나리오] 전투 시작 → 플레이어 유닛 선택 → 이동 범위 표시 상태 캡처.
+## 유닛 선택 후 이동 가능 셀 하이라이트가 표시되는지 시각적으로 검증한다.
+func _scenario_battle_unit_selected() -> void:
+	var scene := get_tree().current_scene
+	var deploy: Node = scene.get_node_or_null("DeploymentScreen")
+	var tm: Node = scene.get_node_or_null("TurnManager")
+	var bm: Node = scene.get_node_or_null("BattleMap")
+	if deploy == null or tm == null or bm == null:
+		push_error("[VisualTest] 시나리오 필수 노드 없음")
+		return
+
+	# 전투 시작 → 플레이어 턴 대기
+	deploy._on_start_pressed()
+	var elapsed := 0
+	while elapsed < 200:
+		await get_tree().process_frame
+		elapsed += 1
+		if str(tm.current_phase) == "player":
+			break
+
+	# 카엘 유닛 선택
+	var player_units: Array = bm.get_units_by_team("player")
+	var kael: Node = null
+	for u in player_units:
+		if u.unit_id == "kael":
+			kael = u
+			break
+
+	if kael == null:
+		push_error("[VisualTest] 카엘 유닛 없음 — 시나리오 스킵")
+		return
+
+	# 카엘 클릭 (TurnManager 내부 메서드 호출)
+	tm._on_unit_clicked(kael)
+
+	# 이동 범위 하이라이트 렌더링 대기
+	for _i in 20:
+		await get_tree().process_frame
+
+	print("[VisualTest] 카엘 선택 완료 — 이동 범위 표시 캡처")
+
+# ── 클릭 시뮬레이션 헬퍼 ──
+
+## 지정한 월드 좌표에 마우스 버튼 클릭 이벤트를 주입한다.
+## @param world_pos 클릭할 월드 좌표 (Vector2)
+func simulate_click(world_pos: Vector2) -> void:
+	var ev := InputEventMouseButton.new()
+	ev.button_index = MOUSE_BUTTON_LEFT
+	ev.pressed = true
+	ev.position = world_pos
+	get_viewport().push_input(ev)
+	await get_tree().process_frame
+	ev = ev.duplicate()
+	ev.pressed = false
+	get_viewport().push_input(ev)
 
 # ── 캡처 및 비교 ──
 

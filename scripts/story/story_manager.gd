@@ -204,6 +204,10 @@ func _on_scene_ended(scene_id: String) -> void:
 	# 유대 트리거 확인
 	_check_bond_trigger(scene_id)
 
+	# 씬 4-3 종료 후 에리스 영구 이탈 처리
+	if scene_id == "4-3":
+		_process_eris_death()
+
 	# 에필로그 종료 → 크레딧 전환
 	if scene_id == ENDING_A_EPILOGUE or scene_id == ENDING_B_EPILOGUE:
 		_start_credits()
@@ -482,6 +486,23 @@ func _check_bond_trigger(scene_id: String) -> void:
 		if lv3.get("scene", "") == scene_id:
 			_bond_system.advance_bond(bond_id, 3)
 			print("[StoryManager] 유대 Lv.3 트리거: %s (scene: %s)" % [bond_id, scene_id])
+
+# ── 에리스 사망 처리 ──
+
+## 씬 4-3 종료 후 에리스 영구 이탈을 처리한다.
+## eris_death 플래그를 설정하고 파티에서 제거한다.
+func _process_eris_death() -> void:
+	var gm: Node = _get_game_manager()
+	var pm: Node = _get_party_manager()
+	if gm == null or pm == null:
+		push_error("[StoryManager] 에리스 사망 처리 실패: 싱글톤 접근 불가")
+		return
+
+	# BondSystem의 ERIS_DEATH_FLAG 상수 사용 (접근 불가 시 직접 문자열 사용)
+	const ERIS_DEATH_FLAG: String = "eris_death"
+	gm.set_flag(ERIS_DEATH_FLAG, true)
+	pm.remove_character("eris")
+	print("[StoryManager] 에리스 사망 처리 완료 — 파티 영구 이탈")
 
 # ── 상태 조회 ──
 

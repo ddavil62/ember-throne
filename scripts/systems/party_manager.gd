@@ -82,6 +82,7 @@ func add_character(char_id: String, level: int = 1) -> void:
 		},
 		"skills": char_data.get("skills", []).duplicate(),
 		"status": [],
+		"injured": false,
 	}
 	party.append(member)
 
@@ -121,10 +122,10 @@ func set_active(char_ids: Array[String]) -> void:
 	if char_ids.size() > MAX_ACTIVE_SIZE:
 		char_ids.resize(MAX_ACTIVE_SIZE)
 
-	# 유효한 캐릭터만 필터
+	# 유효한 캐릭터만 필터 (부상 캐릭터는 출격 불가)
 	var valid: Array[String] = []
 	for cid in char_ids:
-		if get_party_member(cid).size() > 0:
+		if get_party_member(cid).size() > 0 and not is_injured(cid):
 			valid.append(cid)
 	active_party = valid
 	print("[PartyManager] 출격 파티 설정: %s" % str(active_party))
@@ -147,6 +148,30 @@ func get_active_party() -> Array[Dictionary]:
 		if member.size() > 0:
 			result.append(member)
 	return result
+
+# ── 부상 상태 관리 ──
+
+## 캐릭터의 부상 상태를 설정한다.
+## @param char_id 캐릭터 ID
+## @param value 부상 여부
+func set_injured(char_id: String, value: bool) -> void:
+	var member := get_party_member(char_id)
+	if member.is_empty():
+		return
+	member["injured"] = value
+
+## 캐릭터의 부상 여부를 반환한다.
+## 구세이브 호환: injured 필드 없으면 false 반환.
+## @param char_id 캐릭터 ID
+## @returns 부상 상태
+func is_injured(char_id: String) -> bool:
+	var member := get_party_member(char_id)
+	return member.get("injured", false)
+
+## 파티 전원의 부상 상태를 해제한다. 전투 종료 시 호출한다.
+func clear_all_injured() -> void:
+	for member in party:
+		member["injured"] = false
 
 # ── 레벨/경험치 ──
 
@@ -440,6 +465,7 @@ func serialize() -> Array:
 			"equipment": member["equipment"].duplicate(),
 			"skills": member["skills"].duplicate(),
 			"status": member["status"].duplicate(),
+			"injured": member.get("injured", false),
 		})
 	return result
 
@@ -458,6 +484,7 @@ func deserialize(data: Array) -> void:
 			"equipment": entry.get("equipment", {"weapon": "", "armor": "", "accessory": ""}).duplicate(),
 			"skills": entry.get("skills", []).duplicate(),
 			"status": entry.get("status", []).duplicate(),
+			"injured": entry.get("injured", false),
 		}
 		party.append(member)
 	# 출격 파티는 별도 필드에서 복원 (save_manager에서 처리)

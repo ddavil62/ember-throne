@@ -219,6 +219,13 @@ func _on_battle_condition_triggered(is_victory: bool, condition_type: String, re
 				"count": count,
 			})
 		result_data["items_earned"] = items_earned
+	else:
+		# 패배/도주 시에도 EXP·스탯 동기화
+		_sync_exp_to_party()
+
+	# 전투 종료 시 파티 전원 부상 상태 해제 (승리/패배/도주 공통)
+	var pm_clear: Node = get_node("/root/PartyManager")
+	pm_clear.clear_all_injured()
 
 	_battle_result.show_result(result_data)
 
@@ -430,6 +437,13 @@ func _on_turn_started_check_events(phase: String, turn_number: int) -> void:
 ## @param unit_id 사망한 유닛 ID
 ## @param _killer_id 처치한 유닛 ID
 func _on_unit_died_check_events(unit_id: String, _killer_id: String) -> void:
+	# 플레이어 유닛 사망 시 부상 처리 (해당 전투 행동 불가, 다음 전투 복귀)
+	var died_unit: BattleUnit = _battle_map.get_unit_by_id(unit_id)
+	if died_unit != null and died_unit.team == "player":
+		var pm_inj: Node = get_node("/root/PartyManager")
+		pm_inj.set_injured(unit_id, true)
+		print("[BattleScene] 부상 처리: %s" % unit_id)
+
 	var died_enemy_id: String = _extract_enemy_id_from_uid(unit_id)
 
 	for i: int in range(_map_events.size()):
@@ -531,6 +545,7 @@ func _sync_exp_to_party() -> void:
 			continue
 		member["level"] = unit.level
 		member["exp"] = exp_data.get(unit.unit_id, 0)
+		member["stats"] = unit.stats.duplicate()  # 레벨업 스탯 반영
 		print("[BattleScene] EXP 동기화: %s Lv.%d EXP=%d" % [
 			unit.unit_id, member["level"], member["exp"]
 		])

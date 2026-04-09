@@ -63,7 +63,14 @@ func decide_action(unit: BattleUnit, battle_map: Node2D) -> Dictionary:
 		"ambush":
 			action = _patterns.ambush(unit, targets, move_cells, battle_map, self)
 		"flee":
-			action = _patterns.flee(unit, targets, move_cells, battle_map, self)
+			if _is_hard_difficulty():
+				# Hard 모드에서는 도주 대신 공격적으로 행동
+				if targets.is_empty():
+					action = _patterns.defensive(unit, targets, move_cells, battle_map, self)
+				else:
+					action = _patterns.aggressive(unit, targets, move_cells, battle_map, self)
+			else:
+				action = _patterns.flee(unit, targets, move_cells, battle_map, self)
 		_:
 			# 알 수 없는 패턴 — aggressive로 폴백
 			action = _patterns.aggressive(unit, targets, move_cells, battle_map, self)

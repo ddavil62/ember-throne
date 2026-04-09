@@ -78,6 +78,8 @@ func _setup_flash_layer() -> void:
 	_flash_rect.name = "FlashRect"
 	_flash_rect.color = Color(1, 1, 1, 0)
 	_flash_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	# 입력 차단 방지: 투명 전체화면 rect가 마우스 클릭을 삼키지 않도록 IGNORE 설정
+	_flash_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_flash_layer.add_child(_flash_rect)
 
 ## dim 오버레이 레이어를 생성한다. (S등급 암전 연출)
@@ -92,6 +94,7 @@ func _setup_dim_layer() -> void:
 	_dim_rect.name = "DimRect"
 	_dim_rect.color = Color(0, 0, 0, 0)
 	_dim_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_dim_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_dim_layer.add_child(_dim_rect)
 
 # ── 이펙트 재생 ──

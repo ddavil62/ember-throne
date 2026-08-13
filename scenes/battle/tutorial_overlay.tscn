@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://tutorial_overlay_001"]
+
+[ext_resource type="Script" path="res://scripts/battle/tutorial_overlay.gd" id="1_tutorial"]
+
+[node name="TutorialOverlay" type="CanvasLayer"]
+script = ExtResource("1_tutorial")

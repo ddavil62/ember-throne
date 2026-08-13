@@ -339,9 +339,14 @@ func _load_act_data(act: int) -> Array:
 # ── 유틸리티 ──
 
 ## scene_id에서 act 번호를 추출한다.
-## @param scene_id 씬 ID (예: "1-1" → 1, "2-3" → 2)
+## "ending_" 접두사를 가진 에필로그 씬은 act 4로 취급한다.
+## @param scene_id 씬 ID (예: "1-1" → 1, "2-3" → 2, "ending_a_epilogue" → 4)
 ## @returns act 번호 또는 -1
 func _extract_act(scene_id: String) -> int:
+	# 엔딩 에필로그는 act 4에 포함
+	if scene_id.begins_with("ending_"):
+		return 4
+
 	var parts := scene_id.split("-")
 	if parts.size() < 2:
 		return -1

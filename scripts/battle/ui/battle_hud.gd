@@ -291,9 +291,10 @@ func _build_minimap() -> void:
 	_minimap_panel.add_theme_stylebox_override("panel", style)
 	add_child(_minimap_panel)
 
-	# 도트 컨테이너
+	# 도트 컨테이너 — 입력 차단 방지를 위해 MOUSE_FILTER_IGNORE 설정
 	_minimap_dots = Control.new()
 	_minimap_dots.anchors_preset = Control.PRESET_FULL_RECT
+	_minimap_dots.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_minimap_panel.add_child(_minimap_dots)
 
 ## 미니맵 유닛 도트를 갱신한다.

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://credits_screen_001"]
+
+[ext_resource type="Script" path="res://scripts/ui/credits_screen.gd" id="1_credits"]
+
+[node name="CreditsScreen" type="CanvasLayer"]
+script = ExtResource("1_credits")

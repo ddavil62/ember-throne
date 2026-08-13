@@ -342,5 +342,27 @@
       { "type": "narration", "text_ko": "결계석이 빛난다. 따뜻하게.", "text_en": "The barrier stone shines. Warmly." },
       { "type": "narration", "text_ko": "영원한 불꽃은 없다. 하지만 작은 불꽃들은, 함께 타면, 오래간다.", "text_en": "No flame is eternal. But small flames, burning together, last a long time." }
     ]
+  },
+  {
+    "scene_id": "ending_a_epilogue",
+    "title": "엔딩 A 에필로그",
+    "bgm": "dawn_acoustic",
+    "segments": [
+      { "type": "cg", "image": "ending_a_cg.png" },
+      { "type": "narration", "text_ko": "시원화의 불꽃이 다시 타오른다. 리넨은 왕좌 안에 잠들었다. 세리아는 시력을 잃었지만, 카엘의 손을 놓지 않는다.", "text_en": "The Siwon Fire burns again. Linen sleeps within the throne. Seria lost her sight, but never lets go of Kael's hand." },
+      { "type": "narration", "text_ko": "결계는 회복되었다. 재의 확산이 멈추었다. 사라진 것들은 돌아오지 않지만 — 남겨진 것들이 다시 시작한다.", "text_en": "The barrier has recovered. The spread of ash has stopped. What was lost does not return — but what remains begins anew." },
+      { "type": "narration", "text_ko": "불꽃은 영원하지 않다. 하지만 그 온기는 남는다.", "text_en": "Flame is not eternal. But its warmth endures." }
+    ]
+  },
+  {
+    "scene_id": "ending_b_epilogue",
+    "title": "엔딩 B 에필로그",
+    "bgm": "new_morning_acoustic",
+    "segments": [
+      { "type": "cg", "image": "ending_b_cg.png" },
+      { "type": "narration", "text_ko": "시원화는 사라졌다. 하지만 수많은 작은 불꽃이 대륙 곳곳에 빛나고 있다.", "text_en": "The Siwon Fire is gone. But countless small flames shine across the continent." },
+      { "type": "narration", "text_ko": "리넨은 기억을 잃었다. 하지만 나엘이 곁에 있다. 처음부터 다시 시작하는 사랑.", "text_en": "Linen has lost her memories. But Nael is by her side. A love starting over from the beginning." },
+      { "type": "narration", "text_ko": "영원한 불꽃은 없다. 하지만 작은 불꽃들은, 함께 타면, 오래간다.", "text_en": "No flame is eternal. But small flames, burning together, last a long time." }
+    ]
   }
 ]
